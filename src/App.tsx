@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 
 import Homepage from './homepage/Homepage'
@@ -15,6 +15,9 @@ import NutraceuticalPage from './nutraceutical/NutraceuticalPage'
 import OrganicPage from './organic/OrganicPage'
 
 function AppContent() {
+  const { pathname } = useLocation()
+  const hideFooter = pathname === '/contact'
+
   return (
     <div className="relative">
       <ScrollToTop />
@@ -30,7 +33,7 @@ function AppContent() {
         <Route path="/nutraceutical" element={<NutraceuticalPage />} />
         <Route path="/organic" element={<OrganicPage />} />
       </Routes>
-      <NewFooter />
+      {!hideFooter && <NewFooter />}
     </div>
   )
 }

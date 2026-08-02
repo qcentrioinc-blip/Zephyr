@@ -57,15 +57,13 @@ function buildCategories(raw: RawCategory[]): FormulaCategory[] {
 
 export const theme: RangeTheme = {
   title: "Organic Products",
-  subtitle: "Pure. Natural. Custom formulations.",
+  subtitle: "Pure. Natural. Custom private label formulas.",
   accent: "#547A3D",
   accentSoft: "#EFF7ED",
   bg: "#f8f9ef",
   border: "#4a5f35",
-  heroImage:
-    "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=1800&q=80",
-  overlay:
-    "linear-gradient(105deg, rgba(248,249,239,0.97) 0%, rgba(248,249,239,0.92) 38%, rgba(248,249,239,0.55) 62%, rgba(248,249,239,0.18) 82%, rgba(248,249,239,0.05) 100%)",
+  heroImage: "/Generated/organic-hero.png",
+  overlay: "rgba(248,249,239,0.92)",
 };
 
 const rawCatalog: RawCategory[] = [

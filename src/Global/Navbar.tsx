@@ -378,13 +378,19 @@ const Navbar = () => {
   useEffect(() => clearCloseTimeout, []);
 
   const isProductsActive = PRODUCT_LINKS.some((p) => p.path === location.pathname);
+  const isHome = location.pathname === '/';
+  const transparent = isHome && !scrolled;
 
   return (
     <motion.nav
       initial={false}
       animate={{
-        backgroundColor: '#ffffff',
-        boxShadow: scrolled ? '0 1px 20px rgba(0,0,0,0.06)' : '0 0 0 rgba(0,0,0,0)',
+        backgroundColor: transparent ? 'rgba(255,255,255,0)' : '#ffffff',
+        boxShadow: transparent
+          ? '0 0 0 rgba(0,0,0,0)'
+          : scrolled
+            ? '0 1px 20px rgba(0,0,0,0.06)'
+            : '0 0 0 rgba(0,0,0,0)',
       }}
       transition={{ duration: 0.35, ease: EASE_PREMIUM }}
       className="fixed top-0 z-[100] w-full px-4 py-2 sm:px-6 lg:px-8"
@@ -405,7 +411,11 @@ const Navbar = () => {
           ref={pillRef}
           onMouseMove={(e) => mouseX.set(e.clientX)}
           onMouseLeave={() => mouseX.set(Infinity)}
-          className="hidden xl:flex items-center rounded-full bg-[#F1F3F4] px-1.5 py-1 shadow-sm"
+          className={`hidden xl:flex items-center rounded-full px-1.5 py-1 transition-colors duration-300 ${
+            transparent
+              ? 'bg-white/55 shadow-sm backdrop-blur-md'
+              : 'bg-[#F1F3F4] shadow-sm'
+          }`}
         >
           {NAV_LINKS.map((link) => (
             <DockNavItem

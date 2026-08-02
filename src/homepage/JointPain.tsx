@@ -1,65 +1,81 @@
 import { H2, P } from "../Global/Typography/Typo";
 
-
 const JointPain = () => {
   return (
     <section className="zephyr-section overflow-hidden">
       <div className="zephyr-container">
-        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-8 lg:gap-12 xl:gap-16">
-          <div className="w-full lg:w-auto flex justify-center">
+        <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-12 xl:gap-16">
+          <div className="flex w-full justify-center lg:w-auto">
             <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
-              <div className="w-24 h-40 sm:w-28 sm:h-48 md:w-36 md:h-64 lg:w-40 lg:h-72 overflow-hidden rounded-[999px] shadow-lg flex-shrink-0">
+              <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
                 <img
                   src="/Production/ProductionsHeroLeft.png"
                   alt="Zephyr laboratory"
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
-
-              <div className="w-24 h-40 sm:w-28 sm:h-48 md:w-36 md:h-64 lg:w-40 lg:h-72 overflow-hidden rounded-[999px] shadow-lg flex-shrink-0">
+              <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
                 <img
                   src="/Gallery/Gallery1.png"
                   alt="Manufacturing facility"
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
-
-              <div className="w-24 h-40 sm:w-28 sm:h-48 md:w-36 md:h-64 lg:w-40 lg:h-72 overflow-hidden rounded-[999px] shadow-lg flex-shrink-0">
+              <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
                 <img
                   src="/Gallery/Gallery3.png"
                   alt="Production capability"
                   loading="lazy"
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
             </div>
           </div>
 
           <div className="w-full max-w-3xl text-center lg:text-left">
-            <div className="w-20 md:w-28 h-[1px] bg-gray-500 mx-auto lg:mx-0 mb-1" />
-
+            <div className="mx-auto mb-1 h-[1px] w-20 bg-gray-500 md:w-28 lg:mx-0" />
             <H2 className="mb-3">About Zephyr</H2>
             <P className="mb-3">
-              <span className="font-para font-bold
-      leading-[120%] md:leading-[20px]
-      text-[10px] md:text-[12px] lg:text-[14px]
-      tracking-[0.05em]">India’s leading manufacturer and supplier of custom healthcare products. <br />
+              <span className="font-para text-[10px] font-bold leading-[120%] tracking-[0.05em] md:text-[12px] md:leading-[20px] lg:text-[14px]">
+                Contract manufacturing partner for custom dietary supplement
+                brands.
+                <br />
               </span>
-              Zephyr Life Sciences Pvt Ltd. built a 65,000 sq ft production facility and laboratories, a professionally managed company engaged in manufacturing and marketing nutraceutical, herbaceutical, and organic products. We tailor-make vitamins, minerals, health supplements, and specialty tablets. Zephyr develops and manufactures custom healthcare brands. The two things that matter the most to us are customer focus and quality.            </P>
+              Zephyr operates a 65,000 sq ft production facility and laboratories
+              focused on nutraceutical, herbaceutical, and organic products. We
+              tailor-make vitamins, minerals, health supplements, and specialty
+              tablets for private label and brand owners. Customer focus and
+              quality sit at the center of every program.
+            </P>
             <P className="mb-3">
-            Zephyr works worldwide to build long-term partnerships with international nutraceutical, herbaceutical, and organic brand owners with a focus on caring for their business health.            </P>
+              We build long-term partnerships with international nutraceutical,
+              herbaceutical, and organic brand owners, including US marketers and
+              procurement teams that need reliable finished goods supply.
+            </P>
           </div>
         </div>
 
-        <div className="mt-10 max-w-7xl mx-auto space-y-4 text-center lg:text-left">
+        <div className="mx-auto mt-10 max-w-7xl space-y-4 text-center lg:text-left">
           <P className="mb-3">
-          We are a full-service manufacturing partner for the healthcare and organic industry. Our tailor-made vitamins, minerals, health supplements, and specialty tablet solutions together with advanced packaging technologies make us a proud leader in manufacturing for the nutraceutical and organic industry.
-
-With a strong focus on our customers’ requirements, we work in true partnership from the first product idea to the finished ready to go product. We share our market insights, identify opportunities and apply our expertise in new product development and formulations to bring innovative ideas to the market.
-
-As we are producing millions of tablets each year, we have optimised the manufacturing process and are continuing to invest in our high-quality licensed facility in a safe and sustainable way.          </P>
+            Zephyr is a full-service manufacturing partner for the healthcare and
+            organic industry. Our vitamin, mineral, health supplement, and
+            specialty tablet solutions, together with advanced packaging
+            technologies, support US private label and contract manufacturing
+            launches.
+          </P>
+          <P className="mb-3">
+            We work in true partnership from the first product idea to the
+            finished ready-to-go product. We share market insights, identify
+            opportunities, and apply formulation expertise to bring new ideas to
+            market.
+          </P>
+          <P>
+            As we produce millions of tablets each year, we continue to optimize
+            manufacturing processes and invest in our licensed facility in a safe
+            and sustainable way.
+          </P>
         </div>
       </div>
     </section>

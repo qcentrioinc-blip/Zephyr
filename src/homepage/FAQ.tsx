@@ -4,19 +4,19 @@ import { H2, H4, P } from "../Global/Typography/Typo";
 const faqs = [
   {
     q: "What is Zephyr’s manufacturing capacity?",
-    a: "We currently support manufacturing and packaging capacity of up to 5 billion tablets, 100 million capsules, 60 million sachets and 1 million jars per month — ideal for scaling private-label and contract manufacturing partners.",
+    a: "We currently support manufacturing and packaging capacity of up to 5 billion tablets, 100 million capsules, 60 million sachets, and 1 million jars per month. That capacity supports US private label and contract manufacturing partners who need reliable scale.",
   },
   {
     q: "Do you support custom formulations and MOQ projects?",
-    a: "Yes. Zephyr co-develops and manufactures custom nutraceutical, herbaceutical and organic products. MOQ depends on dosage format, packaging and complexity — share your brief via Get in Touch and our team will advise.",
+    a: "Yes. Zephyr co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Get in Touch and our team will advise.",
   },
   {
     q: "Which dosage formats and packaging options do you offer?",
-    a: "Dosage formats include tablets, capsules, sachets, powders, gummies and jelly. Packaging options include jars, sachets, blister, bulk packs, bottle packs, Alu Alu and stick packs.",
+    a: "Dosage formats include tablets, capsules, sachets, powders, gummies, and jelly. Packaging options include jars, sachets, blister, bulk packs, bottle packs, Alu Alu, and stick packs.",
   },
   {
     q: "How do you manage quality and compliance?",
-    a: "Our QA/QC teams perform end-to-end testing of raw materials, in-process and finished goods. We follow GMP and ISO protocols, with experienced teams covering cGMP compliance, audits and validation.",
+    a: "Our QA/QC teams perform end-to-end testing of raw materials, in-process, and finished goods. We follow GMP and ISO protocols, with experienced teams covering cGMP compliance, audits, and validation.",
   },
 ];
 
@@ -71,7 +71,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="zephyr-section">
+    <section className="zephyr-section mb-10">
       <div className="zephyr-container">
         <div className="mb-5 text-center">
           <H2>Frequently asked questions</H2>

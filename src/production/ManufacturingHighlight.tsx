@@ -211,24 +211,18 @@ const ManufacturingHighlight = () => {
                 variants={fadeUp}
                 className="text-white text-[20px] md:text-[24px] lg:text-[32px] font-manrope font-semibold leading-[120%] tracking-normal"
               >
-                Lorum Ipsum Dolor
+                End-to-end CDMO capability
               </motion.h2>
 
               <motion.p
                 variants={fadeUp}
                 className="mt-3 sm:mt-4 text-white/90 text-[16px] md:text-[12px] lg:text-[12px] font-para font-normal leading-[120%] md:leading-[18px] tracking-normal"
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Cursus imperdiet sed id elementum. Quam vel aliquam sit
-                vulputate. Faucibus. Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Cursus imperdiet sed id elementum. Quam vel
-                aliquam sit vulputate. Faucibus. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Cursus imperdiet sed id
-                elementum.  Faucibus. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Cursus imperdiet sed id
-                elementum.  Faucibus. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Cursus imperdiet sed id
-                elementum.
+                From humidity-controlled dispensing and granulation to compression,
+                coating, capsule filling, and finished goods packaging. Zephyr
+                delivers flexible private label manufacturing with GMP and ISO
+                quality systems for nutraceutical, herbaceutical, and organic
+                partners.
               </motion.p>
             </div>
 

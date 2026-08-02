@@ -59,3 +59,277 @@ p {
   animation-play-state: paused;
 }
 
+/*
+ * Glossy glass scrollbars — same language as the footer features strip
+ * (translucent tint + soft border + top highlight), not solid fills.
+ */
+
+/* ── Site-wide: Zephyr green glass (#11BB8A / #113227) ── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(11, 85, 64) rgba(155, 223, 200, 0.06);
+}
+
+html::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    rgba(17, 50, 39, 0.03) 0%,
+    rgba(17, 187, 138, 0.1) 50%,
+    rgba(17, 50, 39, 0.03) 100%
+  );
+  border-left: 1px solid rgba(17, 187, 138, 0.12);
+}
+
+html::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(17, 187, 138, 0.28) 22%,
+      rgba(17, 187, 139, 0.42) 55%,
+      rgba(17, 50, 39, 0.28) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(17, 187, 138, 0.55),
+      rgba(17, 187, 138, 0.22)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(17, 50, 39, 0.18),
+    0 0 10px rgba(17, 187, 138, 0.22);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(17, 187, 138, 0.4) 22%,
+      rgba(17, 187, 139, 0.55) 55%,
+      rgba(17, 50, 39, 0.32) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(17, 187, 138, 0.75),
+      rgba(17, 187, 138, 0.35)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(17, 50, 39, 0.2),
+    0 0 14px rgba(17, 187, 138, 0.35);
+}
+
+/* Shared sizing for product catalog panels */
+.zephyr-scroll-herba,
+.zephyr-scroll-nutra,
+.zephyr-scroll-organic {
+  scrollbar-width: thin;
+}
+
+.zephyr-scroll-herba::-webkit-scrollbar,
+.zephyr-scroll-nutra::-webkit-scrollbar,
+.zephyr-scroll-organic::-webkit-scrollbar {
+  width: 9px;
+}
+
+/* Herbaceutical — amber glass (#C38046) */
+.zephyr-scroll-herba {
+  scrollbar-color: rgba(195, 128, 70, 0.55) rgba(195, 128, 70, 0.08);
+}
+
+.zephyr-scroll-herba::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(195, 128, 70, 0.05),
+    rgba(195, 128, 70, 0.12),
+    rgba(195, 128, 70, 0.05)
+  );
+}
+
+.zephyr-scroll-herba::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(195, 128, 70, 0.28) 22%,
+      rgba(195, 128, 70, 0.45) 55%,
+      rgba(140, 85, 40, 0.35) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(195, 128, 70, 0.55),
+      rgba(195, 128, 70, 0.22)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(120, 70, 30, 0.18),
+    0 0 10px rgba(195, 128, 70, 0.25);
+}
+
+.zephyr-scroll-herba::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(195, 128, 70, 0.4) 22%,
+      rgba(195, 128, 70, 0.58) 55%,
+      rgba(140, 85, 40, 0.4) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(195, 128, 70, 0.75),
+      rgba(195, 128, 70, 0.35)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 0 14px rgba(195, 128, 70, 0.38);
+}
+
+/* Nutraceutical — teal glass (#4AA3A7) */
+.zephyr-scroll-nutra {
+  scrollbar-color: rgba(74, 163, 167, 0.55) rgba(74, 163, 167, 0.08);
+}
+
+.zephyr-scroll-nutra::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(74, 163, 167, 0.05),
+    rgba(74, 163, 167, 0.12),
+    rgba(74, 163, 167, 0.05)
+  );
+}
+
+.zephyr-scroll-nutra::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(74, 163, 167, 0.28) 22%,
+      rgba(74, 163, 167, 0.45) 55%,
+      rgba(40, 110, 115, 0.35) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(74, 163, 167, 0.55),
+      rgba(74, 163, 167, 0.22)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(30, 90, 95, 0.18),
+    0 0 10px rgba(74, 163, 167, 0.25);
+}
+
+.zephyr-scroll-nutra::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(74, 163, 167, 0.4) 22%,
+      rgba(74, 163, 167, 0.58) 55%,
+      rgba(40, 110, 115, 0.4) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(74, 163, 167, 0.75),
+      rgba(74, 163, 167, 0.35)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 0 14px rgba(74, 163, 167, 0.38);
+}
+
+/* Organic — olive glass (#547A3D) */
+.zephyr-scroll-organic {
+  scrollbar-color: rgba(84, 122, 61, 0.55) rgba(84, 122, 61, 0.08);
+}
+
+.zephyr-scroll-organic::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(84, 122, 61, 0.05),
+    rgba(84, 122, 61, 0.12),
+    rgba(84, 122, 61, 0.05)
+  );
+}
+
+.zephyr-scroll-organic::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(84, 122, 61, 0.28) 22%,
+      rgba(84, 122, 61, 0.45) 55%,
+      rgba(50, 80, 35, 0.35) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(84, 122, 61, 0.55),
+      rgba(84, 122, 61, 0.22)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(40, 70, 25, 0.18),
+    0 0 10px rgba(84, 122, 61, 0.25);
+}
+
+.zephyr-scroll-organic::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(84, 122, 61, 0.4) 22%,
+      rgba(84, 122, 61, 0.58) 55%,
+      rgba(50, 80, 35, 0.4) 100%
+    )
+      padding-box,
+    linear-gradient(
+      180deg,
+      rgba(84, 122, 61, 0.75),
+      rgba(84, 122, 61, 0.35)
+    )
+      border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 0 14px rgba(84, 122, 61, 0.38);
+}
+
+

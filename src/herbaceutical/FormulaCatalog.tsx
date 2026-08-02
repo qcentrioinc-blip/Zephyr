@@ -178,7 +178,7 @@ export default function FormulaCatalog() {
 
   const enquireHref = (formula: string, category: string) =>
     `/contact?subject=${encodeURIComponent(
-      `MOQ enquiry — ${theme.title}: ${category}`
+      `MOQ enquiry - ${theme.title}: ${category}`
     )}&message=${encodeURIComponent(
       `I would like to enquire about manufacturing / MOQ for:\n${formula}\n\nRange: ${theme.title}\nCategory: ${category}`
     )}`;
@@ -193,7 +193,9 @@ export default function FormulaCatalog() {
         />
         <div
           className="absolute inset-0"
-          style={{ background: theme.overlay }}
+          style={{
+            background: `linear-gradient(105deg, ${theme.bg}f2 0%, ${theme.bg}d9 34%, ${theme.bg}66 62%, ${theme.bg}14 82%, transparent 100%)`,
+          }}
           aria-hidden="true"
         />
 
@@ -233,7 +235,7 @@ export default function FormulaCatalog() {
       <section className="zephyr-container zephyr-section">
         <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           {/* Desktop sidebar — unchanged */}
-          <aside className="hidden lg:block lg:w-64 shrink-0">
+          <aside className="hidden lg:block lg:w-72 shrink-0">
             <div className="lg:sticky lg:top-28 space-y-4">
               <div className="relative">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -246,7 +248,7 @@ export default function FormulaCatalog() {
                 />
               </div>
 
-              <div className="max-h-[60vh] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-3">
+              <div className="zephyr-scroll-herba max-h-[min(78vh,calc(100vh-9rem))] min-h-[420px] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-3">
                 <CategoryList
                   categories={categories}
                   activeCategory={activeCategory}
@@ -314,7 +316,7 @@ export default function FormulaCatalog() {
                             <X className="h-4 w-4" />
                           </button>
                         </div>
-                        <div className="max-h-[55vh] overflow-y-auto p-2">
+                        <div className="zephyr-scroll-herba max-h-[70vh] overflow-y-auto p-2">
                           <CategoryList
                             categories={categories}
                             activeCategory={activeCategory}
@@ -339,7 +341,7 @@ export default function FormulaCatalog() {
               </P>
               <Link
                 to={`/contact?subject=${encodeURIComponent(
-                  `Partnership enquiry — ${theme.title}`
+                  `Partnership enquiry - ${theme.title}`
                 )}`}
                 className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
                 style={{ backgroundColor: theme.accent }}
@@ -372,13 +374,21 @@ export default function FormulaCatalog() {
                         style={{ backgroundColor: theme.accentSoft }}
                       >
                         <div className="min-w-0 flex-1">
-                          <H3 className="text-base sm:text-lg">
-                            {category.name}
-                          </H3>
-                          <P className="mt-0.5 text-sm text-gray-600">
-                            {category.formulas.length} formulation
-                            {category.formulas.length === 1 ? "" : "s"}
-                          </P>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <H3 className="text-base sm:text-lg">
+                              {category.name}
+                            </H3>
+                            <span
+                              className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-white"
+                              style={{
+                                backgroundColor: theme.accent,
+                                boxShadow: `0 0 0 1px ${theme.accent}55, 0 0 16px ${theme.accent}66`,
+                              }}
+                            >
+                              {category.formulas.length} formulation
+                              {category.formulas.length === 1 ? "" : "s"}
+                            </span>
+                          </div>
                         </div>
                         <motion.span
                           animate={{ rotate: open ? 180 : 0 }}

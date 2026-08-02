@@ -473,9 +473,9 @@ const CTA = () => {
 
           <P className="mx-auto mt-3 max-w-4xl">
             Zephyr is a full-service manufacturing partner for the healthcare and
-            organic industry — tailor-made vitamins, minerals, health
-            supplements and specialty tablets with advanced packaging
-            technologies.
+            organic industry. We tailor-make vitamins, minerals, health
+            supplements, and specialty tablets with advanced packaging
+            technologies for private label brands.
           </P>
         </div>
 

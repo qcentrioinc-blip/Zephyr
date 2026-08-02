@@ -1,119 +1,152 @@
-import React from 'react';
-import { H2, P } from '../Global/Typography/Typo';
+import { Globe2, Store, Truck } from "lucide-react";
+import { H2, H3, P } from "../Global/Typography/Typo";
+import Reveal from "../Global/Reveal";
 
 interface TimelineEntry {
-  year: string;
+  step: string;
+  title: string;
   description: string;
-  fullDescription?: string;
 }
 
-interface GalleryImage {
-  id: number;
-  src: string;
-  alt: string;
-}
+const galleryImages = [
+  {
+    id: 1,
+    src: "/Research/Research1.png",
+    alt: "Partner brand development environment",
+  },
+  {
+    id: 2,
+    src: "/Gallery/Gallery2.png",
+    alt: "High-speed manufacturing equipment",
+  },
+  {
+    id: 3,
+    src: "/Gallery/Gallery5.png",
+    alt: "Quality-controlled production workspace",
+  },
+];
 
-const Timeline: React.FC = () => {
-  const galleryImages: GalleryImage[] = [
-    {
-      id: 1,
-      src: '/Research/Research1.png',
-      alt: 'Laboratory research',
-    },
-    {
-      id: 2,
-      src: '/Gallery/Gallery2.png',
-      alt: 'Production equipment',
-    },
-    {
-      id: 3,
-      src: '/Gallery/Gallery5.png',
-      alt: 'Manufacturing environment',
-    },
-  ];
+const timelineData: TimelineEntry[] = [
+  {
+    step: "01",
+    title: "Private label brief",
+    description:
+      "Share your target market, dosage format, and pack goals. We turn the brief into a manufacturable plan.",
+  },
+  {
+    step: "02",
+    title: "Pilot & process lock",
+    description:
+      "Pilot development, refinement, and production trials establish process, quality, and packaging specifications.",
+  },
+  {
+    step: "03",
+    title: "Quality release systems",
+    description:
+      "Stability support, analytical methods, and validation keep every batch ready for partner audits and market release.",
+  },
+  {
+    step: "04",
+    title: "Scale across channels",
+    description:
+      "Transfer to full-scale manufacturing with artwork support so partners can grow from boutique retail to multi-market distribution.",
+  },
+];
 
-  const timelineData: TimelineEntry[] = [
-    {
-      year: '01',
-      description: 'Trend & market analysis with concept formulations.',
-    },
-    {
-      year: '02',
-      description: 'Pilot development, refinement and production trials.',
-      fullDescription: 'In-house product development laboratories refine, pilot and trial formulations before scale-up.',
-    },
-    {
-      year: '03',
-      description: 'Stability testing, analytical methods & validation.',
-      fullDescription: 'Pre-production samples, analytical method development and validation support.',
-    },
-    {
-      year: '04',
-      description: 'Scale-up manufacturing with packaging & regulatory.',
-      fullDescription: 'Transfer to full-scale production with artwork packaging expertise and a dedicated regulatory team.',
-    },
-  ];
+const highlights = [
+  {
+    icon: Store,
+    title: "Retail packs",
+    body: "Jars, sachets, blister, bottles, Alu Alu, and stick packs for shelf launch.",
+  },
+  {
+    icon: Truck,
+    title: "Contract volume",
+    body: "Monthly capacity of 5B tablets, 100M capsules, 60M sachets, and 1M jars.",
+  },
+  {
+    icon: Globe2,
+    title: "Global partner footprint",
+    body: "India manufacturing with commercial presence supporting Spain and USA partners.",
+  },
+];
 
+const Timeline = () => {
   return (
     <section className="zephyr-section bg-white">
       <div className="zephyr-container">
-        {/* Image Gallery */}
-        <div className="mb-12 sm:mb-16 lg:mb-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {galleryImages.map((image) => (
-              <div
-                key={image.id}
-                className="relative overflow-hidden rounded-2xl sm:rounded-3xl aspect-square sm:aspect-auto sm:h-64 lg:h-full group"
-              >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className="mb-12 sm:mb-16 lg:mb-20">
-          <H2 className=" mb-4 sm:mb-6">
-            From a retail store to the global chain of stores
-          </H2>
-          <P className=" max-w-full">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </P>
-        </div>
-
-        {/* Timeline Data / Text Grid Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-8 sm:gap-y-10">
-          {timelineData.map((item, index) => (
-            <div key={index} className="flex items-start">
-              <div className="flex-shrink-0 flex items-center">
-                <span className="text-xl sm:text-2xl font-semibold text-black">
-                  {item.year}
-                </span>
-                <span className="text-xl sm:text-2xl font-bold text-black ml-1 sm:ml-2 mr-3 sm:mr-4">
-                  :
-                </span>
-              </div>
-              <div className="flex-1 pt-1">
-                <P className="">
-                  {item.description}
-                </P>
-                {item.fullDescription && (
-                  <P className=" mt-1">
-                    {item.fullDescription}
-                  </  P>
-                )}
-              </div>
+        <Reveal className="mb-10 grid gap-4 sm:mb-14 sm:grid-cols-3">
+          {galleryImages.map((image) => (
+            <div
+              key={image.id}
+              className="overflow-hidden rounded-[24px] bg-gray-100"
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="aspect-[4/3] h-full w-full object-cover transition duration-500 hover:scale-105"
+                loading="lazy"
+              />
             </div>
           ))}
+        </Reveal>
+
+        <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
+          <Reveal>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]">
+              Partner growth
+            </p>
+            <H2>From a retail store to the global chain of stores</H2>
+            <P className="mt-5 text-gray-600 leading-relaxed">
+              Zephyr helps brand owners move beyond a single SKU launch. Flexible
+              dosage formats, finished goods packaging, and GMP quality systems
+              help private label lines expand across retailers, chains, and
+              international markets with one manufacturing partner.
+            </P>
+
+            <div className="mt-8 space-y-4">
+              {highlights.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="flex gap-4 rounded-2xl border border-gray-200 bg-[#F7F8F2] p-4"
+                  >
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-[#113227]">
+                      <Icon className="h-5 w-5" strokeWidth={1.75} />
+                    </div>
+                    <div>
+                      <H3 className="!text-[16px] md:!text-[18px]">
+                        {item.title}
+                      </H3>
+                      <P className="mt-1 text-gray-600">{item.body}</P>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Reveal>
+
+          <ol className="relative space-y-5">
+            <div
+              className="pointer-events-none absolute bottom-8 left-[27px] top-8 w-px bg-[#113227]/15"
+              aria-hidden="true"
+            />
+            {timelineData.map((item, index) => (
+              <Reveal key={item.step} delay={index * 0.06}>
+                <li className="relative z-10 flex gap-5 rounded-3xl border border-gray-200 bg-white p-5 shadow-[0_6px_24px_rgba(17,50,39,0.04)]">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#113227] text-sm font-semibold text-white">
+                    {item.step}
+                  </span>
+                  <div>
+                    <H3 className="mb-2 text-[#113227]">{item.title}</H3>
+                    <P className="text-gray-600">{item.description}</P>
+                  </div>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
         </div>
-        
       </div>
     </section>
   );

@@ -4,24 +4,34 @@ import FeaturesSection from "./FeatureCards";
 import Showreel from "./Showreel";
 import Table from "./Table";
 import ProductionShowcase from "./ProductionShowcase";
-// import CTA from "./CTA";
 import Explore from "./Explore";
 import FAQ from "./FAQ";
+import Reveal from "../Global/Reveal";
 
 export default function Homepage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <main>
         <MainSec />
-        <JointPain />
-        <FeaturesSection />
+        <Reveal>
+          <JointPain />
+        </Reveal>
+        <Reveal>
+          <FeaturesSection />
+        </Reveal>
         <Showreel />
-        <Table />
-        <ProductionShowcase />
-        {/* <CTA /> */}
-        
-        <Explore />
-        <FAQ />
+        <Reveal>
+          <Table />
+        </Reveal>
+        <Reveal>
+          <ProductionShowcase />
+        </Reveal>
+        <Reveal>
+          <Explore />
+        </Reveal>
+        <Reveal>
+          <FAQ />
+        </Reveal>
       </main>
     </div>
   );

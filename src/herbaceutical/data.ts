@@ -62,10 +62,8 @@ export const theme: RangeTheme = {
   accentSoft: "#FCF8F2",
   bg: "#fbf3e5",
   border: "#8a5a2b",
-  heroImage:
-    "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=1800&q=80",
-  overlay:
-    "linear-gradient(105deg, rgba(251,243,229,0.97) 0%, rgba(251,243,229,0.92) 38%, rgba(251,243,229,0.55) 62%, rgba(251,243,229,0.18) 82%, rgba(251,243,229,0.05) 100%)",
+  heroImage: "/Generated/rd-lab-bench.png",
+  overlay: "rgba(251,243,229,0.92)",
 };
 
 const rawCatalog: RawCategory[] = [

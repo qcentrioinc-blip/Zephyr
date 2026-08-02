@@ -57,15 +57,13 @@ function buildCategories(raw: RawCategory[]): FormulaCategory[] {
 
 export const theme: RangeTheme = {
   title: "Nutraceutical Products",
-  subtitle: "Science. Nutrition. Wellness partnerships.",
+  subtitle: "Science. Nutrition. Private label partnerships.",
   accent: "#4AA3A7",
   accentSoft: "#E9F6F7",
   bg: "#edf6fb",
   border: "#2f6f8f",
-  heroImage:
-    "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1800&q=80",
-  overlay:
-    "linear-gradient(105deg, rgba(237,246,251,0.97) 0%, rgba(237,246,251,0.92) 38%, rgba(237,246,251,0.55) 62%, rgba(237,246,251,0.18) 82%, rgba(237,246,251,0.05) 100%)",
+  heroImage: "/Generated/production-compression.png",
+  overlay: "rgba(237,246,251,0.92)",
 };
 
 const rawCatalog: RawCategory[] = [

@@ -17,7 +17,7 @@ const ITEMS: ExploreItem[] = [
   {
     title: "Herbaceutical",
     description:
-      "Pure botanical formulations crafted to promote natural wellness, immunity, and holistic health.",
+      "Botanical formulas for private label wellness, immunity, and holistic health brands.",
     image: "/Homepage/Organic.png",
     color: "bg-[#C38046]",
     borderColor: "#C38046",
@@ -27,7 +27,7 @@ const ITEMS: ExploreItem[] = [
   {
     title: "Nutraceutical",
     description:
-      "Science-backed vitamins, minerals, and supplements designed to support optimal health and daily nutrition.",
+      "Science-backed vitamins, minerals, and dietary supplements for everyday nutrition brands.",
     image: "/Homepage/Nutra.png",
     color: "bg-[#4AA3A7]",
     borderColor: "#4AA3A7",
@@ -37,7 +37,7 @@ const ITEMS: ExploreItem[] = [
   {
     title: "Organic",
     description:
-      "Innovative blends of herbal extracts and nutritional science for targeted health and enhanced well-being.",
+      "Organic-focused formulas and clean-label manufacturing for health and wellness brands.",
     image: "/Homepage/Herbal.png",
     color: "bg-[#547A3D]",
     borderColor: "#547A3D",

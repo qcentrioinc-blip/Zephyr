@@ -13,13 +13,13 @@ export default function Table() {
           </H2>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:gap-4 lg:grid-cols-[1.02fr_1.02fr_1fr] lg:gap-6">
+        <div className="grid grid-cols-1 items-stretch gap-3 md:gap-4 lg:grid-cols-[1.02fr_1.02fr_1fr] lg:gap-6">
           {/* Left Card */}
           <div className="relative flex min-h-0 flex-col justify-between rounded-[14px] bg-[#F7F8F2] px-4 py-5 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)] sm:py-6 md:px-7 md:py-8 lg:min-h-[480px]">
             <H4 className="max-w-full md:p-2">
-              5 billion tablets, 100 million capsules, 60 million sachets and 1
-              million jars per month — engineered for partners who need reliable
-              scale without compromising quality.
+              5 billion tablets, 100 million capsules, 60 million sachets, and 1
+              million jars per month. Built for partners who need reliable scale
+              without compromising quality.
             </H4>
 
             <div className="flex items-end justify-between gap-4 pt-4 md:pt-6">
@@ -50,16 +50,16 @@ export default function Table() {
             />
           </div>
 
-          {/* Right Cards */}
-          <div className="flex flex-col gap-3 lg:min-h-[480px]">
-            <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:px-7 md:py-6">
+          {/* Right Cards — even spacing, no stretch gap */}
+          <div className="flex flex-col gap-3 lg:h-full lg:justify-between">
+            <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:flex-1 md:px-7 md:py-6">
               <H1 className="text-[#000000]">65K sq ft</H1>
               <P className="mt-2 max-w-full sm:mt-3 xl:max-w-[290px]">
                 Production facility and laboratories for partner manufacturing.
               </P>
             </div>
 
-            <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:px-7 md:py-6">
+            <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:flex-1 md:px-7 md:py-6">
               <H1 className="text-[#000000]">3 ranges</H1>
               <P className="mt-2 max-w-full sm:mt-3 xl:max-w-[290px]">
                 Nutraceutical, Herbaceutical and Organic custom formulations.
@@ -68,7 +68,7 @@ export default function Table() {
 
             <Link
               to="/contact"
-              className="mt-auto flex h-[64px] items-center justify-between rounded-[14px] bg-[#113227] px-4 text-left text-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition-transform duration-200 hover:translate-y-[4px] sm:h-[72px] sm:px-5 md:h-[88px] md:px-7 lg:h-[100px]"
+              className="flex h-[64px] shrink-0 items-center justify-between rounded-[14px] bg-[#113227] px-4 text-left text-white shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition-transform duration-200 hover:translate-y-[4px] sm:h-[72px] sm:px-5 md:h-[88px] md:flex-1 md:min-h-[88px] md:px-7 lg:h-auto lg:min-h-[100px]"
             >
               <span className="text-[16px] font-normal tracking-normal sm:text-[18px] md:text-[21px]">
                 Enquire / MOQ

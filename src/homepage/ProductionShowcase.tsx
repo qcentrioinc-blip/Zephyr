@@ -84,8 +84,8 @@ export default function ProductionShowcase() {
         >
           <H2 className="text-black">Formats built for brand partners</H2>
           {/* <P className="mx-auto mt-3 max-w-2xl text-gray-600">
-            From dosage forms to finished packaging — flexible manufacturing
-            options ready for private-label and contract scale.
+            From dosage forms to finished packaging. Flexible manufacturing
+            options ready for private label and contract scale.
           </P> */}
         </motion.div>
 
