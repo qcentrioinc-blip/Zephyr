@@ -15,6 +15,7 @@ import Navbar from './Global/Navbar'
 import NewFooter from './Global/NewFooter'
 import Breadcrumbs from './Global/Breadcrumbs'
 import ScrollToTop from './Global/ScrollToTop'
+import ScrollToTopButton from './Global/ScrollToTopButton'
 import Seo from './Global/Seo'
 
 const Homepage = lazy(() => import('./homepage/Homepage'))
@@ -42,13 +43,16 @@ function RouteFallback() {
 function RouteReady({
   children,
   onReady,
+  onPending,
 }: {
   children: ReactNode
   onReady: () => void
+  onPending: () => void
 }) {
   useLayoutEffect(() => {
     onReady()
-  }, [onReady])
+    return () => onPending()
+  }, [onReady, onPending])
 
   return <>{children}</>
 }
@@ -65,15 +69,17 @@ function AppContent() {
     }
   }, [])
 
-  // Hide footer and reset scroll as soon as the route changes (before lazy chunk lands)
   useLayoutEffect(() => {
-    setContentReady(false)
     window.scrollTo(0, 0)
   }, [pathname])
 
   const markReady = useCallback(() => {
     setContentReady(true)
     window.scrollTo(0, 0)
+  }, [])
+
+  const markPending = useCallback(() => {
+    setContentReady(false)
   }, [])
 
   return (
@@ -90,7 +96,11 @@ function AppContent() {
         />
       )}
       <Suspense fallback={<RouteFallback />}>
-        <RouteReady key={pathname} onReady={markReady}>
+        <RouteReady
+          key={pathname}
+          onReady={markReady}
+          onPending={markPending}
+        >
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/research" element={<Research />} />
@@ -104,6 +114,7 @@ function AppContent() {
         </RouteReady>
       </Suspense>
       {!hideFooter && contentReady && <NewFooter />}
+      <ScrollToTopButton />
     </div>
   )
 }
