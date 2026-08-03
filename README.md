@@ -17,7 +17,8 @@ Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/I
 
 | Command | Purpose |
 |---------|---------|
-| `npm run dev` | Local development server |
+| `npm run dev` | Vite SPA + local `/api/send-otp` and `/api/verify-otp` (loads `.env`) |
+| `npx vercel dev` | Optional: same stack via Vercel CLI (closer to production) |
 | `npm run build` | Typecheck (`tsc -b`) + production build |
 | `npm run preview` | Preview the production build |
 | `npm run lint` | ESLint |
@@ -31,7 +32,7 @@ Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/I
 | `/research` | R&D / NPD — pilot, stability, commercial transfer |
 | `/production` | Facilities, QA/QC, process, partner advantage |
 | `/gallery` | Facility & equipment photo gallery |
-| `/contact` | Manufacturing inquiry form (UI only; no email backend yet) |
+| `/contact` | Manufacturing inquiry — company email OTP, then EmailJS enquiry |
 | `/herbaceutical` | Botanical formula catalog |
 | `/nutraceutical` | Dietary supplement formula catalog |
 | `/organic` | Organic / clean-label formula catalog |
@@ -88,16 +89,40 @@ If the live domain is not `https://zephyr.vercel.app`, update:
 - Connect the Git repo to Vercel
 - Build command: `npm run build`
 - Output directory: `dist`
-- SPA rewrites are already in `vercel.json`
-- **Contact form (EmailJS)** — set these Environment Variables in the Vercel project (same names as local `.env`):
-  - `VITE_EMAILJS_SERVICE_ID`
-  - `VITE_EMAILJS_TEMPLATE_ID`
-  - `VITE_EMAILJS_PUBLIC_KEY`
-- Local setup: copy `.env.example` → `.env` and fill in the three values, then restart `npm run dev`
+- SPA rewrites in `vercel.json` exclude `/api/*` so serverless OTP routes work
+- Copy `.env.example` → `.env` locally; add the **same** keys in the Vercel project → Settings → Environment Variables, then **redeploy**
+
+### Contact form env vars
+
+| Variable | Where used | Notes |
+|----------|------------|--------|
+| `VITE_EMAILJS_SERVICE_ID` | Browser enquiry + OTP API fallback | EmailJS service |
+| `VITE_EMAILJS_TEMPLATE_ID` | Browser enquiry only | Inquiry template |
+| `VITE_EMAILJS_PUBLIC_KEY` | Browser enquiry + OTP API fallback | Public key |
+| `EMAILJS_OTP_TEMPLATE_ID` | `/api/send-otp` | Params: `{{OTP}}` / `{{otp}}`, `{{time}}`, `{{email}}` (To Email = `{{email}}`) |
+| `EMAILJS_SERVICE_ID` | Optional server override | Defaults to `VITE_EMAILJS_SERVICE_ID` |
+| `EMAILJS_PUBLIC_KEY` | Optional server override | Defaults to `VITE_EMAILJS_PUBLIC_KEY` |
+| `EMAILJS_PRIVATE_KEY` | `/api/send-otp` | **Required** when EmailJS Security uses API strict mode (Account → General → API keys → Private Key) |
+
+**EmailJS Account → Security:** turn on **API requests from non-browser / Node.js**. If strict mode is on, also set `EMAILJS_PRIVATE_KEY`.
+| `UPSTASH_REDIS_REST_URL` | OTP APIs | Upstash REST URL — **no** `VITE_` prefix |
+| `UPSTASH_REDIS_REST_TOKEN` | OTP APIs | Upstash REST token — **no** `VITE_` prefix |
+| `OTP_SECRET` | OTP APIs | Long random HMAC secret — **no** `VITE_` prefix |
+
+Never commit `.env`. Do not expose Redis token or `OTP_SECRET` to the client.
+
+### Contact OTP flow
+
+1. User submits details (company email required) on step 1; OTP is verified on the same step.
+2. `POST /api/send-otp` validates email, rate-limits, stores a hashed 6-digit OTP in Upstash (10 min TTL), emails the code via EmailJS OTP template.
+3. User enters the code on step 1 → `POST /api/verify-otp` (attempt limits) marks the email verified in Redis.
+4. Client then sends the existing enquiry EmailJS template and advances to step 2 (confirmation).
+
+Local OTP APIs run under `npm run dev` via a Vite middleware plugin (`vite-otp-api.plugin.ts`). Production still uses Vercel `/api` serverless functions.
 
 ## Project notes for team & client
 
-- Contact form submits via EmailJS to the configured inbox; FAQ side note is still local-only UI
+- Contact form: EmailJS OTP verify, then EmailJS enquiry to the configured inbox; FAQ side note is still local-only UI
 - Organic catalog currently mirrors Herbaceutical formula lists by design (leave until unique SKUs are provided)
 - Do not relocate component folders casually; MainSec layout/animations are sensitive — prefer copy-only edits there
 - Production “Stats” block stays commented unless product asks to restore it

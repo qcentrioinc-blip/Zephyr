@@ -46,9 +46,22 @@ type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2;
 
 const STEP_LABELS: Record<Step, string> = {
-  1: "Details & brief",
+  1: "Inquiry",
   2: "Confirmation",
 };
+
+async function postJson<T>(
+  url: string,
+  body: Record<string, unknown>
+): Promise<{ ok: boolean; status: number; data: T }> {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = (await res.json().catch(() => ({}))) as T;
+  return { ok: res.ok, status: res.status, data };
+}
 
 const Content = () => {
   const [params] = useSearchParams();
@@ -63,6 +76,9 @@ const Content = () => {
     subject: params.get("subject") ?? "",
     message: params.get("message") ?? "",
   });
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [verifiedEmail, setVerifiedEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [formError, setFormError] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -70,6 +86,9 @@ const Content = () => {
   const resetForm = () => {
     setStatus("idle");
     setStep(1);
+    setOtp("");
+    setOtpSent(false);
+    setVerifiedEmail("");
     setEmailError("");
     setFormError("");
     setForm({
@@ -83,29 +102,31 @@ const Content = () => {
     });
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const validateDetails = (): boolean => {
     setFormError("");
     setEmailError("");
 
     if (!form.firstName.trim() || !form.phone.trim()) {
       setFormError("Please complete your name and phone to continue.");
       setStatus("error");
-      return;
+      return false;
     }
     if (!isCompanyEmail(form.email)) {
       setEmailError(
         "Please use a company email address. Free domains (Gmail, Yahoo, Outlook, etc.) are not accepted."
       );
       setStatus("error");
-      return;
+      return false;
     }
     if (!form.subject.trim()) {
       setFormError("Please add a subject for your inquiry.");
       setStatus("error");
-      return;
+      return false;
     }
+    return true;
+  };
 
+  const sendEnquiry = async () => {
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -118,32 +139,100 @@ const Content = () => {
       return;
     }
 
+    await emailjs.send(
+      serviceId,
+      templateId,
+      {
+        subject: form.subject,
+        first_name: form.firstName,
+        last_name: form.lastName,
+        company: form.company || "—",
+        email: form.email,
+        phone: form.phone,
+        message: form.message || "—",
+      },
+      { publicKey }
+    );
+    setStatus("success");
+    setStep(2);
+  };
+
+  const requestOtp = async () => {
+    if (!validateDetails()) return;
+
     setStatus("loading");
+    setFormError("");
     try {
-      await emailjs.send(
-        serviceId,
-        templateId,
+      const { ok, data } = await postJson<{ error?: string }>(
+        "/api/send-otp",
         {
-          subject: form.subject,
-          first_name: form.firstName,
-          last_name: form.lastName,
-          company: form.company || "—",
-          email: form.email,
-          phone: form.phone,
-          message: form.message || "—",
-        },
-        { publicKey }
+          email: form.email.trim(),
+          firstName: form.firstName.trim(),
+        }
       );
-      setStatus("success");
-      setStep(2);
+      if (!ok) {
+        setStatus("error");
+        setFormError(data.error || "Could not send verification code.");
+        return;
+      }
+      setOtp("");
+      setOtpSent(true);
+      setVerifiedEmail(form.email.trim().toLowerCase());
+      setStatus("idle");
     } catch {
       setStatus("error");
-      setFormError("Could not send your inquiry. Please try again.");
+      setFormError(
+        "Could not reach verification service. Please try again."
+      );
     }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!otpSent || verifiedEmail !== form.email.trim().toLowerCase()) {
+      await requestOtp();
+      return;
+    }
+
+    setFormError("");
+    if (!/^\d{6}$/.test(otp.trim())) {
+      setFormError("Enter the 6-digit verification code from your email.");
+      setStatus("error");
+      return;
+    }
+
+    setStatus("loading");
+    try {
+      const { ok, data } = await postJson<{ error?: string }>(
+        "/api/verify-otp",
+        {
+          email: form.email.trim(),
+          otp: otp.trim(),
+        }
+      );
+      if (!ok) {
+        setStatus("error");
+        setFormError(data.error || "Verification failed.");
+        return;
+      }
+
+      await sendEnquiry();
+    } catch {
+      setStatus("error");
+      setFormError("Could not verify or send your inquiry. Please try again.");
+    }
+  };
+
+  const handleResendOtp = async () => {
+    await requestOtp();
   };
 
   const fieldClass =
     "w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#11BB8A]/50 focus:bg-white/15 focus:ring-2 focus:ring-[#11BB8A]/20";
+
+  const showOtpField =
+    otpSent && verifiedEmail === form.email.trim().toLowerCase();
 
   return (
     <div className="relative min-h-[100dvh] w-full overflow-hidden bg-[#0d241c]">
@@ -169,7 +258,8 @@ const Content = () => {
             </p>
             <H2 className="text-white">Start a manufacturing inquiry</H2>
             <P className="mx-auto mt-3 max-w-md text-white/65">
-              Company email required. Share your brief and MOQ needs.
+              Company email required. We verify your email before sending your
+              brief.
             </P>
           </div>
 
@@ -199,7 +289,7 @@ const Content = () => {
             <AnimatePresence mode="wait">
               {step === 2 || status === "success" ? (
                 <motion.div
-                  key="step2"
+                  key="confirmation"
                   initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
@@ -273,8 +363,17 @@ const Content = () => {
                     type="email"
                     value={form.email}
                     onChange={(e) => {
-                      setForm((f) => ({ ...f, email: e.target.value }));
+                      const next = e.target.value;
+                      setForm((f) => ({ ...f, email: next }));
                       if (emailError) setEmailError("");
+                      if (
+                        otpSent &&
+                        next.trim().toLowerCase() !== verifiedEmail
+                      ) {
+                        setOtp("");
+                        setOtpSent(false);
+                        setVerifiedEmail("");
+                      }
                     }}
                     placeholder="Company email *"
                     className={fieldClass}
@@ -336,6 +435,41 @@ const Content = () => {
                     placeholder="Project brief — dosage format, estimated volumes / MOQ, target markets…"
                     className={`${fieldClass} resize-none`}
                   />
+
+                  {showOtpField && (
+                    <div className="space-y-3 rounded-2xl border border-[#11BB8A]/30 bg-[#11BB8A]/10 p-4">
+                      <p className="text-sm text-white/80">
+                        We sent a 6-digit code to{" "}
+                        <span className="font-medium text-white">
+                          {form.email.trim()}
+                        </span>
+                        . Enter it below to verify and send your inquiry.
+                      </p>
+                      <input
+                        required
+                        inputMode="numeric"
+                        autoComplete="one-time-code"
+                        pattern="\d{6}"
+                        maxLength={6}
+                        value={otp}
+                        onChange={(e) =>
+                          setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                        }
+                        placeholder="6-digit code *"
+                        className={`${fieldClass} tracking-[0.35em]`}
+                        aria-label="Verification code"
+                      />
+                      <button
+                        type="button"
+                        disabled={status === "loading"}
+                        onClick={handleResendOtp}
+                        className="text-sm text-[#9ad485] transition hover:text-[#b8e9a8] disabled:opacity-70"
+                      >
+                        Resend code
+                      </button>
+                    </div>
+                  )}
+
                   {formError && (
                     <p className="text-sm text-red-300">{formError}</p>
                   )}
@@ -344,7 +478,13 @@ const Content = () => {
                     disabled={status === "loading"}
                     className="mt-2 w-full rounded-full bg-[#11BB8A] py-3.5 text-sm font-semibold text-[#0d241c] transition hover:bg-[#14d09a] disabled:opacity-70"
                   >
-                    {status === "loading" ? "Sending…" : "Send inquiry"}
+                    {status === "loading"
+                      ? showOtpField
+                        ? "Verifying…"
+                        : "Sending code…"
+                      : showOtpField
+                        ? "Verify & send inquiry"
+                        : "Send verification code"}
                   </button>
                 </motion.form>
               )}
