@@ -1,35 +1,30 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { isCompanyEmail, normalizeEmail } from "./_lib/companyEmail";
-import { json, setCors } from "./_lib/http";
+import { isCompanyEmail, normalizeEmail } from "./_lib/companyEmail.js";
+import { json, setCors } from "./_lib/http.js";
 import {
   hashOtp,
   OTP_MAX_ATTEMPTS,
   OTP_VERIFIED_TTL_SECONDS,
   safeEqualHex,
-} from "./_lib/otp";
+} from "./_lib/otp.js";
 import {
   getRedis,
   otpCodeKey,
   otpVerifiedKey,
-  type OtpRecord,
-} from "./_lib/redis";
+} from "./_lib/redis.js";
 
-function readBody(req: VercelRequest): Record<string, unknown> {
+function readBody(req) {
   if (!req.body) return {};
   if (typeof req.body === "string") {
     try {
-      return JSON.parse(req.body) as Record<string, unknown>;
+      return JSON.parse(req.body);
     } catch {
       return {};
     }
   }
-  return req.body as Record<string, unknown>;
+  return req.body;
 }
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handler(req, res) {
   setCors(res);
 
   if (req.method === "OPTIONS") {
@@ -59,7 +54,7 @@ export default async function handler(
 
     const redis = getRedis();
     const codeKey = otpCodeKey(email);
-    const record = (await redis.get(codeKey)) as OtpRecord | null;
+    const record = await redis.get(codeKey);
 
     if (!record?.hash) {
       return json(res, 400, {
@@ -80,7 +75,7 @@ export default async function handler(
 
     if (!match) {
       const ttl = await redis.ttl(codeKey);
-      const next: OtpRecord = { hash: record.hash, attempts };
+      const next = { hash: record.hash, attempts };
       if (ttl > 0) {
         await redis.set(codeKey, next, { ex: ttl });
       } else {

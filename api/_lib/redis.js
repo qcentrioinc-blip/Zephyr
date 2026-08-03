@@ -1,8 +1,8 @@
 import { Redis } from "@upstash/redis";
 
-let redis: Redis | null = null;
+let redis = null;
 
-export function getRedis(): Redis {
+export function getRedis() {
   if (redis) return redis;
 
   const url = process.env["UPSTASH_REDIS_REST_URL"];
@@ -15,23 +15,18 @@ export function getRedis(): Redis {
   return redis;
 }
 
-export function otpCodeKey(email: string): string {
+export function otpCodeKey(email) {
   return `otp:code:${email}`;
 }
 
-export function otpRateKey(email: string): string {
+export function otpRateKey(email) {
   return `otp:rate:${email}`;
 }
 
-export function otpHourKey(email: string): string {
+export function otpHourKey(email) {
   return `otp:hour:${email}`;
 }
 
-export function otpVerifiedKey(email: string): string {
+export function otpVerifiedKey(email) {
   return `otp:verified:${email}`;
 }
-
-export type OtpRecord = {
-  hash: string;
-  attempts: number;
-};

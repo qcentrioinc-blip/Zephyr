@@ -82,14 +82,14 @@ export function otpApiDevPlugin(mode: string): Plugin {
 
           if (path === "/api/send-otp") {
             const { default: handler } = await server.ssrLoadModule(
-              "/api/send-otp.ts"
+              "/api/send-otp.js"
             );
             await handler(vercelReq, vercelRes);
             return;
           }
 
           const { default: handler } = await server.ssrLoadModule(
-            "/api/verify-otp.ts"
+            "/api/verify-otp.js"
           );
           await handler(vercelReq, vercelRes);
         } catch (err) {

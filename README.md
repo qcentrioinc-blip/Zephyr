@@ -118,7 +118,7 @@ Never commit `.env`. Do not expose Redis token or `OTP_SECRET` to the client.
 3. User enters the code on step 1 → `POST /api/verify-otp` (attempt limits) marks the email verified in Redis.
 4. Client then sends the existing enquiry EmailJS template and advances to step 2 (confirmation).
 
-Local OTP APIs run under `npm run dev` via a Vite middleware plugin (`vite-otp-api.plugin.ts`). Production still uses Vercel `/api` serverless functions.
+Local OTP APIs run under `npm run dev` via a Vite middleware plugin (`vite-otp-api.plugin.ts`). Production uses Vercel serverless functions as ESM JavaScript under `/api` (`.js`, not `.ts`) so they work with `"type": "module"`.
 
 ## Project notes for team & client
 

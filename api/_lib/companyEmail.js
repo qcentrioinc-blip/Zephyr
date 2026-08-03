@@ -22,11 +22,11 @@ const FREE_EMAIL_DOMAINS = new Set([
   "rediffmail.com",
 ]);
 
-export function normalizeEmail(email: string): string {
+export function normalizeEmail(email) {
   return email.trim().toLowerCase();
 }
 
-export function isCompanyEmail(email: string): boolean {
+export function isCompanyEmail(email) {
   const trimmed = normalizeEmail(email);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return false;
   const domain = trimmed.split("@")[1];

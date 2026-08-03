@@ -1,21 +1,12 @@
-import { OTP_TTL_SECONDS } from "./otp";
+import { OTP_TTL_SECONDS } from "./otp.js";
 
-type SendOtpEmailParams = {
-  toEmail: string;
-  otp: string;
-  firstName?: string;
-};
-
-export async function sendOtpEmail({
-  toEmail,
-  otp,
-  firstName,
-}: SendOtpEmailParams): Promise<void> {
-  // Bracket access — Vite SSR can statically replace process.env.VITE_* with undefined
+export async function sendOtpEmail({ toEmail, otp, firstName }) {
   const env = process.env;
-  const serviceId = env["EMAILJS_SERVICE_ID"] || env["VITE_EMAILJS_SERVICE_ID"];
+  const serviceId =
+    env["EMAILJS_SERVICE_ID"] || env["VITE_EMAILJS_SERVICE_ID"];
   const templateId = env["EMAILJS_OTP_TEMPLATE_ID"];
-  const publicKey = env["EMAILJS_PUBLIC_KEY"] || env["VITE_EMAILJS_PUBLIC_KEY"];
+  const publicKey =
+    env["EMAILJS_PUBLIC_KEY"] || env["VITE_EMAILJS_PUBLIC_KEY"];
   const privateKey = env["EMAILJS_PRIVATE_KEY"];
 
   if (!serviceId || !templateId || !publicKey) {
@@ -29,8 +20,7 @@ export async function sendOtpEmail({
     timeStyle: "short",
   });
 
-  // Keys must match EmailJS template vars exactly (case-sensitive): OTP, time, email
-  const templateParams: Record<string, string> = {
+  const templateParams = {
     OTP: otp,
     otp,
     passcode: otp,
@@ -40,7 +30,7 @@ export async function sendOtpEmail({
     first_name: firstName || "",
   };
 
-  const body: Record<string, unknown> = {
+  const body = {
     service_id: serviceId,
     template_id: templateId,
     user_id: publicKey,

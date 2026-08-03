@@ -1,38 +1,33 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { isCompanyEmail, normalizeEmail } from "./_lib/companyEmail";
-import { sendOtpEmail } from "./_lib/emailjs";
-import { json, setCors } from "./_lib/http";
+import { isCompanyEmail, normalizeEmail } from "./_lib/companyEmail.js";
+import { sendOtpEmail } from "./_lib/emailjs.js";
+import { json, setCors } from "./_lib/http.js";
 import {
   generateOtp,
   hashOtp,
   OTP_MAX_SENDS_PER_HOUR,
   OTP_RESEND_COOLDOWN_SECONDS,
   OTP_TTL_SECONDS,
-} from "./_lib/otp";
+} from "./_lib/otp.js";
 import {
   getRedis,
   otpCodeKey,
   otpHourKey,
   otpRateKey,
-  type OtpRecord,
-} from "./_lib/redis";
+} from "./_lib/redis.js";
 
-function readBody(req: VercelRequest): Record<string, unknown> {
+function readBody(req) {
   if (!req.body) return {};
   if (typeof req.body === "string") {
     try {
-      return JSON.parse(req.body) as Record<string, unknown>;
+      return JSON.parse(req.body);
     } catch {
       return {};
     }
   }
-  return req.body as Record<string, unknown>;
+  return req.body;
 }
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
+export default async function handler(req, res) {
   setCors(res);
 
   if (req.method === "OPTIONS") {
@@ -77,12 +72,11 @@ export default async function handler(
     }
 
     const otp = generateOtp();
-    const record: OtpRecord = {
+    const record = {
       hash: hashOtp(otp, email),
       attempts: 0,
     };
 
-    // Send first so a failed EmailJS call does not burn rate limits
     await sendOtpEmail({ toEmail: email, otp, firstName });
 
     await redis.set(otpCodeKey(email), record, { ex: OTP_TTL_SECONDS });
