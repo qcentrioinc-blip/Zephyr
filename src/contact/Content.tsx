@@ -5,6 +5,7 @@ import {
   AnimatePresence,
   useReducedMotion,
 } from "framer-motion";
+import emailjs from "@emailjs/browser";
 import { Home } from "lucide-react";
 import { H2, H3, P } from "../Global/Typography/Typo";
 import CelebrationBurst from "../Global/CelebrationBurst";
@@ -105,17 +106,47 @@ const Content = () => {
       return;
     }
 
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setFormError(
+        "Email service is not configured. Please try again later."
+      );
+      setStatus("error");
+      return;
+    }
+
     setStatus("loading");
-    await new Promise((r) => setTimeout(r, 900));
-    setStatus("success");
-    setStep(2);
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          subject: form.subject,
+          first_name: form.firstName,
+          last_name: form.lastName,
+          company: form.company || "—",
+          email: form.email,
+          phone: form.phone,
+          message: form.message || "—",
+        },
+        { publicKey }
+      );
+      setStatus("success");
+      setStep(2);
+    } catch {
+      setStatus("error");
+      setFormError("Could not send your inquiry. Please try again.");
+    }
   };
 
   const fieldClass =
     "w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#11BB8A]/50 focus:bg-white/15 focus:ring-2 focus:ring-[#11BB8A]/20";
 
   return (
-    <div className="relative min-h-[calc(100vh-5rem)] w-full overflow-hidden bg-[#0d241c]">
+    <div className="relative min-h-[100dvh] w-full overflow-hidden bg-[#0d241c]">
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
@@ -130,16 +161,16 @@ const Content = () => {
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
       />
 
-      <div className="zephyr-container relative z-10 flex min-h-[calc(100vh-5rem)] items-center py-16 sm:py-20">
+      <div className="zephyr-container relative z-10 flex min-h-[100dvh] items-start justify-center pt-[calc(var(--zephyr-nav-h)+1.5rem)] pb-12 sm:items-center sm:py-16 sm:pt-[calc(var(--zephyr-nav-h)+2rem)]">
         <div className="mx-auto w-full max-w-xl">
           <div className="mb-8 text-center">
-            {/* <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#9ad485]">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#9ad485]">
               Get in touch
-            </p> */}
+            </p>
             <H2 className="text-white">Start a manufacturing inquiry</H2>
-            {/* <P className="mx-auto mt-3 max-w-md text-white/65">
-              A two-step partnership form. Company email required.
-            </P> */}
+            <P className="mx-auto mt-3 max-w-md text-white/65">
+              Company email required. Share your brief and MOQ needs.
+            </P>
           </div>
 
           <div className="rounded-[32px] border border-white/15 bg-white/10 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8">

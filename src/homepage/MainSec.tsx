@@ -11,8 +11,8 @@ const products = [
       "Private label and contract manufacturing for botanical dietary supplements. From formula brief and MOQ planning to finished tablets, capsules, and specialty dosages for US brand launches.",
     color: "#FFA43D",
     image: "/herbal.webp",
-    buttonText: "View formulas",
-    link: "/herbaceutical",
+    buttonText: "Request MOQ",
+    link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Herbaceutical")}`,
   },
   {
     id: 2,
@@ -21,8 +21,8 @@ const products = [
       "Turnkey manufacturing for vitamins, minerals, and specialty dietary supplements. Flexible dosage forms, finished goods packaging, and practical MOQ support for US brand owners.",
     color: "#247D7D",
     image: "/nuetra.webp",
-    buttonText: "View formulas",
-    link: "/nutraceutical",
+    buttonText: "Request MOQ",
+    link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Nutraceutical")}`,
   },
   {
     id: 3,
@@ -31,8 +31,8 @@ const products = [
       "Organic and clean-label supplement manufacturing for US markets. Private label support from early formulation through finished goods packaging and commercial production.",
     color: "#3FB369",
     image: "/organic.webp",
-    buttonText: "View formulas",
-    link: "/organic",
+    buttonText: "Request MOQ",
+    link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Organic")}`,
   },
 ];
 
@@ -263,7 +263,7 @@ const MainSec: React.FC = () => {
         </div>
 
         {/* Description */}
-        <div className="mt-4 sm:mt-5 md:mt-6 max-w-xl xl:max-w-md mx-auto lg:mx-0 text-center lg:text-left">
+        <div className="relative z-30 mt-4 sm:mt-5 md:mt-6 max-w-xl xl:max-w-md mx-auto lg:mx-0 text-center lg:text-left">
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={`desc-${product.id}`}

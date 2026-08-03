@@ -35,7 +35,7 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative w-full bg-white">
-      <div className="zephyr-container pt-28 pb-0 xl:pt-24">
+      <div className="zephyr-container pt-10 pb-0 sm:pt-12 xl:pt-10">
         <Reveal className="mx-auto mb-8 max-w-4xl text-center sm:mb-10 lg:mb-12">
           <H1 className="mb-4 sm:mb-5">R&D and New Product Development</H1>
           <P className="mx-auto max-w-2xl">

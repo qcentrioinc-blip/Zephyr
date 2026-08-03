@@ -398,13 +398,34 @@ const Navbar = () => {
       className="fixed top-0 z-[100] w-full px-4 py-2 sm:px-6 lg:px-8"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        {/* LEFT: logo */}
-        <Link to="/" className="flex shrink-0 items-center">
+        {/* LEFT: logo — pharmaceutical capsule halo (sized to match dock pill) */}
+        <Link
+          to="/"
+          className="group/logo relative z-10 flex shrink-0 items-center px-2.5 py-1.5"
+          aria-label="Zephyr home"
+        >
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-0 overflow-hidden rounded-full"
+          >
+            {/* Capsule body (dosage-form silhouette) */}
+            <span className="absolute inset-[1px] rounded-full bg-white shadow-[0_1px_10px_rgba(17,50,39,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#11BB8A]/25" />
+            {/* Soft clinical glow */}
+            <span
+              className={`absolute -inset-0.5 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(17,187,138,0.16)_0%,transparent_68%)] ${
+                reduceMotion ? '' : 'zephyr-logo-capsule-pulse'
+              }`}
+            />
+            {/* Sterile glass light sweep */}
+            {!reduceMotion && (
+              <span className="zephyr-logo-capsule-sheen absolute inset-0 rounded-full" />
+            )}
+          </span>
           <motion.img
             src="/Global/Logo.png"
             alt="Zephyr Logo"
             transition={{ duration: 0.25, ease: EASE_PREMIUM }}
-            className="h-10 w-auto object-contain sm:h-12 md:h-14"
+            className="relative z-10 h-9 w-auto object-contain sm:h-10"
           />
         </Link>
 

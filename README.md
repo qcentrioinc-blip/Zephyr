@@ -89,11 +89,15 @@ If the live domain is not `https://zephyr.vercel.app`, update:
 - Build command: `npm run build`
 - Output directory: `dist`
 - SPA rewrites are already in `vercel.json`
-- No server env vars required for the current static inquiry UI
+- **Contact form (EmailJS)** — set these Environment Variables in the Vercel project (same names as local `.env`):
+  - `VITE_EMAILJS_SERVICE_ID`
+  - `VITE_EMAILJS_TEMPLATE_ID`
+  - `VITE_EMAILJS_PUBLIC_KEY`
+- Local setup: copy `.env.example` → `.env` and fill in the three values, then restart `npm run dev`
 
 ## Project notes for team & client
 
-- Contact and FAQ side forms simulate success locally; wire a real intake (Formspree, API, or CRM) when ready
+- Contact form submits via EmailJS to the configured inbox; FAQ side note is still local-only UI
 - Organic catalog currently mirrors Herbaceutical formula lists by design (leave until unique SKUs are provided)
 - Do not relocate component folders casually; MainSec layout/animations are sensitive — prefer copy-only edits there
 - Production “Stats” block stays commented unless product asks to restore it

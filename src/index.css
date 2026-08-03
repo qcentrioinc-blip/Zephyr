@@ -1,18 +1,21 @@
-/* Fixed navbar height (logo + py-2) — keep Breadcrumbs / sticky toolbars aligned */
+/* Fixed header stack (navbar [+ breadcrumbs]) — keep page spacers / sticky toolbars aligned */
 :root {
-  --zephyr-nav-h: 3.5rem; /* mobile: h-10 + py-2 */
-  --zephyr-crumb-h: 2.625rem;
+  /* Nav py-2 (1rem) + logo h-9 with link py-1.5 (~3rem) */
+  --zephyr-nav-h: 4rem;
+  /* Breadcrumb py-2.5 + text line */
+  --zephyr-crumb-h: 2.5rem;
 }
 
 @media (min-width: 640px) {
   :root {
-    --zephyr-nav-h: 4rem; /* sm: h-12 + py-2 */
+    /* Nav py-2 + logo h-10 with link py-1.5 */
+    --zephyr-nav-h: 4.25rem;
   }
 }
 
 @media (min-width: 768px) {
   :root {
-    --zephyr-nav-h: 4.5rem; /* md+: h-14 + py-2 */
+    --zephyr-nav-h: 4.25rem;
   }
 }
 
@@ -39,6 +42,58 @@ p {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Navbar logo — clinical capsule halo (pharma dosage-form cue) */
+@keyframes zephyr-logo-capsule-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes zephyr-logo-capsule-sheen {
+  0% {
+    transform: translateX(-120%) skewX(-18deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.55;
+  }
+  42% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(140%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.zephyr-logo-capsule-pulse {
+  animation: zephyr-logo-capsule-pulse 4.5s ease-in-out infinite;
+}
+
+.zephyr-logo-capsule-sheen {
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.75) 48%,
+    rgba(17, 187, 138, 0.12) 52%,
+    transparent 65%
+  );
+  animation: zephyr-logo-capsule-sheen 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zephyr-logo-capsule-pulse,
+  .zephyr-logo-capsule-sheen {
+    animation: none;
   }
 }
 

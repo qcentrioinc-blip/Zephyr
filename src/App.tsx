@@ -1,4 +1,12 @@
-import { Suspense, lazy } from 'react'
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  type ReactNode,
+} from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './App.css'
@@ -21,7 +29,7 @@ const OrganicPage = lazy(() => import('./organic/OrganicPage'))
 function RouteFallback() {
   return (
     <div
-      className="flex min-h-[50vh] items-center justify-center bg-white text-sm text-gray-500"
+      className="flex min-h-[100dvh] items-center justify-center bg-white text-sm text-gray-500"
       role="status"
       aria-live="polite"
     >
@@ -30,29 +38,72 @@ function RouteFallback() {
   )
 }
 
+/** Marks the lazy route as committed so chrome like the footer can show. */
+function RouteReady({
+  children,
+  onReady,
+}: {
+  children: ReactNode
+  onReady: () => void
+}) {
+  useLayoutEffect(() => {
+    onReady()
+  }, [onReady])
+
+  return <>{children}</>
+}
+
 function AppContent() {
   const { pathname } = useLocation()
   const hideFooter = pathname === '/contact'
+  const showCrumbs = pathname !== '/' && pathname !== '/contact'
+  const [contentReady, setContentReady] = useState(false)
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+  }, [])
+
+  // Hide footer and reset scroll as soon as the route changes (before lazy chunk lands)
+  useLayoutEffect(() => {
+    setContentReady(false)
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  const markReady = useCallback(() => {
+    setContentReady(true)
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
-    <div className="relative">
+    <div className="relative min-h-[100dvh]">
       <Seo />
       <ScrollToTop />
       <Navbar />
       <Breadcrumbs />
+      {/* Only pages with breadcrumbs need a spacer; home keeps nav overlay on the hero */}
+      {showCrumbs && (
+        <div
+          aria-hidden="true"
+          className="h-[calc(var(--zephyr-nav-h)+var(--zephyr-crumb-h))]"
+        />
+      )}
       <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/research" element={<Research />} />
-          <Route path="/production" element={<Production />} />
-          <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/herbaceutical" element={<HerbaceuticalPage />} />
-          <Route path="/nutraceutical" element={<NutraceuticalPage />} />
-          <Route path="/organic" element={<OrganicPage />} />
-        </Routes>
+        <RouteReady key={pathname} onReady={markReady}>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/research" element={<Research />} />
+            <Route path="/production" element={<Production />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/herbaceutical" element={<HerbaceuticalPage />} />
+            <Route path="/nutraceutical" element={<NutraceuticalPage />} />
+            <Route path="/organic" element={<OrganicPage />} />
+          </Routes>
+        </RouteReady>
       </Suspense>
-      {!hideFooter && <NewFooter />}
+      {!hideFooter && contentReady && <NewFooter />}
     </div>
   )
 }

@@ -34,7 +34,7 @@ const features: Feature[] = [
   },
   {
     title: "Global Partnerships",
-    desc: "India · Spain · USA",
+    desc: "· USA",
     Icon: Globe2,
   },
   {

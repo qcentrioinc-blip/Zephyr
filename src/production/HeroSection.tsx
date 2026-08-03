@@ -20,7 +20,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[#0d241c]/55" />
       </div>
 
-      <div className="zephyr-container relative z-10 pb-16 pt-28 sm:pt-32 lg:pb-20 lg:pt-36">
+      <div className="zephyr-container relative z-10 pb-16 pt-10 sm:pt-12 lg:pb-20 lg:pt-14">
         <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
