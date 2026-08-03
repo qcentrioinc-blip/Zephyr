@@ -37,7 +37,7 @@ function FormulaCard({ item, category, enquireHref }: FormulaCardProps) {
           className="mt-auto inline-flex w-full items-center justify-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-white transition hover:opacity-90"
           style={{ backgroundColor: theme.accent }}
         >
-          Enquire / MOQ
+          Request MOQ
           <Send className="h-3 w-3" />
         </Link>
       </div>
@@ -174,7 +174,7 @@ export default function FormulaCatalog() {
 
   const enquireHref = (formula: string, category: string) =>
     `/contact?subject=${encodeURIComponent(
-      `MOQ enquiry - ${theme.title}: ${category}`
+      `MOQ inquiry - ${theme.title}: ${category}`
     )}&message=${encodeURIComponent(
       `I would like to enquire about manufacturing / MOQ for:\n${formula}\n\nRange: ${theme.title}\nCategory: ${category}`
     )}`;
@@ -201,7 +201,7 @@ export default function FormulaCatalog() {
               className="mb-3 text-sm font-semibold uppercase tracking-[0.14em]"
               style={{ color: theme.accent }}
             >
-              Product range · Private label & custom formulations
+              Private label & contract manufacturing catalog
             </P>
             <H1 className="max-w-3xl text-gray-900">{theme.title}</H1>
             <P className="mt-4 max-w-2xl text-gray-800" style={{ color: theme.border }}>
@@ -221,7 +221,7 @@ export default function FormulaCatalog() {
                 {totalFormulas} formulas
               </span>
               <span className="font-medium text-gray-700">
-                MOQ & manufacturing on enquiry · No retail pricing
+                MOQ & manufacturing on inquiry · No retail pricing
               </span>
             </div>
           </div>
@@ -337,12 +337,12 @@ export default function FormulaCatalog() {
               </P>
               <Link
                 to={`/contact?subject=${encodeURIComponent(
-                  `Partnership enquiry - ${theme.title}`
+                  `Partnership inquiry - ${theme.title}`
                 )}`}
                 className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
                 style={{ backgroundColor: theme.accent }}
               >
-                Enquire about this range
+                Request range MOQ
                 <Send className="h-3.5 w-3.5" />
               </Link>
             </div>

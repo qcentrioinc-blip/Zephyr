@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: "Do you support custom formulations and MOQ projects?",
-    a: "Yes. Zephyr co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Get in Touch and our team will advise.",
+    a: "Yes. Zephyr co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Contact and our team will advise.",
   },
   {
     q: "Which dosage formats and packaging options do you offer?",

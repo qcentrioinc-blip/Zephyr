@@ -39,7 +39,7 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const IMG = "/Homepage/NutraBottle.png";
+const IMG = "/Homepage/NutraBottle.webp";
 const CATEGORY_IMAGE = IMG;
 const f = (formula: string): RawFormula => ({ formula, image: IMG });
 
@@ -59,7 +59,7 @@ function buildCategories(raw: RawCategory[]): FormulaCategory[] {
 
 export const theme: RangeTheme = {
   title: "Nutraceutical Products",
-  subtitle: "Science. Nutrition. Private label partnerships.",
+  subtitle: "Dietary supplement manufacturing for private-label partners",
   accent: "#4AA3A7",
   accentSoft: "#E9F6F7",
   bg: "#edf6fb",

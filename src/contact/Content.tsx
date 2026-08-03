@@ -100,7 +100,7 @@ const Content = () => {
       return;
     }
     if (!form.subject.trim()) {
-      setFormError("Please add a subject for your enquiry.");
+      setFormError("Please add a subject for your inquiry.");
       setStatus("error");
       return;
     }
@@ -124,7 +124,7 @@ const Content = () => {
         }}
       />
       <img
-        src="/Production/production-hero-wide.png"
+        src="/Production/production-hero-wide.webp"
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"
@@ -136,7 +136,7 @@ const Content = () => {
             {/* <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#9ad485]">
               Get in touch
             </p> */}
-            <H2 className="text-white">Start a manufacturing enquiry</H2>
+            <H2 className="text-white">Start a manufacturing inquiry</H2>
             {/* <P className="mx-auto mt-3 max-w-md text-white/65">
               A two-step partnership form. Company email required.
             </P> */}
@@ -180,7 +180,7 @@ const Content = () => {
                   <CelebrationBurst reduceMotion={reduceMotion} />
                   <H3 className="text-white">Enquiry received</H3>
                   <P className="mx-auto mt-3 max-w-sm text-white/70">
-                    Thank you for contacting Zephyr. Your manufacturing enquiry
+                    Thank you for contacting Zephyr. Your manufacturing inquiry
                     has been received. Our team will follow up on your company
                     email within one to two business days.
                   </P>
@@ -266,7 +266,7 @@ const Content = () => {
                           phone: e.target.value,
                         }))
                       }
-                      placeholder="Mobile *"
+                      placeholder="Phone *"
                       className={fieldClass}
                     />
                     <input
@@ -313,7 +313,7 @@ const Content = () => {
                     disabled={status === "loading"}
                     className="mt-2 w-full rounded-full bg-[#11BB8A] py-3.5 text-sm font-semibold text-[#0d241c] transition hover:bg-[#14d09a] disabled:opacity-70"
                   >
-                    {status === "loading" ? "Sending…" : "Send enquiry"}
+                    {status === "loading" ? "Sending…" : "Send inquiry"}
                   </button>
                 </motion.form>
               )}

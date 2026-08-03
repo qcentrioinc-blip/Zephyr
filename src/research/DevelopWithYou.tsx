@@ -13,7 +13,7 @@ import { H2, H3, P } from "../Global/Typography/Typo";
 import Reveal from "../Global/Reveal";
 
 const intro =
-  "Zephyr works closely with customers to develop successful products. We start with market-led concept formulas, run pilot trials, complete validation work, and transfer programs into full-scale manufacturing.";
+  "Zephyr works closely with customers to move concepts to commercial manufacturing. We start with market-led concept formulas, run pilot trials, complete validation work, and transfer programs into full-scale production.";
 
 const capabilities = [
   { title: "Pilot facility & labs", detail: "Fully equipped small-scale pilot facility and development laboratories.", icon: FlaskConical },
@@ -35,7 +35,7 @@ export default function DevelopWithYou() {
           <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]">
             Partner development
           </p>
-          <H2>How Zephyr develops with you</H2>
+          <H2>Development-to-manufacturing transfer</H2>
           <P className="mt-3 text-gray-600">{intro}</P>
         </Reveal>
 

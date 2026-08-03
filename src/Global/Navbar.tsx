@@ -20,7 +20,7 @@ const NAV_LINKS: NavLinkItem[] = [
   { name: 'R & D', path: '/research' },
   { name: 'Production', path: '/production' },
   { name: 'Gallery', path: '/gallery' },
-  { name: 'Get In Touch', path: '/contact' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 const PRODUCT_LINKS: ProductLink[] = [

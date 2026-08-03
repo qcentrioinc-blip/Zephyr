@@ -4,10 +4,10 @@ import { H3, P } from "../Global/Typography/Typo";
 import Reveal from "../Global/Reveal";
 
 const content = {
-  title: "PREMIUM FORMULATIONS, EXCEPTIONAL STANDARDS",
+  title: "Formulation depth. Audit-ready quality systems.",
   description:
-    "Zephyr manufactures to high quality standards for US dietary supplement brands. We offer a broad range of vitamin, mineral, and specialty formulations across multiple product formats, with a focus on safety, consistency, and finished goods performance.",
-  buttonText: "VIEW",
+    "Zephyr manufactures to GMP and ISO quality standards for US dietary supplement brands. We offer vitamin, mineral, and specialty formulations across multiple dosage forms, with documentation focused on safety, batch consistency, and finished-goods performance.",
+  buttonText: "Explore R&D",
 };
 
 export default function Showreel() {
@@ -19,8 +19,11 @@ export default function Showreel() {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="relative min-h-[220px] md:min-h-[340px]">
                 <img
-                  src="/Generated/showreel-formulation.png"
+                  src="/Generated/showreel-formulation.webp"
                   alt="Zephyr formulation laboratory"
+                  width={800}
+                  height={600}
+                  loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>

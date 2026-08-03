@@ -9,22 +9,22 @@ type ShowcaseItem = {
 };
 
 const dosageFormats: ShowcaseItem[] = [
-  { name: "Tablets", image: "/Homepage/production/branded/tablet.png" },
-  { name: "Capsules", image: "/Homepage/production/branded/capsule.png" },
-  { name: "Sachets", image: "/Homepage/production/branded/sachet.png" },
-  { name: "Powders", image: "/Homepage/production/branded/powder.png" },
-  { name: "Gummies", image: "/Homepage/production/branded/gummy.png" },
-  { name: "Jelly", image: "/Homepage/production/branded/jelly.png" },
+  { name: "Tablets", image: "/Homepage/production/tablet.webp" },
+  { name: "Capsules", image: "/Homepage/production/capsule.webp" },
+  { name: "Sachets", image: "/Homepage/production/sachet.webp" },
+  { name: "Powders", image: "/Homepage/production/powder.webp" },
+  { name: "Gummies", image: "/Homepage/production/gummy.webp" },
+  { name: "Jelly", image: "/Homepage/production/jelly.webp" },
 ];
 
 const packagingOptions: ShowcaseItem[] = [
-  { name: "Jars", image: "/Homepage/production/branded/jar.png" },
-  { name: "Sachets", image: "/Homepage/production/branded/pack-sachet.png" },
-  { name: "Blister", image: "/Homepage/production/branded/blister.png" },
-  { name: "Bulk Packs", image: "/Homepage/production/branded/bulk.png" },
-  { name: "Bottle Packs", image: "/Homepage/production/branded/bottle.png" },
-  { name: "Alu Alu", image: "/Homepage/production/branded/alu-alu.png" },
-  { name: "Stick Packs", image: "/Homepage/production/branded/stick-pack.png" },
+  { name: "Jars", image: "/Homepage/production/jar.webp" },
+  { name: "Sachets", image: "/Homepage/production/pack-sachet.webp" },
+  { name: "Blister", image: "/Homepage/production/blister.webp" },
+  { name: "Bulk Packs", image: "/Homepage/production/bulk.webp" },
+  { name: "Bottle Packs", image: "/Homepage/production/bottle.webp" },
+  { name: "Alu Alu", image: "/Homepage/production/alu-alu.webp" },
+  { name: "Stick Packs", image: "/Homepage/production/stick-pack.webp" },
 ];
 
 function MarqueeRow({
@@ -82,7 +82,7 @@ export default function ProductionShowcase() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <H2 className="text-black">Formats built for brand partners</H2>
+          <H2 className="text-black">Dosage forms and finished-goods packaging</H2>
           {/* <P className="mx-auto mt-3 max-w-2xl text-gray-600">
             From dosage forms to finished packaging. Flexible manufacturing
             options ready for private label and contract scale.

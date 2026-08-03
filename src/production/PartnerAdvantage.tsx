@@ -35,7 +35,7 @@ export default function PartnerAdvantage() {
             <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]">
               Partner advantage
             </p>
-            <H2>Built for brands that need reliable scale</H2>
+            <H2>Built for brand owners who need dependable commercial supply</H2>
             <P className="mt-4 max-w-xl text-gray-600">
               Zephyr combines high capacity manufacturing with development-led
               transfer and quality systems US brand owners can take to audit.
@@ -65,7 +65,7 @@ export default function PartnerAdvantage() {
               to="/contact"
               className="group mt-8 inline-flex items-center gap-2 rounded-full bg-[#113227] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#0d281f]"
             >
-              Enquire / MOQ
+              Request MOQ
               <ArrowRight
                 size={16}
                 className="transition-transform group-hover:translate-x-1"

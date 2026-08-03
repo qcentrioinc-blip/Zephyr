@@ -24,12 +24,12 @@ type Feature = {
 const features: Feature[] = [
   {
     title: "Custom Formulations",
-    desc: "Private label ready",
+    desc: "Private-label programs",
     Icon: FlaskConical,
   },
   {
     title: "cGMP & ISO Systems",
-    desc: "Quality assured",
+    desc: "cGMP documentation",
     Icon: ShieldCheck,
   },
   {
@@ -39,7 +39,7 @@ const features: Feature[] = [
   },
   {
     title: "End-to-End CDMO",
-    desc: "Idea to finished goods",
+    desc: "Brief to finished goods",
     Icon: Package,
   },
 ];
@@ -134,7 +134,7 @@ const NewFooter = () => {
 
           <div className="col-span-2 flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:items-start sm:text-left lg:col-span-1">
             <H3 className="mb-2 !text-[16px] text-white md:!text-[18px]">
-              Ready to manufacture with Zephyr?
+              Discuss a private-label or contract program
             </H3>
             {/* <P className="mb-4 text-white/70">
               Share your formula brief, dosage form, and MOQ targets. Our team
@@ -144,7 +144,7 @@ const NewFooter = () => {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-[#11BB8A] px-5 py-2.5 text-sm font-semibold text-[#113227] transition hover:bg-[#14d09a]"
             >
-              Enquire / MOQ
+              Request MOQ
               <ArrowRight
                 size={15}
                 className="transition-transform group-hover:translate-x-1"

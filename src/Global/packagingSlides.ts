@@ -1,12 +1,12 @@
 /** Shared finished-goods packaging slides for formula cards (after bottle). */
 export const PACKAGING_SLIDE_PATHS = [
-  "/Homepage/production/branded/jar.png",
-  "/Homepage/production/branded/pack-sachet.png",
-  "/Homepage/production/branded/blister.png",
-  "/Homepage/production/branded/bulk.png",
-  "/Homepage/production/branded/bottle.png",
-  "/Homepage/production/branded/alu-alu.png",
-  "/Homepage/production/branded/stick-pack.png",
+  "/Homepage/production/jar.webp",
+  "/Homepage/production/pack-sachet.webp",
+  "/Homepage/production/blister.webp",
+  "/Homepage/production/bulk.webp",
+  "/Homepage/production/bottle.webp",
+  "/Homepage/production/alu-alu.webp",
+  "/Homepage/production/stick-pack.webp",
 ] as const;
 
 export function buildFormulaSlides(bottleImage: string): string[] {

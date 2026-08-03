@@ -10,10 +10,12 @@ const HeroSection = () => {
     <section className="relative w-full overflow-hidden bg-[#0d241c]">
       <div className="absolute inset-0">
         <img
-          src="/Production/production-hero-wide.png"
+          src="/Production/production-hero-wide.webp"
           alt=""
           className="h-full w-full object-cover opacity-55"
           aria-hidden="true"
+          width={1600}
+          height={900}
         />
         <div className="absolute inset-0 bg-[#0d241c]/55" />
       </div>
@@ -33,7 +35,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.05, ease }}
           >
-            <H1 className="text-white">Precision manufacturing at partner scale</H1>
+            <H1 className="text-white">Manufacturing capacity for private-label scale-up</H1>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -58,7 +60,7 @@ const HeroSection = () => {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#113227] transition hover:bg-[#EDFAEB]"
             >
-              Enquire / MOQ
+              Request MOQ
               <ArrowRight
                 size={16}
                 className="transition-transform group-hover:translate-x-1"

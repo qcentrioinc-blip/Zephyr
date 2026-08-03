@@ -39,7 +39,7 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const IMG = "/Homepage/OrganicBottle.png";
+const IMG = "/Homepage/OrganicBottle.webp";
 const CATEGORY_IMAGE = IMG;
 const f = (formula: string): RawFormula => ({ formula, image: IMG });
 
@@ -59,7 +59,7 @@ function buildCategories(raw: RawCategory[]): FormulaCategory[] {
 
 export const theme: RangeTheme = {
   title: "Herbaceutical Products",
-  subtitle: "Traditional wisdom. Modern manufacturing standards.",
+  subtitle: "Botanical supplement manufacturing to commercial standards",
   accent: "#C38046",
   accentSoft: "#FCF8F2",
   bg: "#fbf3e5",

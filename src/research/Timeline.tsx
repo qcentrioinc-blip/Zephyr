@@ -94,9 +94,9 @@ const Timeline = () => {
         <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
           <Reveal>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]">
-              Partner growth
+              Scale path
             </p>
-            <H2>From a retail store to the global chain of stores</H2>
+            <H2>From first retail SKU to multi-channel distribution</H2>
             <P className="mt-5 text-gray-600 leading-relaxed">
               Zephyr helps brand owners move beyond a single SKU launch. Flexible
               dosage formats, finished goods packaging, and GMP quality systems

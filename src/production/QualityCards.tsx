@@ -9,14 +9,14 @@ const cards = [
     icon: ShieldCheck,
     accent: "#113227",
     soft: "#EDFAEB",
-    body: "End-to-end testing of the raw material, in-process and finished products is carried out during each step by our highly trained quality team which ensures zero contamination. We also follow G.M.P. and ISO protocols. Well qualified, having decades of experience in the field of quality managements, cGMP compliance, audit managements and validation managements. Our QUALITY ASSURANCE team ensures products are manufactured as per GMP regulations and good quality products are released to the market.",
+    body: "QA covers raw-material, in-process, and finished-goods testing under GMP and ISO protocols, with cGMP compliance, audit support, and validation. Experienced quality managers oversee release so products are manufactured to agreed specifications before commercial shipment.",
   },
   {
     title: "Quality Control",
     icon: FlaskConical,
     accent: "#247D7D",
     soft: "#edf6fb",
-    body: "Our quality team, working together with our experienced production team, are committed to ensuring that we supply you with products of the highest quality. We have a dedicated quality department with excellent in-house laboratory facilities and experienced people comprising analytical chemists and qualified persons. This combination of fully equipped laboratory facilities together with our comprehensive quality systems and experienced teams enable us to provide you with everything you need to ensure the quality of your products. Your products are in safe hands with us.",
+    body: "In-house QC labs with analytical chemists and qualified personnel support batch release documentation your partners can take to audit. Production and quality teams work together so finished goods meet agreed specs for private-label and contract programs.",
   },
 ];
 

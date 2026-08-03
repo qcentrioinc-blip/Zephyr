@@ -39,7 +39,7 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const IMG = "/Homepage/HerbalBottle.png";
+const IMG = "/Homepage/HerbalBottle.webp";
 const CATEGORY_IMAGE = IMG;
 const f = (formula: string): RawFormula => ({ formula, image: IMG });
 
@@ -59,7 +59,7 @@ function buildCategories(raw: RawCategory[]): FormulaCategory[] {
 
 export const theme: RangeTheme = {
   title: "Organic Products",
-  subtitle: "Pure. Natural. Custom private label formulas.",
+  subtitle: "Organic and clean-label private-label manufacturing",
   accent: "#547A3D",
   accentSoft: "#EFF7ED",
   bg: "#f8f9ef",

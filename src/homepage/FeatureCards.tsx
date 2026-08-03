@@ -119,21 +119,21 @@ function ShieldGif({ className = "" }: { className?: string }) {
 
 const FEATURE_CARDS: FeatureCard[] = [
   {
-    title: "CUSTOM FORMULATIONS",
+    title: "CUSTOM FORMULATION SUPPORT",
     description:
-      "From concept to commercial scale, Zephyr develops herbaceuticals, nutraceuticals, and organic specialty tablets for brand owners worldwide.",
+      "From concept to commercial scale, Zephyr develops herbaceuticals, nutraceuticals, and organic specialty tablets for US private-label and contract partners.",
     Icon: FlaskGif,
   },
   {
     title: "LICENSED FACILITY",
     description:
-      "65,000 sq ft production and laboratories with humidity controlled dispensing, granulation, compression, coating and capsule filling.",
+      "65,000 sq ft production and laboratories with humidity-controlled dispensing, granulation, compression, coating, and capsule filling.",
     Icon: FactoryGif,
   },
   {
-    title: "QUALITY FIRST",
+    title: "QA / QC SYSTEMS",
     description:
-      "End-to-end raw material, in process and finished product testing under GMP and ISO protocols by an experienced QA/QC team.",
+      "End-to-end raw material, in-process, and finished-product testing under GMP and ISO protocols by an experienced QA/QC team.",
     Icon: ShieldGif,
   },
 ];

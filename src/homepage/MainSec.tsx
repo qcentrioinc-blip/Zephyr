@@ -10,8 +10,8 @@ const products = [
     description:
       "Private label and contract manufacturing for botanical dietary supplements. From formula brief and MOQ planning to finished tablets, capsules, and specialty dosages for US brand launches.",
     color: "#FFA43D",
-    image: "/herbal.png",
-    buttonText: "Explore Range",
+    image: "/herbal.webp",
+    buttonText: "View formulas",
     link: "/herbaceutical",
   },
   {
@@ -20,8 +20,8 @@ const products = [
     description:
       "Turnkey manufacturing for vitamins, minerals, and specialty dietary supplements. Flexible dosage forms, finished goods packaging, and practical MOQ support for US brand owners.",
     color: "#247D7D",
-    image: "/nuetra.png",
-    buttonText: "Explore Range",
+    image: "/nuetra.webp",
+    buttonText: "View formulas",
     link: "/nutraceutical",
   },
   {
@@ -30,8 +30,8 @@ const products = [
     description:
       "Organic and clean-label supplement manufacturing for US markets. Private label support from early formulation through finished goods packaging and commercial production.",
     color: "#3FB369",
-    image: "/organic.png",
-    buttonText: "Explore Range",
+    image: "/organic.webp",
+    buttonText: "View formulas",
     link: "/organic",
   },
 ];
@@ -402,6 +402,10 @@ const MainSec: React.FC = () => {
                   src={product.image}
                   alt={product.title}
                   draggable={false}
+                  width={400}
+                  height={520}
+                  fetchPriority="high"
+                  decoding="async"
                   className="
                     pointer-events-none
                     select-none

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 
 const routeLabels: Record<string, string> = {
-  '/contact': 'Get in Touch',
+  '/contact': 'Contact',
   '/gallery': 'Gallery',
   '/herbaceutical': 'Herbaceutical',
   '/nutraceutical': 'Nutraceutical',

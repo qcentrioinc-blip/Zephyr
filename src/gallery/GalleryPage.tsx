@@ -150,14 +150,14 @@ export default function GalleryPage() {
             transition={{ duration: 0.5, ease }}
             className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]"
           >
-            Photos & Videos
+            Facility gallery
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.05, ease }}
           >
-            <H1>Inside Zephyr</H1>
+            <H1>Manufacturing & lab environments</H1>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -166,9 +166,8 @@ export default function GalleryPage() {
             className="mx-auto mt-4 max-w-2xl"
           >
             <P className="text-gray-600">
-              A look at our manufacturing environment, production capability, and
-              the equipment that powers custom nutraceutical, herbaceutical, and
-              organic partnerships.
+              Production floors, packaging lines, and lab environments used for
+              nutraceutical, herbaceutical, and organic partner programs.
             </P>
           </motion.div>
 

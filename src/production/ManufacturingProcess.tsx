@@ -50,9 +50,10 @@ export default function ManufacturingProcess() {
           </p>
           <H2>From dispensing to finished pack</H2>
           <P className="mt-3 text-gray-600">
-            A clear production path covering controlled dispensing, granulation,
-            compression, coating, hard-gel capsule filling, and flexible finished
-            goods packaging for private label partners.
+            Controlled process flow from dispensing through finished-goods
+            packaging for private-label partners: humidity-controlled dispensing,
+            granulation, compression, coating, hard-gel capsule filling, and
+            flexible finished-goods packaging.
           </P>
         </Reveal>
 
