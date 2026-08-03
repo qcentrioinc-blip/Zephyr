@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { H2, H4, P } from "../Global/Typography/Typo";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { H2, H3, H4, P } from "../Global/Typography/Typo";
+import CelebrationBurst from "../Global/CelebrationBurst";
 
 const faqs = [
   {
@@ -58,8 +60,10 @@ function QuestionIcon({
 }
 
 const FAQ = () => {
+  const reduceMotion = Boolean(useReducedMotion());
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [feedback, setFeedback] = useState("");
+  const [sent, setSent] = useState(false);
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -68,6 +72,7 @@ const FAQ = () => {
   const handleSubmit = () => {
     if (!feedback.trim()) return;
     setFeedback("");
+    setSent(true);
   };
 
   return (
@@ -118,23 +123,60 @@ const FAQ = () => {
           </div>
 
           <div className="rounded-2xl bg-[#F7F8F2] p-5">
-            <P className="mb-3 text-gray-600">
-              Share a short note about your query.
-            </P>
-            <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              rows={5}
-              placeholder="Tell us about your formulation or private-label requirement…"
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#547A3D]"
-            />
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="mt-4 rounded-full bg-[#113227] px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              Send note
-            </button>
+            <AnimatePresence mode="wait">
+              {sent ? (
+                <motion.div
+                  key="success"
+                  initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.28 }}
+                  className="flex flex-col items-center py-4 text-center"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <CelebrationBurst reduceMotion={reduceMotion} />
+                  <H3 className="text-[#113227]">Note received</H3>
+                  <P className="mt-2 max-w-xs text-gray-600">
+                    Thank you for sharing your note. Our team will review it and
+                    follow up if more detail is needed for your manufacturing
+                    enquiry.
+                  </P>
+                  <button
+                    type="button"
+                    onClick={() => setSent(false)}
+                    className="mt-5 rounded-full bg-[#113227] px-5 py-2.5 text-sm font-semibold text-white"
+                  >
+                    Send another
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="form"
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <P className="mb-3 text-gray-600">
+                    Share a short note about your query.
+                  </P>
+                  <textarea
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                    rows={5}
+                    placeholder="Tell us about your formulation or private-label requirement…"
+                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#547A3D]"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    className="mt-4 rounded-full bg-[#113227] px-5 py-2.5 text-sm font-semibold text-white"
+                  >
+                    Send note
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

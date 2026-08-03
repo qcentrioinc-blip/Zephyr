@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { H3, P } from "../Global/Typography/Typo";
 
@@ -51,21 +51,55 @@ const ROTATION_TRANSITION = {
   duration: 1.4,
   ease: [0.22, 1, 0.36, 1] as const,
 };
+const EASE_PREMIUM = [0.16, 1, 0.3, 1] as const;
+const LOOP_MS = 4500;
+
+const SPRING_SOFT = { type: "spring" as const, stiffness: 120, damping: 22, mass: 0.9 };
+
+const centerMotion = {
+  initial: { opacity: 0, scale: 0.92, y: 12 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { ...SPRING_SOFT, opacity: { duration: 0.55, ease: EASE_PREMIUM } },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.94,
+    y: -8,
+    transition: { duration: 0.5, ease: EASE_PREMIUM },
+  },
+};
+
+const sideMotion = {
+  initial: { opacity: 0, scale: 0.94 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.7, ease: EASE_PREMIUM },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.96,
+    transition: { duration: 0.45, ease: EASE_PREMIUM },
+  },
+};
 
 function CircularLabel({
   title,
-  index,
+  pathKey,
   textColor,
   borderColor,
   rotated,
 }: {
   title: string;
-  index: number;
+  pathKey: string;
   textColor: string;
   borderColor: string;
   rotated: boolean;
 }) {
-  const pathId = `circlePath-${index}`;
+  const pathId = `circlePath-${pathKey}`;
 
   return (
     <motion.svg
@@ -101,12 +135,12 @@ function CircularLabel({
 
 function ExploreCard({
   item,
-  index,
+  pathKey,
   sizeClassName,
   insetClassName,
 }: {
   item: ExploreItem;
-  index: number;
+  pathKey: string;
   sizeClassName: string;
   insetClassName: string;
 }) {
@@ -124,7 +158,7 @@ function ExploreCard({
       <div className={`relative ${sizeClassName}`}>
         <CircularLabel
           title={item.title}
-          index={index}
+          pathKey={pathKey}
           textColor={item.textColor}
           borderColor={item.borderColor}
           rotated={isHovered}
@@ -150,36 +184,124 @@ function ExploreCard({
 }
 
 function MobileArcLayout({ items }: { items: ExploreItem[] }) {
-  const [left, center, right] = items;
+  const reduceMotion = Boolean(useReducedMotion());
+  const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion || paused) return;
+    const id = window.setInterval(() => {
+      setFeaturedIndex((i) => (i + 1) % items.length);
+    }, LOOP_MS);
+    return () => window.clearInterval(id);
+  }, [reduceMotion, paused, items.length]);
+
+  if (reduceMotion) {
+    return (
+      <div className="flex items-end justify-center gap-3 sm:hidden">
+        {items.map((item) => (
+          <ExploreCard
+            key={item.title}
+            item={item}
+            pathKey={`eq-${item.title}`}
+            sizeClassName="h-[110px] w-[110px]"
+            insetClassName="inset-[15px]"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  const center = items[featuredIndex];
+  const left = items[(featuredIndex + items.length - 1) % items.length];
+  const right = items[(featuredIndex + 1) % items.length];
 
   return (
-    <div className="flex justify-center sm:hidden">
+    <div
+      className="flex justify-center sm:hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setPaused(false)}
+    >
       <div className="relative h-[200px] w-full max-w-[340px]">
-        <div className="absolute bottom-0 left-0 z-10">
-          <ExploreCard
-            item={left}
-            index={0}
-            sizeClassName="h-[105px] w-[105px]"
-            insetClassName="inset-[15px]"
-          />
+        <div className="absolute bottom-0 left-0 z-10 h-[105px] w-[105px]">
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.div
+              key={`left-${left.title}`}
+              className="absolute inset-0"
+              variants={sideMotion}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <ExploreCard
+                item={left}
+                pathKey={`left-${left.title}-${featuredIndex}`}
+                sizeClassName="h-[105px] w-[105px]"
+                insetClassName="inset-[15px]"
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2">
-          <ExploreCard
-            item={center}
-            index={1}
-            sizeClassName="h-[150px] w-[150px]"
-            insetClassName="inset-[21px]"
-          />
+        <div className="absolute left-1/2 top-0 z-20 h-[150px] w-[150px] -translate-x-1/2">
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.div
+              key={`center-${center.title}`}
+              className="absolute inset-0 origin-center"
+              variants={centerMotion}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              style={{ willChange: "transform, opacity" }}
+            >
+              <motion.div
+                className="h-full w-full rounded-full"
+                animate={{
+                  y: [0, -4, 0],
+                  boxShadow: [
+                    `0 8px 24px ${center.borderColor}22`,
+                    `0 14px 36px ${center.borderColor}33`,
+                    `0 8px 24px ${center.borderColor}22`,
+                  ],
+                }}
+                transition={{
+                  duration: 3.6,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                }}
+              >
+                <ExploreCard
+                  item={center}
+                  pathKey={`center-${center.title}-${featuredIndex}`}
+                  sizeClassName="h-[150px] w-[150px]"
+                  insetClassName="inset-[21px]"
+                />
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        <div className="absolute bottom-0 right-0 z-10">
-          <ExploreCard
-            item={right}
-            index={2}
-            sizeClassName="h-[105px] w-[105px]"
-            insetClassName="inset-[15px]"
-          />
+        <div className="absolute bottom-0 right-0 z-10 h-[105px] w-[105px]">
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.div
+              key={`right-${right.title}`}
+              className="absolute inset-0"
+              variants={sideMotion}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <ExploreCard
+                item={right}
+                pathKey={`right-${right.title}-${featuredIndex}`}
+                sizeClassName="h-[105px] w-[105px]"
+                insetClassName="inset-[15px]"
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>
@@ -189,11 +311,11 @@ function MobileArcLayout({ items }: { items: ExploreItem[] }) {
 function TabletRowLayout({ items }: { items: ExploreItem[] }) {
   return (
     <div className="hidden items-end justify-center gap-5 sm:flex md:gap-8 lg:hidden">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <ExploreCard
           key={item.title}
           item={item}
-          index={index}
+          pathKey={`tablet-${item.title}`}
           sizeClassName="h-[190px] w-[190px] md:h-[230px] md:w-[230px]"
           insetClassName="inset-[27px] md:inset-[33px]"
         />
@@ -205,11 +327,11 @@ function TabletRowLayout({ items }: { items: ExploreItem[] }) {
 function DesktopGridLayout({ items }: { items: ExploreItem[] }) {
   return (
     <div className="hidden place-items-center gap-8 lg:grid lg:grid-cols-3">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <ExploreCard
           key={item.title}
           item={item}
-          index={index}
+          pathKey={`desk-${item.title}`}
           sizeClassName="h-[350px] w-[350px]"
           insetClassName="inset-[49px]"
         />

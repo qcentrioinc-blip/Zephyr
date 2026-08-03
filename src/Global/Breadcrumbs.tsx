@@ -52,7 +52,7 @@ const Breadcrumbs = () => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="sticky top-[65px] z-[90] w-full border-b border-gray-200/80 bg-white/95 backdrop-blur-md"
+      className="sticky top-[var(--zephyr-nav-h)] z-[90] w-full border-b border-gray-200/80 bg-white/95 backdrop-blur-md"
     >
       <div className="zephyr-container flex items-center py-2.5">
         <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-500 pl-0">

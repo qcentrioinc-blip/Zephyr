@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ListFilter, Search, Send, X } from "lucide-react";
 import { theme, categories as allCategories, type FormulaCategory, type FormulaItem } from "./data";
 import { H1, H3, P } from "../Global/Typography/Typo";
+import FormulaCardSlideshow from "../Global/FormulaCardSlideshow";
 
 type FormulaCardProps = {
   item: FormulaItem;
@@ -23,13 +24,8 @@ function FormulaCard({ item, category, enquireHref }: FormulaCardProps) {
       transition={{ duration: 0.22, ease: EASE }}
       className="group mx-auto flex h-full w-full max-w-[220px] flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
     >
-      <div className="relative h-[160px] w-full overflow-hidden bg-white sm:h-[190px] lg:h-[210px]">
-        <img
-          src={item.image}
-          alt=""
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-        />
+      <div className="relative h-[160px] w-full sm:h-[190px] lg:h-[210px]">
+        <FormulaCardSlideshow bottleImage={item.image} alt="" />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-3">
@@ -259,8 +255,8 @@ export default function FormulaCatalog() {
           </aside>
 
           <div className="min-w-0 flex-1">
-            {/* Mobile / tablet toolbar */}
-            <div className="mb-4 flex flex-col gap-3 lg:hidden">
+            {/* Mobile / tablet toolbar — sticky under navbar + breadcrumbs */}
+            <div className="sticky top-[calc(var(--zephyr-nav-h)+var(--zephyr-crumb-h))] z-[80] -mx-1 mb-4 flex flex-col gap-3 border-b border-gray-200/80 bg-white/95 px-1 py-3 backdrop-blur-md lg:hidden">
               <div className="flex items-center gap-2">
                 <div className="relative min-w-0 flex-1">
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />

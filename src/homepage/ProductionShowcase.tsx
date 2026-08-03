@@ -9,22 +9,22 @@ type ShowcaseItem = {
 };
 
 const dosageFormats: ShowcaseItem[] = [
-  { name: "Tablets", image: "/Homepage/production/tablet.png" },
-  { name: "Capsules", image: "/Homepage/production/capsule.png" },
-  { name: "Sachets", image: "/Homepage/production/sachet.png" },
-  { name: "Powders", image: "/Homepage/production/powder.png" },
-  { name: "Gummies", image: "/Homepage/production/gummy.png" },
-  { name: "Jelly", image: "/Homepage/production/jelly.png" },
+  { name: "Tablets", image: "/Homepage/production/branded/tablet.png" },
+  { name: "Capsules", image: "/Homepage/production/branded/capsule.png" },
+  { name: "Sachets", image: "/Homepage/production/branded/sachet.png" },
+  { name: "Powders", image: "/Homepage/production/branded/powder.png" },
+  { name: "Gummies", image: "/Homepage/production/branded/gummy.png" },
+  { name: "Jelly", image: "/Homepage/production/branded/jelly.png" },
 ];
 
 const packagingOptions: ShowcaseItem[] = [
-  { name: "Jars", image: "/Homepage/production/jar.png" },
-  { name: "Sachets", image: "/Homepage/production/pack-sachet.png" },
-  { name: "Blister", image: "/Homepage/production/blister.png" },
-  { name: "Bulk Packs", image: "/Homepage/production/bulk.png" },
-  { name: "Bottle Packs", image: "/Homepage/production/bottle.png" },
-  { name: "Alu Alu", image: "/Homepage/production/alu-alu.png" },
-  { name: "Stick Packs", image: "/Homepage/production/stick-pack.png" },
+  { name: "Jars", image: "/Homepage/production/branded/jar.png" },
+  { name: "Sachets", image: "/Homepage/production/branded/pack-sachet.png" },
+  { name: "Blister", image: "/Homepage/production/branded/blister.png" },
+  { name: "Bulk Packs", image: "/Homepage/production/branded/bulk.png" },
+  { name: "Bottle Packs", image: "/Homepage/production/branded/bottle.png" },
+  { name: "Alu Alu", image: "/Homepage/production/branded/alu-alu.png" },
+  { name: "Stick Packs", image: "/Homepage/production/branded/stick-pack.png" },
 ];
 
 function MarqueeRow({

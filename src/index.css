@@ -1,3 +1,21 @@
+/* Fixed navbar height (logo + py-2) — keep Breadcrumbs / sticky toolbars aligned */
+:root {
+  --zephyr-nav-h: 3.5rem; /* mobile: h-10 + py-2 */
+  --zephyr-crumb-h: 2.625rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --zephyr-nav-h: 4rem; /* sm: h-12 + py-2 */
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --zephyr-nav-h: 4.5rem; /* md+: h-14 + py-2 */
+  }
+}
+
 body {
   font-family: "Manrope", sans-serif;
   overflow-x: hidden;

@@ -115,9 +115,10 @@ const DockNavItem = ({
           >
             {isActive && (
               <motion.span
-                layoutId="nav-active-pill"
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
                 className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-                transition={SPRING_SNAPPY}
               />
             )}
             <span className="relative z-10">{link.name}</span>
@@ -141,9 +142,10 @@ const DockNavItem = ({
           >
             {isActive && (
               <motion.span
-                layoutId="nav-active-pill"
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
                 className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-                transition={SPRING_SNAPPY}
               />
             )}
             <span className="relative z-10">{link.name}</span>

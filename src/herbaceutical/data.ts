@@ -17,9 +17,7 @@ export interface RangeTheme {
   accentSoft: string;
   bg: string;
   border: string;
-  /** Full-bleed hero photo */
   heroImage: string;
-  /** Overlay so headline/body stay readable over the photo */
   overlay: string;
 }
 
@@ -41,18 +39,22 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const CATEGORY_IMAGE = "/Homepage/OrganicBottle.png";
+const IMG = "/Homepage/OrganicBottle.png";
+const CATEGORY_IMAGE = IMG;
+const f = (formula: string): RawFormula => ({ formula, image: IMG });
 
 function buildCategories(raw: RawCategory[]): FormulaCategory[] {
-  return raw.map((cat) => ({
-    name: cat.name,
-    categoryImage: CATEGORY_IMAGE,
-    formulas: cat.formulas.map((item, index) => ({
-      id: slugify("herbaceutical", cat.name, String(index), item.formula.slice(0, 40)),
-      formula: item.formula,
-      image: item.image,
-    })),
-  }));
+  return raw
+    .map((cat) => ({
+      name: cat.name,
+      categoryImage: CATEGORY_IMAGE,
+      formulas: cat.formulas.map((item, index) => ({
+        id: slugify("herbaceutical", cat.name, String(index), item.formula.slice(0, 40)),
+        formula: item.formula,
+        image: item.image,
+      })),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export const theme: RangeTheme = {
@@ -70,145 +72,145 @@ const rawCatalog: RawCategory[] = [
   {
     name: "Joint Care",
     formulas: [
-      { formula: "Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Cat's Claw + Bromelain Extract + Ashwagandha Root", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Rosehip Powder + Ginger + Curcumin + Maca Root", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Guggul + Sea Buck Thorn + Schindra + Eucalyptus", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Burdock Root + Moringa Leaf + Willow Bark + Curcumin", image: "/Homepage/OrganicBottle.png" },
+      f("Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod"),
+      f("Cat's Claw + Bromelain Extract + Ashwagandha Root"),
+      f("Rosehip Powder + Ginger + Curcumin + Maca Root"),
+      f("Guggul + Sea Buck Thorn + Schindra + Eucalyptus"),
+      f("Burdock Root + Moringa Leaf + Willow Bark + Curcumin"),
     ],
   },
   {
     name: "Immunity Boosters",
     formulas: [
-      { formula: "Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit", image: "/Homepage/OrganicBottle.png" },
-      { formula: "American Ginseng + Kalmegh + Echinacea Root + Spirulina", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Curcumin + Moringa + Liquorice + Ashwagandha Root", image: "/Homepage/OrganicBottle.png" },
+      f("Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil"),
+      f("Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit"),
+      f("American Ginseng + Kalmegh + Echinacea Root + Spirulina"),
+      f("Curcumin + Moringa + Liquorice + Ashwagandha Root"),
     ],
   },
   {
     name: "Hair, Skin & Nails",
     formulas: [
-      { formula: "Manjistha Stem + Propolis + Avocado Fruit", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Amla + Bhringraj + Brahmi + Grapeseed", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Orange + Hibiscus + Gingko Biloba + Green Tea", image: "/Homepage/OrganicBottle.png" },
+      f("Manjistha Stem + Propolis + Avocado Fruit"),
+      f("Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry"),
+      f("Amla + Bhringraj + Brahmi + Grapeseed"),
+      f("Orange + Hibiscus + Gingko Biloba + Green Tea"),
     ],
   },
   {
     name: "Anti-Oxidants",
     formulas: [
-      { formula: "Elderberry + Green Tea + Beetroot", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Pomegranate + Cranberry + Curcumin", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Wheat Grass + Acai Berry + Raspberries + Papain", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Spirulina + Tart Cherry + Bacopa Monnieri", image: "/Homepage/OrganicBottle.png" },
+      f("Elderberry + Green Tea + Beetroot"),
+      f("Pomegranate + Cranberry + Curcumin"),
+      f("Wheat Grass + Acai Berry + Raspberries + Papain"),
+      f("Spirulina + Tart Cherry + Bacopa Monnieri"),
     ],
   },
   {
     name: "Kidney Health",
     formulas: [
-      { formula: "Punarnava + Astragalus + Cranberry", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Horse Tail Herb + Birch Leaf + Tulsi Ark", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Manjistha + Amla + Fennel Seed + Celery", image: "/Homepage/OrganicBottle.png" },
+      f("Punarnava + Astragalus + Cranberry"),
+      f("Horse Tail Herb + Birch Leaf + Tulsi Ark"),
+      f("Manjistha + Amla + Fennel Seed + Celery"),
     ],
   },
   {
     name: "Haematinic",
     formulas: [
-      { formula: "Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Folic Acid + Vitamin B12 + Vitamin C", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12", image: "/Homepage/OrganicBottle.png" },
+      f("Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc"),
+      f("Folic Acid + Vitamin B12 + Vitamin C"),
+      f("Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc"),
+      f("Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12"),
     ],
   },
   {
     name: "Heart Health",
     formulas: [
-      { formula: "Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Aronia Berry + Piperine + Maitake Mushroom", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Arjuna + Guggul + Brahmi", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Fenugreek Seed + Amla + Garlic Powder + Arjuna", image: "/Homepage/OrganicBottle.png" },
+      f("Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark"),
+      f("Aronia Berry + Piperine + Maitake Mushroom"),
+      f("Arjuna + Guggul + Brahmi"),
+      f("Fenugreek Seed + Amla + Garlic Powder + Arjuna"),
     ],
   },
   {
     name: "Brain Health",
     formulas: [
-      { formula: "Gingko Biloba + Bacopa Monnieri + Shankhpushpi", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Rosemary Leaf + Gotu Kola + Curcumin + Vacha", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Bacopa Monnieri + Rhodiola Rosea + Ginseng", image: "/Homepage/OrganicBottle.png" },
+      f("Gingko Biloba + Bacopa Monnieri + Shankhpushpi"),
+      f("Rosemary Leaf + Gotu Kola + Curcumin + Vacha"),
+      f("Bacopa Monnieri + Rhodiola Rosea + Ginseng"),
     ],
   },
   {
     name: "Female Fertility",
     formulas: [
-      { formula: "Shatavari + Black Sesame Seed + Liquorice Root + Musta", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Gokshuru + Holy Basil + Ashwagandha Root + Shalparni", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Ashoka + Jeevanti + Punarnava + Guduchi", image: "/Homepage/OrganicBottle.png" },
+      f("Shatavari + Black Sesame Seed + Liquorice Root + Musta"),
+      f("Gokshuru + Holy Basil + Ashwagandha Root + Shalparni"),
+      f("Ashoka + Jeevanti + Punarnava + Guduchi"),
     ],
   },
   {
     name: "Male Fertility",
     formulas: [
-      { formula: "Ashwagandha Root + Mucuna Pruriens + Safed Musli", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Muira Puama + Gokhru + Shilajit", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Shilajit + Ashwagandha Root + Ginseng", image: "/Homepage/OrganicBottle.png" },
+      f("Ashwagandha Root + Mucuna Pruriens + Safed Musli"),
+      f("Muira Puama + Gokhru + Shilajit"),
+      f("Shilajit + Ashwagandha Root + Ginseng"),
     ],
   },
   {
     name: "Diabetic Care",
     formulas: [
-      { formula: "Bitter Melon + Lucuma + Banaba Leaf", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Chitrak Root + Fenugreek Seed + Olive Leaf", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Gymnema Leaf + Bilberry", image: "/Homepage/OrganicBottle.png" },
+      f("Bitter Melon + Lucuma + Banaba Leaf"),
+      f("Chitrak Root + Fenugreek Seed + Olive Leaf"),
+      f("Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark"),
+      f("Gymnema Leaf + Bilberry"),
     ],
   },
   {
     name: "Liver Health",
     formulas: [
-      { formula: "Milk Thistle + Dandelion Root + Green Turmeric", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Kutki + Schisandra Berry + Nigella Sativa", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Milk Thistle + Artichoke Fruit + Myrobalan", image: "/Homepage/OrganicBottle.png" },
+      f("Milk Thistle + Dandelion Root + Green Turmeric"),
+      f("Kutki + Schisandra Berry + Nigella Sativa"),
+      f("Milk Thistle + Artichoke Fruit + Myrobalan"),
     ],
   },
   {
     name: "Menopause",
     formulas: [
-      { formula: "Evening Primrose + Nettle Leaf + Valerian + Wild Yam", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Flaxseed + Red Clover + Black Cohosh Root + Ginseng", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Motherwort + Passion Flower + Valerian", image: "/Homepage/OrganicBottle.png" },
+      f("Evening Primrose + Nettle Leaf + Valerian + Wild Yam"),
+      f("Flaxseed + Red Clover + Black Cohosh Root + Ginseng"),
+      f("Motherwort + Passion Flower + Valerian"),
     ],
   },
   {
     name: "Respiratory Health",
     formulas: [
-      { formula: "Kalmegh + Curcumin + Astragalus", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Ginger + Liquorice + Cardamom", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Kalmegh + Pippali + Vasaka", image: "/Homepage/OrganicBottle.png" },
+      f("Kalmegh + Curcumin + Astragalus"),
+      f("Ginger + Liquorice + Cardamom"),
+      f("Kalmegh + Pippali + Vasaka"),
     ],
   },
   {
     name: "Vision",
     formulas: [
-      { formula: "Goji Berry + Bilberry + Marigold + Carrot", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Fennel Seed + Bay Berry + Spinach", image: "/Homepage/OrganicBottle.png" },
+      f("Goji Berry + Bilberry + Marigold + Carrot"),
+      f("Fennel Seed + Bay Berry + Spinach"),
     ],
   },
   {
     name: "Digestive Health",
     formulas: [
-      { formula: "Amla + Pippali + Ajwain", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Isabgol", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Ginger + Pudina + Fennel", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Liquorice + Fennel + Ajwain", image: "/Homepage/OrganicBottle.png" },
+      f("Amla + Pippali + Ajwain"),
+      f("Isabgol"),
+      f("Ginger + Pudina + Fennel"),
+      f("Liquorice + Fennel + Ajwain"),
     ],
   },
   {
     name: "Weight Management",
     formulas: [
-      { formula: "Isabgol", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Garcinia Cambogia", image: "/Homepage/OrganicBottle.png" },
-      { formula: "Green Tea + Garcinia Cambogia + Chitosan", image: "/Homepage/OrganicBottle.png" },
+      f("Isabgol"),
+      f("Garcinia Cambogia"),
+      f("Green Tea + Garcinia Cambogia + Chitosan"),
     ],
   },
 ];

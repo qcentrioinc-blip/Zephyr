@@ -8,7 +8,7 @@ const products = [
     id: 1,
     title: "HERBACEUTICAL",
     description:
-      "Zephyr manufactures herbaceutical dietary supplements for private label and contract manufacturing partners. We turn botanical extracts into finished tablets, capsules, and specialty dosages with packaging ready for US brand launches. Share your formula brief and MOQ targets. Our team supports formulation development, scale-up, and steady finished goods supply.",
+      "Private label and contract manufacturing for botanical dietary supplements. From formula brief and MOQ planning to finished tablets, capsules, and specialty dosages for US brand launches.",
     color: "#FFA43D",
     image: "/herbal.png",
     buttonText: "Explore Range",
@@ -18,7 +18,7 @@ const products = [
     id: 2,
     title: "NUTRACEUTICAL",
     description:
-      "Zephyr is a nutraceutical brand manufacturing partner for vitamins, minerals, and specialty dietary supplements. We run private label and turnkey manufacturing programs with flexible dosage forms and finished goods packaging. From formulation through commercial batches, US brand owners get clear quality systems and practical MOQ planning.",
+      "Turnkey manufacturing for vitamins, minerals, and specialty dietary supplements. Flexible dosage forms, finished goods packaging, and practical MOQ support for US brand owners.",
     color: "#247D7D",
     image: "/nuetra.png",
     buttonText: "Explore Range",
@@ -26,9 +26,9 @@ const products = [
   },
   {
     id: 3,
-    title: "ORGANIC MEDICINES",
+    title: "ORGANIC",
     description:
-      "Zephyr helps organic and clean-label healthcare brands manufacture dietary supplements with a reliable India-based partner serving US markets. We support private label projects from early formulation to finished goods packaging. Tell us your dosage form, pack style, and volume goals. We take you from concept to commercial production.",
+      "Organic and clean-label supplement manufacturing for US markets. Private label support from early formulation through finished goods packaging and commercial production.",
     color: "#3FB369",
     image: "/organic.png",
     buttonText: "Explore Range",

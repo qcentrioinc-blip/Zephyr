@@ -17,9 +17,7 @@ export interface RangeTheme {
   accentSoft: string;
   bg: string;
   border: string;
-  /** Full-bleed hero photo */
   heroImage: string;
-  /** Overlay so headline/body stay readable over the photo */
   overlay: string;
 }
 
@@ -41,18 +39,22 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const CATEGORY_IMAGE = "/Homepage/HerbalBottle.png";
+const IMG = "/Homepage/HerbalBottle.png";
+const CATEGORY_IMAGE = IMG;
+const f = (formula: string): RawFormula => ({ formula, image: IMG });
 
 function buildCategories(raw: RawCategory[]): FormulaCategory[] {
-  return raw.map((cat) => ({
-    name: cat.name,
-    categoryImage: CATEGORY_IMAGE,
-    formulas: cat.formulas.map((item, index) => ({
-      id: slugify("organic", cat.name, String(index), item.formula.slice(0, 40)),
-      formula: item.formula,
-      image: item.image,
-    })),
-  }));
+  return raw
+    .map((cat) => ({
+      name: cat.name,
+      categoryImage: CATEGORY_IMAGE,
+      formulas: cat.formulas.map((item, index) => ({
+        id: slugify("organic", cat.name, String(index), item.formula.slice(0, 40)),
+        formula: item.formula,
+        image: item.image,
+      })),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export const theme: RangeTheme = {
@@ -70,128 +72,128 @@ const rawCatalog: RawCategory[] = [
   {
     name: "Liverwort",
     formulas: [
-      { formula: "Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Cat's Claw + Bromelain Extract + Ashwagandha Root", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Rosehip Powder + Ginger + Curcumin + Maca Root", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Guggul + Sea Buck Thorn + Schindra + Eucalyptus", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Burdock Root + Moringa Leaf + Willow Bark + Curcumin", image: "/Homepage/HerbalBottle.png" },
+      f("Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod"),
+      f("Cat's Claw + Bromelain Extract + Ashwagandha Root"),
+      f("Rosehip Powder + Ginger + Curcumin + Maca Root"),
+      f("Guggul + Sea Buck Thorn + Schindra + Eucalyptus"),
+      f("Burdock Root + Moringa Leaf + Willow Bark + Curcumin"),
     ],
   },
   {
     name: "Guduchi",
     formulas: [
-      { formula: "Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit", image: "/Homepage/HerbalBottle.png" },
-      { formula: "American Ginseng + Kalmegh + Echinacea Root + Spirulina", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Curcumin + Moringa + Liquorice + Ashwagandha Root", image: "/Homepage/HerbalBottle.png" },
+      f("Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil"),
+      f("Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit"),
+      f("American Ginseng + Kalmegh + Echinacea Root + Spirulina"),
+      f("Curcumin + Moringa + Liquorice + Ashwagandha Root"),
     ],
   },
   {
     name: "Magnolia Bark",
     formulas: [
-      { formula: "Manjistha Stem + Propolis + Avocado Fruit", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Amla + Bhringraj + Brahmi + Grapeseed", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Orange + Hibiscus + Gingko Biloba + Green Tea", image: "/Homepage/HerbalBottle.png" },
+      f("Manjistha Stem + Propolis + Avocado Fruit"),
+      f("Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry"),
+      f("Amla + Bhringraj + Brahmi + Grapeseed"),
+      f("Orange + Hibiscus + Gingko Biloba + Green Tea"),
     ],
   },
   {
     name: "Horsetail",
     formulas: [
-      { formula: "Elderberry + Green Tea + Beetroot", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Pomegranate + Cranberry + Curcumin", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Wheat Grass + Acai Berry + Raspberries + Papain", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Spirulina + Tart Cherry + Bacopa Monnieri", image: "/Homepage/HerbalBottle.png" },
+      f("Elderberry + Green Tea + Beetroot"),
+      f("Pomegranate + Cranberry + Curcumin"),
+      f("Wheat Grass + Acai Berry + Raspberries + Papain"),
+      f("Spirulina + Tart Cherry + Bacopa Monnieri"),
     ],
   },
   {
     name: "Gynostemma",
     formulas: [
-      { formula: "Punarnava + Astragalus + Cranberry", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Horse Tail Herb + Birch Leaf + Tulsi Ark", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Manjistha + Amla + Fennel Seed + Celery", image: "/Homepage/HerbalBottle.png" },
+      f("Punarnava + Astragalus + Cranberry"),
+      f("Horse Tail Herb + Birch Leaf + Tulsi Ark"),
+      f("Manjistha + Amla + Fennel Seed + Celery"),
     ],
   },
   {
     name: "Holy Basil",
     formulas: [
-      { formula: "Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Folic Acid + Vitamin B12 + Vitamin C", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12", image: "/Homepage/HerbalBottle.png" },
+      f("Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc"),
+      f("Folic Acid + Vitamin B12 + Vitamin C"),
+      f("Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc"),
+      f("Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12"),
     ],
   },
   {
     name: "Triphala",
     formulas: [
-      { formula: "Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Aronia Berry + Piperine + Maitake Mushroom", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Arjuna + Guggul + Brahmi", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Fenugreek Seed + Amla + Garlic Powder + Arjuna", image: "/Homepage/HerbalBottle.png" },
+      f("Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark"),
+      f("Aronia Berry + Piperine + Maitake Mushroom"),
+      f("Arjuna + Guggul + Brahmi"),
+      f("Fenugreek Seed + Amla + Garlic Powder + Arjuna"),
     ],
   },
   {
     name: "Curcuma Longa",
     formulas: [
-      { formula: "Gingko Biloba + Bacopa Monnieri + Shankhpushpi", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Rosemary Leaf + Gotu Kola + Curcumin + Vacha", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Bacopa Monnieri + Rhodiola Rosea + Ginseng", image: "/Homepage/HerbalBottle.png" },
+      f("Gingko Biloba + Bacopa Monnieri + Shankhpushpi"),
+      f("Rosemary Leaf + Gotu Kola + Curcumin + Vacha"),
+      f("Bacopa Monnieri + Rhodiola Rosea + Ginseng"),
     ],
   },
   {
     name: "Kalmegh",
     formulas: [
-      { formula: "Shatavari + Black Sesame Seed + Liquorice Root + Musta", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Gokshuru + Holy Basil + Ashwagandha Root + Shalparni", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Ashoka + Jeevanti + Punarnava + Guduchi", image: "/Homepage/HerbalBottle.png" },
+      f("Shatavari + Black Sesame Seed + Liquorice Root + Musta"),
+      f("Gokshuru + Holy Basil + Ashwagandha Root + Shalparni"),
+      f("Ashoka + Jeevanti + Punarnava + Guduchi"),
     ],
   },
   {
     name: "Gymnema Sylvestre",
     formulas: [
-      { formula: "Ashwagandha Root + Mucuna Pruriens + Safed Musli", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Muira Puama + Gokhru + Shilajit", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Shilajit + Ashwagandha Root + Ginseng", image: "/Homepage/HerbalBottle.png" },
+      f("Ashwagandha Root + Mucuna Pruriens + Safed Musli"),
+      f("Muira Puama + Gokhru + Shilajit"),
+      f("Shilajit + Ashwagandha Root + Ginseng"),
     ],
   },
   {
     name: "Liquorice",
     formulas: [
-      { formula: "Bitter Melon + Lucuma + Banaba Leaf", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Chitrak Root + Fenugreek Seed + Olive Leaf", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Gymnema Leaf + Bilberry", image: "/Homepage/HerbalBottle.png" },
+      f("Bitter Melon + Lucuma + Banaba Leaf"),
+      f("Chitrak Root + Fenugreek Seed + Olive Leaf"),
+      f("Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark"),
+      f("Gymnema Leaf + Bilberry"),
     ],
   },
   {
     name: "Cinnamon",
     formulas: [
-      { formula: "Milk Thistle + Dandelion Root + Green Turmeric", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Kutki + Schisandra Berry + Nigella Sativa", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Milk Thistle + Artichoke Fruit + Myrobalan", image: "/Homepage/HerbalBottle.png" },
+      f("Milk Thistle + Dandelion Root + Green Turmeric"),
+      f("Kutki + Schisandra Berry + Nigella Sativa"),
+      f("Milk Thistle + Artichoke Fruit + Myrobalan"),
     ],
   },
   {
     name: "Moringa",
     formulas: [
-      { formula: "Evening Primrose + Nettle Leaf + Valerian + Wild Yam", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Flaxseed + Red Clover + Black Cohosh Root + Ginseng", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Motherwort + Passion Flower + Valerian", image: "/Homepage/HerbalBottle.png" },
+      f("Evening Primrose + Nettle Leaf + Valerian + Wild Yam"),
+      f("Flaxseed + Red Clover + Black Cohosh Root + Ginseng"),
+      f("Motherwort + Passion Flower + Valerian"),
     ],
   },
   {
     name: "Ashwagandha",
     formulas: [
-      { formula: "Kalmegh + Curcumin + Astragalus", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Ginger + Liquorice + Cardamom", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Kalmegh + Pippali + Vasaka", image: "/Homepage/HerbalBottle.png" },
+      f("Kalmegh + Curcumin + Astragalus"),
+      f("Ginger + Liquorice + Cardamom"),
+      f("Kalmegh + Pippali + Vasaka"),
     ],
   },
   {
     name: "Garcinia Cambogia",
     formulas: [
-      { formula: "Goji Berry + Bilberry + Marigold + Carrot", image: "/Homepage/HerbalBottle.png" },
-      { formula: "Fennel Seed + Bay Berry + Spinach", image: "/Homepage/HerbalBottle.png" },
+      f("Goji Berry + Bilberry + Marigold + Carrot"),
+      f("Fennel Seed + Bay Berry + Spinach"),
     ],
   },
 ];

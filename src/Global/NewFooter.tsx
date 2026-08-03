@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  FlaskConical,
+  Globe2,
+  Package,
+  ShieldCheck,
+  type LucideIcon,
+} from "lucide-react";
 import { H3, P } from "./Typography/Typo";
 
 type FooterLink = { name: string; url: string };
@@ -7,6 +14,35 @@ type FooterLink = { name: string; url: string };
 const ACCENT = "#11BB8A";
 const STRIP_BORDER = "rgba(17, 187, 138, 0.35)";
 const STRIP_BG = "rgba(17, 187, 139, 0.27)";
+
+type Feature = {
+  title: string;
+  desc: string;
+  Icon: LucideIcon;
+};
+
+const features: Feature[] = [
+  {
+    title: "Custom Formulations",
+    desc: "Private label ready",
+    Icon: FlaskConical,
+  },
+  {
+    title: "cGMP & ISO Systems",
+    desc: "Quality assured",
+    Icon: ShieldCheck,
+  },
+  {
+    title: "Global Partnerships",
+    desc: "India · Spain · USA",
+    Icon: Globe2,
+  },
+  {
+    title: "End-to-End CDMO",
+    desc: "Idea to finished goods",
+    Icon: Package,
+  },
+];
 
 const NewFooter = () => {
   const productLinks: FooterLink[] = [
@@ -21,13 +57,6 @@ const NewFooter = () => {
     { name: "Gallery", url: "/gallery" },
   ];
 
-  const features = [
-    { title: "Custom Formulations", desc: "Private label ready" },
-    { title: "cGMP & ISO Systems", desc: "Quality assured" },
-    { title: "Global Partnerships", desc: "India · Spain · USA" },
-    { title: "End-to-End CDMO", desc: "Idea to finished goods" },
-  ];
-
   return (
     <footer className="relative w-full overflow-hidden rounded-t-4xl pt-11 pb-7 text-white sm:pt-12 sm:pb-8">
       <div className="absolute inset-0 bg-[#113227]" />
@@ -40,8 +69,8 @@ const NewFooter = () => {
       />
 
       <div className="zephyr-container relative z-10">
-        <div className="mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.15fr] lg:gap-8">
-          <div className="flex flex-col items-center text-center sm:col-span-2 sm:items-start sm:text-left lg:col-span-1">
+        <div className="mb-8 grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-[1.4fr_1fr_1fr_1.15fr] lg:gap-8">
+          <div className="col-span-2 flex flex-col items-center text-center sm:items-start sm:text-left lg:col-span-1">
             <Link to="/" className="mb-3 inline-flex shrink-0 items-center">
               <img
                 src="/Global/Logo.png"
@@ -103,7 +132,7 @@ const NewFooter = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:items-start sm:text-left">
+          <div className="col-span-2 flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:items-start sm:text-left lg:col-span-1">
             <H3 className="mb-2 !text-[16px] text-white md:!text-[18px]">
               Ready to manufacture with Zephyr?
             </H3>
@@ -134,24 +163,20 @@ const NewFooter = () => {
           }}
         >
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:place-items-center md:gap-6">
-            {features.map((f) => (
+            {features.map(({ title, desc, Icon }) => (
               <div
-                key={f.title}
+                key={title}
                 className="flex flex-col items-center gap-2 px-2 py-2 text-center md:max-w-[220px] md:flex-row md:gap-3 md:text-left"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center md:h-11 md:w-11">
-                  <img
-                    src="/Global/LeafIcon.png"
-                    alt=""
-                    className="h-full w-full object-contain"
-                  />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center text-[#11BB8A] md:h-11 md:w-11">
+                  <Icon className="h-full w-full" strokeWidth={1.6} aria-hidden />
                 </div>
                 <div>
                   <P className="!text-[11px] text-white sm:!text-[12px] md:!text-sm">
-                    {f.title}
+                    {title}
                   </P>
                   <P className="mt-0.5 !text-[10px] text-white/65 sm:!text-[11px]">
-                    {f.desc}
+                    {desc}
                   </P>
                 </div>
               </div>
