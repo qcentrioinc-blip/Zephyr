@@ -26,6 +26,7 @@ const GalleryPage = lazy(() => import('./gallery/GalleryPage'))
 const HerbaceuticalPage = lazy(() => import('./herbaceutical/HerbaceuticalPage'))
 const NutraceuticalPage = lazy(() => import('./nutraceutical/NutraceuticalPage'))
 const OrganicPage = lazy(() => import('./organic/OrganicPage'))
+const SkincarePage = lazy(() => import('./skincare/SkincarePage'))
 
 function RouteFallback() {
   return (
@@ -59,8 +60,9 @@ function RouteReady({
 
 function AppContent() {
   const { pathname } = useLocation()
-  const hideFooter = pathname === '/contact'
-  const showCrumbs = pathname !== '/' && pathname !== '/contact'
+  const hideFooter = pathname === '/contact' || pathname === '/skincare'
+  const showCrumbs =
+    pathname !== '/' && pathname !== '/contact' && pathname !== '/skincare'
   const [contentReady, setContentReady] = useState(false)
 
   useEffect(() => {
@@ -110,6 +112,7 @@ function AppContent() {
             <Route path="/herbaceutical" element={<HerbaceuticalPage />} />
             <Route path="/nutraceutical" element={<NutraceuticalPage />} />
             <Route path="/organic" element={<OrganicPage />} />
+            <Route path="/skincare" element={<SkincarePage />} />
           </Routes>
         </RouteReady>
       </Suspense>

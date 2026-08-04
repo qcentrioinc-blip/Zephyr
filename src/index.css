@@ -58,6 +58,28 @@ p {
   }
 }
 
+/* Products dropdown — Skincare "Just launched" */
+@keyframes nav-launch-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(15, 61, 56, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(15, 61, 56, 0);
+  }
+}
+
+.nav-launch-badge {
+  animation: nav-launch-pulse 2.2s ease-in-out infinite;
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-launch-badge {
+    animation: none;
+  }
+}
+
 @keyframes zephyr-logo-capsule-sheen {
   0% {
     transform: translateX(-120%) skewX(-18deg);

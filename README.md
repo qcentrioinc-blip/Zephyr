@@ -36,6 +36,7 @@ Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/I
 | `/herbaceutical` | Botanical formula catalog |
 | `/nutraceutical` | Dietary supplement formula catalog |
 | `/organic` | Organic / clean-label formula catalog |
+| `/skincare` | ALFURIN® skincare showcase (lotion + cream) — partner MOQ via Zephyr |
 
 ## Content & facts
 

@@ -1,0 +1,27 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 300" fill="none" aria-hidden="true">
+  <!-- ALFURIN cream jar  transparent bg -->
+  <defs>
+    <linearGradient id="jarBody" x1="40" y1="70" x2="240" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFEF9"/>
+      <stop offset="0.5" stop-color="#F0EBE0"/>
+      <stop offset="1" stop-color="#DDD4C4"/>
+    </linearGradient>
+    <linearGradient id="jarLid" x1="60" y1="20" x2="220" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFEAE0"/>
+      <stop offset="1" stop-color="#C9C0B0"/>
+    </linearGradient>
+  </defs>
+  <!-- lid -->
+  <ellipse cx="140" cy="48" rx="92" ry="28" fill="url(#jarLid)" stroke="#B7AFA0" stroke-width="1.5"/>
+  <rect x="48" y="40" width="184" height="28" fill="url(#jarLid)"/>
+  <ellipse cx="140" cy="40" rx="92" ry="22" fill="#F7F3EA" stroke="#B7AFA0" stroke-width="1.5"/>
+  <ellipse cx="140" cy="36" rx="40" ry="8" fill="#D9D1C0" opacity="0.7"/>
+  <!-- body -->
+  <path d="M52 68 H228 V210 C228 250 190 278 140 278 C90 278 52 250 52 210 Z" fill="url(#jarBody)" stroke="#B7AFA0" stroke-width="1.5"/>
+  <path d="M72 90 C78 160 78 200 80 230" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="12" stroke-linecap="round"/>
+  <!-- label band -->
+  <rect x="70" y="130" width="140" height="78" rx="10" fill="#F7F7F2" stroke="#C8C0B0" stroke-width="1"/>
+  <text x="140" y="160" text-anchor="middle" fill="#2C2A26" font-family="Manrope, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="2">ALFURIN</text>
+  <text x="140" y="180" text-anchor="middle" fill="#8A9A7B" font-family="Manrope, Helvetica, Arial, sans-serif" font-size="9" letter-spacing="1.5">CREAM</text>
+  <text x="140" y="196" text-anchor="middle" fill="#7A756C" font-family="Manrope, Helvetica, Arial, sans-serif" font-size="7">Intensive - 75 ml</text>
+</svg>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { openSkincareContact } from '../skincare/contactEvents';
 
 interface NavLinkItem {
   name: string;
@@ -12,7 +13,15 @@ interface NavLinkItem {
 interface ProductLink {
   name: string;
   path: string;
+  badge?: string;
 }
+
+const PRODUCT_LINKS: ProductLink[] = [
+  { name: 'Herbaceutical', path: '/herbaceutical' },
+  { name: 'Nutraceutical', path: '/nutraceutical' },
+  { name: 'Organic', path: '/organic' },
+  { name: 'Skincare', path: '/skincare', badge: 'Just launched' },
+];
 
 const NAV_LINKS: NavLinkItem[] = [
   { name: 'Home', path: '/' },
@@ -21,12 +30,6 @@ const NAV_LINKS: NavLinkItem[] = [
   { name: 'Production', path: '/production' },
   { name: 'Gallery', path: '/gallery' },
   { name: 'Contact', path: '/contact' },
-];
-
-const PRODUCT_LINKS: ProductLink[] = [
-  { name: 'Herbaceutical', path: '/herbaceutical' },
-  { name: 'Nutraceutical', path: '/nutraceutical' },
-  { name: 'Organic', path: '/organic' },
 ];
 
 const DOCK_MAX_DISTANCE = 140;
@@ -58,6 +61,7 @@ interface DockNavItemProps {
   onOpenDropdown?: () => void;
   onCloseDropdown?: () => void;
   isDropdownOpen?: boolean;
+  onContactIntercept?: () => void;
 }
 
 const DockNavItem = ({
@@ -68,6 +72,7 @@ const DockNavItem = ({
   onOpenDropdown,
   onCloseDropdown,
   isDropdownOpen,
+  onContactIntercept,
 }: DockNavItemProps) => {
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -93,6 +98,13 @@ const DockNavItem = ({
   const scale = useSpring(scaleRaw, { mass: 0.15, stiffness: 420, damping: 32 });
   const y = useSpring(liftRaw, { mass: 0.15, stiffness: 420, damping: 32 });
 
+  const linkClassName = `
+              relative z-10 flex items-center gap-1 px-3 xl:px-5 py-2.5 rounded-full text-[13px] xl:text-[14.5px]
+              font-medium whitespace-nowrap transition-all duration-300 ease-out
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2
+              ${isActive ? 'text-white font-semibold' : 'text-[#4A4B4F] hover:text-black'}
+            `;
+
   return (
     <div
       ref={itemRef}
@@ -106,12 +118,7 @@ const DockNavItem = ({
             type="button"
             aria-haspopup="menu"
             aria-expanded={isDropdownOpen}
-            className={`
-              relative z-10 flex items-center gap-1 px-3 xl:px-5 py-2.5 rounded-full text-[13px] xl:text-[14.5px]
-              font-medium whitespace-nowrap transition-all duration-300 ease-out
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2
-              ${isActive ? 'text-white font-semibold' : 'text-[#4A4B4F] hover:text-black'}
-            `}
+            className={linkClassName}
           >
             {isActive && (
               <motion.span
@@ -130,16 +137,24 @@ const DockNavItem = ({
               <ChevronDown className="w-3.5 h-3.5" />
             </motion.span>
           </button>
-        ) : (
-          <Link
-            to={link.path}
-            className={`
-              relative z-10 flex items-center gap-1 px-3 xl:px-5 py-2.5 rounded-full text-[13px] xl:text-[14.5px]
-              font-medium whitespace-nowrap transition-all duration-300 ease-out
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2
-              ${isActive ? 'text-white font-semibold' : 'text-[#4A4B4F] hover:text-black'}
-            `}
+        ) : onContactIntercept && link.path === '/contact' ? (
+          <button
+            type="button"
+            onClick={onContactIntercept}
+            className={linkClassName}
           >
+            {isActive && (
+              <motion.span
+                initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
+                className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
+              />
+            )}
+            <span className="relative z-10">{link.name}</span>
+          </button>
+        ) : (
+          <Link to={link.path} className={linkClassName}>
             {isActive && (
               <motion.span
                 initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
@@ -162,7 +177,7 @@ const DockNavItem = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.97 }}
               transition={{ duration: 0.22, ease: EASE_PREMIUM }}
-              className="absolute top-full right-0 pt-3 w-52 origin-top"
+              className="absolute top-full right-0 pt-3 w-64 origin-top"
             >
               <div className="bg-white border border-gray-100 rounded-xl shadow-xl shadow-black/5 overflow-hidden">
                 {PRODUCT_LINKS.map((product, index) => (
@@ -175,9 +190,14 @@ const DockNavItem = ({
                     <Link
                       to={product.path}
                       role="menuitem"
-                      className="block px-5 py-3 text-sm text-[#4A4B4F] hover:bg-gray-50 hover:text-black transition-colors font-medium"
+                      className="flex items-center justify-between gap-2 px-5 py-3 text-sm text-[#4A4B4F] hover:bg-gray-50 hover:text-black transition-colors font-medium"
                     >
-                      {product.name}
+                      <span>{product.name}</span>
+                      {product.badge && (
+                        <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                          {product.badge}
+                        </span>
+                      )}
                     </Link>
                   </motion.div>
                 ))}
@@ -225,9 +245,10 @@ interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   activePath: string;
+  onContactIntercept?: () => void;
 }
 
-const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
+const MobileMenu = ({ isOpen, onClose, activePath, onContactIntercept }: MobileMenuProps) => {
   const [productsExpanded, setProductsExpanded] = useState(false);
 
   useEffect(() => {
@@ -289,9 +310,14 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
                               key={product.path}
                               to={product.path}
                               onClick={onClose}
-                              className="block px-4 py-2.5 text-sm text-[#4A4B4F] hover:text-black transition-colors"
+                              className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm text-[#4A4B4F] hover:text-black transition-colors"
                             >
-                              {product.name}
+                              <span>{product.name}</span>
+                              {product.badge && (
+                                <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                                  {product.badge}
+                                </span>
+                              )}
                             </Link>
                           ))}
                         </motion.div>
@@ -301,7 +327,21 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
                 );
               }
 
-              return (
+              return onContactIntercept && link.path === '/contact' ? (
+                <button
+                  key={link.name}
+                  type="button"
+                  onClick={() => {
+                    onContactIntercept();
+                    onClose();
+                  }}
+                  className={`px-4 py-3 rounded-xl text-left text-[15px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30 ${
+                    isActive ? 'bg-[#2D2E32] text-white' : 'text-[#4A4B4F] hover:bg-[#F1F3F4]'
+                  }`}
+                >
+                  {link.name}
+                </button>
+              ) : (
                 <Link
                   key={link.name}
                   to={link.path}
@@ -327,6 +367,8 @@ const Navbar = () => {
   const location = useLocation();
   const reduceMotion = Boolean(useReducedMotion());
   const scrolled = useScrolled(SCROLL_THRESHOLD);
+  const onSkincare = location.pathname === '/skincare';
+  const openSkincareDrawer = () => openSkincareContact();
 
   const pillRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -454,6 +496,7 @@ const Navbar = () => {
               isDropdownOpen={link.hasDropdown && isProductsOpen}
               onOpenDropdown={openProductsDropdown}
               onCloseDropdown={scheduleCloseProductsDropdown}
+              onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
             />
           ))}
         </div>
@@ -470,6 +513,7 @@ const Navbar = () => {
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
           activePath={location.pathname}
+          onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
         />
       </div>
     </motion.nav>

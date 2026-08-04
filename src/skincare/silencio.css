@@ -1,0 +1,1593 @@
+/* Cream editorial store — scoped to .skincare-silencio */
+
+.skincare-silencio {
+  --sil-bg: #f7f7f2;
+  --sil-bg-deep: #efece4;
+  --sil-fg: #2c2a26;
+  --sil-muted: #7a756c;
+  --sil-line: #ddd8ce;
+  --sil-accent: #8a9a7b;
+  --sil-font-display: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --sil-font-body: "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --sil-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  background: var(--sil-bg);
+  color: var(--sil-fg);
+  font-family: var(--sil-font-body);
+  min-height: 100vh;
+  overflow-x: clip;
+  position: relative;
+}
+
+.skincare-silencio.is-gated {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.skincare-silencio a {
+  color: inherit;
+  text-decoration: none;
+}
+
+html.skincare-lenis,
+html.skincare-lenis body {
+  height: auto;
+}
+
+html.skincare-drawer-open,
+html.skincare-drawer-open body {
+  overflow: hidden !important;
+}
+
+/* ─── Marquees ─── */
+.sil-marquee {
+  overflow: hidden;
+  width: 100%;
+  border-block: 1px solid var(--sil-line);
+  background: transparent;
+}
+
+.sil-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: sil-marquee-x 42s linear infinite;
+  will-change: transform;
+}
+
+.sil-marquee--slow .sil-marquee-track {
+  animation-duration: 58s;
+}
+.sil-marquee--med .sil-marquee-track {
+  animation-duration: 38s;
+}
+.sil-marquee--fast .sil-marquee-track {
+  animation-duration: 22s;
+}
+
+.sil-marquee.is-reverse .sil-marquee-track {
+  animation-direction: reverse;
+}
+
+.sil-marquee-track span {
+  display: inline-block;
+  padding: 0.55rem 0;
+  font-family: var(--sil-font-display);
+  font-size: clamp(1.15rem, 3vw, 2.1rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--sil-muted);
+}
+
+@keyframes sil-marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ─── Intro gate ─── */
+.sil-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 40%, #fffef9 0%, var(--sil-bg) 55%, var(--sil-bg-deep) 100%);
+  overflow: hidden;
+  cursor: none;
+}
+
+.sil-gate-floats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Orbital ring around center lockup — upright product shots only */
+.sil-orbit {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(70vw, 520px);
+  height: min(70vw, 520px);
+  margin: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.sil-orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(26vw, 168px);
+  margin: 0;
+  transform-origin: center center;
+  --orbit-angle: calc(var(--orbit-i) * 90deg);
+  --orbit-r: 200;
+  transform: translate(-50%, -50%) rotate(var(--orbit-angle))
+    translateY(calc(var(--orbit-r) * -1px)) rotate(calc(var(--orbit-angle) * -1));
+}
+
+.sil-orbit-inner {
+  position: relative;
+  width: 100%;
+  will-change: transform;
+}
+
+.sil-orbit-inner img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 18px 36px rgba(44, 42, 38, 0.14));
+  background: transparent;
+  user-select: none;
+}
+
+.sil-float {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 28px rgba(44, 42, 38, 0.1));
+  user-select: none;
+  background: transparent;
+}
+
+.sil-float--a {
+  width: min(26vw, 220px);
+  top: 10%;
+  left: 8%;
+}
+.sil-float--b {
+  width: min(20vw, 170px);
+  top: 14%;
+  right: 10%;
+}
+.sil-float--c {
+  width: min(24vw, 200px);
+  bottom: 12%;
+  left: 16%;
+}
+.sil-float--d {
+  width: min(22vw, 190px);
+  bottom: 16%;
+  right: 12%;
+}
+
+.sil-gate-lockup {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.sil-gate-title {
+  margin: 0;
+  font-family: var(--sil-font-body);
+  font-weight: 500;
+  font-size: clamp(1rem, 2.8vw, 1.35rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--sil-fg);
+}
+
+.sil-enter-circle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  border: 1px solid var(--sil-fg);
+  background: rgba(247, 247, 242, 0.72);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.sil-enter-circle span {
+  font-family: var(--sil-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.35;
+  max-width: 7.5ch;
+  color: var(--sil-fg);
+}
+
+/* ─── Index (legacy hooks) ─── */
+.sil-store {
+  position: relative;
+}
+
+.sil-index-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+  font-family: var(--sil-font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  justify-content: center;
+}
+
+.sil-index-nav span {
+  color: var(--sil-accent);
+  margin-right: 0.35rem;
+}
+
+/* ─── Post-gate hero ─── */
+.sil-hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 4.75rem 0 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, #fffef9 0%, var(--sil-bg) 52%, var(--sil-bg-deep) 100%);
+}
+
+.sil-hero-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sil-hero-anchor {
+  position: absolute;
+  top: 12%;
+  width: min(32vw, 280px);
+  text-align: center;
+  will-change: transform;
+}
+
+.sil-hero-anchor-float {
+  will-change: transform;
+}
+
+.sil-hero-anchor img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 44px rgba(44, 42, 38, 0.14));
+  background: transparent;
+  display: block;
+}
+
+.sil-hero-anchor p {
+  margin: 0.65rem 0 0;
+  font-family: var(--sil-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sil-muted);
+}
+
+.sil-hero-anchor--left {
+  left: max(3vw, 1rem);
+}
+
+.sil-hero-anchor--right {
+  right: max(3vw, 1rem);
+}
+
+/* Center lockup sits above bottom marquees */
+.sil-hero-lockup {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 0 1.25rem;
+  max-width: 52rem;
+  width: 100%;
+  margin-inline: auto;
+  margin-top: auto;
+  margin-bottom: clamp(1.75rem, 5vh, 3.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sil-hero-eyebrow {
+  font-family: var(--sil-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sil-muted);
+  margin: 0 0 0.75rem;
+}
+
+.sil-hero-brand {
+  font-family: var(--sil-font-display);
+  font-size: clamp(3.2rem, 12vw, 7.5rem);
+  letter-spacing: -0.03em;
+  line-height: 0.88;
+  margin: 0 0 0.85rem;
+  font-weight: 500;
+}
+
+.sil-hero-rule {
+  width: min(180px, 40%);
+  height: 1px;
+  background: var(--sil-line);
+  margin: 0 auto 1rem;
+  transform-origin: center;
+}
+
+.sil-hero-sub {
+  margin: 0 0 1rem;
+  color: var(--sil-muted);
+  font-size: 1rem;
+}
+
+.sil-hero-body {
+  margin: 0 auto 1.25rem;
+  max-width: 42rem;
+  color: var(--sil-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.sil-hero-cta {
+  display: inline-flex;
+  margin-inline: auto;
+}
+
+.sil-hero-marquees {
+  position: relative;
+  z-index: 3;
+  margin-top: 0;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* ─── Pinned product ─── */
+.sil-can-section {
+  position: relative;
+  background: var(--sil-bg);
+}
+
+.sil-can-section:nth-of-type(even) {
+  background: var(--sil-bg-deep);
+}
+
+.sil-can-stage {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 4.5rem 1.25rem 2rem;
+  box-sizing: border-box;
+}
+
+.sil-can-num {
+  position: absolute;
+  top: 10%;
+  right: 4%;
+  font-family: var(--sil-font-display);
+  font-size: clamp(5rem, 22vw, 16rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--sil-fg);
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.sil-can-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .sil-can-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+  }
+
+  .sil-can-grid--mirror {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .sil-can-grid--mirror .sil-can-visual {
+    order: 2;
+  }
+
+  .sil-can-grid--mirror .sil-can-label {
+    order: 1;
+    text-align: right;
+  }
+
+  .sil-can-grid--mirror .sil-nutrition,
+  .sil-can-grid--mirror .sil-ings,
+  .sil-can-grid--mirror .sil-scan-row {
+    margin-left: auto;
+  }
+
+  .sil-can-grid--mirror .sil-ings {
+    padding-left: 0;
+    list-style-position: inside;
+  }
+}
+
+.sil-can-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+}
+
+.sil-can-img {
+  width: min(100%, 460px);
+  height: auto;
+  object-fit: contain;
+  will-change: transform;
+  background: transparent;
+  filter: drop-shadow(0 22px 42px rgba(44, 42, 38, 0.12));
+}
+
+.sil-can-note {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-family: var(--sil-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sil-muted);
+  margin: 0;
+}
+
+.sil-can-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.sil-can-ref {
+  font-family: var(--sil-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sil-accent);
+  margin: 0 0 0.35rem;
+}
+
+.sil-can-name {
+  font-family: var(--sil-font-display);
+  font-size: clamp(2rem, 4.8vw, 3.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0 0 0.35rem;
+  font-weight: 500;
+}
+
+.sil-can-role,
+.sil-can-vol {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--sil-muted);
+}
+
+.sil-nutrition {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sil-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.sil-nutrition th,
+.sil-nutrition td {
+  border-top: 1px solid var(--sil-line);
+  padding: 0.45rem 0;
+  text-align: left;
+  font-weight: 400;
+}
+
+.sil-nutrition th {
+  width: 32%;
+  color: var(--sil-muted);
+  text-transform: uppercase;
+}
+
+.sil-ings {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: var(--sil-fg);
+}
+
+.sil-ings li {
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--sil-accent);
+}
+
+.sil-disclaimer {
+  font-size: 0.7rem;
+  line-height: 1.45;
+  color: var(--sil-muted);
+  margin: 0;
+  max-width: 42ch;
+}
+
+.sil-barcode {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: left;
+}
+
+.sil-barcode.is-interactive {
+  cursor: pointer;
+}
+
+.sil-barcode:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.sil-barcode-bars {
+  display: flex;
+  align-items: stretch;
+  height: 42px;
+  gap: 1px;
+}
+
+.sil-barcode-bars span {
+  display: block;
+  background: currentColor;
+  height: 100%;
+}
+
+.sil-barcode-digits {
+  font-family: var(--sil-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+}
+
+.sil-scan-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.25rem;
+  margin-top: 0.35rem;
+}
+
+.sil-scan-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-family: var(--sil-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+}
+
+.sil-scan-cta:disabled {
+  opacity: 0.7;
+}
+
+.sil-scan-progress {
+  margin-top: 0.5rem;
+}
+
+.sil-scan-bar {
+  height: 2px;
+  background: var(--sil-accent);
+  transform-origin: left center;
+  margin-bottom: 0.4rem;
+}
+
+.sil-scan-progress p {
+  margin: 0;
+  font-family: var(--sil-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sil-muted);
+}
+
+.sil-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--sil-fg);
+  background: transparent;
+  color: var(--sil-fg);
+  font-family: var(--sil-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.35rem;
+  width: fit-content;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.sil-cta:hover {
+  background: var(--sil-fg);
+  color: var(--sil-bg);
+}
+
+.sil-cta--fill {
+  background: var(--sil-fg);
+  color: var(--sil-bg);
+}
+
+.sil-cta--fill:hover {
+  background: transparent;
+  color: var(--sil-fg);
+}
+
+/* ─── System ─── */
+.sil-sys-section {
+  position: relative;
+  background: #fffef9;
+}
+
+.sil-sys-stage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1.25rem;
+  padding: 4.5rem 1.25rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.sil-sys-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  align-items: center;
+  flex: 1;
+  width: min(1100px, 100%);
+  margin-inline: auto;
+  min-height: 0;
+}
+
+@media (min-width: 900px) {
+  .sil-sys-layout {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 2.75rem;
+    align-items: center;
+  }
+}
+
+.sil-sys-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
+  margin-top: -1.5rem;
+}
+
+.sil-sys-bands {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sil-sys-line {
+  font-family: var(--sil-font-display);
+  font-size: clamp(1.55rem, 4.6vw, 3.2rem);
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  margin: 0;
+  color: var(--sil-fg);
+}
+
+.sil-sys-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 520px;
+}
+
+@media (min-width: 700px) {
+  .sil-sys-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sil-sys-card {
+  border-top: 1px solid var(--sil-line);
+  padding-top: 0.85rem;
+}
+
+.sil-sys-card h3 {
+  font-family: var(--sil-font-display);
+  font-size: 1.7rem;
+  margin: 0.2rem 0;
+  font-weight: 500;
+}
+
+.sil-sys-card p {
+  margin: 0;
+  color: var(--sil-muted);
+  font-size: 0.9rem;
+}
+
+.sil-sys-media {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 40%, #fffef9 0%, var(--sil-bg-deep) 100%);
+}
+
+@media (min-width: 900px) {
+  .sil-sys-media {
+    min-height: 0;
+    height: min(68vh, 520px);
+    margin-top: auto;
+  }
+}
+
+.sil-sys-video {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.92) contrast(0.96) brightness(1.04);
+}
+
+.sil-sys-media-caption {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.75rem;
+  margin: 0;
+  font-family: var(--sil-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sil-fg);
+  background: rgba(247, 247, 242, 0.72);
+  padding: 0.35rem 0.55rem;
+}
+
+.sil-sys-marquee {
+  margin-inline: -1.25rem;
+  margin-top: 0;
+}
+
+/* ─── Benefits (Staras-style grid) / proof ─── */
+.sil-benefits {
+  padding: 4.5rem 1.25rem 8rem;
+  background: var(--sil-bg);
+  perspective: 1200px;
+}
+
+.sil-benefits-inner {
+  max-width: 1100px;
+  margin-inline: auto;
+  position: relative;
+}
+
+.sil-benefits-title {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2.25rem;
+}
+
+.sil-section-title {
+  font-family: var(--sil-font-display);
+  font-size: clamp(2.2rem, 7vw, 4.2rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem;
+  font-weight: 500;
+}
+
+.sil-benefit-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sil-benefit-chip {
+  appearance: none;
+  border: 1px solid var(--sil-line);
+  background: transparent;
+  color: var(--sil-muted);
+  font-family: var(--sil-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.sil-benefit-chip:hover {
+  border-color: var(--sil-fg);
+  color: var(--sil-fg);
+}
+
+.sil-benefit-chip.is-active {
+  background: var(--sil-fg);
+  border-color: var(--sil-fg);
+  color: var(--sil-bg);
+}
+
+.sil-benefit-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+/* Staras skin-portfolio-three: 2-col + even cards drop lower */
+@media (min-width: 768px) {
+  .sil-benefit-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 2rem;
+    padding-bottom: 8vh;
+  }
+
+  .sil-benefit-card:nth-child(even) {
+    margin-top: 18vh;
+  }
+}
+
+.sil-benefit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.sil-benefit-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--sil-bg-deep);
+}
+
+.sil-benefit-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sil-benefit-card:hover .sil-benefit-media img {
+  transform: scale(1.06);
+}
+
+.sil-benefit-tag {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  font-family: var(--sil-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.55rem;
+  background: rgba(247, 247, 242, 0.92);
+  color: var(--sil-fg);
+  border: 1px solid var(--sil-line);
+}
+
+.sil-benefit-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sil-benefit-year {
+  margin: 0;
+  font-family: var(--sil-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sil-accent);
+}
+
+.sil-benefit-copy h3 {
+  font-family: var(--sil-font-display);
+  font-size: 1.35rem;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.sil-benefit-card--no-title .sil-benefit-copy h3,
+.sil-benefit-grid > .sil-benefit-card:nth-child(5) .sil-benefit-copy h3,
+.sil-benefit-grid > .sil-benefit-card:nth-child(6) .sil-benefit-copy h3 {
+  display: none !important;
+}
+
+.sil-benefit-copy p:last-child {
+  margin: 0;
+  color: var(--sil-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sil-benefit-card:nth-child(even) {
+    margin-top: 0;
+  }
+
+  .sil-benefit-card:hover .sil-benefit-media img {
+    transform: none;
+  }
+}
+
+.sil-proof {
+  background: var(--sil-bg);
+  padding: 4.5rem 1.25rem 5rem;
+}
+
+.sil-proof-shell {
+  width: min(1120px, 100%);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.25rem;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .sil-proof-shell {
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 3.25rem;
+    min-height: min(72vh, 560px);
+  }
+}
+
+.sil-proof-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0 0.25rem;
+}
+
+.sil-proof-eyebrow,
+.sil-proof-title,
+.sil-proof-lead,
+.sil-proof-row,
+.sil-proof .sil-disclaimer,
+.sil-proof-media,
+.sil-proof-media-tag {
+  will-change: transform, opacity;
+}
+
+.sil-proof-eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: var(--sil-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sil-accent);
+}
+
+.sil-proof-title {
+  font-family: var(--sil-font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin: 0 0 0.85rem;
+  font-weight: 500;
+}
+
+.sil-proof-lead {
+  margin: 0 0 1.75rem;
+  max-width: 34ch;
+  color: var(--sil-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.sil-proof-rows {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--sil-line);
+}
+
+.sil-proof-row {
+  display: grid;
+  grid-template-columns: 2.4rem 5.5rem 1fr;
+  gap: 0.65rem;
+  align-items: baseline;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--sil-line);
+}
+
+.sil-proof-num {
+  font-family: var(--sil-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--sil-accent);
+}
+
+.sil-proof-key {
+  font-family: var(--sil-font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sil-muted);
+}
+
+.sil-proof-val {
+  font-size: 0.95rem;
+  color: var(--sil-fg);
+  line-height: 1.35;
+}
+
+.sil-proof .sil-disclaimer {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--sil-muted);
+}
+
+.sil-proof-media {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  background: var(--sil-bg-deep);
+}
+
+@media (min-width: 900px) {
+  .sil-proof-media {
+    min-height: 100%;
+  }
+}
+
+.sil-proof-video {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.9) contrast(0.97) brightness(1.03);
+}
+
+.sil-proof-media-veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(247, 247, 242, 0.28) 0%, transparent 35%),
+    linear-gradient(0deg, rgba(239, 236, 228, 0.35) 0%, transparent 40%);
+}
+
+.sil-proof-media-tag {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  font-family: var(--sil-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sil-fg);
+  background: rgba(247, 247, 242, 0.82);
+  border: 1px solid var(--sil-line);
+  padding: 0.4rem 0.65rem;
+}
+
+/* ─── Receipt / Let's talk (Silencio checkout) ─── */
+.sil-cart {
+  padding: 4.5rem 1.25rem 4rem;
+  background: var(--sil-bg-deep);
+}
+
+.sil-cart-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+@media (min-width: 860px) {
+  .sil-cart-split {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 3.5rem;
+  }
+}
+
+.sil-receipt {
+  width: 100%;
+  margin: 0;
+  padding: 1.5rem 1.25rem 1.75rem;
+  background: #fffef9;
+  border: 1px solid var(--sil-line);
+  box-shadow: 0 24px 60px rgba(44, 42, 38, 0.08);
+  text-align: left;
+  font-family: var(--sil-font-mono);
+}
+
+.sil-receipt-thanks {
+  font-family: var(--sil-font-display);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  margin: 0 0 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.sil-receipt-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.sil-receipt-rule {
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--sil-muted);
+  font-size: 0.7rem;
+  margin: 0.5rem 0;
+  user-select: none;
+}
+
+.sil-receipt-thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0 1rem;
+}
+
+.sil-receipt-thumb {
+  width: 88px;
+  height: 110px;
+  object-fit: contain;
+  background: transparent;
+}
+
+.sil-receipt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sil-receipt-row {
+  padding: 0.7rem 0;
+  border-top: 1px dashed var(--sil-line);
+  font-size: 0.82rem;
+}
+
+.sil-receipt-row strong {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sil-receipt-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  color: var(--sil-muted);
+}
+
+.sil-talk {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+@media (min-width: 860px) {
+  .sil-talk {
+    text-align: left;
+  }
+}
+
+.sil-talk-title {
+  font-family: var(--sil-font-display);
+  font-size: clamp(2.8rem, 10vw, 5.5rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin: 0 0 0.75rem;
+  font-weight: 500;
+}
+
+.sil-talk-sub {
+  max-width: 28ch;
+  margin: 0 auto 1.75rem;
+  color: var(--sil-muted);
+}
+
+@media (min-width: 860px) {
+  .sil-talk-sub {
+    margin-left: 0;
+  }
+}
+
+.sil-talk-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 860px) {
+  .sil-talk-ctas {
+    justify-content: flex-start;
+  }
+}
+
+/* ─── Contact right drawer ─── */
+.sil-drawer-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  pointer-events: none;
+}
+
+.sil-drawer-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(44, 42, 38, 0.35);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.sil-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  width: min(100%, 440px);
+  background: #fffef9;
+  border-left: 1px solid var(--sil-line);
+  box-shadow: -24px 0 60px rgba(44, 42, 38, 0.12);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  color: var(--sil-fg);
+  overflow: hidden;
+}
+
+.sil-drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--sil-line);
+  flex-shrink: 0;
+}
+
+.sil-drawer-title {
+  font-family: var(--sil-font-display);
+  font-size: 1.85rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.sil-drawer-close {
+  appearance: none;
+  border: 1px solid var(--sil-line);
+  background: transparent;
+  color: var(--sil-fg);
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.sil-drawer-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.25rem;
+  padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+}
+
+.sil-contact-eyebrow {
+  font-family: var(--sil-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sil-accent);
+  margin: 0 0 0.35rem;
+}
+
+.sil-contact-lead {
+  color: var(--sil-muted);
+  font-size: 0.88rem;
+  margin: 0 0 1rem;
+  line-height: 1.45;
+}
+
+.sil-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.sil-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 420px) {
+  .sil-contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sil-field {
+  width: 100%;
+  border: 1px solid var(--sil-line);
+  background: var(--sil-bg);
+  color: var(--sil-fg);
+  font-family: var(--sil-font-body);
+  font-size: 0.9rem;
+  padding: 0.85rem 1rem;
+  outline: none;
+  border-radius: 0;
+}
+
+.sil-field:focus {
+  border-color: var(--sil-accent);
+}
+
+.sil-field--area {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.sil-field--otp {
+  letter-spacing: 0.35em;
+}
+
+.sil-field-hint {
+  margin: -0.35rem 0 0;
+  font-size: 0.72rem;
+  color: var(--sil-muted);
+}
+
+.sil-field-error {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #a33f3f;
+}
+
+.sil-otp {
+  border: 1px solid var(--sil-accent);
+  background: rgba(138, 154, 123, 0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sil-otp p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.sil-otp-resend {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--sil-accent);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  width: fit-content;
+}
+
+.sil-contact-submit {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.sil-contact-success {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.sil-contact-queued {
+  font-family: var(--sil-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sil-accent);
+  margin: 0 0 0.5rem;
+}
+
+.sil-contact-success h3 {
+  font-family: var(--sil-font-display);
+  font-size: 1.7rem;
+  margin: 0 0 0.75rem;
+  font-weight: 500;
+}
+
+.sil-contact-success p {
+  color: var(--sil-muted);
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .sil-marquee-track {
+    animation: none;
+  }
+
+  .sil-can-stage,
+  .sil-sys-stage {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sil-gate {
+    cursor: pointer;
+  }
+
+  .sil-enter-circle {
+    position: absolute;
+    left: 50% !important;
+    top: 72% !important;
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 699px) {
+  .sil-gate {
+    cursor: pointer;
+  }
+
+  .sil-orbit {
+    width: min(86vw, 360px);
+    height: min(86vw, 360px);
+  }
+
+  .sil-orbit-item {
+    width: min(30vw, 120px);
+  }
+
+  .sil-hero-anchor {
+    width: min(38vw, 150px);
+    top: 26%;
+  }
+
+  .sil-hero-anchor p {
+    display: none;
+  }
+
+  .sil-enter-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .sil-can-img {
+    width: min(100%, 300px);
+  }
+
+  .sil-can-stage {
+    padding-top: 5rem;
+    align-items: flex-start;
+  }
+
+  .sil-proof-video {
+    min-height: 240px;
+  }
+
+  .sil-proof-row {
+    grid-template-columns: 2rem 4.5rem 1fr;
+    gap: 0.45rem;
+  }
+
+  .sil-sys-copy {
+    padding-top: 0.75rem;
+    margin-top: 0;
+  }
+
+  .sil-sys-video {
+    min-height: 200px;
+    max-height: 240px;
+  }
+
+  .sil-float--a,
+  .sil-hero-pos--a {
+    width: 30vw;
+    top: 10%;
+    left: 4%;
+  }
+}
+
+@media (pointer: coarse) {
+  .sil-gate {
+    cursor: pointer;
+  }
+}

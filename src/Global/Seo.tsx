@@ -50,6 +50,11 @@ const META: Record<string, PageMeta> = {
     description:
       "Organic and clean-label private-label manufacturing catalog. MOQ and manufacturing on inquiry.",
   },
+  "/skincare": {
+    title: "Skincare — ALFURIN® | Zephyr",
+    description:
+      "ALFURIN® moisturizing lotion and cream for psoriasis-prone skin, partnered through Zephyr. Private-label and distribution MOQ enquiries.",
+  },
 };
 
 const FALLBACK: PageMeta = META["/"]!;

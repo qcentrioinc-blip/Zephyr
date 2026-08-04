@@ -6,6 +6,7 @@ const routeLabels: Record<string, string> = {
   '/herbaceutical': 'Herbaceutical',
   '/nutraceutical': 'Nutraceutical',
   '/organic': 'Organic',
+  '/skincare': 'Skincare',
   '/production': 'Production',
   '/research': 'R&D',
 };
@@ -14,6 +15,7 @@ const categoryTitles: Record<string, string> = {
   herbaceutical: 'Herbaceutical',
   nutraceutical: 'Nutraceutical',
   organic: 'Organic',
+  skincare: 'Skincare',
 };
 
 const formatSegment = (segment: string) =>
@@ -25,7 +27,13 @@ const formatSegment = (segment: string) =>
 const Breadcrumbs = () => {
   const location = useLocation();
 
-  if (location.pathname === '/' || location.pathname === '/contact') return null;
+  if (
+    location.pathname === '/' ||
+    location.pathname === '/contact' ||
+    location.pathname === '/skincare'
+  ) {
+    return null;
+  }
 
   const segments = location.pathname.split('/').filter(Boolean);
   const crumbs: Array<{ label: string; to?: string }> = [{ label: 'Home', to: '/' }];
