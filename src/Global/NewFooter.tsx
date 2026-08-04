@@ -65,7 +65,7 @@ const NewFooter = () => {
         src="/flower.svg"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 -bottom-4 h-full w-full select-none object-contain object-right-bottom opacity-4"
+        className="pointer-events-none absolute right-0 -bottom-4 h-full w-full select-none object-contain object-right-bottom opacity-2"
       />
 
       <div className="zephyr-container relative z-10">
