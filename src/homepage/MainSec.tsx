@@ -416,11 +416,9 @@ const MainSec: React.FC = () => {
                 className="absolute inset-0 flex items-center justify-center bg-transparent"
                 style={
                   useLiteMotion
-                    ? { willChange: "transform, opacity" }
+                    ? undefined
                     : {
                         transformStyle: "preserve-3d",
-                        willChange: "transform, opacity",
-                        backfaceVisibility: "hidden",
                       }
                 }
               >
@@ -433,6 +431,7 @@ const MainSec: React.FC = () => {
                   fetchPriority={current === 0 ? "high" : "auto"}
                   decoding="async"
                   className="
+                    zephyr-product-cutout
                     pointer-events-none
                     select-none
                     h-auto
@@ -441,8 +440,6 @@ const MainSec: React.FC = () => {
                     bg-transparent
                     object-contain
                     [background-color:transparent]
-                    drop-shadow-[0_24px_48px_rgba(0,0,0,0.18)]
-                    sm:drop-shadow-[0_50px_100px_rgba(0,0,0,0.25)]
                   "
                 />
               </motion.div>

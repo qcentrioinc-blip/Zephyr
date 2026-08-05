@@ -229,7 +229,7 @@ const Content = () => {
   };
 
   const fieldClass =
-    "w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 text-sm text-white placeholder:text-white/35 outline-none transition focus:border-[#11BB8A]/50 focus:bg-white/15 focus:ring-2 focus:ring-[#11BB8A]/20";
+    "w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-[#113227] placeholder:text-gray-400 outline-none transition focus:border-[#11BB8A] focus:bg-white focus:ring-2 focus:ring-[#11BB8A]/20";
 
   const showOtpField =
     otpSent && verifiedEmail === form.email.trim().toLowerCase();
@@ -263,24 +263,28 @@ const Content = () => {
             </P>
           </div>
 
-          <div className="rounded-[32px] border border-white/15 bg-white/10 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8">
+          <div className="rounded-[32px] border border-white/60 bg-white/90 p-6 shadow-[0_24px_64px_rgba(0,0,0,0.18)] backdrop-blur-sm sm:p-8">
             <div className="mb-6 flex w-full items-center justify-center gap-2 sm:gap-3">
               {([1, 2] as Step[]).map((n, idx) => (
                 <div key={n} className="flex items-center gap-2 sm:gap-2.5">
                   <span
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
                       step >= n
-                        ? "bg-[#11BB8A] text-[#0d241c]"
-                        : "bg-white/10 text-white/50"
+                        ? "bg-[#11BB8A] text-white"
+                        : "bg-gray-200 text-gray-600"
                     }`}
                   >
                     {n}
                   </span>
-                  <span className="hidden whitespace-nowrap text-xs text-white/60 sm:inline">
+                  <span
+                    className={`hidden whitespace-nowrap text-xs font-semibold sm:inline ${
+                      step >= n ? "text-[#113227]" : "text-gray-700"
+                    }`}
+                  >
                     {STEP_LABELS[n]}
                   </span>
                   {idx < 1 && (
-                    <div className="mx-1 h-px w-6 bg-white/15 sm:mx-2 sm:w-10" />
+                    <div className="mx-1 h-[2px] w-6 bg-gray-500 sm:mx-2 sm:w-10" />
                   )}
                 </div>
               ))}
@@ -299,8 +303,8 @@ const Content = () => {
                   aria-live="polite"
                 >
                   <CelebrationBurst reduceMotion={reduceMotion} />
-                  <H3 className="text-white">Enquiry received</H3>
-                  <P className="mx-auto mt-3 max-w-sm text-white/70">
+                  <H3 className="text-[#113227]">Enquiry received</H3>
+                  <P className="mx-auto mt-3 max-w-sm text-gray-600">
                     Thank you for contacting Zephyr. Your manufacturing inquiry
                     has been received. Our team will follow up on your company
                     email within one to two business days.
@@ -309,13 +313,13 @@ const Content = () => {
                     <button
                       type="button"
                       onClick={resetForm}
-                      className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#113227] transition hover:bg-[#EDFAEB]"
+                      className="rounded-full bg-[#113227] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0d281f]"
                     >
                       Send another
                     </button>
                     <Link
                       to="/"
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold text-[#113227] transition hover:border-[#11BB8A] hover:text-[#11BB8A]"
                     >
                       <Home className="h-4 w-4" />
                       Back to Home
@@ -379,9 +383,9 @@ const Content = () => {
                     className={fieldClass}
                   />
                   {emailError ? (
-                    <p className="text-sm text-red-300">{emailError}</p>
+                    <p className="text-sm text-red-600">{emailError}</p>
                   ) : (
-                    <p className="text-xs text-white/45">
+                    <p className="text-xs text-gray-500">
                       Business domains only. Free mail providers are blocked.
                     </p>
                   )}
@@ -437,10 +441,10 @@ const Content = () => {
                   />
 
                   {showOtpField && (
-                    <div className="space-y-3 rounded-2xl border border-[#11BB8A]/30 bg-[#11BB8A]/10 p-4">
-                      <p className="text-sm text-white/80">
+                    <div className="space-y-3 rounded-2xl border border-[#11BB8A]/25 bg-[#EDFAEB]/80 p-4">
+                      <p className="text-sm text-gray-700">
                         We sent a 6-digit code to{" "}
-                        <span className="font-medium text-white">
+                        <span className="font-medium text-[#113227]">
                           {form.email.trim()}
                         </span>
                         . Enter it below to verify and send your inquiry.
@@ -463,7 +467,7 @@ const Content = () => {
                         type="button"
                         disabled={status === "loading"}
                         onClick={handleResendOtp}
-                        className="text-sm text-[#9ad485] transition hover:text-[#b8e9a8] disabled:opacity-70"
+                        className="text-sm font-medium text-[#547A3D] transition hover:text-[#11BB8A] disabled:opacity-70"
                       >
                         Resend code
                       </button>
@@ -471,12 +475,12 @@ const Content = () => {
                   )}
 
                   {formError && (
-                    <p className="text-sm text-red-300">{formError}</p>
+                    <p className="text-sm text-red-600">{formError}</p>
                   )}
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="mt-2 w-full rounded-full bg-[#11BB8A] py-3.5 text-sm font-semibold text-[#0d241c] transition hover:bg-[#14d09a] disabled:opacity-70"
+                    className="mt-2 w-full rounded-full bg-[#113227] py-3.5 text-sm font-semibold text-white transition hover:bg-[#0d281f] disabled:opacity-70"
                   >
                     {status === "loading"
                       ? showOtpField

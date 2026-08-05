@@ -1,6 +1,11 @@
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { H1, H3, H4, P } from "../Global/Typography/Typo";
 
@@ -23,7 +28,7 @@ const panels: Panel[] = [
     p2: "Our product development manager and laboratory teams turn briefs into workable formulas ready for pilot evaluation.",
   },
   {
-    imgUrl: "/Research/Research1.png",
+    imgUrl: "/Generated/rd-pilot-validate.webp",
     subheading: "Pilot & validate",
     heading: "Pilot, stability, and analytics.",
     title: "Pilot trials, stability, and analytics",
@@ -66,12 +71,48 @@ interface TextParallaxContentProps {
   children: ReactNode;
 }
 
+/**
+ * Scroll choreography (one sticky viewport):
+ * 1) Dark overlay + text fade in / scroll up
+ * 2) Text + overlay both leave — image stays fully clear
+ * 3) Near the end, ONLY the photo scales down (overlay is already gone / not scaled)
+ */
 const TextParallaxContent = ({
   imgUrl,
   subheading,
   heading,
   children,
 }: TextParallaxContentProps) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Text: appear early, hold, then leave
+  const textY = useTransform(scrollYProgress, [0, 0.45], [120, -160]);
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.28, 0.42],
+    [0, 1, 1, 0],
+  );
+
+  // Overlay only during text; pinned at 0 for the entire clear + scale phase
+  const veilOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.28, 0.4, 0.42, 1],
+    [0.7, 0.7, 0.7, 0.12, 0, 0],
+  );
+
+  // Hard-remove overlay before scale starts so Safari can’t paint a residual veil
+  const [showVeil, setShowVeil] = useState(true);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setShowVeil(v < 0.45);
+  });
+
+  // Scale the photo layer only — never the overlay
+  const imageScale = useTransform(scrollYProgress, [0.72, 1], [1, 0.85]);
+
   return (
     <div
       style={{
@@ -79,81 +120,47 @@ const TextParallaxContent = ({
         paddingRight: IMG_PADDING,
       }}
     >
-      <div className="relative h-[150vh]">
-        <StickyImage imgUrl={imgUrl} />
-        <OverlayCopy heading={heading} subheading={subheading} />
+      <div ref={sectionRef} className="relative h-[220vh]">
+        <div
+          className="sticky z-0 overflow-hidden rounded-3xl"
+          style={{
+            height: `calc(100dvh - ${IMG_PADDING * 2}px)`,
+            top: IMG_PADDING,
+          }}
+        >
+          {/* Photo scales on exit; no dark layer here */}
+          <motion.div
+            style={{
+              backgroundImage: `url(${imgUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              scale: imageScale,
+            }}
+            className="absolute inset-0 origin-center"
+          />
+
+          {/* Unmounted after text leaves — cannot reappear during scale-down */}
+          {showVeil ? (
+            <motion.div
+              className="pointer-events-none absolute inset-0 z-[1] bg-black"
+              style={{ opacity: veilOpacity }}
+              aria-hidden
+            />
+          ) : null}
+
+          <motion.div
+            style={{ y: textY, opacity: textOpacity }}
+            className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-white"
+          >
+            <H4 className="mb-2 text-center text-white md:mb-4">{subheading}</H4>
+            <H1 className="text-center text-[32px] sm:text-[44px] md:text-[56px] lg:text-[72px] xl:text-[84px] !leading-[1.05]">
+              {heading}
+            </H1>
+          </motion.div>
+        </div>
       </div>
       {children}
     </div>
-  );
-};
-
-interface StickyImageProps {
-  imgUrl: string;
-}
-
-const StickyImage = ({ imgUrl }: StickyImageProps) => {
-  const targetRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["end end", "end start"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-
-  return (
-    <motion.div
-      style={{
-        backgroundImage: `url(${imgUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: `calc(100vh - ${IMG_PADDING * 2}px)`,
-        top: IMG_PADDING,
-        scale,
-      }}
-      ref={targetRef}
-      className="sticky z-0 overflow-hidden rounded-3xl"
-    >
-      <motion.div
-        className="absolute inset-0 bg-neutral-950/70"
-        style={{
-          opacity,
-        }}
-      />
-    </motion.div>
-  );
-};
-
-interface OverlayCopyProps {
-  subheading: string;
-  heading: string;
-}
-
-const OverlayCopy = ({ subheading, heading }: OverlayCopyProps) => {
-  const targetRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [250, -250]);
-  const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
-
-  return (
-    <motion.div
-      style={{
-        y,
-        opacity,
-      }}
-      ref={targetRef}
-      className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
-    >
-      <H4 className="mb-2 text-center text-white md:mb-4 ">{subheading}</H4>
-      <H1 className="text-center text-[32px] sm:text-[44px] md:text-[56px] lg:text-[72px] xl:text-[84px] !leading-[1.05]">
-        {heading}
-      </H1>
-    </motion.div>
   );
 };
 

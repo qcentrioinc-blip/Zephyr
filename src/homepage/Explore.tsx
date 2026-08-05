@@ -254,7 +254,6 @@ function MobileArcLayout({ items }: { items: ExploreItem[] }) {
               initial="initial"
               animate="animate"
               exit="exit"
-              style={{ willChange: "transform, opacity" }}
             >
               <motion.div
                 className="h-full w-full rounded-full"

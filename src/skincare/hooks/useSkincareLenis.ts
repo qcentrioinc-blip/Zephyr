@@ -30,6 +30,7 @@ export function useSkincareLenis(enabled: boolean) {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(ticker);
+    // Disable lag smoothing only while Lenis drives the ticker (restore on leave).
     gsap.ticker.lagSmoothing(0);
 
     document.documentElement.classList.add("skincare-lenis");
@@ -44,8 +45,11 @@ export function useSkincareLenis(enabled: boolean) {
     return () => {
       window.removeEventListener(SKINCARE_CONTACT_LOCK, onLock);
       gsap.ticker.remove(ticker);
+      // Restore GSAP defaults — leaving this at 0 makes every later page scroll stuttery.
+      gsap.ticker.lagSmoothing(500, 33);
       lenis.destroy();
       document.documentElement.classList.remove("skincare-lenis");
+      // Only kill triggers created on this page (do not wipe unrelated ST if any).
       ScrollTrigger.getAll().forEach((t) => t.kill());
       ScrollTrigger.refresh();
     };

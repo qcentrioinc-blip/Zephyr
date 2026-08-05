@@ -17,8 +17,9 @@ import Breadcrumbs from './Global/Breadcrumbs'
 import ScrollToTop from './Global/ScrollToTop'
 import ScrollToTopButton from './Global/ScrollToTopButton'
 import Seo from './Global/Seo'
+/** Eager: first paint must not wait on a lazy chunk (Mac Safari often stuck on “Loading…”). */
+import Homepage from './homepage/Homepage'
 
-const Homepage = lazy(() => import('./homepage/Homepage'))
 const Research = lazy(() => import('./research/Research'))
 const Production = lazy(() => import('./production/Production'))
 const Contact = lazy(() => import('./contact/Contact'))
@@ -71,13 +72,29 @@ function AppContent() {
     }
   }, [])
 
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+  // Warm fonts + layout after route commit so first scroll isn't a decode/layout storm.
+  useEffect(() => {
+    if (!contentReady) return
+    let cancelled = false
+    const warm = async () => {
+      try {
+        await document.fonts?.ready
+      } catch {
+        /* ignore */
+      }
+      if (cancelled) return
+      requestAnimationFrame(() => {
+        void document.body.offsetHeight
+      })
+    }
+    void warm()
+    return () => {
+      cancelled = true
+    }
+  }, [contentReady, pathname])
 
   const markReady = useCallback(() => {
     setContentReady(true)
-    window.scrollTo(0, 0)
   }, [])
 
   const markPending = useCallback(() => {

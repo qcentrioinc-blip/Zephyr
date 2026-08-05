@@ -40,19 +40,21 @@ export default function StoreHero({ reduced, active }: Props) {
         )
         .fromTo(
           [left, right],
-          { opacity: 0, scale: 0.94 },
+          { autoAlpha: 0, scale: 0.94 },
           {
-            opacity: 1,
+            autoAlpha: 1,
             scale: 1,
             stagger: 0.12,
             duration: 1.1,
             ease: "power3.out",
+            force3D: false,
           },
           0.1,
         );
 
       gsap.to([left, right], {
         y: (i) => (i === 0 ? -32 : 32),
+        force3D: false,
         ease: "none",
         scrollTrigger: {
           trigger: rootRef.current,
@@ -64,6 +66,7 @@ export default function StoreHero({ reduced, active }: Props) {
 
       gsap.to(floats, {
         y: (i) => (i === 0 ? -8 : 8),
+        force3D: false,
         duration: 3.6,
         yoyo: true,
         repeat: -1,

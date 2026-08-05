@@ -40,10 +40,7 @@ function MarqueeRow({
 
   return (
     <div className="zephyr-marquee-pause relative overflow-hidden">
-      <div
-        className={`flex w-max gap-3 sm:gap-4 ${animClass}`}
-        style={{ willChange: "transform" }}
-      >
+      <div className={`flex w-max gap-3 sm:gap-4 ${animClass}`}>
         {loop.map((item, index) => (
           <article
             key={`${item.name}-${index}`}
@@ -77,10 +74,10 @@ export default function ProductionShowcase() {
       <div className="zephyr-container">
         <motion.div
           className="mx-auto max-w-3xl text-center"
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0.001, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.15, margin: "100px 0px" }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
           <H2 className="text-black">Dosage forms and finished-goods packaging</H2>
           {/* <P className="mx-auto mt-3 max-w-2xl text-gray-600">
@@ -91,10 +88,10 @@ export default function ProductionShowcase() {
 
         <motion.div
           className="mt-8 space-y-8 md:mt-10 md:space-y-10"
-          initial={{ opacity: 0, y: 22 }}
+          initial={{ opacity: 0.001, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, amount: 0.1, margin: "100px 0px" }}
+          transition={{ duration: 0.45, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
         >
           <div>
             <H3 className="mb-4 text-[#113227]">Dosage formats</H3>

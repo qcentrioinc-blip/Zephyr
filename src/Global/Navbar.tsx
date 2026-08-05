@@ -33,9 +33,9 @@ const NAV_LINKS: NavLinkItem[] = [
 ];
 
 const DOCK_MAX_DISTANCE = 140;
-const DOCK_MAX_SCALE = 1.08;
+const DOCK_MAX_SCALE = 1.06;
 const DOCK_MAX_LIFT = -2;
-const DROPDOWN_CLOSE_DELAY = 150;
+const DROPDOWN_CLOSE_DELAY = 280;
 const SCROLL_THRESHOLD = 12;
 const EASE_PREMIUM = [0.22, 1, 0.36, 1] as const;
 const SPRING_SNAPPY = { type: 'spring', stiffness: 420, damping: 38, mass: 0.7 } as const;
@@ -58,10 +58,13 @@ interface DockNavItemProps {
   isActive: boolean;
   mouseX: ReturnType<typeof useMotionValue<number>>;
   reduceMotion: boolean;
+  dockEnabled: boolean;
   onOpenDropdown?: () => void;
   onCloseDropdown?: () => void;
   isDropdownOpen?: boolean;
   onContactIntercept?: () => void;
+  /** Immediate close (click toggle) vs delayed close (mouse leave). */
+  onToggleDropdown?: () => void;
 }
 
 const DockNavItem = ({
@@ -69,15 +72,17 @@ const DockNavItem = ({
   isActive,
   mouseX,
   reduceMotion,
+  dockEnabled,
   onOpenDropdown,
   onCloseDropdown,
   isDropdownOpen,
   onContactIntercept,
+  onToggleDropdown,
 }: DockNavItemProps) => {
   const itemRef = useRef<HTMLDivElement>(null);
 
   const distance = useTransform(mouseX, (value) => {
-    if (reduceMotion) return DOCK_MAX_DISTANCE;
+    if (reduceMotion || !dockEnabled) return DOCK_MAX_DISTANCE;
     const bounds = itemRef.current?.getBoundingClientRect();
     if (!bounds) return DOCK_MAX_DISTANCE;
     const center = bounds.left + bounds.width / 2;
@@ -100,10 +105,19 @@ const DockNavItem = ({
 
   const linkClassName = `
               relative z-10 flex items-center gap-1 px-3 xl:px-5 py-2.5 rounded-full text-[13px] xl:text-[14.5px]
-              font-medium whitespace-nowrap transition-all duration-300 ease-out
+              font-medium whitespace-nowrap transition-colors duration-300 ease-out
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2
               ${isActive ? 'text-white font-semibold' : 'text-[#4A4B4F] hover:text-black'}
             `;
+
+  const activePill = isActive ? (
+    <motion.span
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
+      className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
+    />
+  ) : null;
 
   return (
     <div
@@ -112,22 +126,23 @@ const DockNavItem = ({
       onMouseEnter={() => link.hasDropdown && onOpenDropdown?.()}
       onMouseLeave={() => link.hasDropdown && onCloseDropdown?.()}
     >
-      <motion.div style={{ scale, y }} className="relative">
+      {/*
+        pointer-events-none on the scaled layer: Safari hit-tests the pre-transform box
+        and steals clicks from Products links when neighbors magnify.
+      */}
+      <motion.div
+        style={dockEnabled && !reduceMotion ? { scale, y } : undefined}
+        className="relative pointer-events-none"
+      >
         {link.hasDropdown ? (
           <button
             type="button"
             aria-haspopup="menu"
             aria-expanded={isDropdownOpen}
-            className={linkClassName}
+            onClick={() => onToggleDropdown?.()}
+            className={`${linkClassName} pointer-events-auto`}
           >
-            {isActive && (
-              <motion.span
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
-                className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-              />
-            )}
+            {activePill}
             <span className="relative z-10">{link.name}</span>
             <motion.span
               animate={{ rotate: isDropdownOpen ? 180 : 0 }}
@@ -141,71 +156,20 @@ const DockNavItem = ({
           <button
             type="button"
             onClick={onContactIntercept}
-            className={linkClassName}
+            className={`${linkClassName} pointer-events-auto`}
           >
-            {isActive && (
-              <motion.span
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
-                className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-              />
-            )}
+            {activePill}
             <span className="relative z-10">{link.name}</span>
           </button>
         ) : (
-          <Link to={link.path} className={linkClassName}>
-            {isActive && (
-              <motion.span
-                initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={reduceMotion ? { duration: 0 } : SPRING_SNAPPY}
-                className="absolute inset-0 z-0 rounded-full bg-[#111315] shadow-[0_8px_24px_rgba(0,0,0,0.16)]"
-              />
-            )}
+          <Link to={link.path} className={`${linkClassName} pointer-events-auto`}>
+            {activePill}
             <span className="relative z-10">{link.name}</span>
           </Link>
         )}
       </motion.div>
 
-      {link.hasDropdown && (
-        <AnimatePresence>
-          {isDropdownOpen && (
-            <motion.div
-              role="menu"
-              initial={{ opacity: 0, y: -4, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -4, scale: 0.97 }}
-              transition={{ duration: 0.22, ease: EASE_PREMIUM }}
-              className="absolute top-full right-0 pt-3 w-64 origin-top"
-            >
-              <div className="bg-white border border-gray-100 rounded-xl shadow-xl shadow-black/5 overflow-hidden">
-                {PRODUCT_LINKS.map((product, index) => (
-                  <motion.div
-                    key={product.path}
-                    initial={{ opacity: 0, x: -6 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.18, delay: index * 0.03, ease: EASE_PREMIUM }}
-                  >
-                    <Link
-                      to={product.path}
-                      role="menuitem"
-                      className="flex items-center justify-between gap-2 px-5 py-3 text-sm text-[#4A4B4F] hover:bg-gray-50 hover:text-black transition-colors font-medium"
-                    >
-                      <span>{product.name}</span>
-                      {product.badge && (
-                        <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                          {product.badge}
-                        </span>
-                      )}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      )}
+      {/* Dropdown stays outside scaled layer + outside backdrop-blur (rendered via portal slot below). */}
     </div>
   );
 };
@@ -386,6 +350,11 @@ const Navbar = () => {
     setIsProductsOpen(true);
   };
 
+  const toggleProductsDropdown = () => {
+    clearCloseTimeout();
+    setIsProductsOpen((open) => !open);
+  };
+
   const scheduleCloseProductsDropdown = () => {
     clearCloseTimeout();
     closeTimeoutRef.current = setTimeout(() => {
@@ -402,9 +371,10 @@ const Navbar = () => {
     if (!isProductsOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (pillRef.current && !pillRef.current.contains(event.target as Node)) {
-        setIsProductsOpen(false);
-      }
+      const target = event.target as Node;
+      const inPill = pillRef.current?.contains(target);
+      const inMenu = document.getElementById('nav-products-menu')?.contains(target);
+      if (!inPill && !inMenu) setIsProductsOpen(false);
     };
 
     const handleEscape = (event: KeyboardEvent) => {
@@ -424,23 +394,20 @@ const Navbar = () => {
   const isProductsActive = PRODUCT_LINKS.some((p) => p.path === location.pathname);
   const isHome = location.pathname === '/';
   const transparent = isHome && !scrolled;
+  // Freeze dock magnification while the menu is open — prevents Safari click misses.
+  const dockEnabled = !isProductsOpen;
 
   return (
-    <motion.nav
-      initial={false}
-      animate={{
-        backgroundColor: transparent ? 'rgba(255,255,255,0)' : '#ffffff',
-        boxShadow: transparent
-          ? '0 0 0 rgba(0,0,0,0)'
+    <nav
+      className={`fixed top-0 z-[100] w-full px-4 py-2 transition-[background-color,box-shadow] duration-300 ease-out sm:px-6 lg:px-8 ${
+        transparent
+          ? 'bg-transparent shadow-none'
           : scrolled
-            ? '0 1px 20px rgba(0,0,0,0.06)'
-            : '0 0 0 rgba(0,0,0,0)',
-      }}
-      transition={{ duration: 0.35, ease: EASE_PREMIUM }}
-      className="fixed top-0 z-[100] w-full px-4 py-2 sm:px-6 lg:px-8"
+            ? 'bg-white shadow-[0_1px_20px_rgba(0,0,0,0.06)]'
+            : 'bg-white shadow-none'
+      }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        {/* LEFT: logo — pharmaceutical capsule halo (sized to match dock pill) */}
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-4">
         <Link
           to="/"
           className="group/logo relative z-10 flex shrink-0 items-center px-2.5 py-1.5"
@@ -450,15 +417,12 @@ const Navbar = () => {
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-0 overflow-hidden rounded-full"
           >
-            {/* Capsule body (dosage-form silhouette) */}
             <span className="absolute inset-[1px] rounded-full bg-white shadow-[0_1px_10px_rgba(17,50,39,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#11BB8A]/25" />
-            {/* Soft clinical glow */}
             <span
               className={`absolute -inset-0.5 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(17,187,138,0.16)_0%,transparent_68%)] ${
                 reduceMotion ? '' : 'zephyr-logo-capsule-pulse'
               }`}
             />
-            {/* Sterile glass light sweep */}
             {!reduceMotion && (
               <span className="zephyr-logo-capsule-sheen absolute inset-0 rounded-full" />
             )}
@@ -467,41 +431,108 @@ const Navbar = () => {
             src="/Global/Logo.png"
             alt="Zephyr Logo"
             transition={{ duration: 0.25, ease: EASE_PREMIUM }}
-            className="relative z-10 h-9 w-auto object-contain sm:h-10"
+            className="relative z-10 h-11 w-auto object-contain sm:h-12 md:h-14"
           />
         </Link>
 
-        {/* RIGHT desktop: nav links */}
+        {/*
+          Solid (not backdrop-blur) pill: Safari backdrop-filter ancestors break
+          hit-testing on absolutely positioned dropdown children.
+        */}
         <div
           ref={pillRef}
           onMouseMove={(e) => mouseX.set(e.clientX)}
-          onMouseLeave={() => mouseX.set(Infinity)}
-          className={`hidden xl:flex items-center rounded-full px-1.5 py-1 transition-colors duration-300 ${
+          onMouseLeave={() => {
+            mouseX.set(Infinity);
+            scheduleCloseProductsDropdown();
+          }}
+          className={`relative hidden xl:flex items-center rounded-full px-1.5 py-1 transition-colors duration-300 ${
             transparent
-              ? 'bg-white/55 shadow-sm backdrop-blur-md'
+              ? 'bg-white/90 shadow-sm'
               : 'bg-[#F1F3F4] shadow-sm'
           }`}
         >
-          {NAV_LINKS.map((link) => (
-            <DockNavItem
-              key={link.name}
-              link={link}
-              isActive={
-                link.hasDropdown
-                  ? isProductsActive
-                  : location.pathname === link.path
-              }
-              mouseX={mouseX}
-              reduceMotion={reduceMotion}
-              isDropdownOpen={link.hasDropdown && isProductsOpen}
-              onOpenDropdown={openProductsDropdown}
-              onCloseDropdown={scheduleCloseProductsDropdown}
-              onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
-            />
-          ))}
+          {NAV_LINKS.map((link) => {
+            if (link.hasDropdown) {
+              return (
+                <div
+                  key={link.name}
+                  className="relative"
+                  onMouseEnter={openProductsDropdown}
+                  onMouseLeave={scheduleCloseProductsDropdown}
+                >
+                  <DockNavItem
+                    link={link}
+                    isActive={isProductsActive}
+                    mouseX={mouseX}
+                    reduceMotion={reduceMotion}
+                    dockEnabled={dockEnabled}
+                    isDropdownOpen={isProductsOpen}
+                    onOpenDropdown={openProductsDropdown}
+                    onCloseDropdown={scheduleCloseProductsDropdown}
+                    onToggleDropdown={toggleProductsDropdown}
+                    onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
+                  />
+                </div>
+              );
+            }
+
+            return (
+              <DockNavItem
+                key={link.name}
+                link={link}
+                isActive={location.pathname === link.path}
+                mouseX={mouseX}
+                reduceMotion={reduceMotion}
+                dockEnabled={dockEnabled}
+                onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
+              />
+            );
+          })}
+
+          {/* Menu rendered as sibling of links, outside any transform — reliable clicks on Mac. */}
+          <AnimatePresence>
+            {isProductsOpen && (
+              <motion.div
+                id="nav-products-menu"
+                role="menu"
+                initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                transition={{ duration: 0.18, ease: EASE_PREMIUM }}
+                onMouseEnter={openProductsDropdown}
+                onMouseLeave={scheduleCloseProductsDropdown}
+                className="absolute left-1/2 top-full z-[120] w-64 -translate-x-1/2 pt-3 origin-top"
+              >
+                <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl shadow-black/5">
+                  {PRODUCT_LINKS.map((product, index) => (
+                    <motion.div
+                      key={product.path}
+                      initial={{ opacity: 0, x: -6 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.18, delay: index * 0.03, ease: EASE_PREMIUM }}
+                    >
+                      <Link
+                        to={product.path}
+                        role="menuitem"
+                        className="flex items-center justify-between gap-2 px-5 py-3 text-sm font-medium text-[#4A4B4F] transition-colors hover:bg-gray-50 hover:text-black"
+                        onClick={() => setIsProductsOpen(false)}
+                      >
+                        <span>{product.name}</span>
+                        {product.badge && (
+                          <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                            {product.badge}
+                          </span>
+                        )}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* RIGHT mobile/tablet: hamburger */}
         <MenuToggle
           isOpen={isMobileMenuOpen}
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -516,7 +547,7 @@ const Navbar = () => {
           onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
         />
       </div>
-    </motion.nav>
+    </nav>
   );
 };
 

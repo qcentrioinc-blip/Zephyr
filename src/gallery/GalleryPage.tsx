@@ -1,267 +1,420 @@
-import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import Reveal from "../Global/Reveal";
 import { H1, H3, P } from "../Global/Typography/Typo";
 
-const FILTERS = ["All", "Factory Tour", "Production Facility", "Equipment"] as const;
+type GalleryCategory = "Factory Tour" | "Production Facility" | "Equipment";
 
-type Filter = (typeof FILTERS)[number];
+const CATEGORY_ORDER: GalleryCategory[] = [
+  "Factory Tour",
+  "Production Facility",
+  "Equipment",
+];
 
 type GalleryItem = {
+  id: string;
   src: string;
   title: string;
-  category: Exclude<Filter, "All">;
-  span?: string;
+  category: GalleryCategory;
+  caption: string;
+  featured?: boolean;
+  productShot?: boolean;
 };
 
-const ITEMS: GalleryItem[] = [
+/** Images paired to facility / equipment content — facility photos vs pack format shots */
+const GALLERY: GalleryItem[] = [
   {
-    src: "/Gallery/LongGallery.png",
-    title: "Production floor overview",
+    id: "end-to-end",
+    src: "/Gallery/gallery-end-to-end-partner.webp",
+    title: "End-to-end manufacturing partner",
     category: "Production Facility",
-    span: "md:col-span-2 md:row-span-2",
+    caption: "Integrated compression, packaging, and release under one documented quality system.",
+    featured: true,
   },
   {
+    id: "rd-analytical",
+    src: "/Gallery/gallery-rd-analytical-labs.webp",
+    title: "R&D and analytical labs",
+    category: "Equipment",
+    caption: "HPLC, method development, and stability analytics before commercial scale-up.",
+    featured: true,
+  },
+  {
+    id: "hall",
+    src: "/Gallery/gallery-production-hall.webp",
+    title: "Integrated production hall",
+    category: "Production Facility",
+    caption: "High-volume bays configured for tablets, capsules, and finished goods.",
+    featured: true,
+  },
+  // Factory Tour
+  {
+    id: "g1",
     src: "/Gallery/Gallery1.png",
     title: "Controlled manufacturing bay",
     category: "Factory Tour",
+    caption: "Climate-managed suites prepared for partner batch production runs.",
   },
   {
-    src: "/Gallery/Gallery2.png",
-    title: "High-speed compression line",
-    category: "Equipment",
-  },
-  {
-    src: "/Gallery/Gallery3.png",
-    title: "Packaging & finishing",
-    category: "Production Facility",
-  },
-  {
+    id: "g5",
     src: "/Gallery/Gallery5.png",
     title: "Quality-ready workspace",
     category: "Factory Tour",
+    caption: "Documented workflows aligned to cGMP and partner audit expectations.",
   },
   {
-    src: "/Production/ProductionsHeroLeft.png",
-    title: "Laboratory environment",
-    category: "Equipment",
-  },
-  {
-    src: "/Production/ProductionsHeroRight.png",
+    id: "exterior",
+    src: "/Production/ProductionsHeroRight.webp",
     title: "Facility exterior & scale",
     category: "Factory Tour",
-    span: "md:col-span-2",
+    caption: "65,000 sq ft manufacturing footprint in Karnataka, India.",
   },
   {
-    src: "/Production.png",
-    title: "End-to-end manufacturing partner",
-    category: "Production Facility",
-  },
-  {
-    src: "/Research.png",
-    title: "R&D and analytical labs",
-    category: "Equipment",
-  },
-  {
-    src: "/Research/Research1.png",
-    title: "Formulation development suite",
+    id: "rd-lab",
+    src: "/Gallery/gallery-rd-lab.webp",
+    title: "Development laboratory",
     category: "Factory Tour",
+    caption: "Pilot formulation suites bridging concept to commercial transfer.",
   },
   {
-    src: "/Research/ResearchStats.png",
-    title: "In-process quality checkpoints",
-    category: "Equipment",
-  },
-  {
-    src: "/Homepage/production/blister.png",
-    title: "Blister packaging capability",
-    category: "Production Facility",
-  },
-  {
-    src: "/Homepage/production/bottle.png",
-    title: "Bottle packing lines",
-    category: "Production Facility",
-  },
-  {
-    src: "/Homepage/production/capsule.png",
-    title: "Hard-gel capsule filling",
-    category: "Equipment",
-  },
-  {
-    src: "/Homepage/production/tablet.png",
-    title: "Tablet compression formats",
-    category: "Equipment",
-  },
-  {
-    src: "/Homepage/production/jar.png",
-    title: "Jar finishing & labelling readiness",
-    category: "Production Facility",
-  },
-  {
-    src: "/Generated/showreel-formulation.png",
+    id: "formulation",
+    src: "/Generated/showreel-formulation.webp",
     title: "Formulation weighing suite",
     category: "Factory Tour",
+    caption: "Precision weighing for R&D and pilot-scale batch preparation.",
   },
   {
-    src: "/Research/research-hero.png",
-    title: "Analytical research hall",
-    category: "Equipment",
-    span: "md:col-span-2",
+    id: "pack-flat",
+    src: "/Generated/packaging-flatlay.png",
+    title: "Pack format library",
+    category: "Factory Tour",
+    caption: "Dosage forms and packaging options for MOQ and launch planning.",
+    productShot: true,
+  },
+  // Production Facility
+  {
+    id: "long",
+    src: "/Gallery/LongGallery.png",
+    title: "Production floor overview",
+    category: "Production Facility",
+    caption: "Clear circulation between compression, packaging, and quality zones.",
   },
   {
-    src: "/Generated/rd-lab-bench.png",
-    title: "Analytical development benches",
-    category: "Equipment",
+    id: "g3",
+    src: "/Gallery/Gallery3.png",
+    title: "Packaging & finishing area",
+    category: "Production Facility",
+    caption: "Secondary packaging, labelling, and finished-goods staging.",
   },
   {
+    id: "compression",
     src: "/Generated/production-compression.png",
     title: "Compression suite operations",
     category: "Production Facility",
-    span: "md:col-span-2",
+    caption: "Commercial-scale tablet compression configured for partner SKUs.",
   },
   {
-    src: "/Generated/packaging-flatlay.png",
-    title: "Finished-pack format library",
-    category: "Factory Tour",
+    id: "blister",
+    src: "/Homepage/production/blister.webp",
+    title: "Blister packaging lines",
+    category: "Production Facility",
+    caption: "Thermoform and cold-form blister formats for retail-ready packs.",
+    productShot: true,
+  },
+  {
+    id: "bottle",
+    src: "/Homepage/production/bottle.webp",
+    title: "Bottle packing lines",
+    category: "Production Facility",
+    caption: "Liquids, syrups, and bottle finished goods with in-line checks.",
+    productShot: true,
+  },
+  {
+    id: "jar",
+    src: "/Homepage/production/jar.webp",
+    title: "Jar finishing & labelling",
+    category: "Production Facility",
+    caption: "Powders, gummies, and jarred formats through secondary packaging.",
+    productShot: true,
+  },
+  // Equipment
+  {
+    id: "g2",
+    src: "/Gallery/Gallery2.png",
+    title: "High-speed compression line",
+    category: "Equipment",
+    caption: "Tablet compression with in-line weight and hardness monitoring.",
+  },
+  {
+    id: "lab-bench",
+    src: "/Production/ProductionsHeroLeft.webp",
+    title: "Analytical laboratory",
+    category: "Equipment",
+    caption: "Bench-scale development and analytical method support.",
+  },
+  {
+    id: "research-hero",
+    src: "/Research/research-hero.webp",
+    title: "Analytical research hall",
+    category: "Equipment",
+    caption: "Method development and release testing for commercial batches.",
+  },
+  {
+    id: "rd-bench",
+    src: "/Generated/rd-lab-bench.png",
+    title: "Development benches",
+    category: "Equipment",
+    caption: "Concept formulas refined before pilot and stability trials.",
+  },
+  {
+    id: "rd-pilot",
+    src: "/Generated/rd-pilot-validate.webp",
+    title: "Pilot validation & analytics",
+    category: "Equipment",
+    caption: "Data-led pilot runs and stability readouts before scale-up.",
+  },
+  {
+    id: "capsule",
+    src: "/Homepage/production/capsule.webp",
+    title: "Capsule filling equipment",
+    category: "Equipment",
+    caption: "Hard-gel and specialty capsule formats on dedicated lines.",
+    productShot: true,
+  },
+  {
+    id: "tablet",
+    src: "/Homepage/production/tablet.webp",
+    title: "Tablet compression formats",
+    category: "Equipment",
+    caption: "Multiple compression profiles for private-label tablet SKUs.",
+    productShot: true,
   },
 ];
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.22, 1, 0.36, 1] as const;
+const FEATURED = GALLERY.filter((i) => i.featured);
 
-export default function GalleryPage() {
-  const [filter, setFilter] = useState<Filter>("All");
-  const [active, setActive] = useState<GalleryItem | null>(null);
-
-  const visible = useMemo(
-    () =>
-      filter === "All" ? ITEMS : ITEMS.filter((item) => item.category === filter),
-    [filter]
+function GalleryTile({
+  item,
+  onOpen,
+  wide,
+}: {
+  item: GalleryItem;
+  onOpen: (item: GalleryItem) => void;
+  wide?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(item)}
+      className={`gallery-scroll-card group flex shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-gray-200/80 bg-white text-left shadow-[0_2px_12px_rgba(17,50,39,0.06)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-[#11BB8A]/40 hover:shadow-[0_12px_32px_rgba(17,50,39,0.1)] active:scale-[0.98] ${
+        wide ? "w-[min(88vw,360px)] sm:w-[400px]" : "w-[min(78vw,260px)] sm:w-[280px]"
+      }`}
+    >
+      <div
+        className={`relative overflow-hidden bg-[#e8ece6] ${wide ? "aspect-[16/10]" : "aspect-[4/3]"}`}
+      >
+        <img
+          src={item.src}
+          alt={item.title}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+        />
+      </div>
+      <div className="border-t border-gray-100 px-4 py-3.5">
+        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#547A3D]">
+          {item.category}
+        </span>
+        <p className="mt-1.5 line-clamp-2 font-manrope text-[13px] font-semibold leading-snug text-[#113227] sm:text-sm">
+          {item.title}
+        </p>
+      </div>
+    </button>
   );
+}
+
+function ScrollRow({
+  title,
+  subtitle,
+  items,
+  onOpen,
+}: {
+  title: string;
+  subtitle: string;
+  items: GalleryItem[];
+  onOpen: (item: GalleryItem) => void;
+}) {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (dir: -1 | 1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(".gallery-scroll-card");
+    const step = card ? card.offsetWidth + 16 : Math.min(el.clientWidth * 0.8, 300);
+    el.scrollTo({ left: el.scrollLeft + dir * step, behavior: "smooth" });
+  };
+
+  if (items.length === 0) return null;
 
   return (
-    <div className="relative w-full overflow-hidden bg-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(84,122,61,0.12),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(74,163,167,0.12),transparent_40%)]" />
-
-      <section className="zephyr-section relative overflow-hidden">
-        <div className="zephyr-container relative py-6 text-center sm:py-10">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease }}
-            className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]"
-          >
-            Facility gallery
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.05, ease }}
-          >
-            <H1>Manufacturing & lab environments</H1>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.12, ease }}
-            className="mx-auto mt-4 max-w-2xl"
-          >
-            <P className="text-gray-600">
-              Production floors, packaging lines, and lab environments used for
-              nutraceutical, herbaceutical, and organic partner programs.
-            </P>
-          </motion.div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                type="button"
-                onClick={() => setFilter(f)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                  filter === f
-                    ? "bg-[#113227] text-white"
-                    : "bg-[#F1F3F4] text-gray-600 hover:bg-[#E8EAED]"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+    <Reveal className="mb-10 sm:mb-14">
+      <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5">
+        <div>
+          <H3 className="text-[#113227]">{title}</H3>
+          <P className="mt-1 !text-sm text-gray-600">{subtitle}</P>
         </div>
-      </section>
+        <div className="flex shrink-0 gap-1.5">
+          <button
+            type="button"
+            aria-label={`Scroll ${title} left`}
+            onClick={() => scroll(-1)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-[#113227] shadow-sm transition-colors duration-200 hover:border-[#11BB8A] hover:text-[#11BB8A]"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            type="button"
+            aria-label={`Scroll ${title} right`}
+            onClick={() => scroll(1)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-[#113227] shadow-sm transition-colors duration-200 hover:border-[#11BB8A] hover:text-[#11BB8A]"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
 
-      <section className="zephyr-container relative pb-16">
-        <motion.div
-          layout
-          className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3"
+      <div className="relative">
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-8 bg-gradient-to-r from-[#f4f7f2] to-transparent"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-[2] w-8 bg-gradient-to-l from-[#f4f7f2] to-transparent"
+          aria-hidden
+        />
+        <div
+          ref={trackRef}
+          className="gallery-scroll-track flex gap-4 overflow-x-auto snap-x snap-proximity overscroll-x-contain pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden"
         >
-          <AnimatePresence mode="popLayout">
-            {visible.map((item, index) => (
-              <motion.article
-                layout
-                key={`${item.src}-${item.title}`}
-                initial={{ opacity: 0, scale: 0.92, y: 24 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.45, delay: index * 0.03, ease }}
-                whileHover={{ y: -4 }}
-                onClick={() => setActive(item)}
-                className={`group relative cursor-pointer overflow-hidden rounded-3xl bg-gray-100 ${item.span ?? ""}`}
-              >
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/55 opacity-90 transition group-hover:opacity-100" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <span className="mb-2 inline-block rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur-sm">
-                    {item.category}
-                  </span>
-                  <H3 className="text-lg text-white sm:text-xl">{item.title}</H3>
-                </div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </section>
+          {items.map((item) => (
+            <GalleryTile key={item.id} item={item} onOpen={onOpen} />
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  );
+}
 
+export default function GalleryPage() {
+  const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+
+  const rows = useMemo(
+    () =>
+      CATEGORY_ORDER.map((cat) => ({
+        title: cat,
+        subtitle: `${GALLERY.filter((i) => i.category === cat && !i.featured).length} documented views`,
+        items: GALLERY.filter((i) => i.category === cat && !i.featured),
+      })),
+    [],
+  );
+
+  const openLightbox = useCallback((item: GalleryItem) => setLightbox(item), []);
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
+  return (
+    <div className="relative min-h-[100dvh] bg-[#f4f7f2]">
+      {/* Static gradient — single layer, no blur */}
+      <div
+        className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(17,187,138,0.12),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(84,122,61,0.1),transparent_38%),linear-gradient(180deg,#f4f7f2_0%,#f7faf5_50%,#f4f7f2_100%)]"
+        aria-hidden
+      />
+
+      <div className="relative z-[1]">
+        {/* Header */}
+        <section className="zephyr-container py-12 sm:py-16 lg:py-20">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#547A3D]">
+              Facility gallery
+            </p>
+            <H1 className="mt-4 text-[#113227]">Manufacturing &amp; lab environments</H1>
+            <P className="mt-4 text-gray-600">
+              Production floors, packaging lines, and development labs for nutraceutical,
+              herbaceutical, and organic partner programs. Scroll each row or tap to expand.
+            </P>
+          </Reveal>
+        </section>
+
+        {/* Featured */}
+        <section className="zephyr-container pb-4 sm:pb-6">
+          <Reveal>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#547A3D]">
+              Core capabilities
+            </p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-3 sm:gap-5">
+              {FEATURED.map((item) => (
+                <GalleryTile key={item.id} item={item} onOpen={openLightbox} wide />
+              ))}
+            </div>
+          </Reveal>
+        </section>
+
+        {/* Rows by environment type */}
+        <section className="zephyr-container pb-14 sm:pb-20">
+          {rows.map((row) => (
+            <ScrollRow
+              key={row.title}
+              title={row.title}
+              subtitle={row.subtitle}
+              items={row.items}
+              onOpen={openLightbox}
+            />
+          ))}
+        </section>
+      </div>
+
+      {/* Lightbox */}
       <AnimatePresence>
-        {active && (
+        {lightbox && (
           <motion.div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-4"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-[#0d241c]/92 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setActive(null)}
+            onClick={closeLightbox}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.35, ease }}
-              className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-3xl bg-black"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: EASE }}
+              className="relative w-full max-w-5xl rounded-2xl bg-white p-2 shadow-2xl sm:p-3"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
-                aria-label="Close gallery lightbox"
-                onClick={() => setActive(null)}
-                className="absolute right-4 top-4 z-10 rounded-full bg-white/15 p-2 text-white backdrop-blur-sm transition hover:bg-white/25"
+                aria-label="Close"
+                onClick={closeLightbox}
+                className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#113227] shadow-md hover:text-[#11BB8A]"
               >
                 <X size={18} />
               </button>
-              <img
-                src={active.src}
-                alt={active.title}
-                className="max-h-[78vh] w-full object-contain"
-              />
-              <div className="border-t border-white/10 bg-black/80 px-5 py-4 text-white">
-                <p className="text-xs uppercase tracking-wide text-white/60">
-                  {active.category}
+              <div className="overflow-hidden rounded-xl bg-[#e8ece6]">
+                <img
+                  src={lightbox.src}
+                  alt={lightbox.title}
+                  className="max-h-[70vh] w-full object-cover object-center"
+                />
+              </div>
+              <div className="px-4 py-4 sm:px-5 sm:py-5">
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#547A3D]">
+                  {lightbox.category}
                 </p>
-                <H3 className="mt-1 text-white">{active.title}</H3>
+                <p className="mt-1.5 font-manrope text-lg font-semibold text-[#113227]">
+                  {lightbox.title}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">{lightbox.caption}</p>
               </div>
             </motion.div>
           </motion.div>

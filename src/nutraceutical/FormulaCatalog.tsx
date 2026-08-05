@@ -232,7 +232,7 @@ export default function FormulaCatalog() {
         <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           {/* Desktop sidebar — unchanged */}
           <aside className="hidden lg:block lg:w-72 shrink-0">
-            <div className="lg:sticky lg:top-28 space-y-4">
+            <div className="lg:sticky lg:top-[calc(var(--zephyr-nav-h)+var(--zephyr-crumb-h)+1rem)] space-y-4">
               <div className="relative">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
@@ -244,7 +244,7 @@ export default function FormulaCatalog() {
                 />
               </div>
 
-              <div className="zephyr-scroll-nutra max-h-[min(78vh,calc(100vh-9rem))] min-h-[420px] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-3">
+              <div className="zephyr-scroll-nutra max-h-[min(78vh,calc(100dvh-9rem))] min-h-[420px] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-3">
                 <CategoryList
                   categories={categories}
                   activeCategory={activeCategory}

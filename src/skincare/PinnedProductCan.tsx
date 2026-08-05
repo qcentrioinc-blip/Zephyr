@@ -51,8 +51,15 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
       if (img) {
         tl.fromTo(
           img,
-          { y: 72, rotate: 4 * flip, scale: 0.9, x: -12 * flip },
-          { y: -44, rotate: -3 * flip, scale: 1.08, x: 10 * flip, ease: "none" },
+          { y: 72, rotate: 4 * flip, scale: 0.9, x: -12 * flip, force3D: false },
+          {
+            y: -44,
+            rotate: -3 * flip,
+            scale: 1.08,
+            x: 10 * flip,
+            ease: "none",
+            force3D: false,
+          },
           0,
         );
       }

@@ -24,8 +24,42 @@ export default function SkincarePage() {
 
   useEffect(() => {
     if (!entered) return;
-    const id = window.requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => window.cancelAnimationFrame(id);
+
+    let cancelled = false;
+    const refresh = () => {
+      if (!cancelled) ScrollTrigger.refresh();
+    };
+
+    const raf = window.requestAnimationFrame(refresh);
+    const t = window.setTimeout(refresh, 400);
+    void document.fonts?.ready?.then(refresh);
+
+    // Re-measure after product / mood images decode (first-scroll pin hitch).
+    const imgs = document.querySelectorAll<HTMLImageElement>(
+      ".skincare-silencio img",
+    );
+    let pending = 0;
+    const onImg = () => {
+      pending -= 1;
+      if (pending <= 0) refresh();
+    };
+    imgs.forEach((img) => {
+      if (img.complete) return;
+      pending += 1;
+      img.addEventListener("load", onImg, { once: true });
+      img.addEventListener("error", onImg, { once: true });
+    });
+    if (pending === 0) refresh();
+
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(t);
+      imgs.forEach((img) => {
+        img.removeEventListener("load", onImg);
+        img.removeEventListener("error", onImg);
+      });
+    };
   }, [entered]);
 
   return (

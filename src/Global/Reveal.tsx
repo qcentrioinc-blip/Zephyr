@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -10,13 +10,46 @@ type RevealProps = {
   y?: number;
 };
 
+/**
+ * Scroll-in reveal tuned for Safari/Mac:
+ * - Never start at opacity 0 (WebKit can skip paint + miss IntersectionObserver).
+ * - Large rootMargin so first scroll isn't a wave of deferred reveals + image decode.
+ * - Fallback forces visible only for sections already near the viewport.
+ */
 export default function Reveal({
   children,
   className = "",
   delay = 0,
-  y = 24,
+  y = 16,
 }: RevealProps) {
   const reduceMotion = Boolean(useReducedMotion());
+  const ref = useRef<HTMLDivElement>(null);
+  const [forceVisible, setForceVisible] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const revealIfNear = () => {
+      const rect = el.getBoundingClientRect();
+      const near =
+        rect.top < window.innerHeight + 160 && rect.bottom > -120;
+      if (near) setForceVisible(true);
+    };
+
+    // Catch Safari IO flakes after first layout / font swap.
+    const t1 = window.setTimeout(revealIfNear, 200);
+    const t2 = window.setTimeout(revealIfNear, 800);
+    window.addEventListener("load", revealIfNear, { once: true });
+    void document.fonts?.ready?.then(revealIfNear);
+
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.removeEventListener("load", revealIfNear);
+    };
+  }, [reduceMotion]);
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
@@ -24,11 +57,13 @@ export default function Reveal({
 
   return (
     <motion.div
+      ref={ref}
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={{ opacity: 0.001, y }}
+      animate={forceVisible ? { opacity: 1, y: 0 } : undefined}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay, ease: EASE }}
+      viewport={{ once: true, amount: 0.08, margin: "120px 0px" }}
+      transition={{ duration: 0.4, delay, ease: EASE }}
     >
       {children}
     </motion.div>

@@ -76,19 +76,18 @@ const NewFooter = () => {
               <img
                 src="/Global/Logo.png"
                 alt="Zephyr"
-                className="h-12 w-auto object-contain sm:h-14 md:h-16"
+                className="h-12 w-auto object-contain sm:h-14 md:h-20"
               />
             </Link>
-            {/* <P className="max-w-[320px] text-sm text-white/70">
+            <P className="max-w-[300px] text-sm text-white/70">
               Contract manufacturing and private label partner for dietary
-              supplements across nutraceutical, herbaceutical, and organic
-              ranges. Built for US brand owners who need formulation support and
+              supplements. Built for US brand owners who need formulation support and
               reliable finished goods supply.
-            </P> */}
-            <P className="mt-3 max-w-[320px] text-sm text-white/55">
+            </P>
+            {/* <P className="mt-3 max-w-[320px] text-sm text-white/55">
               Factory: Plot #168-P5, Vemgal Industrial Area, Kolar District,
               Karnataka, India
-            </P>
+            </P> */}
           </div>
 
           <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
@@ -137,10 +136,9 @@ const NewFooter = () => {
             <H3 className="mb-2 !text-[16px] text-white md:!text-[18px]">
               Discuss a private-label or contract program
             </H3>
-            {/* <P className="mb-4 text-white/70">
-              Share your formula brief, dosage form, and MOQ targets. Our team
-              supports US private label and contract manufacturing enquiries.
-            </P> */}
+            <P className="mb-4 text-white/70">
+              Share your formula brief, dosage form, and MOQ targets.
+            </P>
             <Link
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-[#11BB8A] px-5 py-2.5 text-sm font-semibold text-[#113227] transition hover:bg-[#14d09a]"

@@ -1,21 +1,22 @@
 /* Fixed header stack (navbar [+ breadcrumbs]) — keep page spacers / sticky toolbars aligned */
 :root {
-  /* Nav py-2 (1rem) + logo h-9 with link py-1.5 (~3rem) */
-  --zephyr-nav-h: 4rem;
+  /* Nav py-2 + logo h-11 / link py-1.5 */
+  --zephyr-nav-h: 4.5rem;
   /* Breadcrumb py-2.5 + text line */
   --zephyr-crumb-h: 2.5rem;
 }
 
 @media (min-width: 640px) {
   :root {
-    /* Nav py-2 + logo h-10 with link py-1.5 */
-    --zephyr-nav-h: 4.25rem;
+    /* logo sm:h-12 */
+    --zephyr-nav-h: 4.75rem;
   }
 }
 
 @media (min-width: 768px) {
   :root {
-    --zephyr-nav-h: 4.25rem;
+    /* logo md:h-14 */
+    --zephyr-nav-h: 5rem;
   }
 }
 
@@ -147,6 +148,13 @@ p {
 
 .zephyr-marquee-right {
   animation: zephyr-marquee-right 48s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zephyr-marquee-left,
+  .zephyr-marquee-right {
+    animation: none;
+  }
 }
 
 .zephyr-marquee-pause:hover .zephyr-marquee-left,
@@ -427,4 +435,36 @@ html::-webkit-scrollbar-thumb:hover {
     0 0 14px rgba(84, 122, 61, 0.38);
 }
 
+/* ─── Mac / Safari (WebKit) hardening ───
+ * Causes we mitigate:
+ * 1) filter:drop-shadow on <img> + transform/opacity → gray/black compositing “placeholder” boxes
+ * 2) will-change left on permanently → sticky GPU layers / shade behind media
+ * 3) black studio PNG backdrops show as rectangles on cream pages
+ * 4) backdrop-filter without -webkit- prefix fails on older Safari
+ * 5) 100vh includes chrome UI inconsistently on Safari (prefer dvh with vh fallback)
+ */
+img {
+  -webkit-user-drag: none;
+}
+
+.zephyr-product-cutout {
+  background-color: transparent !important;
+  mix-blend-mode: multiply;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.zephyr-safe-backdrop {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+@supports (height: 100dvh) {
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+  .h-screen {
+    height: 100dvh;
+  }
+}
 

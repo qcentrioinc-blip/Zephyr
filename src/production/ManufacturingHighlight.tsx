@@ -42,11 +42,10 @@ const ManufacturingHighlight = () => {
 
   // --- Entrance variants (images stagger in one after another, then content) ---
   const imageVariant = {
-    hidden: { opacity: 0, scale: 1.15, filter: "blur(14px)" },
+    hidden: { opacity: 0.001, scale: 1.08 },
     visible: {
       opacity: 1,
       scale: 1,
-      filter: "blur(0px)",
       transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
@@ -135,7 +134,7 @@ const ManufacturingHighlight = () => {
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Background Collage */}
         <motion.div
-          className="absolute inset-0 z-0 will-change-transform"
+          className="absolute inset-0 z-0"
           style={{ scale: collageScale }}
           variants={collageStagger}
           initial="hidden"
