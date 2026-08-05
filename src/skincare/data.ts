@@ -26,7 +26,7 @@ export const PRODUCTS: StoreProduct[] = [
     name: "Moisturizing Lotion",
     role: "Daily defence & prevention",
     volume: "Daily use · large areas",
-    image: "/skincare/lotion-bottle.png",
+    image: "/skincare/lotion-bottle.png?v=cutout",
     ingredients: [
       "Fast-absorbing formula for daily use",
       "Supports reduced flaking and surface scaling",
@@ -49,7 +49,7 @@ export const PRODUCTS: StoreProduct[] = [
     name: "Moisturizing Cream",
     role: "Intensive targeted relief",
     volume: "75 ml · plaque & overnight",
-    image: "/skincare/cream-jar.png",
+    image: "/skincare/cream-jar.png?v=cutout",
     ingredients: [
       "Limonia bark extract–powered calming care",
       "Targets thick, rough patches with lasting hydration",
@@ -70,10 +70,10 @@ export const PRODUCTS: StoreProduct[] = [
 ];
 
 export const GATE_FLOATS = [
-  { src: "/skincare/cream-jar.png", className: "sil-float sil-float--a" },
-  { src: "/skincare/lotion-bottle.png", className: "sil-float sil-float--b" },
-  { src: "/skincare/cream-tube.png", className: "sil-float sil-float--c" },
-  { src: "/skincare/lotion-pouch.png", className: "sil-float sil-float--d" },
+  { src: "/skincare/cream-jar.png?v=cutout", className: "sil-float sil-float--a" },
+  { src: "/skincare/lotion-bottle.png?v=cutout", className: "sil-float sil-float--b" },
+  { src: "/skincare/cream-tube.png?v=cutout", className: "sil-float sil-float--c" },
+  { src: "/skincare/lotion-pouch.png?v=cutout", className: "sil-float sil-float--d" },
 ] as const;
 
 export const INDEX = [

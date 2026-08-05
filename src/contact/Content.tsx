@@ -9,38 +9,13 @@ import emailjs from "@emailjs/browser";
 import { Home } from "lucide-react";
 import { H2, H3, P } from "../Global/Typography/Typo";
 import CelebrationBurst from "../Global/CelebrationBurst";
-
-const FREE_EMAIL_DOMAINS = [
-  "gmail.com",
-  "googlemail.com",
-  "yahoo.com",
-  "yahoo.co.in",
-  "ymail.com",
-  "hotmail.com",
-  "outlook.com",
-  "live.com",
-  "msn.com",
-  "icloud.com",
-  "me.com",
-  "mac.com",
-  "protonmail.com",
-  "proton.me",
-  "pm.me",
-  "aol.com",
-  "gmx.com",
-  "mail.com",
-  "yandex.com",
-  "zoho.com",
-  "rediffmail.com",
-];
-
-function isCompanyEmail(email: string): boolean {
-  const trimmed = email.trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return false;
-  const domain = trimmed.split("@")[1];
-  if (!domain) return false;
-  return !FREE_EMAIL_DOMAINS.includes(domain);
-}
+import OtpVerifyModal from "./OtpVerifyModal";
+import {
+  COMPANY_EMAIL_ERROR,
+  isCompanyEmail,
+  sendOtpRequest,
+  verifyOtpRequest,
+} from "./companyEmail";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2;
@@ -49,19 +24,6 @@ const STEP_LABELS: Record<Step, string> = {
   1: "Inquiry",
   2: "Confirmation",
 };
-
-async function postJson<T>(
-  url: string,
-  body: Record<string, unknown>
-): Promise<{ ok: boolean; status: number; data: T }> {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const data = (await res.json().catch(() => ({}))) as T;
-  return { ok: res.ok, status: res.status, data };
-}
 
 const Content = () => {
   const [params] = useSearchParams();
@@ -77,20 +39,33 @@ const Content = () => {
     message: params.get("message") ?? "",
   });
   const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
+  const [otpModalOpen, setOtpModalOpen] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
   const [verifiedEmail, setVerifiedEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [formError, setFormError] = useState("");
+  const [otpError, setOtpError] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const [otpLoading, setOtpLoading] = useState(false);
+
+  const detailsUnlocked =
+    emailVerified && verifiedEmail === form.email.trim().toLowerCase();
+
+  const resetOtpGate = () => {
+    setOtp("");
+    setOtpModalOpen(false);
+    setEmailVerified(false);
+    setVerifiedEmail("");
+    setOtpError("");
+  };
 
   const resetForm = () => {
     setStatus("idle");
     setStep(1);
-    setOtp("");
-    setOtpSent(false);
-    setVerifiedEmail("");
+    resetOtpGate();
     setEmailError("");
     setFormError("");
+    setOtpLoading(false);
     setForm({
       firstName: "",
       lastName: "",
@@ -102,19 +77,94 @@ const Content = () => {
     });
   };
 
+  const handleEmailChange = (next: string) => {
+    setForm((f) => ({ ...f, email: next }));
+    if (emailError) setEmailError("");
+    if (emailVerified || otpModalOpen) {
+      resetOtpGate();
+    }
+  };
+
+  const requestOtp = async () => {
+    setFormError("");
+    setEmailError("");
+    setOtpError("");
+
+    if (!isCompanyEmail(form.email)) {
+      setEmailError(COMPANY_EMAIL_ERROR);
+      setStatus("error");
+      return false;
+    }
+
+    setOtpLoading(true);
+    try {
+      const { ok, data } = await sendOtpRequest(form.email);
+      if (!ok) {
+        setEmailError(data.error || "Could not send verification code.");
+        setStatus("error");
+        return false;
+      }
+      setOtp("");
+      setVerifiedEmail(form.email.trim().toLowerCase());
+      setEmailVerified(false);
+      setOtpModalOpen(true);
+      setStatus("idle");
+      return true;
+    } catch {
+      setEmailError("Could not reach verification service. Please try again.");
+      setStatus("error");
+      return false;
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleVerifyClick = async () => {
+    await requestOtp();
+  };
+
+  const handleVerifyOtp = async (e: FormEvent) => {
+    e.preventDefault();
+    setOtpError("");
+    if (!/^\d{6}$/.test(otp.trim())) {
+      setOtpError("Enter the 6-digit verification code from your email.");
+      return;
+    }
+
+    setOtpLoading(true);
+    try {
+      const { ok, data } = await verifyOtpRequest(form.email, otp);
+      if (!ok) {
+        setOtpError(data.error || "Verification failed.");
+        return;
+      }
+      setEmailVerified(true);
+      setVerifiedEmail(form.email.trim().toLowerCase());
+      setOtpModalOpen(false);
+      setStatus("idle");
+    } catch {
+      setOtpError("Could not verify code. Please try again.");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
   const validateDetails = (): boolean => {
     setFormError("");
     setEmailError("");
 
+    if (!detailsUnlocked) {
+      setFormError("Please verify your company email before submitting.");
+      setStatus("error");
+      return false;
+    }
     if (!form.firstName.trim() || !form.phone.trim()) {
       setFormError("Please complete your name and phone to continue.");
       setStatus("error");
       return false;
     }
     if (!isCompanyEmail(form.email)) {
-      setEmailError(
-        "Please use a company email address. Free domains (Gmail, Yahoo, Outlook, etc.) are not accepted."
-      );
+      setEmailError(COMPANY_EMAIL_ERROR);
       setStatus("error");
       return false;
     }
@@ -132,9 +182,7 @@ const Content = () => {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
     if (!serviceId || !templateId || !publicKey) {
-      setFormError(
-        "Email service is not configured. Please try again later."
-      );
+      setFormError("Email service is not configured. Please try again later.");
       setStatus("error");
       return;
     }
@@ -151,88 +199,29 @@ const Content = () => {
         phone: form.phone,
         message: form.message || "—",
       },
-      { publicKey }
+      { publicKey },
     );
     setStatus("success");
     setStep(2);
   };
 
-  const requestOtp = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     if (!validateDetails()) return;
 
     setStatus("loading");
-    setFormError("");
     try {
-      const { ok, data } = await postJson<{ error?: string }>(
-        "/api/send-otp",
-        {
-          email: form.email.trim(),
-          firstName: form.firstName.trim(),
-        }
-      );
-      if (!ok) {
-        setStatus("error");
-        setFormError(data.error || "Could not send verification code.");
-        return;
-      }
-      setOtp("");
-      setOtpSent(true);
-      setVerifiedEmail(form.email.trim().toLowerCase());
-      setStatus("idle");
-    } catch {
-      setStatus("error");
-      setFormError(
-        "Could not reach verification service. Please try again."
-      );
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    if (!otpSent || verifiedEmail !== form.email.trim().toLowerCase()) {
-      await requestOtp();
-      return;
-    }
-
-    setFormError("");
-    if (!/^\d{6}$/.test(otp.trim())) {
-      setFormError("Enter the 6-digit verification code from your email.");
-      setStatus("error");
-      return;
-    }
-
-    setStatus("loading");
-    try {
-      const { ok, data } = await postJson<{ error?: string }>(
-        "/api/verify-otp",
-        {
-          email: form.email.trim(),
-          otp: otp.trim(),
-        }
-      );
-      if (!ok) {
-        setStatus("error");
-        setFormError(data.error || "Verification failed.");
-        return;
-      }
-
       await sendEnquiry();
     } catch {
       setStatus("error");
-      setFormError("Could not verify or send your inquiry. Please try again.");
+      setFormError("Could not send your inquiry. Please try again.");
     }
-  };
-
-  const handleResendOtp = async () => {
-    await requestOtp();
   };
 
   const fieldClass =
     "w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-[#113227] placeholder:text-gray-400 outline-none transition focus:border-[#11BB8A] focus:bg-white focus:ring-2 focus:ring-[#11BB8A]/20";
 
-  const showOtpField =
-    otpSent && verifiedEmail === form.email.trim().toLowerCase();
+  const disabledFieldClass = `${fieldClass} cursor-not-allowed opacity-50`;
 
   return (
     <div className="relative min-h-[100dvh] w-full overflow-hidden bg-[#0d241c]">
@@ -258,8 +247,8 @@ const Content = () => {
             </p>
             <H2 className="text-white">Start a manufacturing inquiry</H2>
             <P className="mx-auto mt-3 max-w-md text-white/65">
-              Company email required. We verify your email before sending your
-              brief.
+              Company email required. We verify your email before unlocking the
+              inquiry form.
             </P>
           </div>
 
@@ -337,10 +326,48 @@ const Content = () => {
                   transition={{ duration: 0.3 }}
                   className="space-y-4"
                 >
+                  <div>
+                    <div className="relative">
+                      <input
+                        required
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => handleEmailChange(e.target.value)}
+                        placeholder="Company email *"
+                        className={`${fieldClass} pr-20`}
+                        aria-invalid={Boolean(emailError)}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => void handleVerifyClick()}
+                        disabled={otpLoading || !form.email.trim()}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-[#547A3D] transition hover:text-[#11BB8A] disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {otpLoading && !otpModalOpen
+                          ? "…"
+                          : detailsUnlocked
+                            ? "Verified"
+                            : "Verify"}
+                      </button>
+                    </div>
+                    {emailError ? (
+                      <p className="mt-1.5 text-sm text-red-600">{emailError}</p>
+                    ) : detailsUnlocked ? (
+                      <p className="mt-1.5 text-xs font-medium text-[#547A3D]">
+                        Email verified — you can complete your inquiry below.
+                      </p>
+                    ) : (
+                      <p className="mt-1.5 text-xs text-gray-500">
+                        Business domains only. Click Verify to unlock the form.
+                      </p>
+                    )}
+                  </div>
+
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <input
                       required
                       value={form.firstName}
+                      disabled={!detailsUnlocked}
                       onChange={(e) =>
                         setForm((f) => ({
                           ...f,
@@ -348,10 +375,11 @@ const Content = () => {
                         }))
                       }
                       placeholder="First name *"
-                      className={fieldClass}
+                      className={detailsUnlocked ? fieldClass : disabledFieldClass}
                     />
                     <input
                       value={form.lastName}
+                      disabled={!detailsUnlocked}
                       onChange={(e) =>
                         setForm((f) => ({
                           ...f,
@@ -359,41 +387,15 @@ const Content = () => {
                         }))
                       }
                       placeholder="Last name"
-                      className={fieldClass}
+                      className={detailsUnlocked ? fieldClass : disabledFieldClass}
                     />
                   </div>
-                  <input
-                    required
-                    type="email"
-                    value={form.email}
-                    onChange={(e) => {
-                      const next = e.target.value;
-                      setForm((f) => ({ ...f, email: next }));
-                      if (emailError) setEmailError("");
-                      if (
-                        otpSent &&
-                        next.trim().toLowerCase() !== verifiedEmail
-                      ) {
-                        setOtp("");
-                        setOtpSent(false);
-                        setVerifiedEmail("");
-                      }
-                    }}
-                    placeholder="Company email *"
-                    className={fieldClass}
-                  />
-                  {emailError ? (
-                    <p className="text-sm text-red-600">{emailError}</p>
-                  ) : (
-                    <p className="text-xs text-gray-500">
-                      Business domains only. Free mail providers are blocked.
-                    </p>
-                  )}
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <input
                       required
                       type="tel"
                       value={form.phone}
+                      disabled={!detailsUnlocked}
                       onChange={(e) =>
                         setForm((f) => ({
                           ...f,
@@ -401,10 +403,11 @@ const Content = () => {
                         }))
                       }
                       placeholder="Phone *"
-                      className={fieldClass}
+                      className={detailsUnlocked ? fieldClass : disabledFieldClass}
                     />
                     <input
                       value={form.company}
+                      disabled={!detailsUnlocked}
                       onChange={(e) =>
                         setForm((f) => ({
                           ...f,
@@ -412,12 +415,13 @@ const Content = () => {
                         }))
                       }
                       placeholder="Company"
-                      className={fieldClass}
+                      className={detailsUnlocked ? fieldClass : disabledFieldClass}
                     />
                   </div>
                   <input
                     required
                     value={form.subject}
+                    disabled={!detailsUnlocked}
                     onChange={(e) =>
                       setForm((f) => ({
                         ...f,
@@ -425,11 +429,12 @@ const Content = () => {
                       }))
                     }
                     placeholder="Subject * (e.g. MOQ - Nutraceutical tablets)"
-                    className={fieldClass}
+                    className={detailsUnlocked ? fieldClass : disabledFieldClass}
                   />
                   <textarea
                     rows={5}
                     value={form.message}
+                    disabled={!detailsUnlocked}
                     onChange={(e) =>
                       setForm((f) => ({
                         ...f,
@@ -437,70 +442,43 @@ const Content = () => {
                       }))
                     }
                     placeholder="Project brief — dosage format, estimated volumes / MOQ, target markets…"
-                    className={`${fieldClass} resize-none`}
+                    className={`${detailsUnlocked ? fieldClass : disabledFieldClass} resize-none`}
                   />
-
-                  {showOtpField && (
-                    <div className="space-y-3 rounded-2xl border border-[#11BB8A]/25 bg-[#EDFAEB]/80 p-4">
-                      <p className="text-sm text-gray-700">
-                        We sent a 6-digit code to{" "}
-                        <span className="font-medium text-[#113227]">
-                          {form.email.trim()}
-                        </span>
-                        . Enter it below to verify and send your inquiry.
-                      </p>
-                      <input
-                        required
-                        inputMode="numeric"
-                        autoComplete="one-time-code"
-                        pattern="\d{6}"
-                        maxLength={6}
-                        value={otp}
-                        onChange={(e) =>
-                          setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
-                        }
-                        placeholder="6-digit code *"
-                        className={`${fieldClass} tracking-[0.35em]`}
-                        aria-label="Verification code"
-                      />
-                      <button
-                        type="button"
-                        disabled={status === "loading"}
-                        onClick={handleResendOtp}
-                        className="text-sm font-medium text-[#547A3D] transition hover:text-[#11BB8A] disabled:opacity-70"
-                      >
-                        Resend code
-                      </button>
-                    </div>
-                  )}
 
                   {formError && (
                     <p className="text-sm text-red-600">{formError}</p>
                   )}
                   <button
                     type="submit"
-                    disabled={status === "loading"}
-                    className="mt-2 w-full rounded-full bg-[#113227] py-3.5 text-sm font-semibold text-white transition hover:bg-[#0d281f] disabled:opacity-70"
+                    disabled={status === "loading" || !detailsUnlocked}
+                    className="mt-2 w-full rounded-full bg-[#113227] py-3.5 text-sm font-semibold text-white transition hover:bg-[#0d281f] disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    {status === "loading"
-                      ? showOtpField
-                        ? "Verifying…"
-                        : "Sending code…"
-                      : showOtpField
-                        ? "Verify & send inquiry"
-                        : "Send verification code"}
+                    {status === "loading" ? "Sending…" : "Send inquiry"}
                   </button>
                 </motion.form>
               )}
             </AnimatePresence>
           </div>
 
-          <P className="mt-6 text-center text-white/40">
+          {/* <P className="mt-6 text-center text-white/40">
             Factory: Plot #168-P5, Vemgal Industrial Area, Kolar · CIN
             U24100KA2019PTC120330
-          </P>
+          </P> */}
         </div>
       </div>
+
+      <OtpVerifyModal
+        open={otpModalOpen}
+        email={form.email.trim()}
+        otp={otp}
+        onOtpChange={setOtp}
+        onVerify={handleVerifyOtp}
+        onResend={() => void requestOtp()}
+        onClose={() => setOtpModalOpen(false)}
+        loading={otpLoading}
+        error={otpError}
+        tone="global"
+      />
     </div>
   );
 };

@@ -107,16 +107,24 @@ html.skincare-drawer-open body {
   pointer-events: none;
 }
 
-/* Orbital ring around center lockup â€” upright product shots only */
+/* Orbital ring around center lockup — upright product cutouts only */
 .sil-orbit {
   position: absolute;
   left: 50%;
   top: 48%;
-  width: min(70vw, 520px);
-  height: min(70vw, 520px);
+  width: min(92vw, 680px);
+  height: min(92vw, 680px);
   margin: 0;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+/* GSAP rotates this layer only — keeps outer centering transform intact */
+.sil-orbit-spin {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .sil-orbit-item {
@@ -125,17 +133,13 @@ html.skincare-drawer-open body {
   left: 50%;
   width: min(26vw, 168px);
   margin: 0;
-  transform-origin: center center;
-  --orbit-angle: calc(var(--orbit-i) * 90deg);
-  --orbit-r: 200;
-  transform: translate(-50%, -50%) rotate(var(--orbit-angle))
-    translateY(calc(var(--orbit-r) * -1px)) rotate(calc(var(--orbit-angle) * -1));
+  /* Positioned by GSAP x/y — no CSS-var transforms (Safari first-paint bugs) */
 }
 
 .sil-orbit-inner {
   position: relative;
   width: 100%;
-  background: #ffffff;
+  background: transparent;
 }
 
 .sil-orbit-inner img {
@@ -143,11 +147,13 @@ html.skincare-drawer-open body {
   height: auto;
   object-fit: contain;
   display: block;
-  background: #ffffff;
+  background: transparent;
   filter: none;
   -webkit-filter: none;
   user-select: none;
   -webkit-user-drag: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .sil-float {
@@ -156,7 +162,7 @@ html.skincare-drawer-open body {
   filter: none;
   -webkit-filter: none;
   user-select: none;
-  background: #ffffff;
+  background: transparent;
   -webkit-user-drag: none;
 }
 
@@ -278,7 +284,7 @@ html.skincare-drawer-open body {
 }
 
 .sil-hero-anchor-float {
-  background: #ffffff;
+  background: transparent;
 }
 
 .sil-hero-anchor img {
@@ -286,10 +292,12 @@ html.skincare-drawer-open body {
   height: auto;
   object-fit: contain;
   display: block;
-  background-color: #ffffff;
+  background-color: transparent;
   -webkit-user-drag: none;
   filter: none;
   -webkit-filter: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .sil-hero-anchor p {
@@ -465,17 +473,19 @@ html.skincare-drawer-open body {
   place-items: end center;
   min-height: 280px;
   padding-top: 2.5rem;
-  background: #ffffff;
+  background: transparent;
 }
 
 .sil-can-img {
   width: min(100%, 460px);
   height: auto;
   object-fit: contain;
-  background: #ffffff;
+  background: transparent;
   filter: none;
   -webkit-filter: none;
   -webkit-user-drag: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .sil-can-note {
@@ -624,28 +634,25 @@ html.skincare-drawer-open body {
 .sil-scan-row {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 1.25rem;
-  margin-top: 0.35rem;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
 
 .sil-scan-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid currentColor;
-  background: transparent;
-  color: inherit;
-  font-family: var(--sil-font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  border: 1px solid var(--sil-fg);
+  background: var(--sil-fg);
+  color: #ffffff;
+  font-family: var(--sil-font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 0.85rem 1.25rem;
+  padding: 0.85rem 1.5rem;
   cursor: pointer;
-}
-
-.sil-scan-cta:disabled {
-  opacity: 0.7;
 }
 
 .sil-scan-progress {
@@ -1267,7 +1274,7 @@ html.skincare-drawer-open body {
   width: 88px;
   height: 110px;
   object-fit: contain;
-  background: #ffffff;
+  background: transparent;
 }
 
 .sil-receipt-list {
@@ -1478,30 +1485,59 @@ html.skincare-drawer-open body {
   letter-spacing: 0.35em;
 }
 
+.sil-field--disabled,
+.sil-field:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  background: color-mix(in srgb, var(--sil-bg) 85%, var(--sil-line));
+}
+
+.sil-email-verify-wrap {
+  position: relative;
+}
+
+.sil-field--email-verify {
+  padding-right: 4.75rem;
+}
+
+.sil-email-verify-action {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--sil-accent);
+  font-family: var(--sil-font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  line-height: 1;
+}
+
+.sil-email-verify-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .sil-field-hint {
   margin: -0.35rem 0 0;
   font-size: 0.72rem;
   color: var(--sil-muted);
 }
 
+.sil-field-hint--ok {
+  color: var(--sil-accent);
+  font-weight: 500;
+}
+
 .sil-field-error {
   margin: 0;
   font-size: 0.82rem;
   color: #a33f3f;
-}
-
-.sil-otp {
-  border: 1px solid var(--sil-accent);
-  background: rgba(46, 109, 164, 0.08);
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.sil-otp p {
-  margin: 0;
-  font-size: 0.85rem;
 }
 
 .sil-otp-resend {
@@ -1581,8 +1617,8 @@ html.skincare-drawer-open body {
   }
 
   .sil-orbit {
-    width: min(86vw, 360px);
-    height: min(86vw, 360px);
+    width: min(94vw, 420px);
+    height: min(94vw, 420px);
   }
 
   .sil-orbit-item {

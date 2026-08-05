@@ -209,18 +209,25 @@ function GalleryTile({
       type="button"
       onClick={() => onOpen(item)}
       className={`gallery-scroll-card group flex shrink-0 snap-start flex-col overflow-hidden rounded-xl border border-gray-200/80 bg-white text-left shadow-[0_2px_12px_rgba(17,50,39,0.06)] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-[#11BB8A]/40 hover:shadow-[0_12px_32px_rgba(17,50,39,0.1)] active:scale-[0.98] ${
-        wide ? "w-[min(88vw,360px)] sm:w-[400px]" : "w-[min(78vw,260px)] sm:w-[280px]"
+        wide ? "w-full min-w-0" : "w-[min(78vw,260px)] sm:w-[280px]"
       }`}
     >
+      {/*
+        Safari/Mac: do NOT use position:absolute + loading=lazy inside overflow-x rows —
+        WebKit often never paints those images. Keep img in normal flow with a fixed aspect box.
+      */}
       <div
-        className={`relative overflow-hidden bg-[#e8ece6] ${wide ? "aspect-[16/10]" : "aspect-[4/3]"}`}
+        className={`w-full overflow-hidden bg-[#e8ece6] ${wide ? "aspect-[16/10]" : "aspect-[4/3]"}`}
       >
         <img
           src={item.src}
           alt={item.title}
-          loading="lazy"
+          width={wide ? 800 : 560}
+          height={wide ? 500 : 420}
+          loading="eager"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          style={{ display: "block", WebkitTransform: "translateZ(0)" }}
         />
       </div>
       <div className="border-t border-gray-100 px-4 py-3.5">
@@ -259,7 +266,7 @@ function ScrollRow({
   if (items.length === 0) return null;
 
   return (
-    <Reveal className="mb-10 sm:mb-14">
+    <div className="mb-10 sm:mb-14">
       <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5">
         <div>
           <H3 className="text-[#113227]">{title}</H3>
@@ -303,7 +310,7 @@ function ScrollRow({
           ))}
         </div>
       </div>
-    </Reveal>
+    </div>
   );
 }
 
@@ -346,18 +353,16 @@ export default function GalleryPage() {
           </Reveal>
         </section>
 
-        {/* Featured */}
+        {/* Featured — no Reveal wrapper: Safari can skip painting images inside opacity-animated parents */}
         <section className="zephyr-container pb-4 sm:pb-6">
-          <Reveal>
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#547A3D]">
-              Core capabilities
-            </p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3 sm:gap-5">
-              {FEATURED.map((item) => (
-                <GalleryTile key={item.id} item={item} onOpen={openLightbox} wide />
-              ))}
-            </div>
-          </Reveal>
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#547A3D]">
+            Core capabilities
+          </p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-3 sm:gap-5">
+            {FEATURED.map((item) => (
+              <GalleryTile key={item.id} item={item} onOpen={openLightbox} wide />
+            ))}
+          </div>
         </section>
 
         {/* Rows by environment type */}

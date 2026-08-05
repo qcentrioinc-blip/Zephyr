@@ -8,54 +8,16 @@ import {
   setSkincareContactLock,
   type SkincareContactDetail,
 } from "./contactEvents";
-
-const FREE_EMAIL_DOMAINS = [
-  "gmail.com",
-  "googlemail.com",
-  "yahoo.com",
-  "yahoo.co.in",
-  "ymail.com",
-  "hotmail.com",
-  "outlook.com",
-  "live.com",
-  "msn.com",
-  "icloud.com",
-  "me.com",
-  "mac.com",
-  "protonmail.com",
-  "proton.me",
-  "pm.me",
-  "aol.com",
-  "gmx.com",
-  "mail.com",
-  "yandex.com",
-  "zoho.com",
-  "rediffmail.com",
-];
-
-function isCompanyEmail(email: string): boolean {
-  const trimmed = email.trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return false;
-  const domain = trimmed.split("@")[1];
-  if (!domain) return false;
-  return !FREE_EMAIL_DOMAINS.includes(domain);
-}
+import OtpVerifyModal from "../contact/OtpVerifyModal";
+import {
+  COMPANY_EMAIL_ERROR,
+  isCompanyEmail,
+  sendOtpRequest,
+  verifyOtpRequest,
+} from "../contact/companyEmail";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2;
-
-async function postJson<T>(
-  url: string,
-  body: Record<string, unknown>,
-): Promise<{ ok: boolean; data: T }> {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const data = (await res.json().catch(() => ({}))) as T;
-  return { ok: res.ok, data };
-}
 
 const SUBJECT_OPTIONS = [
   { label: "Full range / MOQ", value: "Skincare — ALFURIN range / MOQ" },
@@ -63,7 +25,7 @@ const SUBJECT_OPTIONS = [
   { label: "Cream", value: "Skincare — ALFURIN Moisturizing Cream" },
 ] as const;
 
-/** Right-side cream contact drawer — same OTP flow as /contact. */
+/** Right-side cream contact drawer — OTP-gated like /contact. */
 export default function SkincareContact() {
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
@@ -80,11 +42,17 @@ export default function SkincareContact() {
     message: "",
   });
   const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
+  const [otpModalOpen, setOtpModalOpen] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
   const [verifiedEmail, setVerifiedEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [formError, setFormError] = useState("");
+  const [otpError, setOtpError] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const [otpLoading, setOtpLoading] = useState(false);
+
+  const detailsUnlocked =
+    emailVerified && verifiedEmail === form.email.trim().toLowerCase();
 
   useEffect(() => {
     const onOpen = (e: Event) => {
@@ -106,7 +74,7 @@ export default function SkincareContact() {
     setSkincareContactLock(true);
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape" && !otpModalOpen) setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     panelRef.current?.querySelector<HTMLElement>("input,button")?.focus();
@@ -117,16 +85,23 @@ export default function SkincareContact() {
       setSkincareContactLock(false);
       window.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, otpModalOpen]);
+
+  const resetOtpGate = () => {
+    setOtp("");
+    setOtpModalOpen(false);
+    setEmailVerified(false);
+    setVerifiedEmail("");
+    setOtpError("");
+  };
 
   const resetForm = () => {
     setStatus("idle");
     setStep(1);
-    setOtp("");
-    setOtpSent(false);
-    setVerifiedEmail("");
+    resetOtpGate();
     setEmailError("");
     setFormError("");
+    setOtpLoading(false);
     setForm({
       firstName: "",
       lastName: "",
@@ -138,20 +113,94 @@ export default function SkincareContact() {
     });
   };
 
-  const close = () => setOpen(false);
+  const close = () => {
+    setOtpModalOpen(false);
+    setOpen(false);
+  };
+
+  const handleEmailChange = (next: string) => {
+    setForm((f) => ({ ...f, email: next }));
+    if (emailError) setEmailError("");
+    if (emailVerified || otpModalOpen) {
+      resetOtpGate();
+    }
+  };
+
+  const requestOtp = async () => {
+    setFormError("");
+    setEmailError("");
+    setOtpError("");
+
+    if (!isCompanyEmail(form.email)) {
+      setEmailError(COMPANY_EMAIL_ERROR);
+      setStatus("error");
+      return false;
+    }
+
+    setOtpLoading(true);
+    try {
+      const { ok, data } = await sendOtpRequest(form.email);
+      if (!ok) {
+        setEmailError(data.error || "Could not send verification code.");
+        setStatus("error");
+        return false;
+      }
+      setOtp("");
+      setVerifiedEmail(form.email.trim().toLowerCase());
+      setEmailVerified(false);
+      setOtpModalOpen(true);
+      setStatus("idle");
+      return true;
+    } catch {
+      setEmailError("Could not reach verification service. Please try again.");
+      setStatus("error");
+      return false;
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: FormEvent) => {
+    e.preventDefault();
+    setOtpError("");
+    if (!/^\d{6}$/.test(otp.trim())) {
+      setOtpError("Enter the 6-digit verification code from your email.");
+      return;
+    }
+
+    setOtpLoading(true);
+    try {
+      const { ok, data } = await verifyOtpRequest(form.email, otp);
+      if (!ok) {
+        setOtpError(data.error || "Verification failed.");
+        return;
+      }
+      setEmailVerified(true);
+      setVerifiedEmail(form.email.trim().toLowerCase());
+      setOtpModalOpen(false);
+      setStatus("idle");
+    } catch {
+      setOtpError("Could not verify code. Please try again.");
+    } finally {
+      setOtpLoading(false);
+    }
+  };
 
   const validateDetails = (): boolean => {
     setFormError("");
     setEmailError("");
+    if (!detailsUnlocked) {
+      setFormError("Please verify your company email before submitting.");
+      setStatus("error");
+      return false;
+    }
     if (!form.firstName.trim() || !form.phone.trim()) {
       setFormError("Please complete your name and phone to continue.");
       setStatus("error");
       return false;
     }
     if (!isCompanyEmail(form.email)) {
-      setEmailError(
-        "Please use a company email address. Free domains (Gmail, Yahoo, Outlook, etc.) are not accepted.",
-      );
+      setEmailError(COMPANY_EMAIL_ERROR);
       setStatus("error");
       return false;
     }
@@ -192,61 +241,17 @@ export default function SkincareContact() {
     setStep(2);
   };
 
-  const requestOtp = async () => {
-    if (!validateDetails()) return;
-    setStatus("loading");
-    setFormError("");
-    try {
-      const { ok, data } = await postJson<{ error?: string }>("/api/send-otp", {
-        email: form.email.trim(),
-        firstName: form.firstName.trim(),
-      });
-      if (!ok) {
-        setStatus("error");
-        setFormError(data.error || "Could not send verification code.");
-        return;
-      }
-      setOtp("");
-      setOtpSent(true);
-      setVerifiedEmail(form.email.trim().toLowerCase());
-      setStatus("idle");
-    } catch {
-      setStatus("error");
-      setFormError("Could not reach verification service. Please try again.");
-    }
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!otpSent || verifiedEmail !== form.email.trim().toLowerCase()) {
-      await requestOtp();
-      return;
-    }
-    setFormError("");
-    if (!/^\d{6}$/.test(otp.trim())) {
-      setFormError("Enter the 6-digit verification code from your email.");
-      setStatus("error");
-      return;
-    }
+    if (!validateDetails()) return;
     setStatus("loading");
     try {
-      const { ok, data } = await postJson<{ error?: string }>("/api/verify-otp", {
-        email: form.email.trim(),
-        otp: otp.trim(),
-      });
-      if (!ok) {
-        setStatus("error");
-        setFormError(data.error || "Verification failed.");
-        return;
-      }
       await sendEnquiry();
     } catch {
       setStatus("error");
-      setFormError("Could not verify or send your inquiry. Please try again.");
+      setFormError("Could not send your inquiry. Please try again.");
     }
   };
-
-  const showOtpField = otpSent && verifiedEmail === form.email.trim().toLowerCase();
 
   return (
     <AnimatePresence>
@@ -324,68 +329,85 @@ export default function SkincareContact() {
                     exit={{ opacity: 0, y: -8 }}
                   >
                     <p className="sil-contact-lead">
-                      Company email required. Same secure OTP flow as Zephyr contact.
+                      Verify your company email first. Other fields unlock after OTP.
                     </p>
+
+                    <div className="sil-email-verify-wrap">
+                      <input
+                        required
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => handleEmailChange(e.target.value)}
+                        placeholder="Company email *"
+                        className="sil-field sil-field--email-verify"
+                        aria-invalid={Boolean(emailError)}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => void requestOtp()}
+                        disabled={otpLoading || !form.email.trim()}
+                        className="sil-email-verify-action"
+                      >
+                        {otpLoading && !otpModalOpen
+                          ? "…"
+                          : detailsUnlocked
+                            ? "Verified"
+                            : "Verify"}
+                      </button>
+                    </div>
+                    {emailError ? (
+                      <p className="sil-field-error">{emailError}</p>
+                    ) : detailsUnlocked ? (
+                      <p className="sil-field-hint sil-field-hint--ok">
+                        Email verified — complete your inquiry below.
+                      </p>
+                    ) : (
+                      <p className="sil-field-hint">
+                        Business domains only. Click Verify to unlock the form.
+                      </p>
+                    )}
+
                     <div className="sil-contact-grid">
                       <input
                         required
                         value={form.firstName}
+                        disabled={!detailsUnlocked}
                         onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
                         placeholder="First name *"
-                        className="sil-field"
+                        className={`sil-field${detailsUnlocked ? "" : " sil-field--disabled"}`}
                       />
                       <input
                         value={form.lastName}
+                        disabled={!detailsUnlocked}
                         onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
                         placeholder="Last name"
-                        className="sil-field"
+                        className={`sil-field${detailsUnlocked ? "" : " sil-field--disabled"}`}
                       />
                     </div>
-                    <input
-                      required
-                      type="email"
-                      value={form.email}
-                      onChange={(e) => {
-                        const next = e.target.value;
-                        setForm((f) => ({ ...f, email: next }));
-                        if (emailError) setEmailError("");
-                        if (otpSent && next.trim().toLowerCase() !== verifiedEmail) {
-                          setOtp("");
-                          setOtpSent(false);
-                          setVerifiedEmail("");
-                        }
-                      }}
-                      placeholder="Company email *"
-                      className="sil-field"
-                    />
-                    {emailError ? (
-                      <p className="sil-field-error">{emailError}</p>
-                    ) : (
-                      <p className="sil-field-hint">
-                        Business domains only. Free mail providers are blocked.
-                      </p>
-                    )}
                     <div className="sil-contact-grid">
                       <input
                         required
                         type="tel"
                         value={form.phone}
+                        disabled={!detailsUnlocked}
                         onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                         placeholder="Phone *"
-                        className="sil-field"
+                        className={`sil-field${detailsUnlocked ? "" : " sil-field--disabled"}`}
                       />
                       <input
                         value={form.company}
+                        disabled={!detailsUnlocked}
                         onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
                         placeholder="Company"
-                        className="sil-field"
+                        className={`sil-field${detailsUnlocked ? "" : " sil-field--disabled"}`}
                       />
                     </div>
                     <select
                       required
                       value={form.subject}
+                      disabled={!detailsUnlocked}
                       onChange={(e) => setForm((f) => ({ ...f, subject: e.target.value }))}
-                      className="sil-field"
+                      className={`sil-field${detailsUnlocked ? "" : " sil-field--disabled"}`}
                       aria-label="Enquiry subject"
                     >
                       {SUBJECT_OPTIONS.map((opt) => (
@@ -397,62 +419,39 @@ export default function SkincareContact() {
                     <textarea
                       rows={4}
                       value={form.message}
+                      disabled={!detailsUnlocked}
                       onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                       placeholder="Project brief — volumes / MOQ, markets, packaging…"
-                      className="sil-field sil-field--area"
+                      className={`sil-field sil-field--area${detailsUnlocked ? "" : " sil-field--disabled"}`}
                     />
-
-                    {showOtpField && (
-                      <div className="sil-otp">
-                        <p>
-                          We sent a 6-digit code to <strong>{form.email.trim()}</strong>. Enter it
-                          below to verify and send.
-                        </p>
-                        <input
-                          required
-                          inputMode="numeric"
-                          autoComplete="one-time-code"
-                          pattern="\d{6}"
-                          maxLength={6}
-                          value={otp}
-                          onChange={(e) =>
-                            setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
-                          }
-                          placeholder="6-digit code *"
-                          className="sil-field sil-field--otp"
-                          aria-label="Verification code"
-                        />
-                        <button
-                          type="button"
-                          disabled={status === "loading"}
-                          onClick={() => void requestOtp()}
-                          className="sil-otp-resend"
-                        >
-                          Resend code
-                        </button>
-                      </div>
-                    )}
 
                     {formError && <p className="sil-field-error">{formError}</p>}
 
                     <button
                       type="submit"
-                      disabled={status === "loading"}
+                      disabled={status === "loading" || !detailsUnlocked}
                       className="sil-cta sil-cta--fill sil-contact-submit"
                     >
-                      {status === "loading"
-                        ? showOtpField
-                          ? "Verifying…"
-                          : "Sending code…"
-                        : showOtpField
-                          ? "Verify & send inquiry"
-                          : "Send verification code"}
+                      {status === "loading" ? "Sending…" : "Send inquiry"}
                     </button>
                   </motion.form>
                 )}
               </AnimatePresence>
             </div>
           </motion.aside>
+
+          <OtpVerifyModal
+            open={otpModalOpen}
+            email={form.email.trim()}
+            otp={otp}
+            onOtpChange={setOtp}
+            onVerify={handleVerifyOtp}
+            onResend={() => void requestOtp()}
+            onClose={() => setOtpModalOpen(false)}
+            loading={otpLoading}
+            error={otpError}
+            tone="skincare"
+          />
         </div>
       ) : null}
     </AnimatePresence>

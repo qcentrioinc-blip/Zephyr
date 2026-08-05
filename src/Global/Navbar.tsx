@@ -473,6 +473,42 @@ const Navbar = () => {
                     onToggleDropdown={toggleProductsDropdown}
                     onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
                   />
+
+                  {/* Align under Products only — centering on the full pill pushed the menu right. */}
+                  <AnimatePresence>
+                    {isProductsOpen ? (
+                      <motion.div
+                        id="nav-products-menu"
+                        role="menu"
+                        initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -4, scale: 0.98 }}
+                        transition={{ duration: 0.18, ease: EASE_PREMIUM }}
+                        onMouseEnter={openProductsDropdown}
+                        onMouseLeave={scheduleCloseProductsDropdown}
+                        className="absolute left-0 top-full z-[120] w-64 pt-3 origin-top"
+                      >
+                        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl shadow-black/5">
+                          {PRODUCT_LINKS.map((product) => (
+                            <Link
+                              key={product.path}
+                              to={product.path}
+                              role="menuitem"
+                              className="flex items-center justify-between gap-2 px-5 py-3 text-sm font-medium text-[#4A4B4F] transition-colors hover:bg-gray-50 hover:text-black"
+                              onClick={() => setIsProductsOpen(false)}
+                            >
+                              <span>{product.name}</span>
+                              {product.badge ? (
+                                <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                                  {product.badge}
+                                </span>
+                              ) : null}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ) : null}
+                  </AnimatePresence>
                 </div>
               );
             }
@@ -489,48 +525,6 @@ const Navbar = () => {
               />
             );
           })}
-
-          {/* Menu rendered as sibling of links, outside any transform — reliable clicks on Mac. */}
-          <AnimatePresence>
-            {isProductsOpen && (
-              <motion.div
-                id="nav-products-menu"
-                role="menu"
-                initial={{ opacity: 0, y: -4, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -4, scale: 0.98 }}
-                transition={{ duration: 0.18, ease: EASE_PREMIUM }}
-                onMouseEnter={openProductsDropdown}
-                onMouseLeave={scheduleCloseProductsDropdown}
-                className="absolute left-1/2 top-full z-[120] w-64 -translate-x-1/2 pt-3 origin-top"
-              >
-                <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl shadow-black/5">
-                  {PRODUCT_LINKS.map((product, index) => (
-                    <motion.div
-                      key={product.path}
-                      initial={{ opacity: 0, x: -6 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.18, delay: index * 0.03, ease: EASE_PREMIUM }}
-                    >
-                      <Link
-                        to={product.path}
-                        role="menuitem"
-                        className="flex items-center justify-between gap-2 px-5 py-3 text-sm font-medium text-[#4A4B4F] transition-colors hover:bg-gray-50 hover:text-black"
-                        onClick={() => setIsProductsOpen(false)}
-                      >
-                        <span>{product.name}</span>
-                        {product.badge && (
-                          <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                            {product.badge}
-                          </span>
-                        )}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         <MenuToggle

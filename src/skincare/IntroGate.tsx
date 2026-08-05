@@ -9,12 +9,14 @@ type Props = {
 
 /**
  * Gate: orbit + soft settle around lockup.
- * Images stay straight / front-facing (product-page view) the whole time.
+ * Spin runs on an inner wrapper so GSAP never wipes the outer centering transform
+ * (that caused first-load orbit positions to break until refresh).
  */
 export default function IntroGate({ onEnter, reduced }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
+  const spinRef = useRef<HTMLDivElement>(null);
   const unlocking = useRef(false);
 
   useEffect(() => {
@@ -25,77 +27,134 @@ export default function IntroGate({ onEnter, reduced }: Props) {
   }, []);
 
   useEffect(() => {
-    if (!orbitRef.current) return;
+    if (!orbitRef.current || !spinRef.current) return;
+
     const orbit = orbitRef.current;
+    const spin = spinRef.current;
     const items = Array.from(orbit.querySelectorAll<HTMLElement>(".sil-orbit-item"));
     const inners = Array.from(orbit.querySelectorAll<HTMLElement>(".sil-orbit-inner"));
+    const imgs = Array.from(orbit.querySelectorAll<HTMLImageElement>("img"));
 
-    const rOrbit = Math.min(window.innerWidth * 0.34, 240);
-    const rSettle = Math.min(window.innerWidth * 0.17, 122);
+    // Cardinal positions around the center text; after a full turn land here, then ease outward
+    const rStart = Math.min(window.innerWidth * 0.3, 220);
+    const rOut = Math.min(window.innerWidth * 0.38, 280);
+    // Top, right, bottom, left (relative to center lockup)
+    const cardinalAngle = (i: number) => (i * Math.PI) / 2 - Math.PI / 2;
 
-    if (reduced) {
-      gsap.set(orbit, { rotation: 0 });
-      gsap.set(items, { autoAlpha: 0.95, ["--orbit-r" as string]: rSettle, force3D: false });
-      gsap.set(inners, { rotation: 0, y: 0, force3D: false });
-      return;
-    }
+    let cancelled = false;
+
+    const placeItems = (radius: number) => {
+      items.forEach((item, i) => {
+        const angle = cardinalAngle(i);
+        gsap.set(item, {
+          left: "50%",
+          top: "50%",
+          xPercent: -50,
+          yPercent: -50,
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius,
+          rotation: 0,
+          force3D: false,
+        });
+      });
+    };
 
     const ctx = gsap.context(() => {
-      // force3D:false — WebKit can paint gray shade boxes behind product PNGs on GPU layers
-      gsap.set(orbit, { rotation: 0, force3D: false });
-      gsap.set(inners, { rotation: 0, y: 0, rotateX: 0, rotateY: 0, force3D: false });
-      gsap.set(items, {
-        ["--orbit-r" as string]: rOrbit,
-        autoAlpha: 0,
-        scale: 0.9,
-        force3D: false,
-      });
+      const run = () => {
+        if (cancelled) return;
 
-      const tl = gsap.timeline();
+        gsap.set(spin, { rotation: 0, force3D: false });
+        gsap.set(inners, { rotation: 0, x: 0, y: 0, force3D: false });
+        placeItems(reduced ? rOut : rStart);
 
-      tl.to(items, {
-        autoAlpha: 1,
-        scale: 1,
-        duration: 0.75,
-        stagger: 0.07,
-        ease: "power3.out",
-        force3D: false,
-      });
+        if (reduced) {
+          gsap.set(items, { autoAlpha: 0.95, scale: 1, force3D: false });
+          return;
+        }
 
-      // Orbit ~3s — counter-rotate inners so packs stay upright/straight
-      tl.to(orbit, { rotation: 360, duration: 3, ease: "power1.inOut", force3D: false }, 0.3);
-      tl.to(inners, { rotation: -360, duration: 3, ease: "power1.inOut", force3D: false }, 0.3);
+        gsap.set(items, { autoAlpha: 0, scale: 0.9, force3D: false });
 
-      // Soft settle near lockup (still straight)
-      tl.to(
-        items,
-        {
-          ["--orbit-r" as string]: rSettle,
-          duration: 1.1,
+        const tl = gsap.timeline();
+
+        tl.to(items, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.75,
+          stagger: 0.07,
           ease: "power3.out",
-          stagger: 0.04,
           force3D: false,
-        },
-        "-=0.15",
+        });
+
+        // Full turn — ends exactly where they started
+        tl.to(
+          spin,
+          { rotation: 360, duration: 3.6, ease: "power2.inOut", force3D: false },
+          0.3,
+        );
+        tl.to(
+          inners,
+          { rotation: -360, duration: 3.6, ease: "power2.inOut", force3D: false },
+          0.3,
+        );
+
+        // Soft drift a bit farther out from the start positions
+        tl.to(
+          items,
+          {
+            x: (_i, el) => {
+              const i = items.indexOf(el as HTMLElement);
+              return Math.cos(cardinalAngle(i)) * rOut;
+            },
+            y: (_i, el) => {
+              const i = items.indexOf(el as HTMLElement);
+              return Math.sin(cardinalAngle(i)) * rOut;
+            },
+            duration: 1.6,
+            ease: "power3.out",
+            force3D: false,
+          },
+          "-=1.2",
+        );
+
+        tl.to(
+          inners,
+          {
+            y: (i) => (i % 2 === 0 ? -7 : 7),
+            duration: 3.4,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+            stagger: 0.18,
+            force3D: false,
+          },
+          "-=0.2",
+        );
+      };
+
+      // First visit: wait for decode so layout matches refresh (cached images)
+      const ready = Promise.all(
+        imgs.map((img) => {
+          if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+          return (
+            img.decode?.().catch(() => undefined) ??
+            new Promise<void>((resolve) => {
+              img.addEventListener("load", () => resolve(), { once: true });
+              img.addEventListener("error", () => resolve(), { once: true });
+            })
+          );
+        }),
       );
 
-      // Soft idle — vertical only
-      tl.to(
-        inners,
-        {
-          y: (i) => (i % 2 === 0 ? -7 : 7),
-          duration: 3.2,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
-          stagger: 0.18,
-          force3D: false,
-        },
-        "+=0.08",
-      );
+      void ready.then(() => {
+        if (cancelled) return;
+        requestAnimationFrame(() => requestAnimationFrame(run));
+      });
     }, orbitRef);
 
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      ctx.revert();
+    };
   }, [reduced]);
 
   useEffect(() => {
@@ -190,17 +249,15 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       aria-label="Click to enter ALFURIN skincare store"
     >
       <div ref={orbitRef} className="sil-orbit" aria-hidden>
-        {GATE_FLOATS.map((item, i) => (
-          <div
-            key={item.src}
-            className="sil-orbit-item"
-            style={{ ["--orbit-i" as string]: i }}
-          >
-            <div className="sil-orbit-inner">
-              <img src={item.src} alt="" draggable={false} />
+        <div ref={spinRef} className="sil-orbit-spin">
+          {GATE_FLOATS.map((item) => (
+            <div key={item.src} className="sil-orbit-item">
+              <div className="sil-orbit-inner">
+                <img src={item.src} alt="" draggable={false} />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="sil-gate-lockup">
