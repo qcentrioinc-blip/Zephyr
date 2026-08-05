@@ -234,16 +234,18 @@ const MainSec: React.FC = () => {
         duration: useLiteMotion ? 0.45 : 0.8,
         ease: "easeInOut",
       }}
-      className="relative overflow-hidden h-auto xl:h-screen"
+      className="mainsec-hero relative overflow-hidden h-auto xl:h-screen"
     >
-      {/* Glow — lighter blur on small screens (heavy blur tanks mobile FPS) */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      {/* Soft center glow — gradient only (no CSS filter blur: Safari paints a rectangular filter region that shows as a shade patch in the top-right corner). */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <motion.div
-          key={product.id}
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1.05, opacity: 1 }}
-          transition={{ duration: useLiteMotion ? 0.5 : 1.2 }}
-          className="absolute h-[280px] w-[280px] rounded-full bg-white/40 blur-[60px] sm:h-[560px] sm:w-[560px] sm:bg-white/50 sm:blur-[160px] md:h-[650px] md:w-[650px] md:blur-[190px] lg:h-[800px] lg:w-[800px] lg:blur-[220px]"
+          animate={{ opacity: useLiteMotion ? 0.75 : 1, scale: useLiteMotion ? 1 : 1.04 }}
+          transition={{ duration: useLiteMotion ? 0.5 : 1.2, ease: "easeOut" }}
+          className="absolute left-1/2 top-[38%] h-[min(110vw,920px)] w-[min(110vw,920px)] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.14) 42%, transparent 72%)",
+          }}
         />
       </div>
 
@@ -359,7 +361,7 @@ const MainSec: React.FC = () => {
           onClick={prevSlide}
           disabled={isAnimating}
           aria-label="Previous product"
-          className={`absolute left-2 sm:left-4 lg:left-6 top-[68%] sm:top-[74%] lg:top-[80%] z-40 flex h-9 w-9 sm:h-11 sm:w-11 lg:h-[50px] lg:w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
+          className={`absolute left-2 sm:left-4 lg:left-6 top-[68%] sm:top-[74%] lg:top-[80%] z-40 flex h-9 w-9 sm:h-11 sm:w-11 lg:h-[50px] lg:w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/15 transition hover:bg-white/25 ${
             isAnimating ? "opacity-50 pointer-events-none" : ""
           }`}
         >
@@ -371,7 +373,7 @@ const MainSec: React.FC = () => {
           onClick={nextSlide}
           disabled={isAnimating}
           aria-label="Next product"
-          className={`absolute right-2 sm:right-4 lg:right-6 top-[68%] sm:top-[74%] lg:top-[80%] z-40 flex h-9 w-9 sm:h-11 sm:w-11 lg:h-[50px] lg:w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 backdrop-blur-md transition hover:bg-white/10 ${
+          className={`absolute right-2 sm:right-4 lg:right-6 top-[68%] sm:top-[74%] lg:top-[80%] z-40 flex h-9 w-9 sm:h-11 sm:w-11 lg:h-[50px] lg:w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/15 transition hover:bg-white/25 ${
             isAnimating ? "opacity-50 pointer-events-none" : ""
           }`}
         >
@@ -398,12 +400,11 @@ const MainSec: React.FC = () => {
             </svg>
           </div>
 
-          {/* Fixed-size stage prevents layout placeholders / gray flash behind transparent WebPs */}
+          {/* Clip 3D carousel layers — Safari extends transformed GPU bounds beyond the bottle and tints corners */}
           <div
-            className="relative z-20 flex h-[260px] w-[200px] translate-y-20 items-center justify-center bg-transparent sm:h-[360px] sm:w-[280px] sm:translate-y-30 md:h-[400px] md:w-[300px] md:translate-y-16 lg:h-[420px] lg:w-[300px] lg:translate-y-14 xl:h-[520px] xl:w-[400px] xl:-translate-y-2"
+            className="mainsec-product-stage relative z-20 flex h-[260px] w-[200px] translate-y-20 items-center justify-center overflow-hidden bg-transparent sm:h-[360px] sm:w-[280px] sm:translate-y-30 md:h-[400px] md:w-[300px] md:translate-y-16 lg:h-[420px] lg:w-[300px] lg:translate-y-14 xl:h-[520px] xl:w-[400px] xl:-translate-y-2"
             style={useLiteMotion ? undefined : { perspective: 1200 }}
           >
-            {/* sync (not popLayout): popLayout reserves a layout box that shows as gray behind alpha images */}
             <AnimatePresence mode="sync" custom={direction} initial={false}>
               <motion.div
                 key={product.id}
@@ -413,12 +414,17 @@ const MainSec: React.FC = () => {
                 animate="center"
                 exit="exit"
                 onAnimationComplete={handleAnimationComplete}
-                className="absolute inset-0 flex items-center justify-center bg-transparent"
+                className="mainsec-product-motion absolute inset-0 flex items-center justify-center bg-transparent"
                 style={
                   useLiteMotion
-                    ? undefined
+                    ? {
+                        WebkitBackfaceVisibility: "hidden",
+                        backfaceVisibility: "hidden",
+                      }
                     : {
                         transformStyle: "preserve-3d",
+                        WebkitBackfaceVisibility: "hidden",
+                        backfaceVisibility: "hidden",
                       }
                 }
               >
@@ -431,7 +437,7 @@ const MainSec: React.FC = () => {
                   fetchPriority={current === 0 ? "high" : "auto"}
                   decoding="async"
                   className="
-                    zephyr-product-cutout
+                    mainsec-product-img
                     pointer-events-none
                     select-none
                     h-auto

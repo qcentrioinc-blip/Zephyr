@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Props = { reduced: boolean; active: boolean };
 
-/** Dual system — left copy (lowered), right cream-mood video loop. */
+/** Dual system — bark-to-balm story copy + cinematic origin film. */
 export default function PinnedSystem({ reduced, active }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ export default function PinnedSystem({ reduced, active }: Props) {
     () => {
       if (!active || reduced || !sectionRef.current || !stageRef.current) return;
 
-      const lines = stageRef.current.querySelectorAll(".sil-sys-line");
+      const story = stageRef.current.querySelector(".sil-sys-story");
       const cards = stageRef.current.querySelectorAll(".sil-sys-card");
       const media = stageRef.current.querySelector(".sil-sys-media");
 
@@ -35,9 +35,9 @@ export default function PinnedSystem({ reduced, active }: Props) {
           },
         })
         .fromTo(
-          lines,
-          { xPercent: (i) => (i % 2 === 0 ? -12 : 12), opacity: 0.15 },
-          { xPercent: 0, opacity: 1, stagger: 0.05, ease: "none" },
+          story,
+          { y: 32, opacity: 0 },
+          { y: 0, opacity: 1, ease: "none" },
           0,
         )
         .fromTo(
@@ -61,11 +61,12 @@ export default function PinnedSystem({ reduced, active }: Props) {
       <div ref={stageRef} className="sil-sys-stage">
         <div className="sil-sys-layout">
           <div className="sil-sys-copy">
-            <div className="sil-sys-bands" aria-hidden>
-              <p className="sil-sys-line">Calm · Nourish · Protect</p>
-              <p className="sil-sys-line">ALFURIN dual system</p>
-              <p className="sil-sys-line">Defence + Intensive</p>
-              <p className="sil-sys-line">Limited MOQ enquiries</p>
+            <div className="sil-sys-story">
+              <h2 className="sil-sys-story-title">From bark to balm.</h2>
+              <p className="sil-sys-story-body">
+                The heart of Alfurin is a single plant extract — drawn only from the bark of the
+                Indian wood apple tree (<em>Limonia acidissima</em>). See where it comes from.
+              </p>
             </div>
 
             <div className="sil-sys-cards">
@@ -93,16 +94,16 @@ export default function PinnedSystem({ reduced, active }: Props) {
           <div className="sil-sys-media">
             <video
               className="sil-sys-video"
-              src="/skincare/proof-mood.mp4"
-              poster="/skincare/foliage-mood.webp"
+              src="/skincare/bark-to-balm.mp4"
+              poster="/skincare/bark-to-balm-poster.png"
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-              aria-hidden
+              aria-label="From bark to balm — Limonia acidissima origin story"
             />
-            <p className="sil-sys-media-caption">Calm · Nourish · Protect</p>
+            <p className="sil-sys-media-caption">Limonia acidissima · From bark to balm</p>
           </div>
         </div>
 

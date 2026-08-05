@@ -41,9 +41,9 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=130%",
+          end: "+=88%",
           pin: stageRef.current,
-          scrub: 0.55,
+          scrub: 0.32,
           anticipatePin: 1,
         },
       });
@@ -51,9 +51,9 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
       if (img) {
         tl.fromTo(
           img,
-          { y: 72, rotate: 4 * flip, scale: 0.9, x: -12 * flip, force3D: false },
+          { y: 108, rotate: 4 * flip, scale: 0.9, x: -12 * flip, force3D: false },
           {
-            y: -44,
+            y: 28,
             rotate: -3 * flip,
             scale: 1.08,
             x: 10 * flip,

@@ -1,12 +1,12 @@
 ﻿/* Cream editorial store â€” scoped to .skincare-silencio */
 
 .skincare-silencio {
-  --sil-bg: #f7f7f2;
-  --sil-bg-deep: #efece4;
-  --sil-fg: #2c2a26;
-  --sil-muted: #7a756c;
-  --sil-line: #ddd8ce;
-  --sil-accent: #8a9a7b;
+  --sil-bg: #ffffff;
+  --sil-bg-deep: #ffffff;
+  --sil-fg: #1a2233;
+  --sil-muted: #5a6478;
+  --sil-line: #cdd5e0;
+  --sil-accent: #2e6da4;
   --sil-font-display: "Cormorant Garamond", "Times New Roman", Georgia, serif;
   --sil-font-body: "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --sil-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -96,7 +96,7 @@ html.skincare-drawer-open body {
   z-index: 9000;
   display: grid;
   place-items: center;
-  background: radial-gradient(ellipse at 50% 40%, #fffef9 0%, var(--sil-bg) 55%, var(--sil-bg-deep) 100%);
+  background: #ffffff;
   overflow: hidden;
   cursor: none;
 }
@@ -135,8 +135,7 @@ html.skincare-drawer-open body {
 .sil-orbit-inner {
   position: relative;
   width: 100%;
-  background: transparent;
-  isolation: isolate;
+  background: #ffffff;
 }
 
 .sil-orbit-inner img {
@@ -144,8 +143,7 @@ html.skincare-drawer-open body {
   height: auto;
   object-fit: contain;
   display: block;
-  background: transparent;
-  mix-blend-mode: multiply;
+  background: #ffffff;
   filter: none;
   -webkit-filter: none;
   user-select: none;
@@ -157,9 +155,8 @@ html.skincare-drawer-open body {
   object-fit: contain;
   filter: none;
   -webkit-filter: none;
-  mix-blend-mode: multiply;
   user-select: none;
-  background: transparent;
+  background: #ffffff;
   -webkit-user-drag: none;
 }
 
@@ -199,7 +196,7 @@ html.skincare-drawer-open body {
   font-size: clamp(1rem, 2.8vw, 1.35rem);
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--sil-fg);
+  color: #000000;
 }
 
 .sil-enter-circle {
@@ -211,7 +208,7 @@ html.skincare-drawer-open body {
   height: 118px;
   border-radius: 50%;
   border: 1px solid var(--sil-fg);
-  background: rgba(247, 247, 242, 0.72);
+  background: rgba(255, 255, 255, 0.72);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   display: grid;
@@ -260,8 +257,7 @@ html.skincare-drawer-open body {
   justify-content: flex-end;
   padding: 4.75rem 0 0;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 40%, #fffef9 0%, var(--sil-bg) 52%, var(--sil-bg-deep) 100%);
+  background: #ffffff;
 }
 
 .sil-hero-stage {
@@ -270,8 +266,6 @@ html.skincare-drawer-open body {
   pointer-events: none;
   z-index: 2;
   background: transparent;
-  /* Contain blend modes so product black backdrops dissolve into cream */
-  isolation: isolate;
 }
 
 .sil-hero-anchor {
@@ -284,7 +278,7 @@ html.skincare-drawer-open body {
 }
 
 .sil-hero-anchor-float {
-  background: transparent;
+  background: #ffffff;
 }
 
 .sil-hero-anchor img {
@@ -292,12 +286,10 @@ html.skincare-drawer-open body {
   height: auto;
   object-fit: contain;
   display: block;
-  background-color: transparent;
-  /* Black studio backdrops â†’ cream page (Mac Safari shows them as shade otherwise) */
-  mix-blend-mode: multiply;
+  background-color: #ffffff;
   -webkit-user-drag: none;
-  /* No filter on the image itself â€” filters + opacity/transform = gray boxes on WebKit */
   filter: none;
+  -webkit-filter: none;
 }
 
 .sil-hero-anchor p {
@@ -349,6 +341,7 @@ html.skincare-drawer-open body {
   line-height: 0.88;
   margin: 0 0 0.85rem;
   font-weight: 500;
+  color: #000000;
 }
 
 .sil-hero-rule {
@@ -469,18 +462,17 @@ html.skincare-drawer-open body {
 .sil-can-visual {
   position: relative;
   display: grid;
-  place-items: center;
+  place-items: end center;
   min-height: 280px;
-  background: transparent;
-  isolation: isolate;
+  padding-top: 2.5rem;
+  background: #ffffff;
 }
 
 .sil-can-img {
   width: min(100%, 460px);
   height: auto;
   object-fit: contain;
-  background: transparent;
-  mix-blend-mode: multiply;
+  background: #ffffff;
   filter: none;
   -webkit-filter: none;
   -webkit-user-drag: none;
@@ -520,6 +512,7 @@ html.skincare-drawer-open body {
   line-height: 1;
   margin: 0 0 0.35rem;
   font-weight: 500;
+  color: #000000;
 }
 
 .sil-can-role,
@@ -532,23 +525,35 @@ html.skincare-drawer-open body {
 .sil-nutrition {
   width: 100%;
   border-collapse: collapse;
-  font-family: var(--sil-font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
+  font-family: var(--sil-font-body);
+  font-size: 0.84rem;
+  letter-spacing: 0.01em;
 }
 
 .sil-nutrition th,
 .sil-nutrition td {
   border-top: 1px solid var(--sil-line);
-  padding: 0.45rem 0;
+  padding: 0.55rem 0;
   text-align: left;
-  font-weight: 400;
+  vertical-align: baseline;
 }
 
 .sil-nutrition th {
-  width: 32%;
-  color: var(--sil-muted);
+  width: 30%;
+  font-family: var(--sil-font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--sil-accent);
+}
+
+.sil-nutrition td {
+  font-family: var(--sil-font-display);
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #000000;
 }
 
 .sil-ings {
@@ -697,7 +702,7 @@ html.skincare-drawer-open body {
 /* â”€â”€â”€ System â”€â”€â”€ */
 .sil-sys-section {
   position: relative;
-  background: #fffef9;
+  background: #ffffff;
 }
 
 .sil-sys-stage {
@@ -741,6 +746,37 @@ html.skincare-drawer-open body {
   margin-top: -1.5rem;
 }
 
+.sil-sys-story {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 34rem;
+}
+
+.sil-sys-story-title {
+  font-family: var(--sil-font-display);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+  margin: 0;
+  font-weight: 500;
+  color: #000000;
+}
+
+.sil-sys-story-body {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--sil-muted);
+  text-wrap: pretty;
+}
+
+.sil-sys-story-body em {
+  font-style: normal;
+  color: var(--sil-fg);
+  font-weight: 500;
+}
+
 .sil-sys-bands {
   display: flex;
   flex-direction: column;
@@ -779,6 +815,7 @@ html.skincare-drawer-open body {
   font-size: 1.7rem;
   margin: 0.2rem 0;
   font-weight: 500;
+  color: #000000;
 }
 
 .sil-sys-card p {
@@ -796,8 +833,7 @@ html.skincare-drawer-open body {
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 40%, #fffef9 0%, var(--sil-bg-deep) 100%);
+  background: #ffffff;
 }
 
 @media (min-width: 900px) {
@@ -827,7 +863,7 @@ html.skincare-drawer-open body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--sil-fg);
-  background: rgba(247, 247, 242, 0.72);
+  background: rgba(255, 255, 255, 0.72);
   padding: 0.35rem 0.55rem;
 }
 
@@ -862,6 +898,7 @@ html.skincare-drawer-open body {
   letter-spacing: -0.02em;
   margin: 0 0 1.5rem;
   font-weight: 500;
+  color: #000000;
 }
 
 .sil-benefit-chips {
@@ -958,7 +995,7 @@ html.skincare-drawer-open body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.35rem 0.55rem;
-  background: rgba(247, 247, 242, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--sil-fg);
   border: 1px solid var(--sil-line);
 }
@@ -984,6 +1021,7 @@ html.skincare-drawer-open body {
   margin: 0;
   font-weight: 500;
   letter-spacing: -0.01em;
+  color: #000000;
 }
 
 .sil-benefit-card--no-title .sil-benefit-copy h3,
@@ -1054,6 +1092,7 @@ html.skincare-drawer-open body {
   line-height: 0.95;
   margin: 0 0 0.85rem;
   font-weight: 500;
+  color: #000000;
 }
 
 .sil-proof-lead {
@@ -1138,8 +1177,8 @@ html.skincare-drawer-open body {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(247, 247, 242, 0.28) 0%, transparent 35%),
-    linear-gradient(0deg, rgba(239, 236, 228, 0.35) 0%, transparent 40%);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28) 0%, transparent 35%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.35) 0%, transparent 40%);
 }
 
 .sil-proof-media-tag {
@@ -1152,7 +1191,7 @@ html.skincare-drawer-open body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--sil-fg);
-  background: rgba(247, 247, 242, 0.82);
+  background: rgba(255, 255, 255, 0.82);
   border: 1px solid var(--sil-line);
   padding: 0.4rem 0.65rem;
 }
@@ -1183,7 +1222,7 @@ html.skincare-drawer-open body {
   width: 100%;
   margin: 0;
   padding: 1.5rem 1.25rem 1.75rem;
-  background: #fffef9;
+  background: #ffffff;
   border: 1px solid var(--sil-line);
   box-shadow: 0 24px 60px rgba(44, 42, 38, 0.08);
   text-align: left;
@@ -1228,7 +1267,7 @@ html.skincare-drawer-open body {
   width: 88px;
   height: 110px;
   object-fit: contain;
-  background: transparent;
+  background: #ffffff;
 }
 
 .sil-receipt-list {
@@ -1329,7 +1368,7 @@ html.skincare-drawer-open body {
   height: 100dvh;
   max-height: 100dvh;
   width: min(100%, 440px);
-  background: #fffef9;
+  background: #ffffff;
   border-left: 1px solid var(--sil-line);
   box-shadow: -24px 0 60px rgba(44, 42, 38, 0.12);
   display: flex;
@@ -1453,7 +1492,7 @@ html.skincare-drawer-open body {
 
 .sil-otp {
   border: 1px solid var(--sil-accent);
-  background: rgba(138, 154, 123, 0.1);
+  background: rgba(46, 109, 164, 0.08);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -1566,6 +1605,10 @@ html.skincare-drawer-open body {
 
   .sil-can-img {
     width: min(100%, 300px);
+  }
+
+  .sil-can-visual {
+    padding-top: 1.5rem;
   }
 
   .sil-can-stage {

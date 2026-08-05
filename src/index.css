@@ -454,6 +454,24 @@ img {
   -webkit-filter: none !important;
 }
 
+/* MainSec hero: colored slides — avoid multiply + 3D (Safari gray/shade compositor rects) */
+.mainsec-hero .mainsec-product-stage {
+  isolation: isolate;
+  contain: layout paint;
+}
+
+.mainsec-hero .mainsec-product-motion {
+  transform: translateZ(0);
+}
+
+.mainsec-hero .mainsec-product-img {
+  mix-blend-mode: normal;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
 .zephyr-safe-backdrop {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
