@@ -9,12 +9,16 @@ import {
 import { useReducedMotion } from "framer-motion";
 import { buildFormulaSlides } from "./packagingSlides";
 
-const CYCLE_MS = 700;
+const CYCLE_MS = 1500;
+const FADE_MS = 700;
+const HOVER_START_DELAY_MS = 280;
+const FADE_EASE = "cubic-bezier(0.25, 0.8, 0.35, 1)";
 
 type FormulaCardSlideshowProps = {
   bottleImage: string;
   alt?: string;
   className?: string;
+  imageFit?: "cover" | "contain";
 };
 
 function preload(src: string) {
@@ -30,6 +34,7 @@ export default function FormulaCardSlideshow({
   bottleImage,
   alt = "",
   className = "",
+  imageFit = "cover",
 }: FormulaCardSlideshowProps) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(() => buildFormulaSlides(bottleImage), [bottleImage]);
@@ -38,12 +43,22 @@ export default function FormulaCardSlideshow({
   const [hovering, setHovering] = useState(false);
   const [packReady, setPackReady] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startDelayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const preloadStarted = useRef(false);
+
+  const imageTransition = reduceMotion
+    ? "opacity 0.15s ease"
+    : `opacity ${FADE_MS}ms ${FADE_EASE}`;
+  const objectClass = imageFit === "contain" ? "object-contain" : "object-cover";
 
   const clearCycle = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
+    }
+    if (startDelayRef.current) {
+      clearTimeout(startDelayRef.current);
+      startDelayRef.current = null;
     }
   };
 
@@ -56,11 +71,14 @@ export default function FormulaCardSlideshow({
   useEffect(() => {
     clearCycle();
     if (reduceMotion || !hovering || !packReady) return;
-    // Jump to first packaging slide as soon as assets are warm
-    setIndex((i) => (i === 0 ? 1 : i));
-    intervalRef.current = setInterval(() => {
-      setIndex((i) => (i + 1) % slides.length);
-    }, CYCLE_MS);
+
+    startDelayRef.current = setTimeout(() => {
+      setIndex((i) => (i === 0 ? 1 : i));
+      intervalRef.current = setInterval(() => {
+        setIndex((i) => (i + 1) % slides.length);
+      }, CYCLE_MS);
+    }, HOVER_START_DELAY_MS);
+
     return clearCycle;
   }, [hovering, reduceMotion, packReady, slides.length]);
 
@@ -99,9 +117,10 @@ export default function FormulaCardSlideshow({
         draggable={false}
         decoding="async"
         loading="eager"
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ease-out ${
+        className={`absolute inset-0 h-full w-full ${objectClass} ${
           index === 0 ? "opacity-100" : "opacity-0"
         }`}
+        style={{ transition: imageTransition }}
       />
 
       {/* Packaging mounts after first hover so cards stay light until needed */}
@@ -116,9 +135,10 @@ export default function FormulaCardSlideshow({
               aria-hidden={slideIndex !== index}
               draggable={false}
               decoding="async"
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ease-out ${
+              className={`absolute inset-0 h-full w-full ${objectClass} ${
                 slideIndex === index ? "opacity-100" : "opacity-0"
               }`}
+              style={{ transition: imageTransition }}
             />
           );
         })}

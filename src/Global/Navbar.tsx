@@ -399,7 +399,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full px-4 py-2 transition-[background-color,box-shadow] duration-300 ease-out sm:px-6 lg:px-8 ${
+      className={`fixed top-0 z-[100] w-full px-3 py-2 transition-[background-color,box-shadow] duration-300 ease-out sm:px-4 lg:px-4 ${
         transparent
           ? 'bg-transparent shadow-none'
           : scrolled
@@ -407,7 +407,7 @@ const Navbar = () => {
             : 'bg-white shadow-none'
       }`}
     >
-      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-4">
+      <div className="relative mx-auto flex max-w-[90rem] items-center justify-between gap-4">
         <Link
           to="/"
           className="group/logo relative z-10 flex shrink-0 items-center px-2.5 py-1.5"
@@ -533,7 +533,7 @@ const Navbar = () => {
         />
       </div>
 
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-[90rem]">
         <MobileMenu
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}

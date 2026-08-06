@@ -1,4 +1,4 @@
-import MainSec from "./MainSec";
+import ProductAccordion from "./ProductAccordion";
 import JointPain from "./JointPain";
 import FeaturesSection from "./FeatureCards";
 import Showreel from "./Showreel";
@@ -12,7 +12,7 @@ export default function Homepage() {
   return (
     <div className="min-h-screen bg-white">
       <main>
-        <MainSec />
+        <ProductAccordion />
         <Reveal>
           <JointPain />
         </Reveal>

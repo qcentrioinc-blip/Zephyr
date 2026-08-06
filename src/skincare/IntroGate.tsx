@@ -246,12 +246,12 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       }}
       role="button"
       tabIndex={0}
-      aria-label="Click to enter ALFURIN skincare store"
+      aria-label="Enter ALFURIN clinical range overview"
     >
       <div ref={orbitRef} className="sil-orbit" aria-hidden>
         <div ref={spinRef} className="sil-orbit-spin">
           {GATE_FLOATS.map((item) => (
-            <div key={item.src} className="sil-orbit-item">
+            <div key={item.className} className="sil-orbit-item">
               <div className="sil-orbit-inner">
                 <img src={item.src} alt="" draggable={false} />
               </div>
@@ -261,7 +261,9 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       </div>
 
       <div className="sil-gate-lockup">
-        <h1 className="sil-gate-title">ALFURIN ® SKINCARE</h1>
+        <p className="sil-gate-eyebrow">Zephyr manufacturing</p>
+        <h1 className="sil-gate-title">ALFURIN</h1>
+        <p className="sil-gate-sub">Care for psoriasis-prone skin</p>
       </div>
 
       <div ref={circleRef} className="sil-enter-circle" aria-hidden>

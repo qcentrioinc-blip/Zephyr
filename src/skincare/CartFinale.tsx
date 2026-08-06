@@ -10,10 +10,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Props = { reduced: boolean; active: boolean };
 
-/**
- * Finale — bill left / Let’s talk right.
- * Let’s talk opens the skincare contact drawer.
- */
+/** Quiet partner-enquiry panel (no retail receipt metaphor). */
 export default function CartFinale({ reduced, active }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -53,16 +50,13 @@ export default function CartFinale({ reduced, active }: Props) {
   );
 
   return (
-    <section ref={sectionRef} className="sil-cart" aria-label="Checkout enquiry">
+    <section ref={sectionRef} className="sil-cart" aria-label="Partner enquiry">
       <div className="sil-cart-split">
-        <div className="sil-receipt">
-          <p className="sil-receipt-thanks">Thanks for your visit!</p>
+        <div className="sil-receipt sil-partner-summary">
+          <p className="sil-receipt-thanks">ALFURIN range</p>
           <div className="sil-receipt-head">
-            <span>ALFURIN ®</span>
-            <span>store</span>
-          </div>
-          <div className="sil-receipt-rule" aria-hidden>
-            - - - - - - - - - - - - - - - - - -
+            <span>Zephyr manufacturing</span>
+            <span>B2B</span>
           </div>
 
           <div className="sil-receipt-thumbs" aria-hidden>
@@ -81,21 +75,23 @@ export default function CartFinale({ reduced, active }: Props) {
             {PRODUCTS.map((p) => (
               <li key={p.id} className="sil-receipt-row">
                 <strong>{p.name}</strong>
+                <span>{p.role}</span>
               </li>
             ))}
           </ul>
 
-          <div className="sil-receipt-rule" aria-hidden>
-            * * * * * * * * * * * * * * * *
-          </div>
           <p className="sil-receipt-note">
-            Partner enquiries for lotion, cream, or the dual system — through Zephyr.
+            Discuss availability, distribution, clinic programs, and manufacturing MOQ for the
+            dual-SKU system.
           </p>
         </div>
 
         <div className="sil-talk">
-          <h2 className="sil-talk-title">Let&apos;s talk</h2>
-          <p className="sil-talk-sub">General enquiries &amp; new business — MOQ ready.</p>
+          <h2 className="sil-talk-title">Partner with Zephyr</h2>
+          <p className="sil-talk-sub">
+            Share your market, volumes, and packaging needs. We will follow up on your company
+            email.
+          </p>
           <motion.button
             type="button"
             className="sil-cta sil-cta--fill"
@@ -103,7 +99,7 @@ export default function CartFinale({ reduced, active }: Props) {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >
-            Let&apos;s talk
+            Open partner enquiry
           </motion.button>
         </div>
       </div>

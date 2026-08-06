@@ -20,9 +20,9 @@ type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2;
 
 const SUBJECT_OPTIONS = [
-  { label: "Full range / MOQ", value: "Skincare — ALFURIN range / MOQ" },
-  { label: "Lotion", value: "Skincare — ALFURIN Moisturizing Lotion" },
-  { label: "Cream", value: "Skincare — ALFURIN Moisturizing Cream" },
+  { label: "Full range / MOQ", value: "ALFURIN range — manufacturing / MOQ" },
+  { label: "Lotion", value: "ALFURIN Moisturizing Lotion — partner enquiry" },
+  { label: "Cream", value: "ALFURIN Moisturizing Cream — partner enquiry" },
 ] as const;
 
 /** Right-side cream contact drawer — OTP-gated like /contact. */
@@ -282,9 +282,9 @@ export default function SkincareContact() {
           >
             <div className="sil-drawer-head">
               <div>
-                <p className="sil-contact-eyebrow">Get in touch</p>
+                <p className="sil-contact-eyebrow">Zephyr manufacturing</p>
                 <h2 id={titleId} className="sil-drawer-title">
-                  ALFURIN enquiry
+                  ALFURIN partner enquiry
                 </h2>
               </div>
               <button type="button" className="sil-drawer-close" onClick={close} aria-label="Close">
@@ -303,11 +303,11 @@ export default function SkincareContact() {
                     exit={{ opacity: 0, y: -8 }}
                     role="status"
                   >
-                    <p className="sil-contact-queued">Enquiry queued</p>
-                    <h3>Thanks — we&apos;ll be in touch</h3>
+                    <p className="sil-contact-queued">Enquiry received</p>
+                    <h3>We will follow up shortly</h3>
                     <p>
-                      Your ALFURIN / skincare inquiry was received. Our team will follow up on your
-                      company email within one to two business days.
+                      Your ALFURIN partner enquiry was received. Our manufacturing team will reply
+                      on your company email within one to two business days.
                     </p>
                     <div className="sil-talk-ctas">
                       <button type="button" className="sil-cta" onClick={resetForm}>
@@ -329,7 +329,7 @@ export default function SkincareContact() {
                     exit={{ opacity: 0, y: -8 }}
                   >
                     <p className="sil-contact-lead">
-                      Verify your company email first. Other fields unlock after OTP.
+                      Verify your company email first. Remaining fields unlock after OTP.
                     </p>
 
                     <div className="sil-email-verify-wrap">
@@ -421,7 +421,7 @@ export default function SkincareContact() {
                       value={form.message}
                       disabled={!detailsUnlocked}
                       onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                      placeholder="Project brief — volumes / MOQ, markets, packaging…"
+                      placeholder="Brief — volumes / MOQ, markets, packaging, clinic or retail channel…"
                       className={`sil-field sil-field--area${detailsUnlocked ? "" : " sil-field--disabled"}`}
                     />
 

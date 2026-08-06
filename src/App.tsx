@@ -63,7 +63,7 @@ function AppContent() {
   const { pathname } = useLocation()
   const hideFooter = pathname === '/contact' || pathname === '/skincare'
   const showCrumbs =
-    pathname !== '/' && pathname !== '/contact' && pathname !== '/skincare'
+    pathname !== '/' && pathname !== '/contact'
   const [contentReady, setContentReady] = useState(false)
 
   useEffect(() => {

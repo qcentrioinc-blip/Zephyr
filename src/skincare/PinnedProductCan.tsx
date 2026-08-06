@@ -13,7 +13,7 @@ type Props = {
   active: boolean;
 };
 
-/** Pinned product can — parallax scrub; Connect opens skincare contact drawer. */
+/** Pinned product can — desktop-only parallax scrub; static below lg. */
 export default function PinnedProductCan({ product, reduced, active }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -25,55 +25,108 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
 
   useGSAP(
     () => {
-      if (!active || reduced || !sectionRef.current || !stageRef.current) return;
+      if (!active || !sectionRef.current || !stageRef.current) return;
 
       const img = imgRef.current;
       const meta = metaRef.current;
       const ings = ingsRef.current?.querySelectorAll("li");
-      const flip = mirrored ? -1 : 1;
+      const staticTargets = [img, meta, ...(ings ? Array.from(ings) : [])].filter(Boolean);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=88%",
-          pin: stageRef.current,
-          scrub: 0.32,
-          anticipatePin: 1,
-        },
+      const setStatic = () => {
+        gsap.set(staticTargets, {
+          clearProps: "transform,opacity,x,y,rotate,scale",
+          opacity: 1,
+          y: 0,
+          x: 0,
+          rotate: 0,
+          scale: 1,
+        });
+      };
+
+      if (reduced) {
+        setStatic();
+        return;
+      }
+
+      const mm = gsap.matchMedia();
+
+      // Phone / tablet / iPad Pro: no pin, no scrub — fully static.
+      mm.add("(max-width: 1399px)", () => {
+        setStatic();
       });
 
-      if (img) {
-        tl.fromTo(
-          img,
-          { y: 108, rotate: 4 * flip, scale: 0.9, x: -12 * flip, force3D: false },
-          {
-            y: 28,
-            rotate: -3 * flip,
-            scale: 1.08,
-            x: 10 * flip,
-            ease: "none",
-            force3D: false,
+      // Large desktop only: keep existing scroll-pinned motion.
+      mm.add("(min-width: 1400px)", () => {
+        const flip = mirrored ? -1 : 1;
+
+        const headerOffset = () => {
+          const styles = getComputedStyle(document.documentElement);
+          const toPx = (value: string) => {
+            const raw = value.trim();
+            const n = parseFloat(raw);
+            if (!Number.isFinite(n)) return 0;
+            if (raw.endsWith("rem")) {
+              const root = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+              return n * root;
+            }
+            return n;
+          };
+          return (
+            toPx(styles.getPropertyValue("--zephyr-nav-h")) +
+            toPx(styles.getPropertyValue("--zephyr-crumb-h"))
+          );
+        };
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: () => `top top+=${headerOffset()}`,
+            end: "+=88%",
+            pin: stageRef.current,
+            scrub: 0.32,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           },
-          0,
-        );
-      }
-      if (meta) {
-        tl.fromTo(
-          meta,
-          { y: 36, opacity: 0, x: 18 * flip },
-          { y: 0, opacity: 1, x: 0, ease: "none" },
-          0.12,
-        );
-      }
-      if (ings?.length) {
-        tl.fromTo(
-          ings,
-          { y: 22, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.1, ease: "none" },
-          0.22,
-        );
-      }
+        });
+
+        if (img) {
+          tl.fromTo(
+            img,
+            { y: 108, rotate: 4 * flip, scale: 0.9, x: -12 * flip, force3D: false },
+            {
+              y: 28,
+              rotate: -3 * flip,
+              scale: 1.08,
+              x: 10 * flip,
+              ease: "none",
+              force3D: false,
+            },
+            0,
+          );
+        }
+        if (meta) {
+          tl.fromTo(
+            meta,
+            { y: 36, opacity: 0, x: 18 * flip },
+            { y: 0, opacity: 1, x: 0, ease: "none" },
+            0.12,
+          );
+        }
+        if (ings?.length) {
+          tl.fromTo(
+            ings,
+            { y: 22, opacity: 0 },
+            { y: 0, opacity: 1, stagger: 0.1, ease: "none" },
+            0.22,
+          );
+        }
+
+        return () => {
+          setStatic();
+        };
+      });
+
+      return () => mm.revert();
     },
     { dependencies: [active, reduced, product.id, mirrored], scope: sectionRef },
   );
@@ -101,8 +154,6 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
             <div ref={metaRef} className="sil-can-meta">
               <p className="sil-can-ref">REF {product.ref}</p>
               <h2 className="sil-can-name">{product.name}</h2>
-              <p className="sil-can-role">{product.role}</p>
-              <p className="sil-can-vol">{product.volume}</p>
             </div>
 
             <table className="sil-nutrition">
@@ -122,22 +173,17 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
               ))}
             </ul>
 
-            {product.showNpf ? (
-              <p className="sil-disclaimer">
-                The National Psoriasis Foundation Seal of Recognition does not constitute medical
-                advice. Consult a healthcare professional for diagnosis and treatment.
-              </p>
-            ) : null}
-
             <div className="sil-scan-row">
               <button
                 type="button"
                 className="sil-cta"
                 onClick={() =>
-                  openSkincareContact({ subject: `Skincare — ALFURIN ${product.name}` })
+                  openSkincareContact({
+                    subject: `ALFURIN ${product.name} — partner enquiry`,
+                  })
                 }
               >
-                Connect
+                Partner enquiry
               </button>
             </div>
           </div>

@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 type Props = { reduced: boolean; active: boolean };
 
 /**
- * Use cases — title stays at section top; cards keep scrub enter motion.
+ * Common psoriasis symptoms — staggered media cards with scrub enter motion.
  */
 export default function Benefits({ reduced, active }: Props) {
   const rootRef = useRef<HTMLElement>(null);
@@ -19,8 +19,27 @@ export default function Benefits({ reduced, active }: Props) {
       if (!active || reduced || !rootRef.current) return;
 
       const section = rootRef.current;
+      const head = section.querySelector(".sil-benefits-head");
       const cards = section.querySelectorAll<HTMLElement>(".sil-benefit-card");
       const media = section.querySelectorAll<HTMLElement>(".sil-benefit-media");
+
+      if (head) {
+        gsap.fromTo(
+          head,
+          { y: 28, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              end: "top 52%",
+              scrub: 0.45,
+            },
+          },
+        );
+      }
 
       cards.forEach((card) => {
         gsap.fromTo(
@@ -70,30 +89,32 @@ export default function Benefits({ reduced, active }: Props) {
   );
 
   return (
-    <section ref={rootRef} className="sil-benefits" aria-label="Use cases">
+    <section ref={rootRef} className="sil-benefits" aria-label="Common symptoms">
       <div className="sil-benefits-inner">
-        <h2 className="sil-section-title sil-benefits-title">Use cases</h2>
+        <header className="sil-benefits-head">
+          <p className="sil-benefits-eyebrow">Signs &amp; symptoms</p>
+          <h2 className="sil-section-title sil-benefits-title">Common symptoms</h2>
+          <p className="sil-benefits-lead">
+            Symptoms can vary depending on the type and severity of the condition. People living
+            with psoriasis may experience any combination of the following — use these cues when
+            briefing ALFURIN for clinic education and retail programs.
+          </p>
+        </header>
 
         <ul className="sil-benefit-grid">
-          {BENEFITS.map((card, index) => {
-            const hideTitle = index >= 4 || card.id === "swiss" || card.id === "moq";
-            return (
-              <li
-                key={card.id}
-                className={`sil-benefit-card${hideTitle ? " sil-benefit-card--no-title" : ""}`}
-              >
-                <div className="sil-benefit-media">
-                  <img src={card.image} alt="" draggable={false} />
-                  <span className="sil-benefit-tag">{card.category}</span>
-                </div>
-                <div className="sil-benefit-copy">
-                  <p className="sil-benefit-year">{card.year}</p>
-                  {!hideTitle ? <h3>{card.title}</h3> : null}
-                  <p>{card.line}</p>
-                </div>
-              </li>
-            );
-          })}
+          {BENEFITS.map((card) => (
+            <li key={card.id} className="sil-benefit-card">
+              <div className="sil-benefit-media">
+                <img src={card.image} alt={card.alt} draggable={false} loading="lazy" decoding="async" />
+                <span className="sil-benefit-tag">{card.category}</span>
+              </div>
+              <div className="sil-benefit-copy">
+                <p className="sil-benefit-year">{card.year}</p>
+                <h3>{card.title}</h3>
+                <p>{card.line}</p>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </section>

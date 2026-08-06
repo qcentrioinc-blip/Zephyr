@@ -27,11 +27,7 @@ const formatSegment = (segment: string) =>
 const Breadcrumbs = () => {
   const location = useLocation();
 
-  if (
-    location.pathname === '/' ||
-    location.pathname === '/contact' ||
-    location.pathname === '/skincare'
-  ) {
+  if (location.pathname === '/' || location.pathname === '/contact') {
     return null;
   }
 

@@ -6,6 +6,8 @@ import IntroGate from "./IntroGate";
 import StoreHero from "./StoreHero";
 import PinnedProductCan from "./PinnedProductCan";
 import PinnedSystem from "./PinnedSystem";
+import ScienceSection from "./ScienceSection";
+import RitualSection from "./RitualSection";
 import Benefits from "./Benefits";
 import ProofBand from "./ProofBand";
 import CartFinale from "./CartFinale";
@@ -34,7 +36,6 @@ export default function SkincarePage() {
     const t = window.setTimeout(refresh, 400);
     void document.fonts?.ready?.then(refresh);
 
-    // Re-measure after product / mood images decode (first-scroll pin hitch).
     const imgs = document.querySelectorAll<HTMLImageElement>(
       ".skincare-silencio img",
     );
@@ -79,7 +80,9 @@ export default function SkincarePage() {
         ))}
 
         <PinnedSystem reduced={reduced} active={entered} />
+        <ScienceSection reduced={reduced} active={entered} />
         <Benefits reduced={reduced} active={entered} />
+        <RitualSection reduced={reduced} active={entered} />
         <ProofBand reduced={reduced} active={entered} />
         <CartFinale reduced={reduced} active={entered} />
       </div>

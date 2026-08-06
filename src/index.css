@@ -477,6 +477,406 @@ img {
   backdrop-filter: blur(8px);
 }
 
+/* ── Product accordion hero (homepage) ── */
+.product-accordion-section {
+  box-sizing: border-box;
+}
+
+@media (min-width: 1280px) {
+  .product-accordion-section--desktop {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 1rem 1.25rem;
+    background: #f4f5f7;
+  }
+}
+
+.product-accordion-row {
+  display: flex;
+  height: 100%;
+  min-height: calc(100dvh - 1.5rem);
+  gap: 0;
+  border-radius: 2rem;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(17, 50, 39, 0.08);
+}
+
+.product-accordion-card {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff;
+  color: #111;
+  transition: background-color 0.45s ease, color 0.35s ease;
+  cursor: default;
+  outline: none;
+}
+
+.product-accordion-card.is-active {
+  background: var(--card-accent);
+  color: #fff;
+}
+
+.product-accordion-card__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: calc(100dvh - 1.5rem);
+  padding: 1.5rem 1.25rem 1.75rem;
+  position: relative;
+  transition:
+    justify-content 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    align-items 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-accordion-card.is-active .product-accordion-card__inner {
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+@media (min-width: 1280px) {
+  .product-accordion-card__inner {
+    padding: 2rem 1.5rem 2rem;
+  }
+}
+
+.product-accordion-card__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition:
+    max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease,
+    margin 0.45s ease;
+  margin-bottom: 0;
+}
+
+.product-accordion-card.is-active .product-accordion-card__media {
+  max-height: min(46vh, 400px);
+  opacity: 1;
+  margin-bottom: 1rem;
+}
+
+.product-accordion-card__image {
+  max-height: min(46vh, 400px);
+  width: auto;
+  max-width: min(100%, 260px);
+  object-fit: contain;
+  mix-blend-mode: normal;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.product-accordion-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-accordion-card.is-active .product-accordion-card__content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.product-accordion-card.is-active .product-accordion-card__index {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.product-accordion-card__index {
+  font-family: var(--font-manrope, Manrope, sans-serif);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--card-accent);
+  transition: color 0.35s ease;
+}
+
+.product-accordion-card__title {
+  font-family: var(--font-manrope, Manrope, sans-serif);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.product-accordion-card__subtitle {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: #6b7280;
+  transition: color 0.35s ease;
+}
+
+.product-accordion-card.is-active .product-accordion-card__subtitle {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.product-accordion-card__description {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 34ch;
+  overflow: hidden;
+}
+
+.product-accordion-card__cta {
+  margin-top: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid #111;
+  background: transparent;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.35s ease,
+    color 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.product-accordion-card.is-active .product-accordion-card__cta {
+  align-self: flex-start;
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #fff;
+}
+
+.product-accordion-card__cta:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Mobile / tablet hero carousel (< 1280px) */
+.product-accordion-hero__watermark {
+  font-family: var(--font-manrope, Manrope, sans-serif);
+  font-weight: 700;
+  line-height: 1.05;
+  color: rgba(255, 255, 255, 0.3);
+  white-space: normal;
+  overflow-wrap: break-word;
+  font-size: 34px;
+}
+
+@media (min-width: 380px) {
+  .product-accordion-hero__watermark {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__watermark {
+    font-size: 52px;
+    padding-top: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-accordion-hero__watermark {
+    font-size: 70px;
+    padding-top: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-accordion-hero__watermark {
+    font-size: 92px;
+    white-space: nowrap;
+    line-height: 1;
+    padding-top: 1.25rem;
+  }
+}
+
+.product-accordion-hero__headline {
+  font-family: var(--font-manrope, Manrope, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__headline {
+    font-size: 0.85rem;
+  }
+}
+
+.product-accordion-hero__description {
+  font-family: var(--font-para, inherit);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__description {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-accordion-hero__description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+.product-accordion-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1.1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__cta {
+    font-size: 1rem;
+    padding: 0.55rem 1.25rem;
+  }
+}
+
+.product-accordion-hero__cta:active {
+  transform: scale(0.97);
+}
+
+.product-accordion-hero__nav {
+  position: absolute;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  width: 2.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.25s ease;
+  top: 68%;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__nav {
+    height: 2.75rem;
+    width: 2.75rem;
+    top: 74%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-accordion-hero__nav {
+    height: 3.125rem;
+    width: 3.125rem;
+    top: 78%;
+  }
+}
+
+.product-accordion-hero__nav--prev {
+  left: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__nav--prev {
+    left: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-accordion-hero__nav--prev {
+    left: 1.5rem;
+  }
+}
+
+.product-accordion-hero__nav--next {
+  right: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__nav--next {
+    right: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-accordion-hero__nav--next {
+    right: 1.5rem;
+  }
+}
+
+.product-accordion-hero__nav:hover:not(.is-disabled) {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.product-accordion-hero__nav.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.product-accordion-hero__dot {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.45s ease;
+  cursor: pointer;
+}
+
+.product-accordion-hero__dot.is-active {
+  width: 2rem;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+@media (min-width: 640px) {
+  .product-accordion-hero__dot.is-active {
+    width: 2.5rem;
+  }
+}
+
+.product-accordion-hero__dot.is-disabled {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-accordion-card {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .product-accordion-card__inner,
+  .product-accordion-card__media,
+  .product-accordion-card__content {
+    transition: none;
+  }
+}
+
 @supports (height: 100dvh) {
   .min-h-screen {
     min-height: 100dvh;

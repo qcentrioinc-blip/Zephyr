@@ -13,6 +13,8 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
     "@tailwindcss/vite": "^4.3.0",
     "@upstash/redis": "^1.38.1",
     "clsx": "^2.1.1",
@@ -25,13 +27,15 @@
     "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.15.1",
     "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.4",
     "@vercel/node": "^5.9.3",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.3.0",

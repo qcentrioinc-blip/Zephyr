@@ -21,7 +21,7 @@ function FormulaCard({ item, category, enquireHref }: FormulaCardProps) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -3 }}
-      transition={{ duration: 0.22, ease: EASE }}
+      transition={{ duration: 0.45, ease: [0.25, 0.8, 0.35, 1] }}
       className="group mx-auto flex h-full w-full max-w-[220px] flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
     >
       <div className="relative h-[160px] w-full sm:h-[190px] lg:h-[210px]">
