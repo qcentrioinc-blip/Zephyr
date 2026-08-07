@@ -210,7 +210,7 @@ const ManufacturingHighlight = () => {
                 variants={fadeUp}
                 className="text-white text-[20px] md:text-[24px] lg:text-[32px] font-manrope font-semibold leading-[120%] tracking-normal"
               >
-                End-to-end CDMO capability
+                Full-service CDMO capability
               </motion.h2>
 
               <motion.p

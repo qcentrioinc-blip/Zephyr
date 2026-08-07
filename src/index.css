@@ -454,14 +454,20 @@ img {
   -webkit-filter: none !important;
 }
 
-/* MainSec hero: colored slides — avoid multiply + 3D (Safari gray/shade compositor rects) */
+/* MainSec hero: avoid Safari gray compositor rects during 3D slide changes */
 .mainsec-hero .mainsec-product-stage {
   isolation: isolate;
-  contain: layout paint;
+  overflow: visible;
+  background: transparent !important;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .mainsec-hero .mainsec-product-motion {
-  transform: translateZ(0);
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none;
+  -webkit-box-reflect: none;
 }
 
 .mainsec-hero .mainsec-product-img {
@@ -470,6 +476,8 @@ img {
   backface-visibility: hidden;
   filter: none !important;
   -webkit-filter: none !important;
+  transform: translateZ(0.1px);
+  background: transparent !important;
 }
 
 .zephyr-safe-backdrop {
@@ -572,6 +580,11 @@ img {
   mix-blend-mode: normal;
   filter: none !important;
   -webkit-filter: none !important;
+}
+
+/* Wider skincare packshot — keep same height as other cards to avoid layout jump. */
+.product-accordion-card:nth-child(4) .product-accordion-card__image {
+  max-width: min(100%, 310px);
 }
 
 .product-accordion-card__content {

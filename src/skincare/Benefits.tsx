@@ -96,7 +96,7 @@ export default function Benefits({ reduced, active }: Props) {
           <h2 className="sil-section-title sil-benefits-title">Common symptoms</h2>
           <p className="sil-benefits-lead">
             Symptoms can vary depending on the type and severity of the condition. People living
-            with psoriasis may experience any combination of the following — use these cues when
+            with psoriasis may experience any combination of the following. Use these cues when
             briefing ALFURIN for clinic education and retail programs.
           </p>
         </header>

@@ -96,7 +96,7 @@ const Timeline = () => {
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]">
               Scale path
             </p>
-            <H2>From first retail SKU to multi-channel distribution</H2>
+            <H2>From first retail SKU to broader distribution</H2>
             <P className="mt-5 text-gray-600 leading-relaxed">
               Zephyr helps brand owners move beyond a single SKU launch. Flexible
               dosage formats, finished goods packaging, and GMP quality systems

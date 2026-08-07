@@ -13,7 +13,7 @@ const pillars = [
     image: "/Research/ResearchStats.png",
   },
   {
-    title: "Transfer without friction",
+    title: "Clear manufacturing transfer",
     body: "Development-led scale up, artwork support, and a dedicated regulatory team finalize product, process, and pack specs.",
     image: "/Gallery/Gallery5.png",
   },

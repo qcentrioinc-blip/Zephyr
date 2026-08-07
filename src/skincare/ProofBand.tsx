@@ -12,7 +12,7 @@ const FACTS = [
   { k: "02", label: "Platform", value: "S100 Protein Technology" },
   { k: "03", label: "Focus", value: "Psoriasis-prone skin support" },
   { k: "04", label: "Validation", value: "Phase III clinically validated" },
-  { k: "05", label: "Recognition", value: "Cream — NPF Seal of Recognition" },
+  { k: "05", label: "Recognition", value: "Cream: NPF Seal of Recognition" },
   { k: "06", label: "System", value: "Lotion defence · Cream intensive" },
 ] as const;
 
@@ -83,7 +83,7 @@ export default function ProofBand({ reduced = false, active = true }: Props) {
     <section ref={rootRef} className="sil-proof" aria-label="Clinical formulation facts">
       <div className="sil-proof-shell">
         <header className="sil-proof-head">
-          <p className="sil-proof-eyebrow">Partner diligence</p>
+          <p className="sil-proof-eyebrow">Partner evaluation</p>
           <h2 className="sil-proof-title">Formulation facts</h2>
           <p className="sil-proof-lead">
             Credentials partners typically request when evaluating ALFURIN for distribution,

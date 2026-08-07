@@ -1,7 +1,7 @@
 export const CONTACT = {
-  lotion: `/contact?subject=${encodeURIComponent("ALFURIN Moisturizing Lotion — partner enquiry")}`,
-  cream: `/contact?subject=${encodeURIComponent("ALFURIN Moisturizing Cream — partner enquiry")}`,
-  range: `/contact?subject=${encodeURIComponent("ALFURIN range — manufacturing / MOQ")}`,
+  lotion: `/contact?subject=${encodeURIComponent("ALFURIN Moisturizing Lotion: partner enquiry")}`,
+  cream: `/contact?subject=${encodeURIComponent("ALFURIN Moisturizing Cream: partner enquiry")}`,
+  range: `/contact?subject=${encodeURIComponent("ALFURIN range: manufacturing / MOQ")}`,
 } as const;
 
 export const TRUST_BADGES = [
@@ -17,26 +17,36 @@ export const SCIENCE_CREDENTIALS = [
     id: "derm",
     title: "Dermatologically tested",
     detail: "Formulation screening suited to sensitive and psoriasis-prone skin programs.",
+    image: "/skincare/cred-derm.png?v=flip2",
+    alt: "Clinical dermatology screening of calm, psoriasis-prone skin",
   },
   {
     id: "sensitive",
     title: "Gentle on sensitive skin",
-    detail: "Positioned for partners who need a non-harsh daily and intensive care story.",
+    detail: "Built for partners who need a clear daily and intensive care story without harsh positioning.",
+    image: "/skincare/cred-sensitive.png?v=flip2",
+    alt: "Soft hydrated skin surface suggesting gentle sensitive-skin care",
   },
   {
     id: "s100",
     title: "S100 Protein Technology",
-    detail: "Platform framing for dual-action calm and restore support across the range.",
+    detail: "Shared technology story across lotion and cream for dual-action calm and restore support.",
+    image: "/skincare/cred-s100.png?v=flip2",
+    alt: "Abstract protein technology visualization in soft clinical light",
   },
   {
     id: "limonia",
     title: "Limonia acidissima-derived actives",
-    detail: "Shared botanical active base across lotion and cream for a coherent dual-SKU pitch.",
+    detail: "Shared botanical active base across lotion and cream for a consistent two-product range.",
+    image: "/skincare/cred-limonia.png?v=flip2",
+    alt: "Limonia acidissima botanical fruit and leaves for active extract story",
   },
   {
     id: "phase3",
     title: "Phase III clinically validated",
-    detail: "Clinical validation language partners can cite in diligence and launch materials.",
+    detail: "Clinical validation language partners can cite in evaluation and launch materials.",
+    image: "/skincare/cred-phase3.png?v=flip2",
+    alt: "Clinical research dossier materials for partner review",
   },
 ] as const;
 
@@ -46,7 +56,7 @@ export const RITUAL_STEPS = [
     label: "Prep",
     title: "Cleanse",
     detail:
-      "Gently clean affected areas with lukewarm water. Pat dry with a soft towel before either SKU goes on.",
+      "Gently clean affected areas with lukewarm water. Pat dry with a soft towel before either product goes on.",
     image: "/skincare/ritual-cleanse.png?v=alfurin",
     alt: "Clean hands preparing skin with a soft towel before application",
   },
@@ -55,7 +65,7 @@ export const RITUAL_STEPS = [
     label: "Daytime",
     title: "Apply the Lotion",
     detail:
-      "Pump two to three times and massage evenly into skin. Position for morning use and large-area daily defence.",
+      "Pump two to three times and massage evenly into skin. Suited to morning use and large-area daily defence.",
     image: "/skincare/ritual-lotion.png?v=alfurin",
     alt: "ALFURIN Moisturizing Lotion pump bottle applied to psoriasis-prone skin",
   },
@@ -64,7 +74,7 @@ export const RITUAL_STEPS = [
     label: "Intensive",
     title: "Apply the Cream",
     detail:
-      "Use on thicker plaques or as overnight care for intensive sites. Merchandise cream as the targeted follow-on.",
+      "Use on thicker plaques or as overnight care for intensive sites. Position cream as the targeted follow-on SKU.",
     image: "/skincare/ritual-cream.png?v=alfurin",
     alt: "ALFURIN cream tube with intensive care application on plaque-prone skin",
   },
@@ -92,7 +102,7 @@ export const PRODUCTS: StoreProduct[] = [
     name: "Moisturizing Lotion",
     role: "Daily defence and prevention",
     volume: "Large-area daily use",
-    image: "/skincare/lotion-bottle.png?v=clinical",
+    image: "/skincare/lotion-bottle.png",
     ingredients: [
       "Lightweight, fast-absorbing formula for broad coverage",
       "Helps reduce flaking and surface scaling",
@@ -104,7 +114,7 @@ export const PRODUCTS: StoreProduct[] = [
       { label: "Format", value: "Lotion · pump" },
       { label: "Active base", value: "Limonia acidissima extract" },
       { label: "Platform", value: "S100 Protein Technology" },
-      { label: "Indication focus", value: "Psoriasis-prone skin" },
+      { label: "Focus", value: "Psoriasis-prone skin" },
       { label: "Partner use", value: "Daily defence SKU" },
     ],
   },
@@ -115,7 +125,7 @@ export const PRODUCTS: StoreProduct[] = [
     name: "Moisturizing Cream",
     role: "Intensive targeted relief",
     volume: "Plaque areas and overnight care",
-    image: "/skincare/cream-tube.png?v=clinical",
+    image: "/skincare/cream-tube.png",
     ingredients: [
       "Targets thick plaque formation with lasting hydration",
       "Supports deep moisture retention overnight",
@@ -128,18 +138,15 @@ export const PRODUCTS: StoreProduct[] = [
       { label: "Format", value: "Cream · tube" },
       { label: "Active base", value: "Limonia acidissima extract" },
       { label: "Platform", value: "S100 Protein Technology" },
-      { label: "Indication focus", value: "Psoriasis-prone skin" },
-      { label: "Recognition", value: "NPF Seal of Recognition" },
+      { label: "Focus", value: "Psoriasis-prone skin" },
       { label: "Partner use", value: "Intensive SKU" },
     ],
   },
 ];
 
 export const GATE_FLOATS = [
-  { src: "/skincare/cream-tube.png?v=clinical", className: "sil-float sil-float--a" },
-  { src: "/skincare/lotion-bottle.png?v=clinical", className: "sil-float sil-float--b" },
-  { src: "/skincare/cream-jar.png?v=clinical", className: "sil-float sil-float--c" },
-  { src: "/skincare/lotion-pouch.png?v=clinical", className: "sil-float sil-float--d" },
+  { src: "/skincare/lotion-bottle-hq.png?v=cutout3", className: "sil-orbit-item--lotion", side: "left" as const },
+  { src: "/skincare/cream-tube-hq.png?v=cutout3", className: "sil-orbit-item--cream", side: "right" as const },
 ] as const;
 
 export const INDEX = [
@@ -174,7 +181,7 @@ export const BENEFITS: BenefitCard[] = [
   {
     id: "inflamed",
     title: "Red, inflamed patches",
-    line: "Well-defined red patches are a common plaque-psoriasis signal. Partners use this cue to brief daily defence lotion on broader involved areas.",
+    line: "Well-defined red patches are a common plaque-psoriasis signal. Partners use this cue when briefing daily defence lotion on broader involved areas.",
     year: "01",
     category: "Plaque",
     image: "/skincare/symptom-inflamed.png?v=symptoms",
@@ -183,7 +190,7 @@ export const BENEFITS: BenefitCard[] = [
   {
     id: "scales",
     title: "Thick silvery-white scales",
-    line: "Raised plaques with silvery scale are a hallmark presentation. Intensive cream is positioned for thicker, scale-prone sites in the dual system.",
+    line: "Raised plaques with silvery scale are a hallmark presentation. Intensive cream is positioned for thicker, scale-prone sites in the two-product system.",
     year: "02",
     category: "Scale",
     image: "/skincare/symptom-scales.png?v=symptoms",
@@ -201,7 +208,7 @@ export const BENEFITS: BenefitCard[] = [
   {
     id: "cracked",
     title: "Dry or cracked skin",
-    line: "Dryness and fissures can worsen discomfort and barrier stress. Moisture-forward lotion and cream support help partners talk barrier repair without overclaiming.",
+    line: "Dryness and fissures can worsen discomfort and barrier stress. Moisture-forward lotion and cream support help partners discuss barrier care without overclaiming.",
     year: "04",
     category: "Barrier",
     image: "/skincare/symptom-cracked.png?v=symptoms",
@@ -210,7 +217,7 @@ export const BENEFITS: BenefitCard[] = [
   {
     id: "nails",
     title: "Thickened, pitted, or ridged nails",
-    line: "Nail pitting, ridging, and thickening appear in many psoriasis programs. Include nail changes in education so partners recognize systemic skin involvement.",
+    line: "Nail pitting, ridging, and thickening appear in many psoriasis programs. Include nail changes in education so partners recognize related skin involvement.",
     year: "05",
     category: "Nails",
     image: "/skincare/symptom-nails.png?v=symptoms",
@@ -219,7 +226,7 @@ export const BENEFITS: BenefitCard[] = [
   {
     id: "flares",
     title: "Cyclic flares and remission",
-    line: "Symptoms often cycle between flare and quieter periods. A simple cleanse–lotion–cream protocol helps partners brief consistent use across changing skin days.",
+    line: "Symptoms often cycle between flare and quieter periods. A simple cleanse, lotion, cream protocol helps partners brief consistent use across changing skin days.",
     year: "06",
     category: "Course",
     image: "/skincare/symptom-flares.png?v=symptoms",

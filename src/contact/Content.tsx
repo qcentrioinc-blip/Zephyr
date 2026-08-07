@@ -194,10 +194,10 @@ const Content = () => {
         subject: form.subject,
         first_name: form.firstName,
         last_name: form.lastName,
-        company: form.company || "—",
+        company: form.company || "N/A",
         email: form.email,
         phone: form.phone,
-        message: form.message || "—",
+        message: form.message || "N/A",
       },
       { publicKey },
     );
@@ -354,7 +354,7 @@ const Content = () => {
                       <p className="mt-1.5 text-sm text-red-600">{emailError}</p>
                     ) : detailsUnlocked ? (
                       <p className="mt-1.5 text-xs font-medium text-[#547A3D]">
-                        Email verified — you can complete your inquiry below.
+                        Email verified. You can complete your inquiry below.
                       </p>
                     ) : (
                       <p className="mt-1.5 text-xs text-gray-500">
@@ -441,7 +441,7 @@ const Content = () => {
                         message: e.target.value,
                       }))
                     }
-                    placeholder="Project brief — dosage format, estimated volumes / MOQ, target markets…"
+                    placeholder="Project brief: dosage format, estimated volumes / MOQ, target markets…"
                     className={`${detailsUnlocked ? fieldClass : disabledFieldClass} resize-none`}
                   />
 

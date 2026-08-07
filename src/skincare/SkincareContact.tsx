@@ -20,9 +20,9 @@ type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2;
 
 const SUBJECT_OPTIONS = [
-  { label: "Full range / MOQ", value: "ALFURIN range — manufacturing / MOQ" },
-  { label: "Lotion", value: "ALFURIN Moisturizing Lotion — partner enquiry" },
-  { label: "Cream", value: "ALFURIN Moisturizing Cream — partner enquiry" },
+  { label: "Full range / MOQ", value: "ALFURIN range: manufacturing / MOQ" },
+  { label: "Lotion", value: "ALFURIN Moisturizing Lotion: partner enquiry" },
+  { label: "Cream", value: "ALFURIN Moisturizing Cream: partner enquiry" },
 ] as const;
 
 /** Right-side cream contact drawer — OTP-gated like /contact. */
@@ -230,10 +230,10 @@ export default function SkincareContact() {
         subject: form.subject,
         first_name: form.firstName,
         last_name: form.lastName,
-        company: form.company || "—",
+        company: form.company || "N/A",
         email: form.email,
         phone: form.phone,
-        message: form.message || "—",
+        message: form.message || "N/A",
       },
       { publicKey },
     );
@@ -359,7 +359,7 @@ export default function SkincareContact() {
                       <p className="sil-field-error">{emailError}</p>
                     ) : detailsUnlocked ? (
                       <p className="sil-field-hint sil-field-hint--ok">
-                        Email verified — complete your inquiry below.
+                        Email verified. Complete your inquiry below.
                       </p>
                     ) : (
                       <p className="sil-field-hint">
@@ -421,7 +421,7 @@ export default function SkincareContact() {
                       value={form.message}
                       disabled={!detailsUnlocked}
                       onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                      placeholder="Brief — volumes / MOQ, markets, packaging, clinic or retail channel…"
+                      placeholder="Brief: volumes / MOQ, markets, packaging, clinic or retail channel…"
                       className={`sil-field sil-field--area${detailsUnlocked ? "" : " sil-field--disabled"}`}
                     />
 

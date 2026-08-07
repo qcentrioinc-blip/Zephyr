@@ -45,7 +45,7 @@ const Stats = () => {
 
           <Reveal>
             <div className="rounded-3xl bg-[#F4F4F4] p-6 transition-shadow duration-300 hover:shadow-lg sm:p-8">
-              <H2 className="text-[#113227]">Capability that compounds</H2>
+              <H2 className="text-[#113227]">Capacity built for partners</H2>
               <div className="mt-4 flex flex-col items-center gap-6 sm:flex-row">
                   <P className="flex-1 text-gray-600">
                     From humidity-controlled dispensing and granulation to

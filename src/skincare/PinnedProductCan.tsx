@@ -90,13 +90,16 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
         });
 
         if (img) {
+          const yFrom = mirrored ? 88 : 108;
+          const yTo = mirrored ? 8 : 28;
+
           tl.fromTo(
             img,
-            { y: 108, rotate: 4 * flip, scale: 0.9, x: -12 * flip, force3D: false },
+            { y: yFrom, rotate: 4 * flip, scale: 0.76, x: -12 * flip, force3D: false },
             {
-              y: 28,
+              y: yTo,
               rotate: -3 * flip,
-              scale: 1.08,
+              scale: 0.88,
               x: 10 * flip,
               ease: "none",
               force3D: false,
@@ -140,13 +143,16 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
     >
       <div ref={stageRef} className="sil-can-stage">
         <div className={`sil-can-grid${mirrored ? " sil-can-grid--mirror" : ""}`}>
-          <div className="sil-can-visual">
+          <div className={`sil-can-visual${mirrored ? " sil-can-visual--cream" : ""}`}>
             <img
               ref={imgRef}
               src={product.image}
               alt={product.name}
               className="sil-can-img"
               draggable={false}
+              decoding="async"
+              width={360}
+              height={690}
             />
           </div>
 
@@ -179,7 +185,7 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
                 className="sil-cta"
                 onClick={() =>
                   openSkincareContact({
-                    subject: `ALFURIN ${product.name} — partner enquiry`,
+                    subject: `ALFURIN ${product.name}: partner enquiry`,
                   })
                 }
               >

@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Props = { reduced: boolean; active: boolean };
 
-/** Science credentials — scroll-driven clinical readout for B2B diligence. */
+/** Science credentials — flip cards reveal content-matched imagery on hover. */
 export default function ScienceSection({ reduced, active }: Props) {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -18,57 +18,48 @@ export default function ScienceSection({ reduced, active }: Props) {
 
       const head = rootRef.current.querySelector(".sil-science-head");
       const cards = rootRef.current.querySelectorAll<HTMLElement>(".sil-science-card");
+      const bodies = rootRef.current.querySelectorAll<HTMLElement>(".sil-science-card-body");
 
       if (reduced) {
-        gsap.set([head, cards], { clearProps: "all", opacity: 1 });
+        gsap.set([head, bodies], { clearProps: "all", opacity: 1, y: 0 });
         return;
       }
 
       gsap.fromTo(
         head,
-        { y: 36, opacity: 0 },
+        { y: 28, opacity: 0 },
         {
           y: 0,
           opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: rootRef.current,
-            start: "top 75%",
-            end: "top 45%",
-            scrub: 0.5,
+            start: "top 78%",
+            end: "top 50%",
+            scrub: 0.45,
           },
         },
       );
 
-      cards.forEach((card, index) => {
+      // Animate inner body copy only — keep face transforms free for CSS 3D flip
+      bodies.forEach((body, index) => {
+        const card = cards[index];
+        if (!card) return;
         gsap.fromTo(
-          card,
-          { y: 48, opacity: 0, rotateX: 12, transformPerspective: 900 },
+          body,
+          { y: 20, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            rotateX: 0,
             ease: "none",
             scrollTrigger: {
               trigger: card,
-              start: "top 88%",
-              end: "top 55%",
-              scrub: 0.45,
+              start: "top 90%",
+              end: "top 62%",
+              scrub: 0.4,
             },
           },
         );
-
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 70%",
-          end: "bottom 45%",
-          onEnter: () => card.classList.add("is-active"),
-          onEnterBack: () => card.classList.add("is-active"),
-          onLeave: () => {
-            if (index < cards.length - 1) card.classList.remove("is-active");
-          },
-          onLeaveBack: () => card.classList.remove("is-active"),
-        });
       });
     },
     { dependencies: [active, reduced], scope: rootRef },
@@ -81,7 +72,7 @@ export default function ScienceSection({ reduced, active }: Props) {
           <p className="sil-science-eyebrow">Science</p>
           <h2 className="sil-science-title">Credentials partners evaluate</h2>
           <p className="sil-science-body">
-            A diligence-ready readout of the ALFURIN platform. Built for clinic onboarding,
+            Key credentials for the ALFURIN range. Built for clinic onboarding,
             distribution briefs, and launch materials.
           </p>
         </header>
@@ -90,15 +81,23 @@ export default function ScienceSection({ reduced, active }: Props) {
           <ul className="sil-science-grid">
             {SCIENCE_CREDENTIALS.map((item, index) => (
               <li key={item.id} className="sil-science-card">
-                <div className="sil-science-card-index" aria-hidden>
-                  {String(index + 1).padStart(2, "0")}
+                <div className="sil-science-flip">
+                  <div className="sil-science-face sil-science-face--front">
+                    <div className="sil-science-card-index" aria-hidden>
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+                    <div className="sil-science-card-body">
+                      <h3>{item.title}</h3>
+                      <p>{item.detail}</p>
+                    </div>
+                  </div>
+                  <div className="sil-science-face sil-science-face--back" aria-hidden>
+                    <img src={item.image} alt={item.alt} loading="lazy" decoding="async" draggable={false} />
+                    <div className="sil-science-face-caption">
+                      <p>{item.title}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="sil-science-card-body">
-                  <span className="sil-science-num">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
-                </div>
-                <span className="sil-science-card-bar" aria-hidden />
               </li>
             ))}
           </ul>

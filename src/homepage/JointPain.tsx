@@ -56,7 +56,7 @@ const JointPain = () => {
             </P>
             <P className="mb-3">
               We support long-term partnerships with nutraceutical,
-              herbaceutical, and organic brand owners—including US marketers and
+              herbaceutical, and organic brand owners, including US marketers and
               procurement teams that need dependable finished-goods supply.
             </P>
           </div>

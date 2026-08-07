@@ -82,7 +82,7 @@ export default function CartFinale({ reduced, active }: Props) {
 
           <p className="sil-receipt-note">
             Discuss availability, distribution, clinic programs, and manufacturing MOQ for the
-            dual-SKU system.
+            lotion and cream system.
           </p>
         </div>
 

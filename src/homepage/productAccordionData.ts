@@ -21,7 +21,7 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     watermark: "HERBACEUTICAL",
     headline: "Botanical manufacturing",
     description:
-      "Private label and contract manufacturing for botanical dietary supplements — from formula brief and MOQ planning to finished tablets, capsules, and specialty dosages.",
+      "Private label and contract manufacturing for botanical dietary supplements. From formula brief and MOQ planning to finished tablets, capsules, and specialty dosages.",
     color: "#FFA43D",
     image: "/herbal.webp",
     route: "/herbaceutical",
@@ -49,7 +49,7 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     watermark: "ORGANIC",
     headline: "Organic & clean-label",
     description:
-      "Organic and clean-label supplement manufacturing for US markets — private label support from early formulation through finished goods packaging and commercial production.",
+      "Organic and clean-label supplement manufacturing for US markets. Private label support from early formulation through finished goods packaging and commercial production.",
     color: "#3FB369",
     image: "/organic.webp",
     route: "/organic",
@@ -58,16 +58,16 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
   {
     id: "skincare",
     index: "04",
-    title: "ALFURIN",
-    subtitle: "Psoriasis-prone skin · Zephyr manufacturing",
-    watermark: "ALFURIN",
+    title: "Skin care",
+    subtitle: "Psoriasis-prone skin. Zephyr manufacturing.",
+    watermark: "SKIN CARE",
     headline: "Clinical derm care for psoriasis-prone skin",
     description:
-      "ALFURIN lotion and cream: a dual-action system for psoriasis-prone skin, manufactured by Zephyr for US distribution, clinic, and private-label partners.",
+      "ALFURIN lotion and cream: a dual-action system for psoriasis-prone skin with barrier support, manufactured by Zephyr for US distribution, clinic, and private-label partners.",
     color: "#1F5F8B",
-    image: "/skincare/lotion-bottle.png?v=clinical",
+    image: "/Skincare.png?v=user1",
     route: "/skincare",
-    connectHref: `/contact?subject=${encodeURIComponent("ALFURIN range — manufacturing / MOQ")}`,
+    connectHref: `/contact?subject=${encodeURIComponent("ALFURIN range: manufacturing / MOQ")}`,
   },
 ];
 

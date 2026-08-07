@@ -8,15 +8,13 @@ type Props = {
 };
 
 /**
- * Gate: orbit + soft settle around lockup.
- * Spin runs on an inner wrapper so GSAP never wipes the outer centering transform
- * (that caused first-load orbit positions to break until refresh).
+ * Gate: two products flanking the lockup with a soft mirrored float.
+ * (Orbit spin looked sparse / uneven with only two SKUs.)
  */
 export default function IntroGate({ onEnter, reduced }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
-  const orbitRef = useRef<HTMLDivElement>(null);
-  const spinRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const unlocking = useRef(false);
 
   useEffect(() => {
@@ -27,32 +25,28 @@ export default function IntroGate({ onEnter, reduced }: Props) {
   }, []);
 
   useEffect(() => {
-    if (!orbitRef.current || !spinRef.current) return;
+    if (!stageRef.current) return;
 
-    const orbit = orbitRef.current;
-    const spin = spinRef.current;
-    const items = Array.from(orbit.querySelectorAll<HTMLElement>(".sil-orbit-item"));
-    const inners = Array.from(orbit.querySelectorAll<HTMLElement>(".sil-orbit-inner"));
-    const imgs = Array.from(orbit.querySelectorAll<HTMLImageElement>("img"));
+    const stage = stageRef.current;
+    const items = Array.from(stage.querySelectorAll<HTMLElement>(".sil-orbit-item"));
+    const inners = Array.from(stage.querySelectorAll<HTMLElement>(".sil-orbit-inner"));
+    const imgs = Array.from(stage.querySelectorAll<HTMLImageElement>("img"));
 
-    // Cardinal positions around the center text; after a full turn land here, then ease outward
-    const rStart = Math.min(window.innerWidth * 0.3, 220);
-    const rOut = Math.min(window.innerWidth * 0.38, 280);
-    // Top, right, bottom, left (relative to center lockup)
-    const cardinalAngle = (i: number) => (i * Math.PI) / 2 - Math.PI / 2;
+    const spanX = Math.min(window.innerWidth * 0.28, 250);
+    const enterY = 56;
 
     let cancelled = false;
 
-    const placeItems = (radius: number) => {
+    const placeFlanking = (spread: number, y = 0) => {
       items.forEach((item, i) => {
-        const angle = cardinalAngle(i);
+        const dir = i === 0 ? -1 : 1;
         gsap.set(item, {
           left: "50%",
           top: "50%",
           xPercent: -50,
           yPercent: -50,
-          x: Math.cos(angle) * radius,
-          y: Math.sin(angle) * radius,
+          x: dir * spread,
+          y,
           rotation: 0,
           force3D: false,
         });
@@ -63,75 +57,82 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       const run = () => {
         if (cancelled) return;
 
-        gsap.set(spin, { rotation: 0, force3D: false });
-        gsap.set(inners, { rotation: 0, x: 0, y: 0, force3D: false });
-        placeItems(reduced ? rOut : rStart);
+        gsap.set(inners, { rotation: 0, x: 0, y: 0, scale: 1, force3D: false });
 
         if (reduced) {
+          placeFlanking(spanX, 0);
           gsap.set(items, { autoAlpha: 0.95, scale: 1, force3D: false });
           return;
         }
 
-        gsap.set(items, { autoAlpha: 0, scale: 0.9, force3D: false });
+        placeFlanking(spanX * 0.72, enterY);
+        gsap.set(items, { autoAlpha: 0, scale: 0.88, force3D: false });
+        gsap.set(inners, {
+          rotation: (i) => (i === 0 ? -8 : 8),
+          force3D: false,
+        });
 
         const tl = gsap.timeline();
 
+        // Rise into flanking positions beside the lockup
         tl.to(items, {
           autoAlpha: 1,
           scale: 1,
-          duration: 0.75,
-          stagger: 0.07,
+          y: 0,
+          x: (i) => (i === 0 ? -spanX : spanX),
+          duration: 1.05,
+          stagger: 0.12,
           ease: "power3.out",
           force3D: false,
         });
 
-        // Full turn — ends exactly where they started
-        tl.to(
-          spin,
-          { rotation: 360, duration: 3.6, ease: "power2.inOut", force3D: false },
-          0.3,
-        );
         tl.to(
           inners,
-          { rotation: -360, duration: 3.6, ease: "power2.inOut", force3D: false },
-          0.3,
-        );
-
-        // Soft drift a bit farther out from the start positions
-        tl.to(
-          items,
           {
-            x: (_i, el) => {
-              const i = items.indexOf(el as HTMLElement);
-              return Math.cos(cardinalAngle(i)) * rOut;
-            },
-            y: (_i, el) => {
-              const i = items.indexOf(el as HTMLElement);
-              return Math.sin(cardinalAngle(i)) * rOut;
-            },
-            duration: 1.6,
+            rotation: 0,
+            duration: 1.05,
+            stagger: 0.12,
             ease: "power3.out",
             force3D: false,
           },
-          "-=1.2",
+          "<",
         );
 
+        // Soft mirrored float — opposite vertical drift + gentle counter-tilt
         tl.to(
           inners,
           {
-            y: (i) => (i % 2 === 0 ? -7 : 7),
-            duration: 3.4,
+            y: (i) => (i === 0 ? -14 : 14),
+            rotation: (i) => (i === 0 ? -3.5 : 3.5),
+            duration: 3.2,
             yoyo: true,
             repeat: -1,
             ease: "sine.inOut",
-            stagger: 0.18,
+            stagger: {
+              each: 0.2,
+              from: "start",
+            },
             force3D: false,
           },
-          "-=0.2",
+          "-=0.15",
+        );
+
+        // Subtle breathing scale on the wrappers (out of phase)
+        tl.to(
+          items,
+          {
+            scale: (i) => (i === 0 ? 1.035 : 0.975),
+            duration: 3.2,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+            stagger: 0.2,
+            force3D: false,
+          },
+          "<",
         );
       };
 
-      // First visit: wait for decode so layout matches refresh (cached images)
       const ready = Promise.all(
         imgs.map((img) => {
           if (img.complete && img.naturalWidth > 0) return Promise.resolve();
@@ -149,7 +150,7 @@ export default function IntroGate({ onEnter, reduced }: Props) {
         if (cancelled) return;
         requestAnimationFrame(() => requestAnimationFrame(run));
       });
-    }, orbitRef);
+    }, stageRef);
 
     return () => {
       cancelled = true;
@@ -208,7 +209,7 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       return;
     }
 
-    const items = orbitRef.current?.querySelectorAll(".sil-orbit-item");
+    const items = stageRef.current?.querySelectorAll(".sil-orbit-item");
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.style.overflow = "";
@@ -219,10 +220,11 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       tl.to(
         items,
         {
-          scale: 0.92,
+          x: (i) => (i === 0 ? "-=48" : "+=48"),
+          scale: 0.9,
           autoAlpha: 0,
-          stagger: 0.04,
-          duration: 0.4,
+          stagger: 0.05,
+          duration: 0.42,
           ease: "power2.in",
           force3D: false,
         },
@@ -248,16 +250,14 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       tabIndex={0}
       aria-label="Enter ALFURIN clinical range overview"
     >
-      <div ref={orbitRef} className="sil-orbit" aria-hidden>
-        <div ref={spinRef} className="sil-orbit-spin">
-          {GATE_FLOATS.map((item) => (
-            <div key={item.className} className="sil-orbit-item">
-              <div className="sil-orbit-inner">
-                <img src={item.src} alt="" draggable={false} />
-              </div>
+      <div ref={stageRef} className="sil-orbit sil-orbit--duo" aria-hidden>
+        {GATE_FLOATS.map((item) => (
+          <div key={item.className} className={`sil-orbit-item ${item.className}`}>
+            <div className="sil-orbit-inner">
+              <img src={item.src} alt="" draggable={false} />
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       <div className="sil-gate-lockup">

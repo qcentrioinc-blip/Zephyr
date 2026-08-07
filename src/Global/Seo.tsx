@@ -11,7 +11,7 @@ type PageMeta = {
 
 const META: Record<string, PageMeta> = {
   "/": {
-    title: "Zephyr — CDMO & Private-Label Manufacturing Partner",
+    title: "Zephyr | CDMO & Private-Label Manufacturing Partner",
     description:
       "Zephyr manufactures nutraceutical, herbaceutical, and organic dietary supplements for US brand owners. 65,000 sq ft facility, GMP/ISO systems, and MOQ-ready private-label programs.",
   },
@@ -51,9 +51,9 @@ const META: Record<string, PageMeta> = {
       "Organic and clean-label private-label manufacturing catalog. MOQ and manufacturing on inquiry.",
   },
   "/skincare": {
-    title: "Skincare — ALFURIN® | Zephyr",
+    title: "Skincare | ALFURIN® | Zephyr",
     description:
-      "ALFURIN® moisturizing lotion and cream for psoriasis-prone skin, partnered through Zephyr. Private-label and distribution MOQ enquiries.",
+      "ALFURIN moisturizing lotion and cream for psoriasis-prone skin, manufactured by Zephyr. Private-label, clinic, and distribution MOQ enquiries.",
   },
 };
 

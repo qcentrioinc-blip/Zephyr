@@ -18,9 +18,13 @@ import { useSkincareLenis } from "./hooks/useSkincareLenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Set true to restore the intro lock gate before the landing hero. */
+const ENABLE_INTRO_GATE = false;
+
 export default function SkincarePage() {
   const reduced = usePrefersReducedMotion();
-  const [entered, setEntered] = useState(reduced);
+  // Gate disabled: land directly on the main skincare page.
+  const [entered, setEntered] = useState(() => !ENABLE_INTRO_GATE || reduced);
 
   useSkincareLenis(entered && !reduced);
 
@@ -65,7 +69,9 @@ export default function SkincarePage() {
 
   return (
     <main className={`skincare-silencio ${entered ? "is-open" : "is-gated"}`}>
-      {!entered ? <IntroGate onEnter={() => setEntered(true)} reduced={reduced} /> : null}
+      {ENABLE_INTRO_GATE && !entered ? (
+        <IntroGate onEnter={() => setEntered(true)} reduced={reduced} />
+      ) : null}
 
       <div className="sil-store" aria-hidden={!entered}>
         <StoreHero reduced={reduced} active={entered} />

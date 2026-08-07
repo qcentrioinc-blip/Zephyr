@@ -10,24 +10,35 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type Props = { reduced: boolean; active: boolean };
 
-/** Survives React Strict Mode remount so the enter animation does not double-play. */
+/** Only set true after the enter timeline finishes — avoids blank hero on Strict Mode remount. */
 let landingIntroPlayed = false;
 
 /**
- * Landing hero — clinical split layout; enter animation runs once after the gate.
+ * Landing hero — clinical split layout with enter animation on first visit.
  */
 export default function StoreHero({ reduced, active }: Props) {
   const rootRef = useRef<HTMLElement>(null);
 
-  // Hide landing content before first paint when the gate unlocks (avoids flash → re-animate).
+  // Hide content before first paint so the reveal animation is clean.
   useLayoutEffect(() => {
     if (!active || reduced || !rootRef.current || landingIntroPlayed) return;
 
     const root = rootRef.current;
     gsap.set(root.querySelector(".sil-land-glow"), { opacity: 0, scale: 0.92 });
-    gsap.set(root.querySelector(".sil-land-copy"), { y: 28, opacity: 0 });
-    gsap.set(root.querySelectorAll(".sil-land-card"), { y: 36, opacity: 0, force3D: false });
+    gsap.set(root.querySelector(".sil-land-copy"), { y: 36, opacity: 0 });
+    gsap.set(root.querySelectorAll(".sil-land-card"), {
+      y: 48,
+      opacity: 0,
+      force3D: false,
+    });
   }, [active, reduced]);
+
+  // Allow enter animation again on the next visit to /skincare
+  useLayoutEffect(() => {
+    return () => {
+      landingIntroPlayed = false;
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -38,33 +49,47 @@ export default function StoreHero({ reduced, active }: Props) {
       const glow = rootRef.current.querySelector(".sil-land-glow");
       const targets = [glow, copy, ...cards].filter(Boolean);
 
+      const showStatic = () => {
+        gsap.set(targets, {
+          clearProps: "transform,opacity,scale",
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+      };
+
       if (reduced) {
-        gsap.set(targets, { clearProps: "all", opacity: 1, y: 0, scale: 1 });
+        showStatic();
         landingIntroPlayed = true;
         return;
       }
 
-      if (!landingIntroPlayed) {
-        landingIntroPlayed = true;
+      if (landingIntroPlayed) {
+        showStatic();
+      } else {
         gsap.set(glow, { opacity: 0, scale: 0.92 });
-        gsap.set(copy, { y: 28, opacity: 0 });
-        gsap.set(cards, { y: 36, opacity: 0, force3D: false });
+        gsap.set(copy, { y: 36, opacity: 0 });
+        gsap.set(cards, { y: 48, opacity: 0, force3D: false });
 
         gsap
-          .timeline()
-          .to(glow, { opacity: 1, scale: 1, duration: 1.1, ease: "power2.out" }, 0)
-          .to(copy, { y: 0, opacity: 1, duration: 0.95, ease: "power3.out" }, 0.08)
+          .timeline({
+            onComplete: () => {
+              landingIntroPlayed = true;
+            },
+          })
+          .to(glow, { opacity: 1, scale: 1, duration: 1.15, ease: "power2.out" }, 0)
+          .to(copy, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, 0.1)
           .to(
             cards,
             {
               y: 0,
               opacity: 1,
-              stagger: 0.12,
-              duration: 0.95,
+              stagger: 0.14,
+              duration: 1,
               ease: "power3.out",
               force3D: false,
             },
-            0.18,
+            0.22,
           );
       }
 
@@ -92,7 +117,7 @@ export default function StoreHero({ reduced, active }: Props) {
 
       <div className="sil-land-shell">
         <div className="sil-land-copy">
-          <p className="sil-land-eyebrow">Zephyr manufacturing · ALFURIN</p>
+          {/* <p className="sil-land-eyebrow">Zephyr manufacturing · ALFURIN</p> */}
           <h1 className="sil-land-title">
             A new approach
             <span>to psoriatic skin</span>

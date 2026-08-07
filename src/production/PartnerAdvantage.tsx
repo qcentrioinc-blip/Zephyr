@@ -35,7 +35,7 @@ export default function PartnerAdvantage() {
             <p className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#547A3D]">
               Partner advantage
             </p>
-            <H2>Built for brand owners who need dependable commercial supply</H2>
+            <H2>Built for brand owners who need reliable commercial supply</H2>
             <P className="mt-4 max-w-xl text-gray-600">
               Zephyr combines high capacity manufacturing with development-led
               transfer and quality systems US brand owners can take to audit.

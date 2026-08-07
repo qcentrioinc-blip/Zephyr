@@ -141,7 +141,7 @@ export default function RitualSection({ reduced, active }: Props) {
           <p className="sil-ritual-body">
             ALFURIN is built for regular use on psoriasis-prone skin. A non-greasy, dermatologically
             tested system partners can brief for clinic protocols, retail education, and home
-            routines — cleanse, lotion for large areas, cream where plaque is thicker.
+            routines: cleanse, lotion for large areas, cream where plaque is thicker.
           </p>
         </header>
 
