@@ -16,6 +16,8 @@ export default defineConfig(({ mode }) => {
   applyEnv(mode);
 
   return {
+    base: "/",
+    publicDir: "public",
     plugins: [react(), tailwindcss(), otpApiDevPlugin(mode)],
   };
 });
