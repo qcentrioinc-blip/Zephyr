@@ -90,7 +90,7 @@ export default function PinnedSystem({ reduced, active }: Props) {
           >
             <img
               className="sil-sys-video"
-              src="/products/info-img-skincare.png"
+              src="/products/info-img-skincare1.png"
               alt="Alfurin dual system: lotion and cream"
             />
           </motion.div>

@@ -23,28 +23,28 @@ function plainText(children: ReactNode): string | null {
 
 const h1Size = `
   font-manrope font-bold
-  leading-[120%]
+  leading-[1.1]
   text-[24px] md:text-[32px] lg:text-[46px]
   tracking-wide
 `;
 
 const h2Size = `
   font-manrope font-semibold
-  leading-[120%]
+  leading-[1.1]
   text-[20px] md:text-[24px] lg:text-[32px]
   tracking-wide
 `;
 
 const h3Size = `
   font-manrope font-semibold
-  leading-[120%]
+  leading-[1.1]
   text-[18px] md:text-[18px] lg:text-[24px]
   tracking-wide
 `;
 
 const h4Size = `
   font-manrope font-semibold
-  leading-[120%]
+  leading-[1.1]
   text-[16px] md:text-[16px] lg:text-[18px]
   tracking-wide
 `;

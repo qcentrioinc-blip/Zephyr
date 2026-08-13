@@ -293,10 +293,10 @@ const PanelCopy = ({
       <p className="mb-3 font-manrope text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1f5f8b]">
         {String(index + 1).padStart(2, "0")} · {panel.subheading}
       </p>
-      <H1 className="mb-3 !text-[26px] !leading-[1.12] text-neutral-900 lg:!text-[34px]">
+      <H1 className="mb-3 !text-[26px] !leading-[1.1] text-neutral-900 lg:!text-[34px]">
         {panel.heading}
       </H1>
-      <H3 className="mb-4 !text-[20px] !leading-snug text-neutral-800 lg:!text-[24px]">
+      <H3 className="mb-4 !text-[20px] !leading-[1.1] text-neutral-800 lg:!text-[24px]">
         {panel.title}
       </H3>
       <P className="mb-3 !text-[14px] !leading-relaxed text-neutral-600 lg:!text-[16px]">
@@ -342,7 +342,7 @@ const StaticPanel = ({ panel, index }: { panel: Panel; index: number }) => {
           <p className="mb-3 font-manrope text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1f5f8b]">
             {String(index + 1).padStart(2, "0")} · {panel.subheading}
           </p>
-          <H1 className="mb-3 !text-[26px] !leading-tight text-neutral-900 md:!text-[32px]">
+          <H1 className="mb-3 !text-[26px] !leading-[1.1] text-neutral-900 md:!text-[32px]">
             {panel.heading}
           </H1>
           <H3 className="mb-4 !text-[22px] text-neutral-900 lg:!text-[28px]">

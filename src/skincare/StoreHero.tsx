@@ -157,8 +157,7 @@ export default function StoreHero({ reduced, active }: Props) {
                 <img src={lotion.image} alt={lotion.name} draggable={false} />
               </div>
               <div className="sil-land-card-meta">
-                <span>01</span>
-                <LetterStrip as="h2" text={lotion.name} className="" />
+                <LetterStrip as="h2" text={lotion.name} className="sil-land-card-name" />
               </div>
             </article>
           ) : null}
@@ -168,8 +167,7 @@ export default function StoreHero({ reduced, active }: Props) {
                 <img src={cream.image} alt={cream.name} draggable={false} />
               </div>
               <div className="sil-land-card-meta">
-                <span>02</span>
-                <LetterStrip as="h2" text={cream.name} className="" />
+                <LetterStrip as="h2" text={cream.name} className="sil-land-card-name" />
               </div>
             </article>
           ) : null}

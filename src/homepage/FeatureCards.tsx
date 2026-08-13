@@ -151,7 +151,7 @@ export default function FeaturesSection() {
                 className="group flex flex-col rounded-2xl border border-[#6d6d6d] bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-5"
               >
                 <div className="mb-3 flex items-center justify-between gap-3">
-                  <H3 className="whitespace-pre-line uppercase leading-tight text-[#111111]">
+                  <H3 className="whitespace-pre-line uppercase leading-[1.1] text-[#111111]">
                     {card.title}
                   </H3>
                   <Icon className="h-12 w-12 shrink-0 text-black sm:h-14 sm:w-14" />

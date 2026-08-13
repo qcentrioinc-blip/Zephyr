@@ -35,6 +35,13 @@ p {
   letter-spacing: 0.05em;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.1;
+}
+
 @keyframes text-fade-in {
   from {
     opacity: 0;
@@ -153,8 +160,10 @@ p {
   overflow: hidden;
   display: inline-block;
   transform: none;
-  line-height: 1.35;
-  padding-bottom: 0.14em;
+  /* Descender room inside the slide mask (g/G) — margin pulls visual line-height tighter */
+  line-height: 1.22;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.07em;
   vertical-align: top;
 }
 
@@ -162,9 +171,12 @@ p {
 h1.strip-slide-up,
 h2.strip-slide-up,
 h3.strip-slide-up,
-h4.strip-slide-up {
+h4.strip-slide-up,
+span.strip-slide-up,
+a.strip-slide-up {
   overflow: visible;
-  padding-bottom: 0.08em;
+  line-height: 1.1;
+  padding-bottom: 0.04em;
 }
 
 .strip-slide-up span.row:before {
@@ -174,10 +186,11 @@ h4.strip-slide-up {
 .strip-slide-up span.row > span {
   display: inline-block;
   transition: transform 0.6s cubic-bezier(0.65, 0.02, 0.23, 1);
-  transform: translate(20%, 110%);
+  transform: translate(20%, 105%);
   position: relative;
   z-index: 1;
   color: inherit;
+  padding-bottom: 0.05em;
 }
 
 .strip-slide-up span.row > span.letter-slide-animate {
@@ -824,7 +837,7 @@ img {
   font-family: var(--font-manrope, Manrope, sans-serif);
   font-size: clamp(1.1rem, 1.6vw, 1.35rem);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.1;
   margin: 0;
 }
 

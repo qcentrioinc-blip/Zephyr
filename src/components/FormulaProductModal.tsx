@@ -128,7 +128,7 @@ export default function FormulaProductModal({
                   text={item.formula}
                   immediate
                   variant="inherit"
-                  className="font-manrope text-[18px] font-semibold leading-snug tracking-wide text-gray-900 sm:text-[22px] lg:text-[24px]"
+                  className="font-manrope text-[18px] font-semibold leading-[1.1] tracking-wide text-gray-900 sm:text-[22px] lg:text-[24px]"
                 />
 
                 <P className="mt-4 text-gray-600">{description}</P>

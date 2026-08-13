@@ -88,7 +88,10 @@ export default function CartFinale({ reduced, active }: Props) {
         </div>
 
         <div className="sil-talk">
-          <LetterStrip as="h2" text="Partner with Zephyr" className="sil-talk-title" />
+          <h2 className="sil-talk-title">
+            <LetterStrip as="span" text="Partner with" className="sil-talk-title-line" />
+            <LetterStrip as="span" text="Zephyr" className="sil-talk-title-line" />
+          </h2>
           <p className="sil-talk-sub">
             Share your market, volumes, and packaging needs for Alfurin. We will follow up on your
             company email.

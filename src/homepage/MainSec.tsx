@@ -254,7 +254,7 @@ const MainSec: React.FC = () => {
       className="mainsec-hero relative overflow-hidden h-auto xl:h-screen"
     >
       <div className="relative z-10 mx-auto h-full max-w-7xl px-4 pt-16 pb-10 sm:px-6 sm:pt-18 sm:pb-14 md:pt-20 md:pb-16 lg:px-8 lg:pt-20 lg:pb-16 xl:pt-12 xl:pb-0">
-        <div className="flex min-h-[3.4rem] xs:min-h-[3.8rem] sm:min-h-[4.6rem] md:min-h-[5.8rem] lg:min-h-[5.8rem] xl:min-h-[8.5rem] 2xl:min-h-[9.5rem] items-end justify-center">
+        <div className="flex min-h-[3.4rem] xs:min-h-[3.8rem] sm:min-h-[4.6rem] md:min-h-[5.8rem] lg:min-h-[5.8rem] xl:min-h-[8.5rem] 2xl:min-h-[9.5rem] items-end justify-center overflow-visible">
           <LetterStrip
             key={product.id}
             as="h1"
@@ -272,7 +272,7 @@ const MainSec: React.FC = () => {
                 font-bold
                 leading-[1.05]
                 lg:leading-[1.05]
-                xl:leading-none
+                xl:leading-[1.02]
                 text-white/30
                 text-[34px]
                 xs:text-[38px]

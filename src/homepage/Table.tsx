@@ -47,7 +47,7 @@ export default function Table() {
 
           <div className="flex flex-col gap-3 lg:h-full lg:justify-between">
             <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:flex-1 md:px-7 md:py-6">
-              <p className="font-manrope text-[24px] font-bold leading-[120%] tracking-wide text-[#000000] md:text-[32px] lg:text-[46px]">
+              <p className="font-manrope text-[24px] font-bold leading-[1.1] tracking-wide text-[#000000] md:text-[32px] lg:text-[46px]">
                 65K sq ft
               </p>
               <P className="mt-2 max-w-full sm:mt-3 xl:max-w-[290px]">
@@ -56,7 +56,7 @@ export default function Table() {
             </div>
 
             <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:flex-1 md:px-7 md:py-6">
-              <p className="font-manrope text-[24px] font-bold leading-[120%] tracking-wide text-[#000000] md:text-[32px] lg:text-[46px]">
+              <p className="font-manrope text-[24px] font-bold leading-[1.1] tracking-wide text-[#000000] md:text-[32px] lg:text-[46px]">
                 3 ranges
               </p>
               <P className="mt-2 max-w-full sm:mt-3 xl:max-w-[290px]">
