@@ -124,18 +124,117 @@ p {
   animation: text-fade-in 0.45s ease-out both;
 }
 
+/* ── LetterStrip (ported from CloudDiet / Qcentrio) ── */
+.strip-slide-up {
+  opacity: 0;
+}
+
+.strip-slide-up span {
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.65, 0.02, 0.23, 1);
+  transform: translate(20%, 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.strip-slide-up span:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateY(-40%);
+  transition: transform 0.6s cubic-bezier(0.65, 0.02, 0.23, 1);
+}
+
+.strip-slide-up span.row {
+  overflow: hidden;
+  display: inline-block;
+  transform: none;
+  line-height: 1.35;
+  padding-bottom: 0.14em;
+  vertical-align: top;
+}
+
+/* Headings: avoid clipping descenders on parent containers */
+h1.strip-slide-up,
+h2.strip-slide-up,
+h3.strip-slide-up,
+h4.strip-slide-up {
+  overflow: visible;
+  padding-bottom: 0.08em;
+}
+
+.strip-slide-up span.row:before {
+  display: none;
+}
+
+.strip-slide-up span.row > span {
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.65, 0.02, 0.23, 1);
+  transform: translate(20%, 110%);
+  position: relative;
+  z-index: 1;
+  color: inherit;
+}
+
+.strip-slide-up span.row > span.letter-slide-animate {
+  transform: translate(0, 0) !important;
+}
+
+.strip-slide-up span.row > span.letter-slide-animate:before {
+  transform: translateY(100%);
+}
+
+.strip-slide-inherit span.row > span {
+  color: inherit;
+}
+
+.strip-slide-black span.row > span {
+  color: #000 !important;
+}
+
+.strip-slide-green span.row > span {
+  color: #11bb8a !important;
+}
+
+.strip-slide-white span.row > span {
+  color: #fff !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-fade-in {
+    animation: none;
+  }
+
+  .strip-slide-up,
+  .strip-slide-up span,
+  .strip-slide-up span.row > span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .strip-slide-up span:before,
+  .strip-slide-up span.row > span:before {
+    display: none;
+  }
+}
+
 @keyframes zephyr-marquee-left {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
 @keyframes zephyr-marquee-right {
   from {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
   to {
     transform: translateX(0);
@@ -143,11 +242,11 @@ p {
 }
 
 .zephyr-marquee-left {
-  animation: zephyr-marquee-left 42s linear infinite;
+  animation: zephyr-marquee-left 26s linear infinite;
 }
 
 .zephyr-marquee-right {
-  animation: zephyr-marquee-right 48s linear infinite;
+  animation: zephyr-marquee-right 26s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -494,7 +593,7 @@ img {
   .product-accordion-section--desktop {
     height: 100dvh;
     min-height: 100dvh;
-    padding: 1rem 1.25rem;
+    padding: 1.1rem 1.25rem;
     background: #f4f5f7;
   }
 }
@@ -513,6 +612,8 @@ img {
 .product-accordion-card {
   flex: 1 1 0;
   min-width: 0;
+  position: relative;
+  overflow: hidden;
   background: #fff;
   color: #111;
   transition: background-color 0.45s ease, color 0.35s ease;
@@ -520,9 +621,66 @@ img {
   outline: none;
 }
 
+/* Inactive-only subtle industry video behind content */
+.product-accordion-card__video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.product-accordion-card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.12;
+}
+
 .product-accordion-card.is-active {
-  background: var(--card-accent);
+  background-color: var(--card-accent);
+  background-image: var(--card-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
+}
+
+.product-accordion-card.is-active .product-accordion-card__media {
+  position: relative;
+  z-index: 3;
+  transform: translateY(2rem);
+}
+
+.product-accordion-card:nth-child(3).is-active .product-accordion-card__media,
+.product-accordion-card:nth-child(4).is-active .product-accordion-card__media {
+  transform: translate(0.5rem, 2.25rem);
+}
+
+.product-accordion-card.is-active .product-accordion-card__content {
+  z-index: 2;
+  padding-top: 1rem;
+}
+
+/* Linear gradient behind text only — clear at the top, darker at the bottom */
+.product-accordion-card.is-active .product-accordion-card__content::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  right: -1.5rem;
+  top: -2.25rem;
+  bottom: -2rem;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.28) 28%,
+    rgba(0, 0, 0, 0.62) 58%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
 }
 
 .product-accordion-card__inner {
@@ -534,6 +692,7 @@ img {
   min-height: calc(100dvh - 1.5rem);
   padding: 1.5rem 1.25rem 1.75rem;
   position: relative;
+  z-index: 1;
   transition:
     justify-content 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     align-items 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -584,7 +743,12 @@ img {
 
 /* Wider skincare packshot — keep same height as other cards to avoid layout jump. */
 .product-accordion-card:nth-child(4) .product-accordion-card__image {
-  max-width: min(100%, 310px);
+  max-width: min(100%, 420px);
+  max-height: min(52vh, 460px);
+}
+
+.product-accordion-card:nth-child(4).is-active .product-accordion-card__media {
+  max-height: min(52vh, 460px);
 }
 
 .product-accordion-card__content {
@@ -605,17 +769,55 @@ img {
   text-align: left;
 }
 
-.product-accordion-card.is-active .product-accordion-card__index {
-  color: rgba(255, 255, 255, 0.35);
+.product-accordion-card__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
 }
 
-.product-accordion-card__index {
-  font-family: var(--font-manrope, Manrope, sans-serif);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--card-accent);
-  transition: color 0.35s ease;
+.product-accordion-card.is-active .product-accordion-card__heading {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.85rem;
+}
+
+.product-accordion-card__heading-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.product-accordion-card.is-active .product-accordion-card__heading-copy {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ── Animated industry icon (inactive state) ─────────────────────── */
+.product-accordion-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.accordion-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  border: 1.5px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.accordion-icon-svg {
+  width: 32px;
+  height: 32px;
 }
 
 .product-accordion-card__title {
@@ -624,6 +826,10 @@ img {
   font-weight: 700;
   line-height: 1.15;
   margin: 0;
+}
+
+.product-accordion-card:not(.is-active) .product-accordion-card__title {
+  font-size: clamp(1.28rem, 1.9vw, 1.55rem);
 }
 
 .product-accordion-card__subtitle {

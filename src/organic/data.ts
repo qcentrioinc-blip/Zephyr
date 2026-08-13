@@ -39,7 +39,7 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const IMG = "/Homepage/HerbalBottle.webp";
+const IMG = "/homepage/herbal-bottle.webp";
 const CATEGORY_IMAGE = IMG;
 const f = (formula: string): RawFormula => ({ formula, image: IMG });
 

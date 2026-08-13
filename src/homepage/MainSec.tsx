@@ -7,6 +7,7 @@ import {
   useReducedMotion,
   type Variants,
 } from "framer-motion";
+import { LetterStrip } from "../components/LetterStrip";
 
 const products = [
   {
@@ -15,7 +16,7 @@ const products = [
     description:
       "Private label and contract manufacturing for botanical dietary supplements. From formula brief and MOQ planning to finished tablets, capsules, and specialty dosages for US brand launches.",
     color: "#FFA43D",
-    image: "/herbal.webp",
+    image: "/homepage/herbal.webp",
     buttonText: "Request MOQ",
     link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Herbaceutical")}`,
   },
@@ -25,7 +26,7 @@ const products = [
     description:
       "Turnkey manufacturing for vitamins, minerals, and specialty dietary supplements. Flexible dosage forms, finished goods packaging, and practical MOQ support for US brand owners.",
     color: "#247D7D",
-    image: "/nuetra.webp",
+    image: "/homepage/nuetra.webp",
     buttonText: "Request MOQ",
     link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Nutraceutical")}`,
   },
@@ -35,7 +36,7 @@ const products = [
     description:
       "Organic and clean-label supplement manufacturing for US markets. Private label support from early formulation through finished goods packaging and commercial production.",
     color: "#3FB369",
-    image: "/organic.webp",
+    image: "/homepage/organic.webp",
     buttonText: "Request MOQ",
     link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Organic")}`,
   },
@@ -43,9 +44,9 @@ const products = [
     id: 4,
     title: "SKIN CARE",
     description:
-      "ALFURIN lotion and cream: a dual-action system for psoriasis-prone skin with barrier support, manufactured by Zephyr for US distribution, clinic, and private-label partners.",
+      "Alfurin lotion and cream: a dual-action system for psoriasis-prone skin with barrier support. Available through Zephyr for US distribution and clinic partners.",
     color: "#1F5F8B",
-    image: "/Skincare.png?v=user1",
+    image: "/homepage/skincare-main.png",
     buttonText: "Explore range",
     link: "/skincare",
   },
@@ -254,22 +255,13 @@ const MainSec: React.FC = () => {
     >
       <div className="relative z-10 mx-auto h-full max-w-7xl px-4 pt-16 pb-10 sm:px-6 sm:pt-18 sm:pb-14 md:pt-20 md:pb-16 lg:px-8 lg:pt-20 lg:pb-16 xl:pt-12 xl:pb-0">
         <div className="flex min-h-[3.4rem] xs:min-h-[3.8rem] sm:min-h-[4.6rem] md:min-h-[5.8rem] lg:min-h-[5.8rem] xl:min-h-[8.5rem] 2xl:min-h-[9.5rem] items-end justify-center">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.h1
-              key={product.id}
-              initial={
-                reduceMotion
-                  ? false
-                  : { clipPath: "inset(100% 0 0 0)", opacity: 0 }
-              }
-              animate={{ clipPath: "inset(0% 0 0 0)", opacity: 1 }}
-              exit={
-                reduceMotion
-                  ? { opacity: 0 }
-                  : { clipPath: "inset(0 0 100% 0)", opacity: 0 }
-              }
-              transition={{ duration: useLiteMotion ? 0.35 : 0.7 }}
-              className="
+          <LetterStrip
+            key={product.id}
+            as="h1"
+            text={product.title}
+            variant="inherit"
+            immediate
+            className="
                 pt-4
                 sm:pt-6
                 md:pt-8
@@ -293,10 +285,7 @@ const MainSec: React.FC = () => {
                 px-2
                 sm:px-4
               "
-            >
-              {product.title}
-            </motion.h1>
-          </AnimatePresence>
+          />
         </div>
 
         <div className="relative z-30 mt-4 sm:mt-5 md:mt-6 max-w-xl mx-auto text-center xl:max-w-md xl:mx-0 xl:text-left">

@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { PRODUCTS } from "./data";
 import { openSkincareContact } from "./contactEvents";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -53,9 +54,9 @@ export default function CartFinale({ reduced, active }: Props) {
     <section ref={sectionRef} className="sil-cart" aria-label="Partner enquiry">
       <div className="sil-cart-split">
         <div className="sil-receipt sil-partner-summary">
-          <p className="sil-receipt-thanks">ALFURIN range</p>
+          <p className="sil-receipt-thanks">Alfurin range</p>
           <div className="sil-receipt-head">
-            <span>Zephyr manufacturing</span>
+            <span>Zephyr distribution</span>
             <span>B2B</span>
           </div>
 
@@ -81,16 +82,16 @@ export default function CartFinale({ reduced, active }: Props) {
           </ul>
 
           <p className="sil-receipt-note">
-            Discuss availability, distribution, clinic programs, and manufacturing MOQ for the
+            Discuss availability, distribution, clinic programs, and supply MOQ for the
             lotion and cream system.
           </p>
         </div>
 
         <div className="sil-talk">
-          <h2 className="sil-talk-title">Partner with Zephyr</h2>
+          <LetterStrip as="h2" text="Partner with Zephyr" className="sil-talk-title" />
           <p className="sil-talk-sub">
-            Share your market, volumes, and packaging needs. We will follow up on your company
-            email.
+            Share your market, volumes, and packaging needs for Alfurin. We will follow up on your
+            company email.
           </p>
           <motion.button
             type="button"

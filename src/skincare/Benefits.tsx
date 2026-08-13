@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { BENEFITS } from "./data";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -93,11 +94,15 @@ export default function Benefits({ reduced, active }: Props) {
       <div className="sil-benefits-inner">
         <header className="sil-benefits-head">
           <p className="sil-benefits-eyebrow">Signs &amp; symptoms</p>
-          <h2 className="sil-section-title sil-benefits-title">Common symptoms</h2>
+          <LetterStrip
+            as="h2"
+            text="Common symptoms"
+            className="sil-section-title sil-benefits-title"
+          />
           <p className="sil-benefits-lead">
             Symptoms can vary depending on the type and severity of the condition. People living
             with psoriasis may experience any combination of the following. Use these cues when
-            briefing ALFURIN for clinic education and retail programs.
+            briefing Alfurin for clinic education and retail programs.
           </p>
         </header>
 
@@ -110,7 +115,7 @@ export default function Benefits({ reduced, active }: Props) {
               </div>
               <div className="sil-benefit-copy">
                 <p className="sil-benefit-year">{card.year}</p>
-                <h3>{card.title}</h3>
+                <LetterStrip as="h3" text={card.title} />
                 <p>{card.line}</p>
               </div>
             </li>

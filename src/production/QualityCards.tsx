@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ShieldCheck, FlaskConical } from "lucide-react";
-import { H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 const cards = [
   {

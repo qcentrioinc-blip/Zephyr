@@ -1,6 +1,6 @@
 import React from "react";
-import { H1, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H1, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 interface ProjectCard {
   id: number;
@@ -50,7 +50,7 @@ const HeroSection: React.FC = () => {
         <div className="w-full">
           <div className="zephyr-container overflow-hidden">
             <img
-              src="/Research/research-hero.webp"
+              src="/facility/research-hero.webp"
               alt="Zephyr research and development laboratory"
               className="h-[160px] w-full rounded-t-3xl object-cover sm:h-[200px] sm:rounded-t-4xl md:h-[240px] lg:h-[280px]"
             />

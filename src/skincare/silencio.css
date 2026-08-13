@@ -366,8 +366,12 @@ html.skincare-drawer-open body {
   color: var(--sil-fg);
 }
 
-.sil-land-title span {
+.sil-land-title > .sil-land-title-line {
   display: block;
+  color: inherit;
+}
+
+.sil-land-title > .sil-land-title-line--accent {
   color: var(--sil-accent);
 }
 
@@ -590,8 +594,8 @@ html.skincare-drawer-open body {
 
 .sil-can-img {
   width: auto;
-  max-width: min(100%, 260px);
-  max-height: min(100%, calc(var(--sil-can-stage-h) - 6rem));
+  max-width: min(100%, 340px);
+  max-height: min(100%, calc(var(--sil-can-stage-h) - 5rem));
   height: auto;
   object-fit: contain;
   object-position: center;
@@ -608,8 +612,8 @@ html.skincare-drawer-open body {
 
 @media (min-width: 1400px) {
   .sil-can-img {
-    max-height: min(100%, calc(var(--sil-can-stage-h) - 7rem));
-    max-width: min(100%, 290px);
+    max-height: min(100%, calc(var(--sil-can-stage-h) - 5.5rem));
+    max-width: min(100%, 400px);
   }
 }
 
@@ -733,8 +737,8 @@ html.skincare-drawer-open body {
   }
 
   .sil-can-img {
-    max-width: min(100%, 220px);
-    max-height: min(36vh, 270px);
+    max-width: min(100%, 300px);
+    max-height: min(42vh, 360px);
   }
 
   .sil-can-label {
@@ -908,9 +912,10 @@ html.skincare-drawer-open body {
 
 @media (min-width: 1400px) {
   .sil-sys-layout {
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 2.75rem;
-    align-items: center;
+    grid-template-columns: 0.95fr 1.15fr;
+    gap: 2.25rem;
+    align-items: stretch;
+    width: min(1180px, 100%);
   }
 }
 
@@ -1006,7 +1011,7 @@ html.skincare-drawer-open body {
   position: relative;
   width: 100%;
   min-height: 220px;
-  align-self: center;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1014,21 +1019,34 @@ html.skincare-drawer-open body {
   background: #ffffff;
 }
 
-@media (min-width: 1400px) {
-  .sil-sys-media {
-    min-height: 0;
-    height: min(58vh, 460px);
-    margin-top: 0;
-  }
-}
-
 .sil-sys-video {
   width: 100%;
   height: 100%;
   min-height: 220px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
-  background: var(--sil-bg-deep);
+  background: #ffffff;
+}
+
+@media (min-width: 1400px) {
+  .sil-sys-media {
+    min-height: 0;
+    height: auto;
+    margin-top: 0;
+    overflow: visible;
+  }
+
+  .sil-sys-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex: none;
+    transform: scale(1.06);
+    transform-origin: center center;
+  }
 }
 
 .sil-sys-media-caption {
@@ -2348,8 +2366,8 @@ html.skincare-drawer-open body {
   }
 
   .sil-sys-media {
-    width: 92%;
-    max-width: 640px;
+    width: 96%;
+    max-width: 720px;
     height: auto;
     min-height: 0;
     margin: 1.85rem auto 0;
@@ -2364,7 +2382,7 @@ html.skincare-drawer-open body {
     height: 100%;
     min-height: 0;
     max-height: none;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     background: #ffffff;
   }
@@ -2385,7 +2403,7 @@ html.skincare-drawer-open body {
     max-width: 980px;
     grid-template-columns: 1fr 1fr;
     gap: 2rem 2.25rem;
-    align-items: center;
+    align-items: stretch;
   }
 
   .sil-sys-copy {
@@ -2401,12 +2419,22 @@ html.skincare-drawer-open body {
   }
 
   .sil-sys-media {
-    width: 90%;
-    max-width: 420px;
-    aspect-ratio: 4 / 3;
-    min-height: 220px;
-    margin-top: 2rem;
-    justify-self: center;
+    width: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
+    margin-top: 0;
+    justify-self: stretch;
+    align-self: stretch;
+  }
+
+  .sil-sys-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
   }
 
   .sil-sys-cards {
@@ -2453,13 +2481,13 @@ html.skincare-drawer-open body {
 
   .sil-can-img {
     width: auto;
-    max-width: min(100%, 165px);
-    max-height: min(24dvh, 185px);
+    max-width: min(100%, 220px);
+    max-height: min(30dvh, 250px);
   }
 
   .sil-can-visual {
     height: auto;
-    max-height: min(26dvh, 200px);
+    max-height: min(32dvh, 270px);
     flex: 0 0 auto;
   }
 
@@ -2519,11 +2547,11 @@ html.skincare-drawer-open body {
 
   .sil-sys-media {
     order: 2;
-    width: 88%;
-    max-width: 360px;
+    width: 94%;
+    max-width: 400px;
     aspect-ratio: 16 / 11;
-    min-height: 180px;
-    max-height: min(46vw, 280px);
+    min-height: 200px;
+    max-height: min(52vw, 320px);
     margin: 1.85rem auto 0;
   }
 

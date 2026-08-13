@@ -9,8 +9,8 @@ import {
   Palette,
   Scale,
 } from "lucide-react";
-import { H2, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H2, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 const intro =
   "Zephyr works closely with customers to move concepts to commercial manufacturing. We start with market-led concept formulas, run pilot trials, complete validation work, and transfer programs into full-scale production.";

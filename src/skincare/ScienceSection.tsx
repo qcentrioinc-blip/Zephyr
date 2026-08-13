@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { SCIENCE_CREDENTIALS } from "./data";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -70,9 +71,13 @@ export default function ScienceSection({ reduced, active }: Props) {
       <div className="sil-science-shell">
         <header className="sil-science-head">
           <p className="sil-science-eyebrow">Science</p>
-          <h2 className="sil-science-title">Credentials partners evaluate</h2>
+          <LetterStrip
+            as="h2"
+            text="Credentials partners evaluate"
+            className="sil-science-title"
+          />
           <p className="sil-science-body">
-            Key credentials for the ALFURIN range. Built for clinic onboarding,
+            Key credentials for the Alfurin range. Built for clinic onboarding,
             distribution briefs, and launch materials.
           </p>
         </header>
@@ -87,7 +92,7 @@ export default function ScienceSection({ reduced, active }: Props) {
                       {String(index + 1).padStart(2, "0")}
                     </div>
                     <div className="sil-science-card-body">
-                      <h3>{item.title}</h3>
+                      <LetterStrip as="h3" text={item.title} />
                       <p>{item.detail}</p>
                     </div>
                   </div>

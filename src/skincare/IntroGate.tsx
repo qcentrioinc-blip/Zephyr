@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { GATE_FLOATS } from "./data";
+import { LetterStrip } from "../components/LetterStrip";
 
 type Props = {
   onEnter: () => void;
@@ -248,7 +249,7 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       }}
       role="button"
       tabIndex={0}
-      aria-label="Enter ALFURIN clinical range overview"
+      aria-label="Enter Alfurin clinical range overview"
     >
       <div ref={stageRef} className="sil-orbit sil-orbit--duo" aria-hidden>
         {GATE_FLOATS.map((item) => (
@@ -261,9 +262,9 @@ export default function IntroGate({ onEnter, reduced }: Props) {
       </div>
 
       <div className="sil-gate-lockup">
-        <p className="sil-gate-eyebrow">Zephyr manufacturing</p>
-        <h1 className="sil-gate-title">ALFURIN</h1>
-        <p className="sil-gate-sub">Care for psoriasis-prone skin</p>
+        <p className="sil-gate-eyebrow">Zephyr distribution</p>
+        <LetterStrip as="h1" text="Alfurin" immediate className="sil-gate-title" />
+        <p className="sil-gate-sub">Psoriasis-prone skincare</p>
       </div>
 
       <div ref={circleRef} className="sil-enter-circle" aria-hidden>

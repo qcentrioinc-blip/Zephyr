@@ -2,7 +2,7 @@ import Explore from "../homepage/Explore";
 import ProductionShowcase from "../homepage/ProductionShowcase";
 // import Stats from "../research/Stats";
 import Timeline from "../research/Timeline";
-import PageProgress from "../Global/PageProgress";
+import PageProgress from "../components/PageProgress";
 import HeroSection from "./HeroSection";
 import QualityCards from "./QualityCards";
 import ManufacturingProcess from "./ManufacturingProcess";

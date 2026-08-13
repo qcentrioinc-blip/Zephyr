@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { PRODUCTS } from "./data";
 import { openSkincareContact } from "./contactEvents";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -112,21 +113,31 @@ export default function StoreHero({ reduced, active }: Props) {
   const cream = PRODUCTS[1];
 
   return (
-    <header ref={rootRef} className="sil-land" aria-label="ALFURIN partner overview">
+    <header ref={rootRef} className="sil-land" aria-label="Alfurin distribution overview">
       <div className="sil-land-glow" aria-hidden />
 
       <div className="sil-land-shell">
         <div className="sil-land-copy">
-          {/* <p className="sil-land-eyebrow">Zephyr manufacturing · ALFURIN</p> */}
+          {/* <p className="sil-land-eyebrow">Zephyr distribution · Alfurin</p> */}
           <h1 className="sil-land-title">
-            A new approach
-            <span>to psoriatic skin</span>
+            <LetterStrip
+              as="span"
+              text="A new approach"
+              immediate
+              className="sil-land-title-line"
+            />
+            <LetterStrip
+              as="span"
+              text="to psoriatic skin"
+              immediate
+              className="sil-land-title-line sil-land-title-line--accent"
+            />
           </h1>
           <p className="sil-land-body">
-            Dual-action natural-active care for psoriasis-prone skin. Lotion for daily large-area
-            defence. Cream for intensive plaque sites. Limonia acidissima-derived actives and S100
-            Protein Technology, manufactured by Zephyr for US distribution, clinic, and
-            private-label partners.
+            Alfurin — psoriasis-prone skincare, Zephyr distribution. Dual-action natural-active
+            care: lotion for daily large-area defence, cream for intensive plaque sites. Limonia
+            acidissima-derived actives and S100 Protein Technology, available through Zephyr for
+            US distribution and clinic partners.
           </p>
           <motion.button
             type="button"
@@ -147,7 +158,7 @@ export default function StoreHero({ reduced, active }: Props) {
               </div>
               <div className="sil-land-card-meta">
                 <span>01</span>
-                <h2>{lotion.name}</h2>
+                <LetterStrip as="h2" text={lotion.name} className="" />
               </div>
             </article>
           ) : null}
@@ -158,7 +169,7 @@ export default function StoreHero({ reduced, active }: Props) {
               </div>
               <div className="sil-land-card-meta">
                 <span>02</span>
-                <h2>{cream.name}</h2>
+                <LetterStrip as="h2" text={cream.name} className="" />
               </div>
             </article>
           ) : null}

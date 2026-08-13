@@ -2,6 +2,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -84,10 +85,10 @@ export default function ProofBand({ reduced = false, active = true }: Props) {
       <div className="sil-proof-shell">
         <header className="sil-proof-head">
           <p className="sil-proof-eyebrow">Partner evaluation</p>
-          <h2 className="sil-proof-title">Formulation facts</h2>
+          <LetterStrip as="h2" text="Formulation facts" className="sil-proof-title" />
           <p className="sil-proof-lead">
-            Credentials partners typically request when evaluating ALFURIN for distribution,
-            clinic programs, or private-label planning.
+            Credentials partners typically request when evaluating Alfurin for distribution
+            or clinic programs.
           </p>
         </header>
 

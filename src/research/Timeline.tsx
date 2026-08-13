@@ -1,6 +1,6 @@
 import { Globe2, Store, Truck } from "lucide-react";
-import { H2, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H2, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 interface TimelineEntry {
   step: string;
@@ -11,17 +11,17 @@ interface TimelineEntry {
 const galleryImages = [
   {
     id: 1,
-    src: "/Research/Research1.png",
+    src: "/facility/research-1.png",
     alt: "Partner brand development environment",
   },
   {
     id: 2,
-    src: "/Gallery/Gallery2.png",
+    src: "/facility/gallery-2.png",
     alt: "High-speed manufacturing equipment",
   },
   {
     id: 3,
-    src: "/Gallery/Gallery5.png",
+    src: "/facility/gallery-5.png",
     alt: "Quality-controlled production workspace",
   },
 ];

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { H3, P } from "../Global/Typography/Typo";
+import { H3, P } from "../components/Typography/Typo";
 
 interface ExploreItem {
   title: string;
@@ -18,7 +18,7 @@ const ITEMS: ExploreItem[] = [
     title: "Herbaceutical",
     description:
       "Botanical dietary supplements for private-label brand programs.",
-    image: "/Homepage/Organic.webp",
+    image: "/homepage/herbal.webp",
     color: "bg-[#C38046]",
     borderColor: "#C38046",
     textColor: "#C38046",
@@ -28,7 +28,7 @@ const ITEMS: ExploreItem[] = [
     title: "Nutraceutical",
     description:
       "Vitamins, minerals, and specialty supplements for commercial brand portfolios.",
-    image: "/Homepage/Nutra.webp",
+    image: "/homepage/nuetra.webp",
     color: "bg-[#4AA3A7]",
     borderColor: "#4AA3A7",
     textColor: "#4AA3A7",
@@ -38,11 +38,21 @@ const ITEMS: ExploreItem[] = [
     title: "Organic",
     description:
       "Organic and clean-label manufacturing for private-label launch.",
-    image: "/Homepage/Herbal.webp",
+    image: "/homepage/organic.webp",
     color: "bg-[#547A3D]",
     borderColor: "#547A3D",
     textColor: "#547A3D",
     link: "/organic",
+  },
+  {
+    title: "Skin Care",
+    description:
+      "Alfurin — psoriasis-prone skincare, Zephyr distribution.",
+    image: "/homepage/skincare-main.png",
+    color: "bg-[#1F5F8B]",
+    borderColor: "#1F5F8B",
+    textColor: "#1F5F8B",
+    link: "/skincare",
   },
 ];
 
@@ -50,40 +60,6 @@ const ROTATION_ON_HOVER = 25;
 const ROTATION_TRANSITION = {
   duration: 1.4,
   ease: [0.22, 1, 0.36, 1] as const,
-};
-const EASE_PREMIUM = [0.16, 1, 0.3, 1] as const;
-const LOOP_MS = 4500;
-
-const SPRING_SOFT = { type: "spring" as const, stiffness: 120, damping: 22, mass: 0.9 };
-
-const centerMotion = {
-  initial: { opacity: 0, scale: 0.92, y: 12 },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: { ...SPRING_SOFT, opacity: { duration: 0.55, ease: EASE_PREMIUM } },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.94,
-    y: -8,
-    transition: { duration: 0.5, ease: EASE_PREMIUM },
-  },
-};
-
-const sideMotion = {
-  initial: { opacity: 0, scale: 0.94 },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.7, ease: EASE_PREMIUM },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.96,
-    transition: { duration: 0.45, ease: EASE_PREMIUM },
-  },
 };
 
 function CircularLabel({
@@ -124,7 +100,7 @@ function CircularLabel({
       <circle cx="150" cy="150" r="145" fill="none" stroke={borderColor} strokeWidth="1" />
       <circle cx="150" cy="150" r="108" fill="none" stroke={borderColor} strokeWidth="1" />
 
-      <text fill={textColor} fontSize="13" letterSpacing="4.2" fontWeight="400">
+      <text fill={textColor} fontSize="14" letterSpacing="3.5" fontWeight="400">
         <textPath href={`#${pathId}`} startOffset="0%">
           {`${title} • `.repeat(20)}
         </textPath>
@@ -149,13 +125,12 @@ function ExploreCard({
   return (
     <Link
       to={item.link}
-      className="group flex cursor-pointer flex-col items-center"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={() => setIsHovered(true)}
       onTouchEnd={() => setIsHovered(false)}
     >
-      <div className={`relative ${sizeClassName}`}>
+      <div className={`relative rounded-full bg-white ${sizeClassName}`}>
         <CircularLabel
           title={item.title}
           pathKey={pathKey}
@@ -164,18 +139,20 @@ function ExploreCard({
           rotated={isHovered}
         />
 
-        <div className={`absolute ${insetClassName} overflow-hidden rounded-full shadow-lg`}>
+        <div
+          className={`absolute ${insetClassName} flex items-center justify-center overflow-hidden rounded-full bg-white`}
+        >
           <img
             src={item.image}
             alt={item.title}
-            className="h-full w-full object-cover transition-transform duration-500"
+            className="h-[95%] w-[95%] bg-white object-contain transition-transform duration-500 group-hover:scale-[1.03]"
           />
 
           <div
-            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center p-3 text-center transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0%_0_0_0)] sm:p-4 md:p-6`}
+            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center p-2 text-center transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0%_0_0_0)] sm:p-3 md:p-4`}
           >
-            <H3 className="mb-1.5 text-white sm:mb-2 md:mb-3">{item.title}</H3>
-            <P className="text-white">{item.description}</P>
+            <H3 className="mb-1 text-white !text-[11px] sm:!text-[13px] md:!text-[15px] lg:!text-[16px]" animate={false}>{item.title}</H3>
+            <P className="text-white !text-[9px] sm:!text-[10px] md:!text-[11px] lg:!text-[12px]">{item.description}</P>
           </div>
         </div>
       </div>
@@ -183,140 +160,33 @@ function ExploreCard({
   );
 }
 
-function MobileArcLayout({ items }: { items: ExploreItem[] }) {
-  const reduceMotion = Boolean(useReducedMotion());
-  const [featuredIndex, setFeaturedIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  useEffect(() => {
-    if (reduceMotion || paused) return;
-    const id = window.setInterval(() => {
-      setFeaturedIndex((i) => (i + 1) % items.length);
-    }, LOOP_MS);
-    return () => window.clearInterval(id);
-  }, [reduceMotion, paused, items.length]);
-
-  if (reduceMotion) {
-    return (
-      <div className="flex items-end justify-center gap-3 sm:hidden">
-        {items.map((item) => (
-          <ExploreCard
-            key={item.title}
-            item={item}
-            pathKey={`eq-${item.title}`}
-            sizeClassName="h-[110px] w-[110px]"
-            insetClassName="inset-[15px]"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  const center = items[featuredIndex];
-  const left = items[(featuredIndex + items.length - 1) % items.length];
-  const right = items[(featuredIndex + 1) % items.length];
-
+/** Mobile: static 2×2 grid, no animation */
+function MobileGridLayout({ items }: { items: ExploreItem[] }) {
   return (
-    <div
-      className="flex justify-center sm:hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => setPaused(false)}
-    >
-      <div className="relative h-[200px] w-full max-w-[340px]">
-        <div className="absolute bottom-0 left-0 z-10 h-[105px] w-[105px]">
-          <AnimatePresence mode="sync" initial={false}>
-            <motion.div
-              key={`left-${left.title}`}
-              className="absolute inset-0"
-              variants={sideMotion}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <ExploreCard
-                item={left}
-                pathKey={`left-${left.title}-${featuredIndex}`}
-                sizeClassName="h-[105px] w-[105px]"
-                insetClassName="inset-[15px]"
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="absolute left-1/2 top-0 z-20 h-[150px] w-[150px] -translate-x-1/2">
-          <AnimatePresence mode="sync" initial={false}>
-            <motion.div
-              key={`center-${center.title}`}
-              className="absolute inset-0 origin-center"
-              variants={centerMotion}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <motion.div
-                className="h-full w-full rounded-full"
-                animate={{
-                  y: [0, -4, 0],
-                  boxShadow: [
-                    `0 8px 24px ${center.borderColor}22`,
-                    `0 14px 36px ${center.borderColor}33`,
-                    `0 8px 24px ${center.borderColor}22`,
-                  ],
-                }}
-                transition={{
-                  duration: 3.6,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                }}
-              >
-                <ExploreCard
-                  item={center}
-                  pathKey={`center-${center.title}-${featuredIndex}`}
-                  sizeClassName="h-[150px] w-[150px]"
-                  insetClassName="inset-[21px]"
-                />
-              </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="absolute bottom-0 right-0 z-10 h-[105px] w-[105px]">
-          <AnimatePresence mode="sync" initial={false}>
-            <motion.div
-              key={`right-${right.title}`}
-              className="absolute inset-0"
-              variants={sideMotion}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <ExploreCard
-                item={right}
-                pathKey={`right-${right.title}-${featuredIndex}`}
-                sizeClassName="h-[105px] w-[105px]"
-                insetClassName="inset-[15px]"
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
+    <div className="grid grid-cols-2 place-items-center gap-3 sm:hidden">
+      {items.map((item) => (
+        <ExploreCard
+          key={item.title}
+          item={item}
+          pathKey={`mob-${item.title}`}
+          sizeClassName="h-[170px] w-[170px]"
+          insetClassName="inset-[28px]"
+        />
+      ))}
     </div>
   );
 }
 
 function TabletRowLayout({ items }: { items: ExploreItem[] }) {
   return (
-    <div className="hidden items-end justify-center gap-5 sm:flex md:gap-8 lg:hidden">
+    <div className="hidden grid-cols-2 place-items-center gap-8 sm:grid md:gap-10 lg:hidden">
       {items.map((item) => (
         <ExploreCard
           key={item.title}
           item={item}
           pathKey={`tablet-${item.title}`}
-          sizeClassName="h-[190px] w-[190px] md:h-[230px] md:w-[230px]"
-          insetClassName="inset-[27px] md:inset-[33px]"
+          sizeClassName="h-[200px] w-[200px] md:h-[250px] md:w-[250px]"
+          insetClassName="inset-[32px] md:inset-[40px]"
         />
       ))}
     </div>
@@ -325,14 +195,14 @@ function TabletRowLayout({ items }: { items: ExploreItem[] }) {
 
 function DesktopGridLayout({ items }: { items: ExploreItem[] }) {
   return (
-    <div className="hidden place-items-center gap-8 lg:grid lg:grid-cols-3">
+    <div className="hidden place-items-center gap-10 lg:grid lg:grid-cols-4 xl:gap-12">
       {items.map((item) => (
         <ExploreCard
           key={item.title}
           item={item}
           pathKey={`desk-${item.title}`}
-          sizeClassName="h-[350px] w-[350px]"
-          insetClassName="inset-[49px]"
+          sizeClassName="h-[230px] w-[230px] xl:h-[270px] xl:w-[270px]"
+          insetClassName="inset-[36px] xl:inset-[42px]"
         />
       ))}
     </div>
@@ -343,7 +213,7 @@ export default function Explore() {
   return (
     <section className="zephyr-section">
       <div className="zephyr-container">
-        <MobileArcLayout items={ITEMS} />
+        <MobileGridLayout items={ITEMS} />
         <TabletRowLayout items={ITEMS} />
         <DesktopGridLayout items={ITEMS} />
       </div>

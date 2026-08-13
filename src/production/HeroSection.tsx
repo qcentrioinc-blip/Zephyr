@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { H1, P } from "../Global/Typography/Typo";
+import { H1, P } from "../components/Typography/Typo";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -10,7 +10,7 @@ const HeroSection = () => {
     <section className="relative w-full overflow-hidden bg-[#0d241c]">
       <div className="absolute inset-0">
         <img
-          src="/Production/production-hero-wide.webp"
+          src="/facility/production-hero-wide.webp"
           alt=""
           className="h-full w-full object-cover opacity-55"
           aria-hidden="true"

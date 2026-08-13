@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { H2, H4, P } from "../Global/Typography/Typo";
+import { H2, H4, P } from "../components/Typography/Typo";
 
 export default function Table() {
-  const facilityImage = "/Production/ProductionsHeroRight.webp";
+  const facilityImage = "/facility/productions-hero-right.webp";
 
   return (
     <section className="zephyr-section bg-white">
@@ -27,7 +27,7 @@ export default function Table() {
               </div>
 
               <img
-                src="/Global/Logo.png"
+                src="/brand/logo.png"
                 alt="Zephyr"
                 className="h-8 w-auto object-contain sm:h-16"
               />

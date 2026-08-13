@@ -15,14 +15,15 @@ import {
   sendOtpRequest,
   verifyOtpRequest,
 } from "../contact/companyEmail";
+import { LetterStrip } from "../components/LetterStrip";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 1 | 2;
 
 const SUBJECT_OPTIONS = [
-  { label: "Full range / MOQ", value: "ALFURIN range: manufacturing / MOQ" },
-  { label: "Lotion", value: "ALFURIN Moisturizing Lotion: partner enquiry" },
-  { label: "Cream", value: "ALFURIN Moisturizing Cream: partner enquiry" },
+  { label: "Full range / supply", value: "Alfurin range: distribution / supply enquiry" },
+  { label: "Lotion", value: "Alfurin Moisturizing Lotion: distribution enquiry" },
+  { label: "Cream", value: "Alfurin Moisturizing Cream: distribution enquiry" },
 ] as const;
 
 /** Right-side cream contact drawer — OTP-gated like /contact. */
@@ -282,10 +283,14 @@ export default function SkincareContact() {
           >
             <div className="sil-drawer-head">
               <div>
-                <p className="sil-contact-eyebrow">Zephyr manufacturing</p>
-                <h2 id={titleId} className="sil-drawer-title">
-                  ALFURIN partner enquiry
-                </h2>
+                <p className="sil-contact-eyebrow">Zephyr distribution</p>
+                <LetterStrip
+                  as="h2"
+                  text="Alfurin partner enquiry"
+                  immediate
+                  className="sil-drawer-title"
+                  id={titleId}
+                />
               </div>
               <button type="button" className="sil-drawer-close" onClick={close} aria-label="Close">
                 <X className="h-5 w-5" />
@@ -304,9 +309,9 @@ export default function SkincareContact() {
                     role="status"
                   >
                     <p className="sil-contact-queued">Enquiry received</p>
-                    <h3>We will follow up shortly</h3>
+                    <LetterStrip as="h3" text="We will follow up shortly" immediate />
                     <p>
-                      Your ALFURIN partner enquiry was received. Our manufacturing team will reply
+                      Your Alfurin partner enquiry was received. Our distribution team will reply
                       on your company email within one to two business days.
                     </p>
                     <div className="sil-talk-ctas">

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Building2, Gauge, ShieldCheck, Sparkles } from "lucide-react";
-import { H2, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H2, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 const advantages = [
   {
@@ -76,7 +76,7 @@ export default function PartnerAdvantage() {
           <Reveal delay={0.08}>
             <div className="overflow-hidden rounded-[28px]">
               <img
-                src="/Production/production-hero-wide.png"
+                src="/facility/production-hero-wide.png"
                 alt="Zephyr manufacturing facility"
                 className="aspect-[4/5] h-full w-full object-cover sm:aspect-[5/6]"
               />

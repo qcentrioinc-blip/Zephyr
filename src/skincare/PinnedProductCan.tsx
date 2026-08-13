@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import type { StoreProduct } from "./data";
 import { openSkincareContact } from "./contactEvents";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -159,7 +160,7 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
           <div className="sil-can-label">
             <div ref={metaRef} className="sil-can-meta">
               <p className="sil-can-ref">REF {product.ref}</p>
-              <h2 className="sil-can-name">{product.name}</h2>
+              <LetterStrip as="h2" text={product.name} className="sil-can-name" />
             </div>
 
             <table className="sil-nutrition">
@@ -185,7 +186,7 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
                 className="sil-cta"
                 onClick={() =>
                   openSkincareContact({
-                    subject: `ALFURIN ${product.name}: partner enquiry`,
+                    subject: `Alfurin ${product.name}: distribution enquiry`,
                   })
                 }
               >

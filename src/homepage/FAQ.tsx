@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { H2, H3, H4, P } from "../Global/Typography/Typo";
-import CelebrationBurst from "../Global/CelebrationBurst";
+import { H2, H3, H4, P } from "../components/Typography/Typo";
+import CelebrationBurst from "../components/CelebrationBurst";
 
 const faqs = [
   {
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: "Which dosage formats and packaging options do you offer?",
-    a: "Dosage formats include tablets, capsules, sachets, powders, gummies, and jelly. Packaging options include jars, sachets, blister, bulk packs, bottle packs, Alu Alu, and stick packs.",
+    a: "Dosage formats include tablets, capsules, powders, gummies, and jelly. Packaging options include jars, sachets, blister, bulk packs, bottle packs, Alu Alu, and stick packs.",
   },
   {
     q: "How do you manage quality and compliance?",
@@ -104,7 +104,7 @@ const FAQ = () => {
                     onClick={() => toggle(index)}
                     className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left sm:px-5"
                   >
-                    <H4 className={open ? "text-[#113227]" : ""}>{item.q}</H4>
+                    <H4 className={open ? "text-[#113227]" : ""} animate={false}>{item.q}</H4>
                     <QuestionIcon
                       active={open}
                       className={`h-6 w-6 shrink-0 transition-transform duration-300 ${

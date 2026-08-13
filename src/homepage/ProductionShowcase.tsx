@@ -1,7 +1,7 @@
 // import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 // import { ArrowRight } from "lucide-react";
-import { H2, H3, P } from "../Global/Typography/Typo";
+import { H2, H3, P } from "../components/Typography/Typo";
 
 type ShowcaseItem = {
   name: string;
@@ -9,22 +9,21 @@ type ShowcaseItem = {
 };
 
 const dosageFormats: ShowcaseItem[] = [
-  { name: "Tablets", image: "/Homepage/production/tablet.webp" },
-  { name: "Capsules", image: "/Homepage/production/capsule.webp" },
-  { name: "Sachets", image: "/Homepage/production/sachet.webp" },
-  { name: "Powders", image: "/Homepage/production/powder.webp" },
-  { name: "Gummies", image: "/Homepage/production/gummy.webp" },
-  { name: "Jelly", image: "/Homepage/production/jelly.webp" },
+  { name: "Tablets", image: "/packaging/tablet.webp" },
+  { name: "Capsules", image: "/packaging/capsule.webp" },
+  { name: "Powders", image: "/packaging/powder.webp" },
+  { name: "Gummies", image: "/packaging/gummy.webp" },
+  { name: "Jelly", image: "/packaging/jelly.webp" },
 ];
 
 const packagingOptions: ShowcaseItem[] = [
-  { name: "Jars", image: "/Homepage/production/jar.webp" },
-  { name: "Sachets", image: "/Homepage/production/pack-sachet.webp" },
-  { name: "Blister", image: "/Homepage/production/blister.webp" },
-  { name: "Bulk Packs", image: "/Homepage/production/bulk.webp" },
-  { name: "Bottle Packs", image: "/Homepage/production/bottle.webp" },
-  { name: "Alu Alu", image: "/Homepage/production/alu-alu.webp" },
-  { name: "Stick Packs", image: "/Homepage/production/stick-pack.webp" },
+  { name: "Jars", image: "/packaging/jar.webp" },
+  { name: "Sachets", image: "/packaging/pack-sachet.webp" },
+  { name: "Blister", image: "/packaging/blister.webp" },
+  { name: "Bulk Packs", image: "/packaging/bulk.webp" },
+  { name: "Bottle Packs", image: "/packaging/bottle.webp" },
+  { name: "Alu Alu", image: "/packaging/alu-alu.webp" },
+  { name: "Stick Packs", image: "/packaging/stick-pack.webp" },
 ];
 
 function MarqueeRow({
@@ -34,7 +33,9 @@ function MarqueeRow({
   items: ShowcaseItem[];
   direction: "left" | "right";
 }) {
-  const loop = [...items, ...items];
+  // Four copies ensures the strip always overflows the viewport so the
+  // seamless -25% translate never shows a bare end, even on ultra-wide screens.
+  const loop = [...items, ...items, ...items, ...items];
   const animClass =
     direction === "left" ? "zephyr-marquee-left" : "zephyr-marquee-right";
 
@@ -74,7 +75,7 @@ export default function ProductionShowcase() {
       <div className="zephyr-container">
         <motion.div
           className="mx-auto max-w-3xl text-center"
-          initial={{ opacity: 0.001, y: 14 }}
+          initial={{ opacity: 1, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15, margin: "100px 0px" }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -88,7 +89,7 @@ export default function ProductionShowcase() {
 
         <motion.div
           className="mt-8 space-y-8 md:mt-10 md:space-y-10"
-          initial={{ opacity: 0.001, y: 16 }}
+          initial={{ opacity: 1, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1, margin: "100px 0px" }}
           transition={{ duration: 0.45, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}

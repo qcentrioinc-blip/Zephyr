@@ -1,5 +1,5 @@
-import { H2, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H2, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 interface StatCard {
   number: string;
@@ -8,9 +8,9 @@ interface StatCard {
 
 /** GIF assets ready for re-enable of right-side circles */
 export const STATS_CIRCLE_GIFS = {
-  formulate: "/Production/icons/formulate.gif",
-  ranges: "/Production/icons/ranges.gif",
-  quality: "/Production/icons/quality.gif",
+  formulate: "/facility/icons/formulate.gif",
+  ranges: "/facility/icons/ranges.gif",
+  quality: "/facility/icons/quality.gif",
 } as const;
 
 const Stats = () => {
@@ -55,7 +55,7 @@ const Stats = () => {
                   </P>
                 <div className="w-full shrink-0 sm:w-40 lg:w-48">
                   <img
-                    src="/Research/ResearchStats.png"
+                    src="/facility/research-stats.png"
                     alt="Zephyr manufacturing capability"
                     className="h-auto w-full object-contain shadow-md"
                   />

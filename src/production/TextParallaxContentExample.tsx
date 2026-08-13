@@ -11,7 +11,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { H1, H3, P } from "../Global/Typography/Typo";
+import { H1, H3, P } from "../components/Typography/Typo";
 
 type Panel = {
   imgUrl: string;

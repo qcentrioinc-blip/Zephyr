@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { RITUAL_STEPS } from "./data";
+import { LetterStrip } from "../components/LetterStrip";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -137,9 +138,13 @@ export default function RitualSection({ reduced, active }: Props) {
       <div className="sil-ritual-inner">
         <header className="sil-ritual-head">
           <p className="sil-ritual-eyebrow">Daily ritual</p>
-          <h2 className="sil-ritual-title">Developed for everyday programs</h2>
+          <LetterStrip
+            as="h2"
+            text="Developed for everyday programs"
+            className="sil-ritual-title"
+          />
           <p className="sil-ritual-body">
-            ALFURIN is built for regular use on psoriasis-prone skin. A non-greasy, dermatologically
+            Alfurin is built for regular use on psoriasis-prone skin. A non-greasy, dermatologically
             tested system partners can brief for clinic protocols, retail education, and home
             routines: cleanse, lotion for large areas, cream where plaque is thicker.
           </p>
@@ -163,7 +168,7 @@ export default function RitualSection({ reduced, active }: Props) {
 
                 <div className="sil-ritual-copy">
                   <span className="sil-ritual-label">{step.label}</span>
-                  <h3>{step.title}</h3>
+                  <LetterStrip as="h3" text={step.title} />
                   <p>{step.detail}</p>
                 </div>
               </li>

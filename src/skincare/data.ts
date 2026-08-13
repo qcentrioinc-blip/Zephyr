@@ -1,7 +1,11 @@
+export const SKINCARE_MAIN_IMAGE = "/homepage/skincare-main.png";
+export const SKINCARE_LOTION_IMAGE = "/products/lotion.png?v=white1";
+export const SKINCARE_CREAM_IMAGE = "/products/cream-tube-2.png";
+
 export const CONTACT = {
-  lotion: `/contact?subject=${encodeURIComponent("ALFURIN Moisturizing Lotion: partner enquiry")}`,
-  cream: `/contact?subject=${encodeURIComponent("ALFURIN Moisturizing Cream: partner enquiry")}`,
-  range: `/contact?subject=${encodeURIComponent("ALFURIN range: manufacturing / MOQ")}`,
+  lotion: `/contact?subject=${encodeURIComponent("Alfurin Moisturizing Lotion: distribution enquiry")}`,
+  cream: `/contact?subject=${encodeURIComponent("Alfurin Moisturizing Cream: distribution enquiry")}`,
+  range: `/contact?subject=${encodeURIComponent("Alfurin range: distribution / supply enquiry")}`,
 } as const;
 
 export const TRUST_BADGES = [
@@ -67,7 +71,7 @@ export const RITUAL_STEPS = [
     detail:
       "Pump two to three times and massage evenly into skin. Suited to morning use and large-area daily defence.",
     image: "/skincare/ritual-lotion.png?v=alfurin",
-    alt: "ALFURIN Moisturizing Lotion pump bottle applied to psoriasis-prone skin",
+    alt: "Alfurin Moisturizing Lotion pump bottle applied to psoriasis-prone skin",
   },
   {
     num: "03",
@@ -76,7 +80,7 @@ export const RITUAL_STEPS = [
     detail:
       "Use on thicker plaques or as overnight care for intensive sites. Position cream as the targeted follow-on SKU.",
     image: "/skincare/ritual-cream.png?v=alfurin",
-    alt: "ALFURIN cream tube with intensive care application on plaque-prone skin",
+    alt: "Alfurin cream tube with intensive care application on plaque-prone skin",
   },
 ] as const;
 
@@ -102,7 +106,7 @@ export const PRODUCTS: StoreProduct[] = [
     name: "Moisturizing Lotion",
     role: "Daily defence and prevention",
     volume: "Large-area daily use",
-    image: "/skincare/lotion-bottle.png",
+    image: SKINCARE_LOTION_IMAGE,
     ingredients: [
       "Lightweight, fast-absorbing formula for broad coverage",
       "Helps reduce flaking and surface scaling",
@@ -125,7 +129,7 @@ export const PRODUCTS: StoreProduct[] = [
     name: "Moisturizing Cream",
     role: "Intensive targeted relief",
     volume: "Plaque areas and overnight care",
-    image: "/skincare/cream-tube.png",
+    image: SKINCARE_CREAM_IMAGE,
     ingredients: [
       "Targets thick plaque formation with lasting hydration",
       "Supports deep moisture retention overnight",
@@ -145,8 +149,8 @@ export const PRODUCTS: StoreProduct[] = [
 ];
 
 export const GATE_FLOATS = [
-  { src: "/skincare/lotion-bottle-hq.png?v=cutout3", className: "sil-orbit-item--lotion", side: "left" as const },
-  { src: "/skincare/cream-tube-hq.png?v=cutout3", className: "sil-orbit-item--cream", side: "right" as const },
+  { src: SKINCARE_LOTION_IMAGE, className: "sil-orbit-item--lotion", side: "left" as const },
+  { src: SKINCARE_CREAM_IMAGE, className: "sil-orbit-item--cream", side: "right" as const },
 ] as const;
 
 export const INDEX = [
@@ -199,7 +203,7 @@ export const BENEFITS: BenefitCard[] = [
   {
     id: "itch",
     title: "Itching, burning, and soreness",
-    line: "Persistent itch, burn, and soreness often drive clinic visits. Framing ALFURIN as calm, non-greasy daily care helps partners address comfort-led demand.",
+    line: "Persistent itch, burn, and soreness often drive clinic visits. Framing Alfurin as calm, non-greasy daily care helps partners address comfort-led demand.",
     year: "03",
     category: "Sensation",
     image: "/skincare/symptom-itch.png?v=symptoms",

@@ -1,6 +1,6 @@
 import Explore from "../homepage/Explore";
 import { TextParallaxContentExample } from "../production/TextParallaxContentExample";
-import PageProgress from "../Global/PageProgress";
+import PageProgress from "../components/PageProgress";
 import DevelopWithYou from "./DevelopWithYou";
 import HeroSection from "./HeroSection";
 import RdNarrative from "./RdNarrative";

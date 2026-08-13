@@ -11,19 +11,20 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import './App.css'
 
-import Navbar from './Global/Navbar'
-import NewFooter from './Global/NewFooter'
-import Breadcrumbs from './Global/Breadcrumbs'
-import ScrollToTop from './Global/ScrollToTop'
-import ScrollToTopButton from './Global/ScrollToTopButton'
-import Seo from './Global/Seo'
+import Navbar from './components/Navbar'
+import NewFooter from './components/NewFooter'
+import Breadcrumbs from './components/Breadcrumbs'
+import ScrollToTop from './components/ScrollToTop'
+import ScrollToTopButton from './components/ScrollToTopButton'
+import Seo from './components/Seo'
 /** Eager: first paint must not wait on a lazy chunk (Mac Safari often stuck on “Loading…”). */
 import Homepage from './homepage/Homepage'
 
 const Research = lazy(() => import('./research/Research'))
 const Production = lazy(() => import('./production/Production'))
 const Contact = lazy(() => import('./contact/Contact'))
-const GalleryPage = lazy(() => import('./gallery/GalleryPage'))
+// Gallery page disabled — see src/gallery/GalleryPage.tsx
+// const GalleryPage = lazy(() => import('./gallery/GalleryPage'))
 const HerbaceuticalPage = lazy(() => import('./herbaceutical/HerbaceuticalPage'))
 const NutraceuticalPage = lazy(() => import('./nutraceutical/NutraceuticalPage'))
 const OrganicPage = lazy(() => import('./organic/OrganicPage'))
@@ -124,7 +125,8 @@ function AppContent() {
             <Route path="/" element={<Homepage />} />
             <Route path="/research" element={<Research />} />
             <Route path="/production" element={<Production />} />
-            <Route path="/gallery" element={<GalleryPage />} />
+            {/* Gallery route disabled — /gallery returns no match (404) */}
+            {/* <Route path="/gallery" element={<GalleryPage />} /> */}
             <Route path="/contact" element={<Contact />} />
             <Route path="/herbaceutical" element={<HerbaceuticalPage />} />
             <Route path="/nutraceutical" element={<NutraceuticalPage />} />

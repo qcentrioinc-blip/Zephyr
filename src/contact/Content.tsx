@@ -7,8 +7,8 @@ import {
 } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { Home } from "lucide-react";
-import { H2, H3, P } from "../Global/Typography/Typo";
-import CelebrationBurst from "../Global/CelebrationBurst";
+import { H2, H3, P } from "../components/Typography/Typo";
+import CelebrationBurst from "../components/CelebrationBurst";
 import OtpVerifyModal from "./OtpVerifyModal";
 import {
   COMPANY_EMAIL_ERROR,
@@ -233,7 +233,7 @@ const Content = () => {
         }}
       />
       <img
-        src="/Production/production-hero-wide.webp"
+        src="/facility/production-hero-wide.webp"
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20"

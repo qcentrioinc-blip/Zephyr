@@ -7,9 +7,10 @@ import {
   type MouseEvent,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion, type TargetAndTransition, type Transition } from "framer-motion";
+import { ArrowRight, Leaf, Pill, Sprout, Droplet } from "lucide-react";
 import { PRODUCT_ACCORDION_ITEMS, type ProductAccordionItem } from "./productAccordionData";
+import { LetterStrip } from "../components/LetterStrip";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const DEFAULT_ACTIVE_ID = PRODUCT_ACCORDION_ITEMS[0].id;
@@ -37,6 +38,96 @@ type CardHandlers = {
   onViewMore: (item: ProductAccordionItem) => void;
 };
 
+const RANGE_ICONS: Record<string, { Icon: React.ElementType; animation: TargetAndTransition; transition: Transition }> = {
+  herbaceutical: {
+    Icon: Leaf,
+    animation: { rotate: [0, -8, 8, 0] },
+    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+  },
+  nutraceutical: {
+    Icon: Pill,
+    animation: { y: [0, -6, 0] },
+    transition: { duration: 2.6, repeat: Infinity, ease: "easeInOut" },
+  },
+  organic: {
+    Icon: Sprout,
+    animation: { scale: [1, 1.12, 1] },
+    transition: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+  },
+  skincare: {
+    Icon: Droplet,
+    animation: { scale: [1, 1.1, 1] },
+    transition: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
+  },
+};
+
+/** Industry-specific animated icon shown in inactive state */
+function RangeIcon({ id, color }: { id: string; color: string }) {
+  const config = RANGE_ICONS[id] ?? RANGE_ICONS.herbaceutical;
+  const { Icon, animation, transition } = config;
+  return (
+    <motion.div
+      className="accordion-icon-wrap"
+      animate={animation}
+      transition={transition}
+      style={{ color }}
+      aria-hidden
+    >
+      <Icon strokeWidth={1.5} className="accordion-icon-svg" />
+    </motion.div>
+  );
+}
+
+/** Subtle full-card video for inactive panels */
+function InactivePanelVideo({
+  src,
+  visible,
+  reduceMotion,
+}: {
+  src: string;
+  visible: boolean;
+  reduceMotion: boolean;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reduceMotion) return;
+
+    if (visible) {
+      void video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [visible, reduceMotion]);
+
+  if (reduceMotion) return null;
+
+  return (
+    <motion.div
+      className="product-accordion-card__video-wrap"
+      initial={false}
+      animate={{ opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.4, ease: EASE }}
+      aria-hidden
+    >
+      <video
+        ref={videoRef}
+        className="product-accordion-card__video"
+        src={src}
+        muted
+        autoPlay
+        loop
+        playsInline
+        preload="auto"
+        onLoadedData={(e) => {
+          if (visible) void e.currentTarget.play().catch(() => {});
+        }}
+      />
+    </motion.div>
+  );
+}
+
 function DesktopAccordionCard({
   item,
   active,
@@ -53,13 +144,31 @@ function DesktopAccordionCard({
   return (
     <article
       className={`product-accordion-card${active ? " is-active" : ""}`}
-      style={{ "--card-accent": item.color } as CSSProperties}
+      style={
+        {
+          "--card-accent": item.color,
+          "--card-bg": `url("${item.panelBg}")`,
+        } as CSSProperties
+      }
       onMouseEnter={onActivate}
       onFocus={onActivate}
       tabIndex={0}
       aria-label={`${item.title}: ${item.subtitle}`}
     >
+      <InactivePanelVideo
+        src={item.panelVideo}
+        visible={!active}
+        reduceMotion={reduceMotion}
+      />
       <div className="product-accordion-card__inner">
+        {/* Inactive: animated industry icon */}
+        {!active ? (
+          <div className="product-accordion-card__icon" aria-hidden>
+            <RangeIcon id={item.id} color={item.color} />
+          </div>
+        ) : null}
+
+        {/* Active: product photo */}
         <div className="product-accordion-card__media" aria-hidden={!active}>
           <motion.img
             src={item.image}
@@ -77,9 +186,35 @@ function DesktopAccordionCard({
         </div>
 
         <div className="product-accordion-card__content">
-          <span className="product-accordion-card__index">{item.index}</span>
-          <h2 className="product-accordion-card__title">{item.title}</h2>
-          <p className="product-accordion-card__subtitle">{item.subtitle}</p>
+          {/* Active: title + subtitle side-by-side, no number */}
+          {active ? (
+            <div className="product-accordion-card__heading product-accordion-card__heading--active">
+              <div className="product-accordion-card__heading-copy">
+                <LetterStrip
+                  key={`acc-active-${item.id}`}
+                  as="h2"
+                  text={item.title}
+                  variant="inherit"
+                  immediate
+                  className="product-accordion-card__title"
+                />
+                <p className="product-accordion-card__subtitle">{item.subtitle}</p>
+              </div>
+            </div>
+          ) : (
+            /* Inactive: title + subtitle stacked, no number */
+            <div className="product-accordion-card__heading">
+              <div className="product-accordion-card__heading-copy">
+                <LetterStrip
+                  as="h2"
+                  text={item.title}
+                  variant="inherit"
+                  className="product-accordion-card__title"
+                />
+                <p className="product-accordion-card__subtitle">{item.subtitle}</p>
+              </div>
+            </div>
+          )}
 
           <AnimatePresence initial={false}>
             {active ? (
@@ -121,8 +256,17 @@ export default function ProductAccordion() {
 
   useEffect(() => {
     PRODUCT_ACCORDION_ITEMS.forEach((item) => {
-      const img = new Image();
-      img.src = item.image;
+      const product = new Image();
+      product.src = item.image;
+      const bg = new Image();
+      bg.src = item.panelBg;
+    });
+
+    const uniqueVideos = [...new Set(PRODUCT_ACCORDION_ITEMS.map((item) => item.panelVideo))];
+    uniqueVideos.forEach((src) => {
+      const video = document.createElement("video");
+      video.preload = "auto";
+      video.src = src;
     });
   }, []);
 

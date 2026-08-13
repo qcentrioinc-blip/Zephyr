@@ -8,6 +8,8 @@ export type ProductAccordionItem = {
   description: string;
   color: string;
   image: string;
+  panelBg: string;
+  panelVideo: string;
   route: string;
   connectHref: string;
 };
@@ -23,7 +25,9 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     description:
       "Private label and contract manufacturing for botanical dietary supplements. From formula brief and MOQ planning to finished tablets, capsules, and specialty dosages.",
     color: "#FFA43D",
-    image: "/herbal.webp",
+    image: "/homepage/herbal.webp",
+    panelBg: "/backgrounds/bg1.png",
+    panelVideo: "/videos/herbal1-vid.mp4",
     route: "/herbaceutical",
     connectHref: `/contact?subject=${encodeURIComponent("MOQ inquiry - Herbaceutical")}`,
   },
@@ -37,7 +41,9 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     description:
       "Turnkey manufacturing for vitamins, minerals, and specialty dietary supplements with flexible dosage forms, finished goods packaging, and practical MOQ support.",
     color: "#247D7D",
-    image: "/nuetra.webp",
+    image: "/homepage/nuetra.webp",
+    panelBg: "/backgrounds/bg2.png",
+    panelVideo: "/videos/nuetra1-vid.mp4",
     route: "/nutraceutical",
     connectHref: `/contact?subject=${encodeURIComponent("MOQ inquiry - Nutraceutical")}`,
   },
@@ -51,7 +57,9 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     description:
       "Organic and clean-label supplement manufacturing for US markets. Private label support from early formulation through finished goods packaging and commercial production.",
     color: "#3FB369",
-    image: "/organic.webp",
+    image: "/homepage/organic.webp",
+    panelBg: "/backgrounds/bg3.png",
+    panelVideo: "/videos/organic1-vid.mp4",
     route: "/organic",
     connectHref: `/contact?subject=${encodeURIComponent("MOQ inquiry - Organic")}`,
   },
@@ -59,15 +67,17 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     id: "skincare",
     index: "04",
     title: "Skin care",
-    subtitle: "Psoriasis-prone skin. Zephyr manufacturing.",
+    subtitle: "Alfurin — Zephyr distribution",
     watermark: "SKIN CARE",
-    headline: "Clinical derm care for psoriasis-prone skin",
+    headline: "Alfurin — psoriasis-prone skincare",
     description:
-      "ALFURIN lotion and cream: a dual-action system for psoriasis-prone skin with barrier support, manufactured by Zephyr for US distribution, clinic, and private-label partners.",
+      "Alfurin lotion and cream: a dual-action system for psoriasis-prone skin with barrier support. Available through Zephyr for US distribution and clinic partners.",
     color: "#1F5F8B",
-    image: "/Skincare.png?v=user1",
+    image: "/homepage/skincare-main.png",
+    panelBg: "/backgrounds/bg4.png",
+    panelVideo: "/videos/skin-care-vid.mp4",
     route: "/skincare",
-    connectHref: `/contact?subject=${encodeURIComponent("ALFURIN range: manufacturing / MOQ")}`,
+    connectHref: `/contact?subject=${encodeURIComponent("Alfurin range: distribution / supply enquiry")}`,
   },
 ];
 

@@ -1,8 +1,10 @@
+// Gallery page disabled — route/nav commented out in App, Navbar, Footer, Seo, Breadcrumbs, sitemap.
+
 import { useCallback, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import Reveal from "../Global/Reveal";
-import { H1, H3, P } from "../Global/Typography/Typo";
+import Reveal from "../components/Reveal";
+import { H1, H3, P } from "../components/Typography/Typo";
 
 type GalleryCategory = "Factory Tour" | "Production Facility" | "Equipment";
 
@@ -22,8 +24,11 @@ type GalleryItem = {
   productShot?: boolean;
 };
 
-/** Images paired to facility / equipment content — facility photos vs pack format shots */
-const GALLERY: GalleryItem[] = [
+/** Gallery disabled — full tile list preserved in comment below for re-enable. */
+const GALLERY: GalleryItem[] = [];
+
+/*
+const GALLERY_DISABLED: GalleryItem[] = [
   {
     id: "end-to-end",
     src: "/Gallery/gallery-end-to-end-partner.webp",
@@ -34,7 +39,7 @@ const GALLERY: GalleryItem[] = [
   },
   {
     id: "rd-analytical",
-    src: "/Gallery/gallery-rd-analytical-labs.webp",
+    src: "/facility/gallery-rd-analytical-labs.webp",
     title: "R&D and analytical labs",
     category: "Equipment",
     caption: "HPLC, method development, and stability analytics before commercial scale-up.",
@@ -51,28 +56,28 @@ const GALLERY: GalleryItem[] = [
   // Factory Tour
   {
     id: "g1",
-    src: "/Gallery/Gallery1.png",
+    src: "/facility/gallery-1.png",
     title: "Controlled manufacturing bay",
     category: "Factory Tour",
     caption: "Climate-managed suites prepared for partner batch production runs.",
   },
   {
     id: "g5",
-    src: "/Gallery/Gallery5.png",
+    src: "/facility/gallery-5.png",
     title: "Quality-ready workspace",
     category: "Factory Tour",
     caption: "Documented workflows aligned to cGMP and partner audit expectations.",
   },
   {
     id: "exterior",
-    src: "/Production/ProductionsHeroRight.webp",
+    src: "/facility/productions-hero-right.webp",
     title: "Facility exterior & scale",
     category: "Factory Tour",
     caption: "65,000 sq ft manufacturing footprint in Karnataka, India.",
   },
   {
     id: "rd-lab",
-    src: "/Gallery/gallery-rd-lab.webp",
+    src: "/facility/gallery-rd-lab.webp",
     title: "Development laboratory",
     category: "Factory Tour",
     caption: "Pilot formulation suites bridging concept to commercial transfer.",
@@ -95,14 +100,14 @@ const GALLERY: GalleryItem[] = [
   // Production Facility
   {
     id: "long",
-    src: "/Gallery/LongGallery.png",
+    src: "/facility/long-gallery.png",
     title: "Production floor overview",
     category: "Production Facility",
     caption: "Clear circulation between compression, packaging, and quality zones.",
   },
   {
     id: "g3",
-    src: "/Gallery/Gallery3.png",
+    src: "/facility/gallery-3.png",
     title: "Packaging & finishing area",
     category: "Production Facility",
     caption: "Secondary packaging, labelling, and finished-goods staging.",
@@ -116,7 +121,7 @@ const GALLERY: GalleryItem[] = [
   },
   {
     id: "blister",
-    src: "/Homepage/production/blister.webp",
+    src: "/packaging/blister.webp",
     title: "Blister packaging lines",
     category: "Production Facility",
     caption: "Thermoform and cold-form blister formats for retail-ready packs.",
@@ -124,7 +129,7 @@ const GALLERY: GalleryItem[] = [
   },
   {
     id: "bottle",
-    src: "/Homepage/production/bottle.webp",
+    src: "/packaging/bottle.webp",
     title: "Bottle packing lines",
     category: "Production Facility",
     caption: "Liquids, syrups, and bottle finished goods with in-line checks.",
@@ -132,7 +137,7 @@ const GALLERY: GalleryItem[] = [
   },
   {
     id: "jar",
-    src: "/Homepage/production/jar.webp",
+    src: "/packaging/jar.webp",
     title: "Jar finishing & labelling",
     category: "Production Facility",
     caption: "Powders, gummies, and jarred formats through secondary packaging.",
@@ -141,21 +146,21 @@ const GALLERY: GalleryItem[] = [
   // Equipment
   {
     id: "g2",
-    src: "/Gallery/Gallery2.png",
+    src: "/facility/gallery-2.png",
     title: "High-speed compression line",
     category: "Equipment",
     caption: "Tablet compression with in-line weight and hardness monitoring.",
   },
   {
     id: "lab-bench",
-    src: "/Production/ProductionsHeroLeft.webp",
+    src: "/facility/productions-hero-left.webp",
     title: "Analytical laboratory",
     category: "Equipment",
     caption: "Bench-scale development and analytical method support.",
   },
   {
     id: "research-hero",
-    src: "/Research/research-hero.webp",
+    src: "/facility/research-hero.webp",
     title: "Analytical research hall",
     category: "Equipment",
     caption: "Method development and release testing for commercial batches.",
@@ -176,7 +181,7 @@ const GALLERY: GalleryItem[] = [
   },
   {
     id: "capsule",
-    src: "/Homepage/production/capsule.webp",
+    src: "/packaging/capsule.webp",
     title: "Capsule filling equipment",
     category: "Equipment",
     caption: "Hard-gel and specialty capsule formats on dedicated lines.",
@@ -184,13 +189,14 @@ const GALLERY: GalleryItem[] = [
   },
   {
     id: "tablet",
-    src: "/Homepage/production/tablet.webp",
+    src: "/packaging/tablet.webp",
     title: "Tablet compression formats",
     category: "Equipment",
     caption: "Multiple compression profiles for private-label tablet SKUs.",
     productShot: true,
   },
 ];
+*/
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const FEATURED = GALLERY.filter((i) => i.featured);

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 const content = {
   title: "Formulation depth. Audit-ready quality systems.",

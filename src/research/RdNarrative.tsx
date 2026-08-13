@@ -1,21 +1,21 @@
-import { H2, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H2, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 const pillars = [
   {
     title: "Concept to pilot",
     body: "Market-led concept formulas, supplier assessment, and lab refinement before you commit to a commercial batch.",
-    image: "/Research/Research1.png",
+    image: "/facility/research-1.png",
   },
   {
     title: "Validate with confidence",
     body: "In-house stability testing, analytical method development, and validation support help keep partner dossiers complete.",
-    image: "/Research/ResearchStats.png",
+    image: "/facility/research-stats.png",
   },
   {
     title: "Clear manufacturing transfer",
     body: "Development-led scale up, artwork support, and a dedicated regulatory team finalize product, process, and pack specs.",
-    image: "/Gallery/Gallery5.png",
+    image: "/facility/gallery-5.png",
   },
 ];
 

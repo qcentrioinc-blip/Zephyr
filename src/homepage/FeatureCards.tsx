@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { H3, P } from "../Global/Typography/Typo";
+import { H3, P } from "../components/Typography/Typo";
 
 type FeatureCard = {
   title: string;
@@ -119,7 +119,7 @@ function ShieldGif({ className = "" }: { className?: string }) {
 
 const FEATURE_CARDS: FeatureCard[] = [
   {
-    title: "CUSTOM FORMULATION SUPPORT",
+    title: "CUSTOM FORMULATION",
     description:
       "From concept to commercial scale, Zephyr develops herbaceuticals, nutraceuticals, and organic specialty tablets for US private-label and contract partners.",
     Icon: FlaskGif,

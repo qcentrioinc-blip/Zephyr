@@ -1,6 +1,7 @@
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import { openSkincareContact } from "./contactEvents";
+import { LetterStrip } from "../components/LetterStrip";
 
 type Props = { reduced: boolean; active: boolean };
 
@@ -40,22 +41,26 @@ export default function PinnedSystem({ reduced, active }: Props) {
             transition={{ duration: noMotion ? 0 : 0.7, ease: EASE }}
           >
             <div className="sil-sys-story">
-              <h2 className="sil-sys-story-title">Two products. One complete system.</h2>
+              <LetterStrip
+                as="h2"
+                text="Two products. One complete system."
+                className="sil-sys-story-title"
+              />
               <p className="sil-sys-story-body">
                 Formulated to work together for daily programs: lotion for large-area defence,
                 cream for intensive sites. The shared active story is Limonia acidissima extract
-                with S100 Protein Technology, manufactured by Zephyr for partners who need a clear
-                two-product range story.
+                with S100 Protein Technology. Alfurin is available through Zephyr distribution for
+                partners who need a clear two-product range story.
               </p>
             </div>
 
             <div className="sil-sys-cards">
               <article className="sil-sys-card">
-                <h3>Lotion</h3>
+                <LetterStrip as="h3" text="Lotion" />
                 <p>Daily defence and prevention for large areas.</p>
               </article>
               <article className="sil-sys-card">
-                <h3>Cream</h3>
+                <LetterStrip as="h3" text="Cream" />
                 <p>Intensive relief for plaques and overnight care.</p>
               </article>
             </div>
@@ -83,16 +88,10 @@ export default function PinnedSystem({ reduced, active }: Props) {
               ease: EASE,
             }}
           >
-            <video
+            <img
               className="sil-sys-video"
-              src="/skincare/dual-system.mp4?v=alfurin"
-              poster="/skincare/dual-system-poster.png?v=alfurin"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              aria-label="ALFURIN dual system film: lotion and cream"
+              src="/products/info-img-skincare.png"
+              alt="Alfurin dual system: lotion and cream"
             />
           </motion.div>
         </div>

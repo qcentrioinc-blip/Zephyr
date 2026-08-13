@@ -8,7 +8,7 @@ import PinnedProductCan from "./PinnedProductCan";
 import PinnedSystem from "./PinnedSystem";
 import ScienceSection from "./ScienceSection";
 import RitualSection from "./RitualSection";
-import Benefits from "./Benefits";
+// import Benefits from "./Benefits";
 import ProofBand from "./ProofBand";
 import CartFinale from "./CartFinale";
 import SkincareContact from "./SkincareContact";
@@ -87,7 +87,7 @@ export default function SkincarePage() {
 
         <PinnedSystem reduced={reduced} active={entered} />
         <ScienceSection reduced={reduced} active={entered} />
-        <Benefits reduced={reduced} active={entered} />
+        {/* <Benefits reduced={reduced} active={entered} /> */}
         <RitualSection reduced={reduced} active={entered} />
         <ProofBand reduced={reduced} active={entered} />
         <CartFinale reduced={reduced} active={entered} />

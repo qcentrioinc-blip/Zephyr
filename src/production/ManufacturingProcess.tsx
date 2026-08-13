@@ -1,5 +1,5 @@
-import { H2, H3, P } from "../Global/Typography/Typo";
-import Reveal from "../Global/Reveal";
+import { H2, H3, P } from "../components/Typography/Typo";
+import Reveal from "../components/Reveal";
 
 const steps = [
   {
@@ -12,7 +12,7 @@ const steps = [
     step: "02",
     title: "Wet & dry granulation",
     body: "Flexible granulation routes tuned to formula and dosage format.",
-    image: "/Gallery/Gallery2.png",
+    image: "/facility/gallery-2.png",
   },
   {
     step: "03",
@@ -24,13 +24,13 @@ const steps = [
     step: "04",
     title: "Film & sugar coating",
     body: "Coating capability for performance, stability and finished look.",
-    image: "/Gallery/Gallery3.png",
+    image: "/facility/gallery-3.png",
   },
   {
     step: "05",
     title: "Hard-gel capsule filling",
     body: "Beadlet and powder filling into hard-gel capsules at scale.",
-    image: "/Homepage/production/capsule.png",
+    image: "/packaging/capsule.webp",
   },
   {
     step: "06",
