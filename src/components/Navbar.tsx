@@ -400,7 +400,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full px-3 py-2 transition-[background-color,box-shadow] duration-300 ease-out sm:px-4 lg:px-4 ${
+      className={`fixed top-0 z-[100] w-full px-3 py-2 transition-[background-color,box-shadow] duration-300 ease-out sm:px-3 lg:px-3 xl:px-3 2xl:px-4 ${
         transparent
           ? 'bg-transparent shadow-none'
           : scrolled
@@ -408,7 +408,8 @@ const Navbar = () => {
             : 'bg-white shadow-none'
       }`}
     >
-      <div className="relative mx-auto flex max-w-[90rem] items-center justify-between gap-4">
+      {/* All screens: edge-to-edge with tight side padding */}
+      <div className="relative mx-auto flex w-full max-w-none items-center justify-between gap-4">
         <Link
           to="/"
           className="group/logo relative z-10 flex shrink-0 items-center px-2.5 py-1.5"
@@ -534,7 +535,7 @@ const Navbar = () => {
         />
       </div>
 
-      <div className="mx-auto max-w-[90rem]">
+      <div className="mx-auto w-full max-w-none">
         <MobileMenu
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}

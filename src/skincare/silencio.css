@@ -721,26 +721,42 @@ html.skincare-drawer-open body {
 }
 
 @media (max-width: 1399px) {
+  /* Static, normal-flow stage — full product content visible without viewport clip */
+  .sil-can-stage {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    align-items: flex-start;
+    padding: 2rem 1.25rem 2.5rem;
+  }
+
   .sil-can-grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     height: auto;
+    max-height: none;
     gap: 1.25rem;
   }
 
   .sil-can-visual {
     height: auto;
     max-height: none;
+    overflow: visible;
+  }
+
+  .sil-can-visual--cream {
+    transform: none;
   }
 
   .sil-can-img {
     max-width: min(100%, 300px);
-    max-height: min(42vh, 360px);
+    max-height: min(48vh, 380px);
   }
 
   .sil-can-label {
     height: auto;
     max-height: none;
+    overflow: visible;
   }
 
   .sil-nutrition td {

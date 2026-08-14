@@ -152,6 +152,7 @@ export default function PinnedProductCan({ product, reduced, active }: Props) {
               className="sil-can-img"
               draggable={false}
               decoding="async"
+              loading="lazy"
               width={360}
               height={690}
             />

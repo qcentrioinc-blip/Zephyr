@@ -23,7 +23,7 @@ const HeroSection: React.FC = () => {
     },
     {
       id: 3,
-      title: "Commercial transfer",
+      title: "Commercial",
       description: "Development-led transfer to full manufacturing",
     },
     {

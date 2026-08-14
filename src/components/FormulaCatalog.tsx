@@ -31,7 +31,6 @@ function FormulaCard({ item, category, enquireHref, onOpen }: FormulaCardProps) 
 
   return (
     <motion.article
-      layout
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -3 }}
@@ -40,7 +39,7 @@ function FormulaCard({ item, category, enquireHref, onOpen }: FormulaCardProps) 
       tabIndex={0}
       onClick={onOpen}
       onKeyDown={handleKeyDown}
-      className="group mx-auto flex h-full w-full max-w-[220px] cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="group mx-auto flex h-full w-full max-w-[220px] cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 [content-visibility:auto] [contain-intrinsic-size:auto_320px]"
       style={{ outlineColor: "var(--formula-accent, #113227)" }}
     >
       <div className="relative h-[160px] w-full sm:h-[190px] lg:h-[210px]">

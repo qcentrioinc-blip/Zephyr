@@ -9,32 +9,34 @@ import Explore from "./Explore";
 import FAQ from "./FAQ";
 import Reveal from "../components/Reveal";
 
+/**
+ * Eager sections so refresh-at-footer has full page height on first layout
+ * (avoids restore fighting lazy chunk mount).
+ */
 export default function Homepage() {
   return (
-    <div className="min-h-screen bg-white">
-      <main>
+    <main className="min-h-screen bg-white">
       <div className="block xl:hidden">
-  <MainSec />
-</div>
-        <ProductAccordion />
-        <JointPain />
-        <Reveal>
-          <FeaturesSection />
-        </Reveal>
-        <Showreel />
-        <Reveal>
-          <Table />
-        </Reveal>
-        <Reveal>
-          <ProductionShowcase />
-        </Reveal>
-        <Reveal>
-          <Explore />
-        </Reveal>
-        <Reveal>
-          <FAQ />
-        </Reveal>
-      </main>
-    </div>
+        <MainSec />
+      </div>
+      <ProductAccordion />
+      <JointPain />
+      <Reveal>
+        <FeaturesSection />
+      </Reveal>
+      <Showreel />
+      <Reveal>
+        <Table />
+      </Reveal>
+      <Reveal>
+        <ProductionShowcase />
+      </Reveal>
+      <Reveal>
+        <Explore />
+      </Reveal>
+      <Reveal>
+        <FAQ />
+      </Reveal>
+    </main>
   );
 }

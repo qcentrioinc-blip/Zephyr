@@ -17,13 +17,17 @@ export default function Table() {
           <div className="relative flex min-h-0 flex-col justify-between rounded-[14px] bg-[#F7F8F2] px-4 py-5 text-[#163925] shadow-[0_2px_10px_rgba(0,0,0,0.04)] sm:py-6 md:px-7 md:py-8 lg:min-h-[480px]">
             <H4 className="max-w-full md:p-2">
               5 billion tablets, 100 million capsules, 60 million sachets, and 1
-              million jars per month. Built for partners who need reliable scale
-              without compromising quality.
+              million jars per month. Capacity planned for private-label and
+              contract programs that need dependable throughput month after
+              month. Built for partners who need reliable scale without
+              compromising quality, documentation, or commercial release timing.
+              From early formulation through finished-goods packaging, programs
+              stay aligned to MOQ, dosage form, and market requirements.
             </H4>
 
             <div className="flex items-end justify-between gap-4 pt-4 md:pt-6">
               <div>
-                <H4 className="">Contract manufacturing partner</H4>
+                <H4 className="">Manufacturing partner</H4>
               </div>
 
               <img

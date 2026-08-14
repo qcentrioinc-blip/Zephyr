@@ -21,13 +21,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <!-- Warm hero decode on first visit (cuts first-scroll layout stutter on Mac). -->
     <link rel="preload" as="image" href="/homepage/herbal.webp" fetchpriority="high" />
     <link rel="preload" as="image" href="/brand/logo.png" />
     <title>Zephyr — CDMO & Private-Label Manufacturing Partner</title>
+    <script>
+      // Instant scroll restore: hide first paint if we have a saved offset for this path.
+      (function () {
+        try {
+          if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+          var y = Number(sessionStorage.getItem("zephyr:scroll:" + location.pathname) || "0");
+          if (y > 0) document.documentElement.classList.add("scroll-restore-pending");
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      html.scroll-restore-pending,
+      html.scroll-restore-pending body {
+        visibility: hidden;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

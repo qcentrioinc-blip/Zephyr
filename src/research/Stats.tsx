@@ -58,6 +58,8 @@ const Stats = () => {
                     src="/facility/research-stats.png"
                     alt="Zephyr manufacturing capability"
                     className="h-auto w-full object-contain shadow-md"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

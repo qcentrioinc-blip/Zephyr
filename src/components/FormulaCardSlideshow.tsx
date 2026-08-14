@@ -116,7 +116,7 @@ export default function FormulaCardSlideshow({
         aria-hidden={index !== 0}
         draggable={false}
         decoding="async"
-        loading="eager"
+        loading="lazy"
         className={`absolute inset-0 h-full w-full ${objectClass} ${
           index === 0 ? "opacity-100" : "opacity-0"
         }`}

@@ -32,8 +32,14 @@ export default function SkincarePage() {
     if (!entered) return;
 
     let cancelled = false;
+    let debounceTimer = 0;
+
     const refresh = () => {
-      if (!cancelled) ScrollTrigger.refresh();
+      if (cancelled) return;
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(() => {
+        if (!cancelled) ScrollTrigger.refresh();
+      }, 80);
     };
 
     const raf = window.requestAnimationFrame(refresh);
@@ -60,6 +66,7 @@ export default function SkincarePage() {
       cancelled = true;
       window.cancelAnimationFrame(raf);
       window.clearTimeout(t);
+      window.clearTimeout(debounceTimer);
       imgs.forEach((img) => {
         img.removeEventListener("load", onImg);
         img.removeEventListener("error", onImg);

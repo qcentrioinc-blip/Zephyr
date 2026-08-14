@@ -154,7 +154,13 @@ export default function StoreHero({ reduced, active }: Props) {
           {lotion ? (
             <article className="sil-land-card sil-land-card--lotion">
               <div className="sil-land-card-media">
-                <img src={lotion.image} alt={lotion.name} draggable={false} />
+                <img
+                  src={lotion.image}
+                  alt={lotion.name}
+                  draggable={false}
+                  decoding="async"
+                  fetchPriority="high"
+                />
               </div>
               <div className="sil-land-card-meta">
                 <LetterStrip as="h2" text={lotion.name} className="sil-land-card-name" />
@@ -164,7 +170,13 @@ export default function StoreHero({ reduced, active }: Props) {
           {cream ? (
             <article className="sil-land-card sil-land-card--cream">
               <div className="sil-land-card-media">
-                <img src={cream.image} alt={cream.name} draggable={false} />
+                <img
+                  src={cream.image}
+                  alt={cream.name}
+                  draggable={false}
+                  decoding="async"
+                  loading="lazy"
+                />
               </div>
               <div className="sil-land-card-meta">
                 <LetterStrip as="h2" text={cream.name} className="sil-land-card-name" />

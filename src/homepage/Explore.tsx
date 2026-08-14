@@ -114,21 +114,24 @@ function ExploreCard({
   pathKey,
   sizeClassName,
   insetClassName,
+  hoverFx = false,
 }: {
   item: ExploreItem;
   pathKey: string;
   sizeClassName: string;
   insetClassName: string;
+  /** Desktop-only: ring text spin + colored overlay reveal */
+  hoverFx?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const showFx = hoverFx && isHovered;
 
   return (
     <Link
       to={item.link}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setIsHovered(false)}
+      className={hoverFx ? "group" : undefined}
+      onMouseEnter={hoverFx ? () => setIsHovered(true) : undefined}
+      onMouseLeave={hoverFx ? () => setIsHovered(false) : undefined}
     >
       <div className={`relative rounded-full bg-white ${sizeClassName}`}>
         <CircularLabel
@@ -136,7 +139,7 @@ function ExploreCard({
           pathKey={pathKey}
           textColor={item.textColor}
           borderColor={item.borderColor}
-          rotated={isHovered}
+          rotated={showFx}
         />
 
         <div
@@ -145,11 +148,17 @@ function ExploreCard({
           <img
             src={item.image}
             alt={item.title}
-            className="h-[95%] w-[95%] bg-white object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+            loading="lazy"
+            decoding="async"
+            className={`h-[95%] w-[95%] bg-white object-contain transition-transform duration-500 ${
+              showFx ? "scale-[1.03]" : "scale-100"
+            }`}
           />
 
           <div
-            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center p-2 text-center transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [clip-path:inset(100%_0_0_0)] group-hover:[clip-path:inset(0%_0_0_0)] sm:p-3 md:p-4`}
+            className={`absolute inset-0 ${item.color} flex flex-col items-center justify-center p-2 text-center transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-3 md:p-4 ${
+              showFx ? "[clip-path:inset(0%_0_0_0)]" : "[clip-path:inset(100%_0_0_0)]"
+            }`}
           >
             <H3 className="mb-1 text-white !text-[11px] sm:!text-[13px] md:!text-[15px] lg:!text-[16px]" animate={false}>{item.title}</H3>
             <P className="text-white !text-[9px] sm:!text-[10px] md:!text-[11px] lg:!text-[12px]">{item.description}</P>
@@ -203,6 +212,7 @@ function DesktopGridLayout({ items }: { items: ExploreItem[] }) {
           pathKey={`desk-${item.title}`}
           sizeClassName="h-[230px] w-[230px] xl:h-[270px] xl:w-[270px]"
           insetClassName="inset-[36px] xl:inset-[42px]"
+          hoverFx={true}
         />
       ))}
     </div>

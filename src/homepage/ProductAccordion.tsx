@@ -78,7 +78,7 @@ function RangeIcon({ id, color }: { id: string; color: string }) {
   );
 }
 
-/** Subtle full-card video for inactive panels */
+/** Subtle full-card video for inactive panels — src loads only while inactive. */
 function InactivePanelVideo({
   src,
   visible,
@@ -89,17 +89,22 @@ function InactivePanelVideo({
   reduceMotion: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [activeSrc, setActiveSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!visible || reduceMotion) {
+      setActiveSrc(null);
+      videoRef.current?.pause();
+      return;
+    }
+    setActiveSrc(src);
+  }, [visible, reduceMotion, src]);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reduceMotion) return;
-
-    if (visible) {
-      void video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
-  }, [visible, reduceMotion]);
+    if (!video || !activeSrc || reduceMotion || !visible) return;
+    void video.play().catch(() => {});
+  }, [activeSrc, visible, reduceMotion]);
 
   if (reduceMotion) return null;
 
@@ -111,19 +116,21 @@ function InactivePanelVideo({
       transition={{ duration: 0.4, ease: EASE }}
       aria-hidden
     >
-      <video
-        ref={videoRef}
-        className="product-accordion-card__video"
-        src={src}
-        muted
-        autoPlay
-        loop
-        playsInline
-        preload="auto"
-        onLoadedData={(e) => {
-          if (visible) void e.currentTarget.play().catch(() => {});
-        }}
-      />
+      {activeSrc ? (
+        <video
+          ref={videoRef}
+          className="product-accordion-card__video"
+          src={activeSrc}
+          muted
+          autoPlay
+          loop
+          playsInline
+          preload="metadata"
+          onLoadedData={(e) => {
+            if (visible) void e.currentTarget.play().catch(() => {});
+          }}
+        />
+      ) : null}
     </motion.div>
   );
 }
@@ -255,19 +262,28 @@ export default function ProductAccordion() {
   }, [activeId]);
 
   useEffect(() => {
-    PRODUCT_ACCORDION_ITEMS.forEach((item) => {
-      const product = new Image();
-      product.src = item.image;
-      const bg = new Image();
-      bg.src = item.panelBg;
-    });
+    let cancelled = false;
+    const preloadImages = () => {
+      if (cancelled) return;
+      PRODUCT_ACCORDION_ITEMS.forEach((item, index) => {
+        window.setTimeout(() => {
+          if (cancelled) return;
+          const product = new Image();
+          product.src = item.image;
+          const bg = new Image();
+          bg.src = item.panelBg;
+        }, index * 120);
+      });
+    };
 
-    const uniqueVideos = [...new Set(PRODUCT_ACCORDION_ITEMS.map((item) => item.panelVideo))];
-    uniqueVideos.forEach((src) => {
-      const video = document.createElement("video");
-      video.preload = "auto";
-      video.src = src;
-    });
+    const ric = window.requestIdleCallback?.(preloadImages, { timeout: 2500 });
+    const t = ric == null ? window.setTimeout(preloadImages, 800) : undefined;
+
+    return () => {
+      cancelled = true;
+      if (ric != null) window.cancelIdleCallback?.(ric);
+      if (t != null) window.clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {

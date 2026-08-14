@@ -10,9 +10,10 @@ const JointPain = () => {
             <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
               <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
                 <img
-                  src="/facility/gallery-rd-lab.webp"
-                  alt="Development laboratory"
+                  src="/facility/jointpain-cdmo-lab.webp"
+                  alt="CDMO manufacturing laboratory"
                   loading="lazy"
+                  decoding="async"
                   width={320}
                   height={576}
                   className="h-full w-full object-cover"

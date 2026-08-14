@@ -79,6 +79,8 @@ export default function PartnerAdvantage() {
                 src="/facility/production-hero-wide.png"
                 alt="Zephyr manufacturing facility"
                 className="aspect-[4/5] h-full w-full object-cover sm:aspect-[5/6]"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </Reveal>

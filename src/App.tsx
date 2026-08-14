@@ -17,6 +17,8 @@ import Breadcrumbs from './components/Breadcrumbs'
 import ScrollToTop from './components/ScrollToTop'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import Seo from './components/Seo'
+import PageLoader from './components/PageLoader'
+import { hasSeenEntryGate, markEntryGateSeen } from './lib/entry-gate'
 /** Eager: first paint must not wait on a lazy chunk (Mac Safari often stuck on “Loading…”). */
 import Homepage from './homepage/Homepage'
 
@@ -60,7 +62,7 @@ function RouteReady({
   return <>{children}</>
 }
 
-function AppContent() {
+function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) {
   const { pathname } = useLocation()
   const hideFooter = pathname === '/contact' || pathname === '/skincare'
   const showCrumbs =
@@ -69,6 +71,7 @@ function AppContent() {
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
+      // Manual + session restore in ScrollToTop (avoids hero flash on refresh).
       window.history.scrollRestoration = 'manual'
     }
   }, [])
@@ -96,11 +99,13 @@ function AppContent() {
 
   const markReady = useCallback(() => {
     setContentReady(true)
-  }, [])
+    onBootReady(true)
+  }, [onBootReady])
 
   const markPending = useCallback(() => {
     setContentReady(false)
-  }, [])
+    onBootReady(false)
+  }, [onBootReady])
 
   return (
     <div className="relative min-h-[100dvh]">
@@ -142,10 +147,23 @@ function AppContent() {
 }
 
 function App() {
+  const [entered, setEntered] = useState(() => hasSeenEntryGate())
+  const [bootReady, setBootReady] = useState(false)
+  const showEntryGate = !entered
+
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <AppContent />
+        <AppContent onBootReady={setBootReady} />
+        {showEntryGate ? (
+          <PageLoader
+            ready={bootReady}
+            onEnter={() => {
+              markEntryGateSeen()
+              setEntered(true)
+            }}
+          />
+        ) : null}
       </BrowserRouter>
     </HelmetProvider>
   )
