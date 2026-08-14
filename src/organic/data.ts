@@ -1,3 +1,4 @@
+import { publicAssetSrc } from "@/lib/publicAssetSrc";
 import { ORGANIC_PRODUCT_IMAGES } from "./imageManifest";
 
 export interface FormulaItem {
@@ -34,7 +35,8 @@ interface RawCategory {
 }
 
 export function organicProductImage(folder: string, formula: string): string {
-  return ORGANIC_PRODUCT_IMAGES[`${folder}|${formula}`] ?? "";
+  const src = ORGANIC_PRODUCT_IMAGES[`${folder}|${formula}`] ?? "";
+  return src ? publicAssetSrc(src) : "";
 }
 
 function slugify(...parts: string[]): string {

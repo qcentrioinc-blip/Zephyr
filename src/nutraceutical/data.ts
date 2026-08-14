@@ -1,3 +1,4 @@
+import { publicAssetSrc } from "@/lib/publicAssetSrc";
 import { NUTRA_PRODUCT_IMAGES } from "./imageManifest";
 
 export interface FormulaItem {
@@ -34,7 +35,8 @@ interface RawCategory {
 }
 
 export function nutraProductImage(folder: string, formula: string): string {
-  return NUTRA_PRODUCT_IMAGES[`${folder}|${formula}`] ?? "";
+  const src = NUTRA_PRODUCT_IMAGES[`${folder}|${formula}`] ?? "";
+  return src ? publicAssetSrc(src) : "";
 }
 
 function slugify(...parts: string[]): string {

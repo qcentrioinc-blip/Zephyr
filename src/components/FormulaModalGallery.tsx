@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
+import { publicAssetSrc } from "@/lib/publicAssetSrc";
 import { buildFormulaSlides } from "./packagingSlides";
 
 const AUTOPLAY_MS = 3000;
@@ -30,9 +31,7 @@ export default function FormulaModalGallery({
 }: Props) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(
-    () => (gallery ?? buildFormulaSlides(bottleImage)).map((src) =>
-      src.includes("%") ? src : encodeURI(src),
-    ),
+    () => (gallery ?? buildFormulaSlides(bottleImage)).map(publicAssetSrc),
     [bottleImage, gallery],
   );
   const labels = useMemo(

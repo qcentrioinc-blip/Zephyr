@@ -7,17 +7,13 @@ import {
   type TouchEvent,
 } from "react";
 import { useReducedMotion } from "framer-motion";
+import { publicAssetSrc } from "@/lib/publicAssetSrc";
 import { buildFormulaSlides } from "./packagingSlides";
 
 const CYCLE_MS = 1500;
 const FADE_MS = 700;
 const HOVER_START_DELAY_MS = 280;
 const FADE_EASE = "cubic-bezier(0.25, 0.8, 0.35, 1)";
-
-function assetSrc(src: string) {
-  if (!src) return src;
-  return src.includes("%") ? src : encodeURI(src);
-}
 
 type FormulaCardSlideshowProps = {
   bottleImage: string;
@@ -43,7 +39,7 @@ export default function FormulaCardSlideshow({
 }: FormulaCardSlideshowProps) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(
-    () => buildFormulaSlides(bottleImage).map(assetSrc),
+    () => buildFormulaSlides(bottleImage).map(publicAssetSrc),
     [bottleImage],
   );
   const packaging = useMemo(() => slides.slice(1), [slides]);
