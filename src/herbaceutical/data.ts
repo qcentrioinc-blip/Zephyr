@@ -1,3 +1,5 @@
+import { HERB_PRODUCT_IMAGES } from "./imageManifest";
+
 export interface FormulaItem {
   id: string;
   formula: string;
@@ -31,6 +33,10 @@ interface RawCategory {
   formulas: RawFormula[];
 }
 
+export function herbProductImage(folder: string, formula: string): string {
+  return HERB_PRODUCT_IMAGES[`${folder}|${formula}`] ?? "";
+}
+
 function slugify(...parts: string[]): string {
   return parts
     .join("-")
@@ -39,15 +45,16 @@ function slugify(...parts: string[]): string {
     .replace(/^-|-$/g, "");
 }
 
-const IMG = "/homepage/2.png";
-const CATEGORY_IMAGE = IMG;
-const f = (formula: string): RawFormula => ({ formula, image: IMG });
+const f = (folder: string, formula: string): RawFormula => ({
+  formula,
+  image: herbProductImage(folder, formula),
+});
 
 function buildCategories(raw: RawCategory[]): FormulaCategory[] {
   return raw
     .map((cat) => ({
       name: cat.name,
-      categoryImage: CATEGORY_IMAGE,
+      categoryImage: cat.formulas.find((item) => item.image)?.image ?? "",
       formulas: cat.formulas.map((item, index) => ({
         id: slugify("herbaceutical", cat.name, String(index), item.formula.slice(0, 40)),
         formula: item.formula,
@@ -72,145 +79,145 @@ const rawCatalog: RawCategory[] = [
   {
     name: "Joint Care",
     formulas: [
-      f("Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod"),
-      f("Cat's Claw + Bromelain Extract + Ashwagandha Root"),
-      f("Rosehip Powder + Ginger + Curcumin + Maca Root"),
-      f("Guggul + Sea Buck Thorn + Schindra + Eucalyptus"),
-      f("Burdock Root + Moringa Leaf + Willow Bark + Curcumin"),
+      f("Joint care", "Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod"),
+      f("Joint care", "Cat's Claw + Bromelain Extract + Ashwagandha Root"),
+      f("Joint care", "Rosehip Powder + Ginger + Curcumin + Maca Root"),
+      f("Joint care", "Guggul + Sea Buck Thorn + Schindra + Eucalyptus"),
+      f("Joint care", "Burdock Root + Moringa Leaf + Willow Bark + Curcumin"),
     ],
   },
   {
     name: "Immunity Boosters",
     formulas: [
-      f("Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil"),
-      f("Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit"),
-      f("American Ginseng + Kalmegh + Echinacea Root + Spirulina"),
-      f("Curcumin + Moringa + Liquorice + Ashwagandha Root"),
+      f("Immunity booster", "Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil"),
+      f("Immunity booster", "Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit"),
+      f("Immunity booster", "American Ginseng + Kalmegh + Echinacea Root + Spirulina"),
+      f("Immunity booster", "Curcumin + Moringa + Liquorice + Ashwagandha Root"),
     ],
   },
   {
     name: "Hair, Skin & Nails",
     formulas: [
-      f("Manjistha Stem + Propolis + Avocado Fruit"),
-      f("Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry"),
-      f("Amla + Bhringraj + Brahmi + Grapeseed"),
-      f("Orange + Hibiscus + Gingko Biloba + Green Tea"),
+      f("Hair,skin , nails", "Manjistha Stem + Propolis + Avocado Fruit"),
+      f("Hair,skin , nails", "Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry"),
+      f("Hair,skin , nails", "Amla + Bhringraj + Brahmi + Grapeseed"),
+      f("Hair,skin , nails", "Orange + Hibiscus + Gingko Biloba + Green Tea"),
     ],
   },
   {
     name: "Anti-Oxidants",
     formulas: [
-      f("Elderberry + Green Tea + Beetroot"),
-      f("Pomegranate + Cranberry + Curcumin"),
-      f("Wheat Grass + Acai Berry + Raspberries + Papain"),
-      f("Spirulina + Tart Cherry + Bacopa Monnieri"),
+      f("Anti Oxidents", "Elderberry + Green Tea + Beetroot"),
+      f("Anti Oxidents", "Pomegranate + Cranberry + Curcumin"),
+      f("Anti Oxidents", "Wheat Grass + Acai Berry + Raspberries + Papain"),
+      f("Anti Oxidents", "Spirulina + Tart Cherry + Bacopa Monnieri"),
     ],
   },
   {
     name: "Kidney Health",
     formulas: [
-      f("Punarnava + Astragalus + Cranberry"),
-      f("Horse Tail Herb + Birch Leaf + Tulsi Ark"),
-      f("Manjistha + Amla + Fennel Seed + Celery"),
+      f("Kidney Health", "Punarnava + Astragalus + Cranberry"),
+      f("Kidney Health", "Horse Tail Herb + Birch Leaf + Tulsi Ark"),
+      f("Kidney Health", "Manjistha + Amla + Fennel Seed + Celery"),
     ],
   },
   {
     name: "Haematinic",
     formulas: [
-      f("Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc"),
-      f("Folic Acid + Vitamin B12 + Vitamin C"),
-      f("Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc"),
-      f("Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12"),
+      f("Haematinic", "Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc"),
+      f("Haematinic", "Folic Acid + Vitamin B12 + Vitamin C"),
+      f("Haematinic", "Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc"),
+      f("Haematinic", "Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12"),
     ],
   },
   {
     name: "Heart Health",
     formulas: [
-      f("Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark"),
-      f("Aronia Berry + Piperine + Maitake Mushroom"),
-      f("Arjuna + Guggul + Brahmi"),
-      f("Fenugreek Seed + Amla + Garlic Powder + Arjuna"),
+      f("Heart Health", "Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark"),
+      f("Heart Health", "Aronia Berry + Piperine + Maitake Mushroom"),
+      f("Heart Health", "Arjuna + Guggul + Brahmi"),
+      f("Heart Health", "Fenugreek Seed + Amla + Garlic Powder + Arjuna"),
     ],
   },
   {
     name: "Brain Health",
     formulas: [
-      f("Gingko Biloba + Bacopa Monnieri + Shankhpushpi"),
-      f("Rosemary Leaf + Gotu Kola + Curcumin + Vacha"),
-      f("Bacopa Monnieri + Rhodiola Rosea + Ginseng"),
+      f("Brain Health", "Gingko Biloba + Bacopa Monnieri + Shankhpushpi"),
+      f("Brain Health", "Rosemary Leaf + Gotu Kola + Curcumin + Vacha"),
+      f("Brain Health", "Bacopa Monnieri + Rhodiola Rosea + Ginseng"),
     ],
   },
   {
     name: "Female Fertility",
     formulas: [
-      f("Shatavari + Black Sesame Seed + Liquorice Root + Musta"),
-      f("Gokshuru + Holy Basil + Ashwagandha Root + Shalparni"),
-      f("Ashoka + Jeevanti + Punarnava + Guduchi"),
+      f("Female fertility", "Shatavari + Black Sesame Seed + Liquorice Root + Musta"),
+      f("Female fertility", "Gokshuru + Holy Basil + Ashwagandha Root + Shalparni"),
+      f("Female fertility", "Ashoka + Jeevanti + Punarnava + Guduchi"),
     ],
   },
   {
     name: "Male Fertility",
     formulas: [
-      f("Ashwagandha Root + Mucuna Pruriens + Safed Musli"),
-      f("Muira Puama + Gokhru + Shilajit"),
-      f("Shilajit + Ashwagandha Root + Ginseng"),
+      f("male fertility", "Ashwagandha Root + Mucuna Pruriens + Safed Musli"),
+      f("male fertility", "Muira Puama + Gokhru + Shilajit"),
+      f("male fertility", "Shilajit + Ashwagandha Root + Ginseng"),
     ],
   },
   {
     name: "Diabetic Care",
     formulas: [
-      f("Bitter Melon + Lucuma + Banaba Leaf"),
-      f("Chitrak Root + Fenugreek Seed + Olive Leaf"),
-      f("Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark"),
-      f("Gymnema Leaf + Bilberry"),
+      f("Diabetic care", "Bitter Melon + Lucuma + Banaba Leaf"),
+      f("Diabetic care", "Chitrak Root + Fenugreek Seed + Olive Leaf"),
+      f("Diabetic care", "Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark"),
+      f("Diabetic care", "Gymnema Leaf + Bilberry"),
     ],
   },
   {
     name: "Liver Health",
     formulas: [
-      f("Milk Thistle + Dandelion Root + Green Turmeric"),
-      f("Kutki + Schisandra Berry + Nigella Sativa"),
-      f("Milk Thistle + Artichoke Fruit + Myrobalan"),
+      f("Liver Health", "Milk Thistle + Dandelion Root + Green Turmeric"),
+      f("Liver Health", "Kutki + Schisandra Berry + Nigella Sativa"),
+      f("Liver Health", "Milk Thistle + Artichoke Fruit + Myrobalan"),
     ],
   },
   {
     name: "Menopause",
     formulas: [
-      f("Evening Primrose + Nettle Leaf + Valerian + Wild Yam"),
-      f("Flaxseed + Red Clover + Black Cohosh Root + Ginseng"),
-      f("Motherwort + Passion Flower + Valerian"),
+      f("Menopause", "Evening Primrose + Nettle Leaf + Valerian + Wild Yam"),
+      f("Menopause", "Flaxseed + Red Clover + Black Cohosh Root + Ginseng"),
+      f("Menopause", "Motherwort + Passion Flower + Valerian"),
     ],
   },
   {
     name: "Respiratory Health",
     formulas: [
-      f("Kalmegh + Curcumin + Astragalus"),
-      f("Ginger + Liquorice + Cardamom"),
-      f("Kalmegh + Pippali + Vasaka"),
+      f("Respiratory Health", "Kalmegh + Curcumin + Astragalus"),
+      f("Respiratory Health", "Ginger + Liquorice + Cardamom"),
+      f("Respiratory Health", "Kalmegh + Pippali + Vasaka"),
     ],
   },
   {
     name: "Vision",
     formulas: [
-      f("Goji Berry + Bilberry + Marigold + Carrot"),
-      f("Fennel Seed + Bay Berry + Spinach"),
+      f("Vision", "Goji Berry + Bilberry + Marigold + Carrot"),
+      f("Vision", "Fennel Seed + Bay Berry + Spinach"),
     ],
   },
   {
     name: "Digestive Health",
     formulas: [
-      f("Amla + Pippali + Ajwain"),
-      f("Isabgol"),
-      f("Ginger + Pudina + Fennel"),
-      f("Liquorice + Fennel + Ajwain"),
+      f("Digestive Health", "Amla + Pippali + Ajwain"),
+      f("Digestive Health", "Isabgol"),
+      f("Digestive Health", "Ginger + Pudina + Fennel"),
+      f("Digestive Health", "Liquorice + Fennel + Ajwain"),
     ],
   },
   {
     name: "Weight Management",
     formulas: [
-      f("Isabgol"),
-      f("Garcinia Cambogia"),
-      f("Green Tea + Garcinia Cambogia + Chitosan"),
+      f("Weight management", "Isabgol"),
+      f("Weight management", "Garcinia Cambogia"),
+      f("Weight management", "Green Tea + Garcinia Cambogia + Chitosan"),
     ],
   },
 ];

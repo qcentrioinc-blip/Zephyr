@@ -48,7 +48,7 @@ const ITEMS: ExploreItem[] = [
     title: "Skin Care",
     description:
       "Alfurin — psoriasis-prone skincare, Zephyr distribution.",
-    image: "/homepage/skincare-main.png",
+    image: "/skincare/dual-system-poster.svg",
     color: "bg-[#1F5F8B]",
     borderColor: "#1F5F8B",
     textColor: "#1F5F8B",

@@ -14,6 +14,11 @@ const FADE_MS = 700;
 const HOVER_START_DELAY_MS = 280;
 const FADE_EASE = "cubic-bezier(0.25, 0.8, 0.35, 1)";
 
+function assetSrc(src: string) {
+  if (!src) return src;
+  return src.includes("%") ? src : encodeURI(src);
+}
+
 type FormulaCardSlideshowProps = {
   bottleImage: string;
   alt?: string;
@@ -37,7 +42,10 @@ export default function FormulaCardSlideshow({
   imageFit = "cover",
 }: FormulaCardSlideshowProps) {
   const reduceMotion = Boolean(useReducedMotion());
-  const slides = useMemo(() => buildFormulaSlides(bottleImage), [bottleImage]);
+  const slides = useMemo(
+    () => buildFormulaSlides(bottleImage).map(assetSrc),
+    [bottleImage],
+  );
   const packaging = useMemo(() => slides.slice(1), [slides]);
   const [index, setIndex] = useState(0);
   const [hovering, setHovering] = useState(false);
@@ -50,6 +58,7 @@ export default function FormulaCardSlideshow({
     ? "opacity 0.15s ease"
     : `opacity ${FADE_MS}ms ${FADE_EASE}`;
   const objectClass = imageFit === "contain" ? "object-contain" : "object-cover";
+  const imagePad = imageFit === "contain" ? "p-2" : "";
 
   const clearCycle = () => {
     if (intervalRef.current) {
@@ -109,19 +118,21 @@ export default function FormulaCardSlideshow({
       onClick={onTapCycle}
       role="presentation"
     >
-      {/* Bottle always present */}
-      <img
-        src={slides[0]}
-        alt={index === 0 ? alt : ""}
-        aria-hidden={index !== 0}
-        draggable={false}
-        decoding="async"
-        loading="lazy"
-        className={`absolute inset-0 h-full w-full ${objectClass} ${
-          index === 0 ? "opacity-100" : "opacity-0"
-        }`}
-        style={{ transition: imageTransition }}
-      />
+      {slides[0] ? (
+        <img
+          src={slides[0]}
+          alt={index === 0 ? alt : ""}
+          aria-hidden={index !== 0}
+          draggable={false}
+          decoding="async"
+          loading="eager"
+          fetchPriority="high"
+          className={`absolute inset-0 h-full w-full ${objectClass} ${imagePad} ${
+            index === 0 ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ transition: imageTransition }}
+        />
+      ) : null}
 
       {/* Packaging mounts after first hover so cards stay light until needed */}
       {packReady &&
@@ -135,7 +146,7 @@ export default function FormulaCardSlideshow({
               aria-hidden={slideIndex !== index}
               draggable={false}
               decoding="async"
-              className={`absolute inset-0 h-full w-full ${objectClass} ${
+              className={`absolute inset-0 h-full w-full ${objectClass} py-3 ${
                 slideIndex === index ? "opacity-100" : "opacity-0"
               }`}
               style={{ transition: imageTransition }}

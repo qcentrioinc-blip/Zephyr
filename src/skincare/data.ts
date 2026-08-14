@@ -1,6 +1,6 @@
-export const SKINCARE_MAIN_IMAGE = "/homepage/skincare-main.png";
-export const SKINCARE_LOTION_IMAGE = "/products/lotion.png?v=white1";
-export const SKINCARE_CREAM_IMAGE = "/products/cream-tube-2.png";
+export const SKINCARE_MAIN_IMAGE = "/skincare/dual-system-poster.svg";
+export const SKINCARE_LOTION_IMAGE = "/skincare/cream-l.svg";
+export const SKINCARE_CREAM_IMAGE = "/skincare/cream-s.svg";
 
 export const CONTACT = {
   lotion: `/contact?subject=${encodeURIComponent("Alfurin Moisturizing Lotion: distribution enquiry")}`,
@@ -70,7 +70,7 @@ export const RITUAL_STEPS = [
     title: "Apply the Lotion",
     detail:
       "Pump two to three times and massage evenly into skin. Suited to morning use and large-area daily defence.",
-    image: "/skincare/ritual-lotion.png?v=alfurin",
+    image: "/skincare/ritual-lotion.svg",
     alt: "Alfurin Moisturizing Lotion pump bottle applied to psoriasis-prone skin",
   },
   {
@@ -79,7 +79,7 @@ export const RITUAL_STEPS = [
     title: "Apply the Cream",
     detail:
       "Use on thicker plaques or as overnight care for intensive sites. Position cream as the targeted follow-on SKU.",
-    image: "/skincare/ritual-cream.png?v=alfurin",
+    image: "/skincare/ritual-cream.svg",
     alt: "Alfurin cream tube with intensive care application on plaque-prone skin",
   },
 ] as const;

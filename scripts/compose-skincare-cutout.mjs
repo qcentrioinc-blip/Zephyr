@@ -146,7 +146,7 @@ const lotionCut = await (await cutBlackBg("public/skincare/lotion-bottle.png"))
   .resize({ height: 920, fit: "inside" })
   .png()
   .toBuffer();
-const creamCut = await (await cutBlackBg("public/skincare/cream-tube.png"))
+const creamCut = await (await cutBlackBg("public/skincare/cream-s.svg"))
   .resize({ height: 850, fit: "inside" })
   .png()
   .toBuffer();

@@ -17,11 +17,12 @@ type FormulaCardProps = {
   category: string;
   enquireHref: (formula: string, category: string) => string;
   onOpen: () => void;
+  imageFit?: "cover" | "contain";
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-function FormulaCard({ item, category, enquireHref, onOpen }: FormulaCardProps) {
+function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover" }: FormulaCardProps) {
   const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -39,11 +40,11 @@ function FormulaCard({ item, category, enquireHref, onOpen }: FormulaCardProps) 
       tabIndex={0}
       onClick={onOpen}
       onKeyDown={handleKeyDown}
-      className="group mx-auto flex h-full w-full max-w-[220px] cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 [content-visibility:auto] [contain-intrinsic-size:auto_320px]"
+      className="group mx-auto flex h-full w-full max-w-[220px] cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{ outlineColor: "var(--formula-accent, #113227)" }}
     >
       <div className="relative h-[160px] w-full sm:h-[190px] lg:h-[210px]">
-        <FormulaCardSlideshow bottleImage={item.image} alt="" />
+        <FormulaCardSlideshow bottleImage={item.image} alt="" imageFit={imageFit} />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-3">
@@ -454,6 +455,7 @@ export default function FormulaCatalog({
                                   item={item}
                                   category={category.name}
                                   enquireHref={enquireHref}
+                                  imageFit="contain"
                                   onOpen={() =>
                                     setSelected({
                                       item,

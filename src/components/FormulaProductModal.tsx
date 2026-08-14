@@ -106,7 +106,7 @@ export default function FormulaProductModal({
               <X className="h-4 w-4" />
             </button>
 
-            <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2">
+            <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2 lg:items-stretch">
               <FormulaModalGallery
                 bottleImage={item.image}
                 gallery={item.gallery}

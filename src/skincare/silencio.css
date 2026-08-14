@@ -303,8 +303,7 @@ html.skincare-drawer-open body {
   align-items: center;
   padding: 1.25rem 1.25rem 2.5rem;
   overflow: hidden;
-  background:
-    linear-gradient(165deg, #eef3f7 0%, #f7fafc 42%, #e8eef3 100%);
+  background: #ffffff;
   box-sizing: border-box;
 }
 
@@ -490,11 +489,11 @@ html.skincare-drawer-open body {
 /* â”€â”€â”€ Pinned product â”€â”€â”€ */
 .sil-can-section {
   position: relative;
-  background: var(--sil-bg);
+  background:rgb(242, 244, 247);
 }
 
 .sil-can-section:nth-of-type(even) {
-  background: var(--sil-bg-deep);
+  background:rgb(242, 244, 247);
 }
 
 .sil-can-stage {
@@ -591,8 +590,8 @@ html.skincare-drawer-open body {
 
 .sil-can-img {
   width: auto;
-  max-width: min(100%, 340px);
-  max-height: min(100%, calc(var(--sil-can-stage-h) - 5rem));
+  max-width: min(100%, 380px);
+  max-height: min(100%, calc(var(--sil-can-stage-h) - 3.25rem));
   height: auto;
   object-fit: contain;
   object-position: center;
@@ -609,8 +608,8 @@ html.skincare-drawer-open body {
 
 @media (min-width: 1400px) {
   .sil-can-img {
-    max-height: min(100%, calc(var(--sil-can-stage-h) - 5.5rem));
-    max-width: min(100%, 400px);
+    max-height: min(100%, calc(var(--sil-can-stage-h) - 3.5rem));
+    max-width: min(100%, 460px);
   }
 }
 
@@ -749,8 +748,8 @@ html.skincare-drawer-open body {
   }
 
   .sil-can-img {
-    max-width: min(100%, 300px);
-    max-height: min(48vh, 380px);
+    max-width: min(100%, 340px);
+    max-height: min(54vh, 440px);
   }
 
   .sil-can-label {
@@ -2501,13 +2500,13 @@ html.skincare-drawer-open body {
 
   .sil-can-img {
     width: auto;
-    max-width: min(100%, 220px);
-    max-height: min(30dvh, 250px);
+    max-width: min(100%, 250px);
+    max-height: min(36dvh, 300px);
   }
 
   .sil-can-visual {
     height: auto;
-    max-height: min(32dvh, 270px);
+    max-height: min(38dvh, 320px);
     flex: 0 0 auto;
   }
 

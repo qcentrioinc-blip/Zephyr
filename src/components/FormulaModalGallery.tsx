@@ -30,7 +30,9 @@ export default function FormulaModalGallery({
 }: Props) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(
-    () => gallery ?? buildFormulaSlides(bottleImage),
+    () => (gallery ?? buildFormulaSlides(bottleImage)).map((src) =>
+      src.includes("%") ? src : encodeURI(src),
+    ),
     [bottleImage, gallery],
   );
   const labels = useMemo(
@@ -82,22 +84,24 @@ export default function FormulaModalGallery({
 
   return (
     <div
-      className="relative flex h-full min-h-[220px] flex-col bg-[#f7f8f9] sm:min-h-[280px] lg:min-h-[360px]"
+      className="relative flex h-full min-h-[220px] flex-col bg-[#f7f8f9] sm:min-h-[280px] lg:min-h-0"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative flex flex-1 items-center justify-center p-6 sm:p-8">
-        {slides.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt={i === 0 ? alt : `${alt} — ${labels[i] ?? "packaging"}`}
-            className={`absolute max-h-[min(52vw,280px)] w-auto max-w-[85%] object-contain transition-opacity duration-500 lg:max-h-[320px] ${
-              i === index ? "opacity-100" : "pointer-events-none opacity-0"
-            }`}
-            draggable={false}
-          />
-        ))}
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-white">
+        {slides.map((src, i) =>
+          src ? (
+            <img
+              key={src}
+              src={src}
+              alt={i === 0 ? alt : `${alt} — ${labels[i] ?? "packaging"}`}
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
+                i === index ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
+              draggable={false}
+            />
+          ) : null,
+        )}
 
         {slides.length > 1 && (
           <>

@@ -1,5 +1,6 @@
 import { H2, H3, P } from "../components/Typography/Typo";
 import Reveal from "../components/Reveal";
+import { PACKAGING_IMAGES } from "../components/packagingSlides";
 
 const steps = [
   {
@@ -30,7 +31,7 @@ const steps = [
     step: "05",
     title: "Hard-gel capsule filling",
     body: "Beadlet and powder filling into hard-gel capsules at scale.",
-    image: "/packaging/capsule.webp",
+    image: PACKAGING_IMAGES.capsule,
   },
   {
     step: "06",

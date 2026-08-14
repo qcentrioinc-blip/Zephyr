@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 // import { ArrowRight } from "lucide-react";
 import { H2, H3, P } from "../components/Typography/Typo";
+import { PACKAGING_IMAGES } from "../components/packagingSlides";
 
 type ShowcaseItem = {
   name: string;
@@ -9,21 +10,21 @@ type ShowcaseItem = {
 };
 
 const dosageFormats: ShowcaseItem[] = [
-  { name: "Tablets", image: "/packaging/tablet.webp" },
-  { name: "Capsules", image: "/packaging/capsule.webp" },
-  { name: "Powders", image: "/packaging/powder.webp" },
-  { name: "Gummies", image: "/packaging/gummy.webp" },
-  { name: "Jelly", image: "/packaging/jelly.webp" },
+  { name: "Tablets", image: PACKAGING_IMAGES.tablet },
+  { name: "Capsules", image: PACKAGING_IMAGES.capsule },
+  { name: "Powders", image: PACKAGING_IMAGES.powder },
+  { name: "Gummies", image: PACKAGING_IMAGES.gummy },
+  { name: "Jelly", image: PACKAGING_IMAGES.jelly },
 ];
 
 const packagingOptions: ShowcaseItem[] = [
-  { name: "Jars", image: "/packaging/jar.webp" },
-  { name: "Sachets", image: "/packaging/pack-sachet.webp" },
-  { name: "Blister", image: "/packaging/blister.webp" },
-  { name: "Bulk Packs", image: "/packaging/bulk.webp" },
-  { name: "Bottle Packs", image: "/packaging/bottle.webp" },
-  { name: "Alu Alu", image: "/packaging/alu-alu.webp" },
-  { name: "Stick Packs", image: "/packaging/stick-pack.webp" },
+  { name: "Jars", image: PACKAGING_IMAGES.jar },
+  { name: "Sachets", image: PACKAGING_IMAGES.sachets },
+  { name: "Blister", image: PACKAGING_IMAGES.blisters },
+  { name: "Bulk Packs", image: PACKAGING_IMAGES.bulkPacks },
+  { name: "Bottle Packs", image: PACKAGING_IMAGES.bottlePacks },
+  { name: "Alu Alu", image: PACKAGING_IMAGES.aluAlu },
+  { name: "Stick Packs", image: PACKAGING_IMAGES.stickPack },
 ];
 
 function MarqueeRow({

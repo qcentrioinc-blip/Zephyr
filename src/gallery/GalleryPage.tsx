@@ -121,7 +121,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
   },
   {
     id: "blister",
-    src: "/packaging/blister.webp",
+    src: "/packaging/Blisters.jpg",
     title: "Blister packaging lines",
     category: "Production Facility",
     caption: "Thermoform and cold-form blister formats for retail-ready packs.",
@@ -129,7 +129,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
   },
   {
     id: "bottle",
-    src: "/packaging/bottle.webp",
+    src: "/packaging/Bottle%20packs.jpg",
     title: "Bottle packing lines",
     category: "Production Facility",
     caption: "Liquids, syrups, and bottle finished goods with in-line checks.",
@@ -137,7 +137,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
   },
   {
     id: "jar",
-    src: "/packaging/jar.webp",
+    src: "/packaging/jar.jpg",
     title: "Jar finishing & labelling",
     category: "Production Facility",
     caption: "Powders, gummies, and jarred formats through secondary packaging.",
