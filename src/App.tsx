@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
-import { HelmetProvider } from 'react-helmet-async'
+import { HelmetProvider, Helmet } from 'react-helmet-async'
 import './App.css'
 
 import Navbar from './components/Navbar'
@@ -19,6 +19,7 @@ import ScrollToTopButton from './components/ScrollToTopButton'
 import Seo from './components/Seo'
 import PageLoader from './components/PageLoader'
 import { hasSeenEntryGate, markEntryGateSeen } from './lib/entry-gate'
+import { SITE_LOCKDOWN } from './lib/site-lockdown'
 /** Eager: first paint must not wait on a lazy chunk (Mac Safari often stuck on “Loading…”). */
 import Homepage from './homepage/Homepage'
 
@@ -146,25 +147,42 @@ function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) 
   )
 }
 
-function App() {
+function NormalApp() {
   const [entered, setEntered] = useState(() => hasSeenEntryGate())
   const [bootReady, setBootReady] = useState(false)
   const showEntryGate = !entered
 
   return (
+    <BrowserRouter>
+      <AppContent onBootReady={setBootReady} />
+      {showEntryGate ? (
+        <PageLoader
+          ready={bootReady}
+          onEnter={() => {
+            markEntryGateSeen()
+            setEntered(true)
+          }}
+        />
+      ) : null}
+    </BrowserRouter>
+  )
+}
+
+function App() {
+  if (SITE_LOCKDOWN) {
+    return (
+      <HelmetProvider>
+        <Helmet>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <PageLoader ready locked />
+      </HelmetProvider>
+    )
+  }
+
+  return (
     <HelmetProvider>
-      <BrowserRouter>
-        <AppContent onBootReady={setBootReady} />
-        {showEntryGate ? (
-          <PageLoader
-            ready={bootReady}
-            onEnter={() => {
-              markEntryGateSeen()
-              setEntered(true)
-            }}
-          />
-        ) : null}
-      </BrowserRouter>
+      <NormalApp />
     </HelmetProvider>
   )
 }

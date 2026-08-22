@@ -105,7 +105,7 @@ const DockNavItem = ({
   const y = useSpring(liftRaw, { mass: 0.15, stiffness: 420, damping: 32 });
 
   const linkClassName = `
-              relative z-10 flex items-center gap-1 px-3 xl:px-5 py-2.5 rounded-full text-[13px] xl:text-[14.5px]
+              relative z-10 flex items-center gap-1 px-3 xl:px-5 py-1.5 rounded-full text-[13px] xl:text-[14.5px]
               font-medium whitespace-nowrap transition-colors duration-300 ease-out
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2
               ${isActive ? 'text-white font-semibold' : 'text-[#4A4B4F] hover:text-black'}
@@ -394,25 +394,27 @@ const Navbar = () => {
 
   const isProductsActive = PRODUCT_LINKS.some((p) => p.path === location.pathname);
   const isHome = location.pathname === '/';
-  const transparent = isHome && !scrolled;
+  const glassy = isHome && !scrolled;
   // Freeze dock magnification while the menu is open — prevents Safari click misses.
   const dockEnabled = !isProductsOpen;
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full px-3 py-2 transition-[background-color,box-shadow] duration-300 ease-out sm:px-3 lg:px-3 xl:px-3 2xl:px-4 ${
-        transparent
-          ? 'bg-transparent shadow-none'
+      className={`fixed top-0 z-[100] w-full px-3 py-1 transition-[background-color,box-shadow] duration-300 ease-out sm:px-3 lg:px-3 xl:px-3 2xl:px-4 ${
+        glassy
+          ? 'zephyr-nav--glassy bg-transparent shadow-none'
           : scrolled
             ? 'bg-white shadow-[0_1px_20px_rgba(0,0,0,0.06)]'
             : 'bg-white shadow-none'
       }`}
     >
+      {/* Sibling layer (not an ancestor of the dropdown) so Safari hit-testing stays intact */}
+      <span className="zephyr-nav-glass" aria-hidden />
       {/* All screens: edge-to-edge with tight side padding */}
-      <div className="relative mx-auto flex w-full max-w-none items-center justify-between gap-4">
+      <div className="relative z-10 mx-auto flex w-full max-w-none items-center justify-between gap-4 xl:gap-8">
         <Link
           to="/"
-          className="group/logo relative z-10 flex shrink-0 items-center px-2.5 py-1.5"
+          className="relative z-10 flex shrink-0 items-center px-2 py-1"
           aria-label="Zephyr home"
         >
           <span
@@ -420,20 +422,11 @@ const Navbar = () => {
             className="pointer-events-none absolute inset-0 -z-0 overflow-hidden rounded-full"
           >
             <span className="absolute inset-[1px] rounded-full bg-white shadow-[0_1px_10px_rgba(17,50,39,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#11BB8A]/25" />
-            <span
-              className={`absolute -inset-0.5 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(17,187,138,0.16)_0%,transparent_68%)] ${
-                reduceMotion ? '' : 'zephyr-logo-capsule-pulse'
-              }`}
-            />
-            {!reduceMotion && (
-              <span className="zephyr-logo-capsule-sheen absolute inset-0 rounded-full" />
-            )}
           </span>
-          <motion.img
+          <img
             src="/brand/logo.png"
             alt="Zephyr Logo"
-            transition={{ duration: 0.25, ease: EASE_PREMIUM }}
-            className="relative z-10 h-11 w-auto object-contain sm:h-12 md:h-14"
+            className="relative z-10 h-10 w-auto object-contain sm:h-11 md:h-12"
           />
         </Link>
 
@@ -448,9 +441,9 @@ const Navbar = () => {
             mouseX.set(Infinity);
             scheduleCloseProductsDropdown();
           }}
-          className={`relative hidden xl:flex items-center rounded-full px-1.5 py-1 transition-colors duration-300 ${
-            transparent
-              ? 'bg-white/90 shadow-sm'
+          className={`relative hidden xl:flex items-center rounded-full px-1 py-0.5 transition-colors duration-300 ${
+            glassy
+              ? 'bg-white/70 shadow-sm ring-1 ring-white/60'
               : 'bg-[#F1F3F4] shadow-sm'
           }`}
         >

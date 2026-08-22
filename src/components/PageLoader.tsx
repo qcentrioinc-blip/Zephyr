@@ -15,10 +15,12 @@ const ROTATING_TEXTS = [
 
 type PageLoaderProps = {
   ready: boolean;
-  onEnter: () => void;
+  onEnter?: () => void;
+  /** Site lockdown: show gate only, no click-through. */
+  locked?: boolean;
 };
 
-export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
+export default function PageLoader({ ready, onEnter, locked = false }: PageLoaderProps) {
   const reduced = Boolean(useReducedMotion());
   const enteredRef = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -54,15 +56,15 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
   }, []);
 
   useEffect(() => {
-    if (!ready) return;
+    if (locked || !ready) return;
     const elapsed = Date.now() - mountedAt.current;
     const wait = Math.max(0, MIN_LOADER_MS - elapsed);
     const t = window.setTimeout(() => setCanEnter(true), wait);
     return () => window.clearTimeout(t);
-  }, [ready]);
+  }, [locked, ready]);
 
   useEffect(() => {
-    if (!canEnter) return;
+    if (locked || !canEnter) return;
 
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     const setFromPoint = (x: number, y: number) => setCursor({ x, y });
@@ -86,18 +88,18 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       window.removeEventListener("mousemove", onMouse);
       window.removeEventListener("touchmove", onTouch);
     };
-  }, [canEnter]);
+  }, [canEnter, locked]);
 
   const enter = useCallback(() => {
-    if (!canEnter || enteredRef.current) return;
+    if (locked || !canEnter || enteredRef.current || !onEnter) return;
     enteredRef.current = true;
     setExiting(true);
     document.body.style.overflow = "";
     window.setTimeout(onEnter, reduced ? 120 : 420);
-  }, [canEnter, onEnter, reduced]);
+  }, [canEnter, locked, onEnter, reduced]);
 
   useEffect(() => {
-    if (!canEnter) return;
+    if (locked || !canEnter) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -106,23 +108,25 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [canEnter, enter]);
+  }, [canEnter, enter, locked]);
+
+  const interactive = !locked && canEnter;
 
   return createPortal(
     <div
-      className={`zephyr-page-loader${canEnter ? " is-ready" : ""}${exiting ? " zephyr-page-loader--exit" : ""}`}
-      onClick={canEnter ? enter : undefined}
+      className={`zephyr-page-loader${interactive ? " is-ready" : ""}${exiting ? " zephyr-page-loader--exit" : ""}`}
+      onClick={interactive ? enter : undefined}
       onKeyDown={(e) => {
-        if (!canEnter) return;
+        if (!interactive) return;
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           enter();
         }
       }}
-      role={canEnter ? "button" : undefined}
-      tabIndex={canEnter ? 0 : -1}
-      aria-busy={!canEnter}
-      aria-label={canEnter ? "Click to enter Zephyr" : undefined}
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : -1}
+      aria-busy={!ready}
+      aria-label={interactive ? "Click to enter Zephyr" : undefined}
     >
       <div className="zephyr-page-loader__media" aria-hidden>
         <video
@@ -178,7 +182,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
         </p>
       </div>
 
-      {canEnter ? (
+      {interactive ? (
         <div
           className="zephyr-page-loader__enter-circle-wrap"
           aria-hidden
