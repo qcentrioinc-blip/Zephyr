@@ -104,6 +104,16 @@ html.scroll-restore-pending .zephyr-page-loader {
   color: rgba(255, 255, 255, 0.78);
 }
 
+.zephyr-page-loader--locked {
+  background: #ffffff;
+  cursor: default;
+}
+
+.zephyr-page-loader__logo--solo {
+  margin-bottom: 0;
+  height: clamp(5rem, 14vw, 8rem);
+}
+
 .zephyr-page-loader__enter-circle-wrap {
   position: fixed;
   top: 0;

@@ -20,7 +20,29 @@ type PageLoaderProps = {
   locked?: boolean;
 };
 
-export default function PageLoader({ ready, onEnter, locked = false }: PageLoaderProps) {
+function LockedPageLoader() {
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  return createPortal(
+    <div className="zephyr-page-loader zephyr-page-loader--locked">
+      <img
+        src="/brand/logo.png"
+        alt="Zephyr"
+        className="zephyr-page-loader__logo zephyr-page-loader__logo--solo"
+        draggable={false}
+      />
+    </div>,
+    document.body,
+  );
+}
+
+function EntryPageLoader({ ready, onEnter }: { ready: boolean; onEnter?: () => void }) {
   const reduced = Boolean(useReducedMotion());
   const enteredRef = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -56,15 +78,15 @@ export default function PageLoader({ ready, onEnter, locked = false }: PageLoade
   }, []);
 
   useEffect(() => {
-    if (locked || !ready) return;
+    if (!ready) return;
     const elapsed = Date.now() - mountedAt.current;
     const wait = Math.max(0, MIN_LOADER_MS - elapsed);
     const t = window.setTimeout(() => setCanEnter(true), wait);
     return () => window.clearTimeout(t);
-  }, [locked, ready]);
+  }, [ready]);
 
   useEffect(() => {
-    if (locked || !canEnter) return;
+    if (!canEnter) return;
 
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     const setFromPoint = (x: number, y: number) => setCursor({ x, y });
@@ -88,18 +110,18 @@ export default function PageLoader({ ready, onEnter, locked = false }: PageLoade
       window.removeEventListener("mousemove", onMouse);
       window.removeEventListener("touchmove", onTouch);
     };
-  }, [canEnter, locked]);
+  }, [canEnter]);
 
   const enter = useCallback(() => {
-    if (locked || !canEnter || enteredRef.current || !onEnter) return;
+    if (!canEnter || enteredRef.current || !onEnter) return;
     enteredRef.current = true;
     setExiting(true);
     document.body.style.overflow = "";
     window.setTimeout(onEnter, reduced ? 120 : 420);
-  }, [canEnter, locked, onEnter, reduced]);
+  }, [canEnter, onEnter, reduced]);
 
   useEffect(() => {
-    if (locked || !canEnter) return;
+    if (!canEnter) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -108,25 +130,23 @@ export default function PageLoader({ ready, onEnter, locked = false }: PageLoade
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [canEnter, enter, locked]);
-
-  const interactive = !locked && canEnter;
+  }, [canEnter, enter]);
 
   return createPortal(
     <div
-      className={`zephyr-page-loader${interactive ? " is-ready" : ""}${exiting ? " zephyr-page-loader--exit" : ""}`}
-      onClick={interactive ? enter : undefined}
+      className={`zephyr-page-loader${canEnter ? " is-ready" : ""}${exiting ? " zephyr-page-loader--exit" : ""}`}
+      onClick={canEnter ? enter : undefined}
       onKeyDown={(e) => {
-        if (!interactive) return;
+        if (!canEnter) return;
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           enter();
         }
       }}
-      role={interactive ? "button" : undefined}
-      tabIndex={interactive ? 0 : -1}
+      role={canEnter ? "button" : undefined}
+      tabIndex={canEnter ? 0 : -1}
       aria-busy={!ready}
-      aria-label={interactive ? "Click to enter Zephyr" : undefined}
+      aria-label={canEnter ? "Click to enter Zephyr" : undefined}
     >
       <div className="zephyr-page-loader__media" aria-hidden>
         <video
@@ -182,7 +202,7 @@ export default function PageLoader({ ready, onEnter, locked = false }: PageLoade
         </p>
       </div>
 
-      {interactive ? (
+      {canEnter ? (
         <div
           className="zephyr-page-loader__enter-circle-wrap"
           aria-hidden
@@ -207,4 +227,9 @@ export default function PageLoader({ ready, onEnter, locked = false }: PageLoade
     </div>,
     document.body,
   );
+}
+
+export default function PageLoader({ ready, onEnter, locked = false }: PageLoaderProps) {
+  if (locked) return <LockedPageLoader />;
+  return <EntryPageLoader ready={ready} onEnter={onEnter} />;
 }
