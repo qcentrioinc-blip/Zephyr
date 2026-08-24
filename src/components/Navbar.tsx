@@ -396,7 +396,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full px-3 py-1 transition-[background-color,box-shadow] duration-300 ease-out sm:px-3 lg:px-3 xl:px-3 2xl:px-4 ${
+      className={`fixed top-0 z-[100] w-full py-1 transition-[background-color,box-shadow] duration-300 ease-out ${
         glassy
           ? 'zephyr-nav--glassy bg-transparent shadow-none'
           : scrolled
@@ -407,7 +407,7 @@ const Navbar = () => {
       {/* Sibling layer (not an ancestor of the dropdown) so Safari hit-testing stays intact */}
       <span className="zephyr-nav-glass" aria-hidden />
       {/* All screens: edge-to-edge with tight side padding */}
-      <div className="relative z-10 mx-auto flex w-full max-w-none items-center justify-between gap-4 xl:gap-8">
+      <div className="zephyr-container relative z-10 flex w-full items-center justify-between gap-4 xl:gap-8">
         <Link
           to="/"
           className="relative z-10 flex shrink-0 items-center px-2 py-1"
@@ -522,7 +522,7 @@ const Navbar = () => {
         />
       </div>
 
-      <div className="mx-auto w-full max-w-none">
+      <div className="zephyr-container mx-auto w-full">
         <MobileMenu
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}

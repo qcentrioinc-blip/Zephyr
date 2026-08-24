@@ -11,10 +11,11 @@ import { AnimatePresence, motion, useReducedMotion, type TargetAndTransition, ty
 import { ArrowRight, Leaf, Pill, Sprout } from "lucide-react";
 import { PRODUCT_ACCORDION_ITEMS, type ProductAccordionItem } from "./productAccordionData";
 import { LetterStrip } from "../components/LetterStrip";
+import { HERO_DESKTOP_MIN_PX } from "./heroBreakpoints";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const DEFAULT_ACTIVE_ID = PRODUCT_ACCORDION_ITEMS[0].id;
-const DESKTOP_MIN = 1400;
+const DESKTOP_MIN = HERO_DESKTOP_MIN_PX;
 const DESKTOP_AUTOPLAY_DELAY = 3000;
 
 function useMediaQuery(query: string) {
@@ -243,7 +244,7 @@ function DesktopAccordionCard({
   );
 }
 
-/** Desktop (≥1400px) product accordion. Mobile/tablet/iPad Pro use MainSec as the hero. */
+/** Desktop (≥1200px) product accordion. Below that, MainSec is the hero. */
 export default function ProductAccordion() {
   const navigate = useNavigate();
   const reduceMotion = Boolean(useReducedMotion());
@@ -308,8 +309,9 @@ export default function ProductAccordion() {
       className="product-accordion-section product-accordion-section--desktop"
       aria-label="Product ranges"
     >
-      <div
-        className="product-accordion-row"
+      <div className="product-accordion-shell">
+        <div
+          className="product-accordion-row"
         onMouseEnter={() => setDesktopPaused(true)}
         onMouseLeave={() => setDesktopPaused(false)}
         onFocus={() => setDesktopPaused(true)}
@@ -328,6 +330,7 @@ export default function ProductAccordion() {
             onViewMore={handleViewMore}
           />
         ))}
+        </div>
       </div>
     </section>
   );

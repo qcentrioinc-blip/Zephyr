@@ -620,19 +620,89 @@ img {
   box-sizing: border-box;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1200px) {
   /* Accordion starts flush under the navbar. The top padding equals nav height so
      the sage wash sits behind the glass bar, with no card overlap and no gap. */
   .product-accordion-section--desktop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 0;
     height: 100dvh;
     min-height: 100dvh;
     max-height: 100dvh;
-    padding: calc(var(--zephyr-nav-h) + 10px) 1.25rem 1.1rem;
+    padding: calc(var(--zephyr-nav-h) + 10px) 1rem 1.1rem;
     background:
       radial-gradient(90% 70% at 12% 0%, rgba(255, 164, 61, 0.35) 0%, transparent 46%),
       radial-gradient(80% 60% at 88% 0%, rgba(74, 163, 167, 0.28) 0%, transparent 48%),
       linear-gradient(180deg, #16352f 0%, #2a5349 32%, #e7ece9 72%, #f4f5f7 100%);
+  }
+}
+
+@media (min-width: 640px) {
+  .product-accordion-section--desktop {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-accordion-section--desktop {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1200px) and (min-height: 860px) {
+  .product-accordion-section--desktop {
+    justify-content: center;
+  }
+}
+
+.product-accordion-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 80rem;
+  height: 100%;
+  min-height: 0;
+  margin-inline: auto;
+}
+
+@media (min-width: 1200px) {
+  .product-accordion-shell {
+    max-height: min(calc(100dvh - var(--zephyr-nav-h) - 1.75rem), 820px);
+  }
+}
+
+/* Slightly tighter inactive type in the zoom / mid-desktop band so 3 panels stay readable */
+@media (min-width: 1200px) and (max-width: 1535px) {
+  .product-accordion-card:not(.is-active) .product-accordion-card__title {
+    font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  }
+
+  .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
+    font-size: 0.86rem;
+    max-width: 14ch;
+  }
+
+  .product-accordion-card:not(.is-active) .accordion-icon-wrap {
+    width: 60px;
+    height: 60px;
+  }
+
+  .product-accordion-card:not(.is-active) .accordion-icon-svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .product-accordion-card.is-active .product-accordion-card__media {
+    max-height: min(38vh, 320px);
+  }
+
+  .product-accordion-card__image {
+    max-height: min(38vh, 320px);
+    max-width: min(100%, 210px);
   }
 }
 
@@ -871,7 +941,7 @@ img {
 }
 
 .product-accordion-card:not(.is-active) .product-accordion-card__title {
-  font-size: clamp(1.55rem, 2.35vw, 2rem);
+  font-size: clamp(1.45rem, 1.55rem, 1.72rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
@@ -886,9 +956,9 @@ img {
 
 .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
   color: #111;
-  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  font-size: clamp(0.92rem, 0.98rem, 1.02rem);
   line-height: 1.45;
-  max-width: 16ch;
+  max-width: 18ch;
 }
 
 .product-accordion-card:not(.is-active) .product-accordion-card__heading {
