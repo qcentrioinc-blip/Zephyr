@@ -7,7 +7,6 @@ const routeLabels: Record<string, string> = {
   '/herbaceutical': 'Herbaceutical',
   '/nutraceutical': 'Nutraceutical',
   '/organic': 'Organic',
-  '/skincare': 'Skincare',
   '/production': 'Production',
   '/research': 'R&D',
 };
@@ -16,7 +15,6 @@ const categoryTitles: Record<string, string> = {
   herbaceutical: 'Herbaceutical',
   nutraceutical: 'Nutraceutical',
   organic: 'Organic',
-  skincare: 'Skincare',
 };
 
 const formatSegment = (segment: string) =>

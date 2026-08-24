@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { openSkincareContact } from '../skincare/contactEvents';
 
 interface NavLinkItem {
   name: string;
@@ -20,7 +19,6 @@ const PRODUCT_LINKS: ProductLink[] = [
   { name: 'Herbaceutical', path: '/herbaceutical' },
   { name: 'Nutraceutical', path: '/nutraceutical' },
   { name: 'Organic', path: '/organic' },
-  { name: 'Skincare', path: '/skincare', badge: 'Now available' },
 ];
 
 const NAV_LINKS: NavLinkItem[] = [
@@ -332,8 +330,6 @@ const Navbar = () => {
   const location = useLocation();
   const reduceMotion = Boolean(useReducedMotion());
   const scrolled = useScrolled(SCROLL_THRESHOLD);
-  const onSkincare = location.pathname === '/skincare';
-  const openSkincareDrawer = () => openSkincareContact();
 
   const pillRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -466,7 +462,6 @@ const Navbar = () => {
                     onOpenDropdown={openProductsDropdown}
                     onCloseDropdown={scheduleCloseProductsDropdown}
                     onToggleDropdown={toggleProductsDropdown}
-                    onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
                   />
 
                   {/* Align under Products only — centering on the full pill pushed the menu right. */}
@@ -516,7 +511,6 @@ const Navbar = () => {
                 mouseX={mouseX}
                 reduceMotion={reduceMotion}
                 dockEnabled={dockEnabled}
-                onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
               />
             );
           })}
@@ -533,7 +527,6 @@ const Navbar = () => {
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
           activePath={location.pathname}
-          onContactIntercept={onSkincare ? openSkincareDrawer : undefined}
         />
       </div>
     </nav>

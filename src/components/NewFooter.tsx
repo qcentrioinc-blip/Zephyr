@@ -49,7 +49,6 @@ const NewFooter = () => {
     { name: "Herbaceutical", url: "/herbaceutical" },
     { name: "Nutraceutical", url: "/nutraceutical" },
     { name: "Organic", url: "/organic" },
-    { name: "Skincare", url: "/skincare" },
   ];
 
   const companyLinks: FooterLink[] = [

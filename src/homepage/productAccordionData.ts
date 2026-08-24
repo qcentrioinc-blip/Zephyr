@@ -63,22 +63,6 @@ export const PRODUCT_ACCORDION_ITEMS: ProductAccordionItem[] = [
     route: "/organic",
     connectHref: `/contact?subject=${encodeURIComponent("MOQ inquiry - Organic")}`,
   },
-  {
-    id: "skincare",
-    index: "04",
-    title: "Skin care",
-    subtitle: "Alfurin — Zephyr distribution",
-    watermark: "SKIN CARE",
-    headline: "Alfurin — psoriasis-prone skincare",
-    description:
-      "Alfurin lotion and cream: a dual-action system for psoriasis-prone skin with barrier support. Available through Zephyr for US distribution and clinic partners.",
-    color: "#1F5F8B",
-    image: "/skincare/dual-system-poster.svg",
-    panelBg: "/backgrounds/bg4.png",
-    panelVideo: "/videos/skin-care-vid.mp4",
-    route: "/skincare",
-    connectHref: `/contact?subject=${encodeURIComponent("Alfurin range: distribution / supply enquiry")}`,
-  },
 ];
 
 export function getAccordionItemByRoute(route: string): ProductAccordionItem | undefined {

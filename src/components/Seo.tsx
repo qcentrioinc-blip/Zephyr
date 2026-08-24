@@ -51,11 +51,6 @@ const META: Record<string, PageMeta> = {
     description:
       "Organic and clean-label private-label manufacturing catalog. MOQ and manufacturing on inquiry.",
   },
-  "/skincare": {
-    title: "Skincare | Alfurin | Zephyr Distribution",
-    description:
-      "Alfurin — psoriasis-prone skincare, Zephyr distribution. Moisturizing lotion and cream for clinic and distribution partners. Supply and MOQ enquiries.",
-  },
 };
 
 const FALLBACK: PageMeta = META["/"]!;

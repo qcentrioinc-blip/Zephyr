@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
-import { HelmetProvider, Helmet } from 'react-helmet-async'
+import { HelmetProvider } from 'react-helmet-async'
 import './App.css'
 
 import Navbar from './components/Navbar'
@@ -19,7 +19,6 @@ import ScrollToTopButton from './components/ScrollToTopButton'
 import Seo from './components/Seo'
 import PageLoader from './components/PageLoader'
 import { hasSeenEntryGate, markEntryGateSeen } from './lib/entry-gate'
-import { SITE_LOCKDOWN } from './lib/site-lockdown'
 /** Eager: first paint must not wait on a lazy chunk (Mac Safari often stuck on “Loading…”). */
 import Homepage from './homepage/Homepage'
 
@@ -31,7 +30,6 @@ const Contact = lazy(() => import('./contact/Contact'))
 const HerbaceuticalPage = lazy(() => import('./herbaceutical/HerbaceuticalPage'))
 const NutraceuticalPage = lazy(() => import('./nutraceutical/NutraceuticalPage'))
 const OrganicPage = lazy(() => import('./organic/OrganicPage'))
-const SkincarePage = lazy(() => import('./skincare/SkincarePage'))
 
 function RouteFallback() {
   return (
@@ -65,7 +63,7 @@ function RouteReady({
 
 function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) {
   const { pathname } = useLocation()
-  const hideFooter = pathname === '/contact' || pathname === '/skincare'
+  const hideFooter = pathname === '/contact'
   const showCrumbs =
     pathname !== '/' && pathname !== '/contact'
   const [contentReady, setContentReady] = useState(false)
@@ -137,7 +135,6 @@ function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) 
             <Route path="/herbaceutical" element={<HerbaceuticalPage />} />
             <Route path="/nutraceutical" element={<NutraceuticalPage />} />
             <Route path="/organic" element={<OrganicPage />} />
-            <Route path="/skincare" element={<SkincarePage />} />
           </Routes>
         </RouteReady>
       </Suspense>
@@ -147,42 +144,25 @@ function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) 
   )
 }
 
-function NormalApp() {
+function App() {
   const [entered, setEntered] = useState(() => hasSeenEntryGate())
   const [bootReady, setBootReady] = useState(false)
   const showEntryGate = !entered
 
   return (
-    <BrowserRouter>
-      <AppContent onBootReady={setBootReady} />
-      {showEntryGate ? (
-        <PageLoader
-          ready={bootReady}
-          onEnter={() => {
-            markEntryGateSeen()
-            setEntered(true)
-          }}
-        />
-      ) : null}
-    </BrowserRouter>
-  )
-}
-
-function App() {
-  if (SITE_LOCKDOWN) {
-    return (
-      <HelmetProvider>
-        <Helmet>
-          <meta name="robots" content="noindex, nofollow" />
-        </Helmet>
-        <PageLoader ready locked />
-      </HelmetProvider>
-    )
-  }
-
-  return (
     <HelmetProvider>
-      <NormalApp />
+      <BrowserRouter>
+        <AppContent onBootReady={setBootReady} />
+        {showEntryGate ? (
+          <PageLoader
+            ready={bootReady}
+            onEnter={() => {
+              markEntryGateSeen()
+              setEntered(true)
+            }}
+          />
+        ) : null}
+      </BrowserRouter>
     </HelmetProvider>
   )
 }

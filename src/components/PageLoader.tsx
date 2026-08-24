@@ -10,39 +10,14 @@ const ROTATING_TEXTS = [
   "Herbaceutical",
   "Nutraceutical",
   "Organic",
-  "Skin-care",
 ];
 
 type PageLoaderProps = {
   ready: boolean;
-  onEnter?: () => void;
-  /** Site lockdown: show gate only, no click-through. */
-  locked?: boolean;
+  onEnter: () => void;
 };
 
-function LockedPageLoader() {
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, []);
-
-  return createPortal(
-    <div className="zephyr-page-loader zephyr-page-loader--locked">
-      <img
-        src="/brand/logo.png"
-        alt="Zephyr"
-        className="zephyr-page-loader__logo zephyr-page-loader__logo--solo"
-        draggable={false}
-      />
-    </div>,
-    document.body,
-  );
-}
-
-function EntryPageLoader({ ready, onEnter }: { ready: boolean; onEnter?: () => void }) {
+export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
   const reduced = Boolean(useReducedMotion());
   const enteredRef = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -113,7 +88,7 @@ function EntryPageLoader({ ready, onEnter }: { ready: boolean; onEnter?: () => v
   }, [canEnter]);
 
   const enter = useCallback(() => {
-    if (!canEnter || enteredRef.current || !onEnter) return;
+    if (!canEnter || enteredRef.current) return;
     enteredRef.current = true;
     setExiting(true);
     document.body.style.overflow = "";
@@ -145,7 +120,7 @@ function EntryPageLoader({ ready, onEnter }: { ready: boolean; onEnter?: () => v
       }}
       role={canEnter ? "button" : undefined}
       tabIndex={canEnter ? 0 : -1}
-      aria-busy={!ready}
+      aria-busy={!canEnter}
       aria-label={canEnter ? "Click to enter Zephyr" : undefined}
     >
       <div className="zephyr-page-loader__media" aria-hidden>
@@ -227,9 +202,4 @@ function EntryPageLoader({ ready, onEnter }: { ready: boolean; onEnter?: () => v
     </div>,
     document.body,
   );
-}
-
-export default function PageLoader({ ready, onEnter, locked = false }: PageLoaderProps) {
-  if (locked) return <LockedPageLoader />;
-  return <EntryPageLoader ready={ready} onEnter={onEnter} />;
 }

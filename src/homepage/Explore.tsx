@@ -44,16 +44,6 @@ const ITEMS: ExploreItem[] = [
     textColor: "#547A3D",
     link: "/organic",
   },
-  {
-    title: "Skin Care",
-    description:
-      "Alfurin — psoriasis-prone skincare, Zephyr distribution.",
-    image: "/skincare/dual-system-poster.svg",
-    color: "bg-[#1F5F8B]",
-    borderColor: "#1F5F8B",
-    textColor: "#1F5F8B",
-    link: "/skincare",
-  },
 ];
 
 const ROTATION_ON_HOVER = 25;
@@ -169,26 +159,36 @@ function ExploreCard({
   );
 }
 
-/** Mobile: static 2×2 grid, no animation */
+/** Mobile: 2-column grid; odd last item centered on its own row */
 function MobileGridLayout({ items }: { items: ExploreItem[] }) {
+  const lastOdd = items.length % 2 !== 0;
+
   return (
     <div className="grid grid-cols-2 place-items-center gap-3 sm:hidden">
-      {items.map((item) => (
-        <ExploreCard
-          key={item.title}
-          item={item}
-          pathKey={`mob-${item.title}`}
-          sizeClassName="h-[170px] w-[170px]"
-          insetClassName="inset-[28px]"
-        />
-      ))}
+      {items.map((item, index) => {
+        const isCenteredLast = lastOdd && index === items.length - 1;
+
+        return (
+          <div
+            key={item.title}
+            className={isCenteredLast ? "col-span-2 flex justify-center" : undefined}
+          >
+            <ExploreCard
+              item={item}
+              pathKey={`mob-${item.title}`}
+              sizeClassName="h-[170px] w-[170px]"
+              insetClassName="inset-[28px]"
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 function TabletRowLayout({ items }: { items: ExploreItem[] }) {
   return (
-    <div className="hidden grid-cols-2 place-items-center gap-8 sm:grid md:gap-10 lg:hidden">
+    <div className="hidden place-items-center gap-8 sm:grid sm:grid-cols-3 md:gap-10 lg:hidden">
       {items.map((item) => (
         <ExploreCard
           key={item.title}
@@ -204,7 +204,7 @@ function TabletRowLayout({ items }: { items: ExploreItem[] }) {
 
 function DesktopGridLayout({ items }: { items: ExploreItem[] }) {
   return (
-    <div className="hidden place-items-center gap-10 lg:grid lg:grid-cols-4 xl:gap-12">
+    <div className="hidden place-items-center justify-center gap-10 lg:grid lg:grid-cols-3 xl:gap-12">
       {items.map((item) => (
         <ExploreCard
           key={item.title}

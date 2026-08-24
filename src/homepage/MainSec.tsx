@@ -40,16 +40,6 @@ const products = [
     buttonText: "Request MOQ",
     link: `/contact?subject=${encodeURIComponent("MOQ inquiry - Organic")}`,
   },
-  {
-    id: 4,
-    title: "SKIN CARE",
-    description:
-      "Alfurin lotion and cream: a dual-action system for psoriasis-prone skin with barrier support. Available through Zephyr for US distribution and clinic partners.",
-    color: "#1F5F8B",
-    image: "/skincare/dual-system-poster.svg",
-    buttonText: "Explore range",
-    link: "/skincare",
-  },
 ];
 
 const AUTOPLAY_DELAY = 5000;

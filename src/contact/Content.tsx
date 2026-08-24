@@ -477,7 +477,6 @@ const Content = () => {
         onClose={() => setOtpModalOpen(false)}
         loading={otpLoading}
         error={otpError}
-        tone="global"
       />
     </div>
   );

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, type TargetAndTransition, type Transition } from "framer-motion";
-import { ArrowRight, Leaf, Pill, Sprout, Droplet } from "lucide-react";
+import { ArrowRight, Leaf, Pill, Sprout } from "lucide-react";
 import { PRODUCT_ACCORDION_ITEMS, type ProductAccordionItem } from "./productAccordionData";
 import { LetterStrip } from "../components/LetterStrip";
 
@@ -53,11 +53,6 @@ const RANGE_ICONS: Record<string, { Icon: React.ElementType; animation: TargetAn
     Icon: Sprout,
     animation: { scale: [1, 1.12, 1] },
     transition: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-  },
-  skincare: {
-    Icon: Droplet,
-    animation: { scale: [1, 1.1, 1] },
-    transition: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
   },
 };
 
