@@ -1,11 +1,12 @@
 /** Encode a `/public` asset path so spaces and reserved chars work on CDNs.
- *  Keep `+` literal — Vite's static server 404s (falls back to index.html) on `%2B`. */
+ *
+ *  Use `%2B` for `+` (not a literal `+`). On Vercel/CDNs a bare `+` in the path
+ *  is often treated like a space, so files named `A + B.jpg` 404 in production
+ *  while working in Vite. Local Vite middleware maps `%2B` → `+` for disk lookup.
+ */
 export function publicAssetSrc(src: string): string {
   if (!src) return src;
   if (src.startsWith("data:") || src.startsWith("blob:")) return src;
-  if (src.includes("%")) {
-    return src.replace(/%2B/gi, "+");
-  }
 
   if (/^https?:\/\//i.test(src)) {
     try {
@@ -25,7 +26,13 @@ function encodePathname(pathname: string): string {
     .split("/")
     .map((segment, index) => {
       if (index === 0 && segment === "") return "";
-      return encodeURIComponent(segment).replace(/%2B/g, "+");
+      let decoded = segment;
+      try {
+        decoded = decodeURIComponent(segment);
+      } catch {
+        /* keep raw segment */
+      }
+      return encodeURIComponent(decoded);
     })
     .join("/");
 }

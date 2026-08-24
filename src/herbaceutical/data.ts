@@ -110,7 +110,6 @@ const rawCatalog: RawCategory[] = [
     name: "Anti-Oxidants",
     formulas: [
       f("Anti Oxidents", "Elderberry + Green Tea + Beetroot"),
-      f("Anti Oxidents", "Pomegranate + Cranberry + Curcumin"),
       f("Anti Oxidents", "Wheat Grass + Acai Berry + Raspberries + Papain"),
       f("Anti Oxidents", "Spirulina + Tart Cherry + Bacopa Monnieri"),
     ],

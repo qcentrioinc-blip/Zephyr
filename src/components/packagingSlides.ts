@@ -8,9 +8,9 @@ export const PACKAGING_IMAGES = {
   jar: "/packaging/jar.jpg",
   sachets: "/packaging/Sachets.svg",
   blisters: "/packaging/Blisters.jpg",
-  bulkPacks: "/packaging/Bulk%20packs.jpg",
-  bottlePacks: "/packaging/Bottle%20packs.jpg",
-  aluAlu: "/packaging/Alu%20Alu.jpg",
+  bulkPacks: "/packaging/Bulk packs.jpg",
+  bottlePacks: "/packaging/Bottle packs.jpg",
+  aluAlu: "/packaging/Alu Alu.jpg",
   stickPack: "/packaging/Stick-pack.svg",
 } as const;
 

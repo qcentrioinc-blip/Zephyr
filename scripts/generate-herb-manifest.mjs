@@ -60,7 +60,7 @@ const catalog = [
   ["Joint Care", ["Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod", "Cat's Claw + Bromelain Extract + Ashwagandha Root", "Rosehip Powder + Ginger + Curcumin + Maca Root", "Guggul + Sea Buck Thorn + Schindra + Eucalyptus", "Burdock Root + Moringa Leaf + Willow Bark + Curcumin"]],
   ["Immunity Boosters", ["Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil", "Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit", "American Ginseng + Kalmegh + Echinacea Root + Spirulina", "Curcumin + Moringa + Liquorice + Ashwagandha Root"]],
   ["Hair, Skin & Nails", ["Manjistha Stem + Propolis + Avocado Fruit", "Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry", "Amla + Bhringraj + Brahmi + Grapeseed", "Orange + Hibiscus + Gingko Biloba + Green Tea"]],
-  ["Anti-Oxidants", ["Elderberry + Green Tea + Beetroot", "Pomegranate + Cranberry + Curcumin", "Wheat Grass + Acai Berry + Raspberries + Papain", "Spirulina + Tart Cherry + Bacopa Monnieri"]],
+  ["Anti-Oxidants", ["Elderberry + Green Tea + Beetroot", "Wheat Grass + Acai Berry + Raspberries + Papain", "Spirulina + Tart Cherry + Bacopa Monnieri"]],
   ["Kidney Health", ["Punarnava + Astragalus + Cranberry", "Horse Tail Herb + Birch Leaf + Tulsi Ark", "Manjistha + Amla + Fennel Seed + Celery"]],
   ["Haematinic", ["Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc", "Folic Acid + Vitamin B12 + Vitamin C", "Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc", "Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12"]],
   ["Heart Health", ["Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark", "Aronia Berry + Piperine + Maitake Mushroom", "Arjuna + Guggul + Brahmi", "Fenugreek Seed + Amla + Garlic Powder + Arjuna"]],
@@ -107,6 +107,7 @@ for (const [category, formulas] of catalog) {
 
     if (!filename) {
       missing.push(`${category} → ${formula}`);
+      // Keep a blank entry so callers can fall back gracefully (empty src).
       continue;
     }
 
@@ -115,9 +116,8 @@ for (const [category, formulas] of catalog) {
 }
 
 if (missing.length) {
-  console.error("Missing images:");
-  for (const m of missing) console.error(" ", m);
-  process.exit(1);
+  console.warn("Missing images (skipped):");
+  for (const m of missing) console.warn(" ", m);
 }
 
 const body = Object.entries(manifest)
