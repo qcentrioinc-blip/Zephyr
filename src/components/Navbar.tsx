@@ -184,7 +184,7 @@ const MenuToggle = ({ isOpen, onClick }: MenuToggleProps) => (
     onClick={onClick}
     aria-label={isOpen ? 'Close menu' : 'Open menu'}
     aria-expanded={isOpen}
-    className="xl:hidden relative w-10 h-10 flex items-center justify-center text-black hover:bg-[#F1F3F4] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
+    className="xl:hidden relative w-9 h-9 md:w-10 md:h-10 flex items-center justify-center text-black hover:bg-[#F1F3F4] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
   >
     <motion.span
       className="absolute block w-5 h-[1.5px] bg-current rounded-full"
@@ -396,7 +396,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full py-[clamp(0.35rem,0.4vw,0.65rem)] transition-[background-color,box-shadow] duration-300 ease-out ${
+      className={`fixed top-0 z-[100] w-full py-1 md:py-[clamp(0.35rem,0.4vw,0.65rem)] transition-[background-color,box-shadow] duration-300 ease-out ${
         glassy
           ? 'zephyr-nav--glassy bg-transparent shadow-none'
           : scrolled
@@ -410,7 +410,7 @@ const Navbar = () => {
       <div className="zephyr-container nav-bar-inner relative z-10 flex w-full items-center justify-between">
         <Link
           to="/"
-          className="relative z-10 flex shrink-0 items-center px-2 py-1"
+          className="relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2 md:py-1"
           aria-label="Zephyr home"
         >
           <img

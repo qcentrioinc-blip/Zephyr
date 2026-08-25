@@ -139,8 +139,8 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
 
       <div className="zephyr-page-loader__copy">
         <img
-          src="/brand/logo.png"
-          alt=""
+          src="/brand/logo-lock.png"
+          alt="Zephyr"
           className="zephyr-page-loader__logo"
           draggable={false}
         />

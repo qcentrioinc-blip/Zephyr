@@ -56,8 +56,9 @@ html.scroll-restore-pending .zephyr-page-loader {
 
 .zephyr-page-loader__logo {
   display: block;
-  width: auto;
-  height: clamp(4.25rem, 10.5vw, 6.25rem);
+  width: min(88vw, 26rem);
+  height: auto;
+  max-height: clamp(4.5rem, 12vw, 7rem);
   object-fit: contain;
   margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
   user-select: none;

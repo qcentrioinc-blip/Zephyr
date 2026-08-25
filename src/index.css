@@ -154,6 +154,18 @@ h4 {
   object-fit: contain;
 }
 
+/* Mobile: smaller logo + shorter nav chrome */
+@media (max-width: 767px) {
+  :root {
+    --zephyr-nav-h: clamp(40px, 10vw, 46px);
+    --zephyr-nav-gap: clamp(10px, 3vw, 16px);
+  }
+
+  .nav-logo-img {
+    height: clamp(28px, 7vw, 34px);
+  }
+}
+
 .nav-products-menu {
   width: clamp(17rem, 19vw, 22rem);
 }
@@ -247,6 +259,22 @@ h4 {
 @media (prefers-reduced-motion: reduce) {
   .zephyr-nav--glassy .zephyr-nav-glass::after {
     animation: none;
+  }
+}
+
+/*
+ * Mobile / tablet homepage hero (MainSec carousel): solid bar instead of glass.
+ * Logo PNG has a dark field — it disappears on orange / teal / green slides
+ * when the nav is fully transparent.
+ */
+@media (max-width: 1199px) {
+  nav.zephyr-nav--glassy {
+    background-color: rgba(255, 255, 255, 0.97) !important;
+    box-shadow: 0 1px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  nav.zephyr-nav--glassy .zephyr-nav-glass {
+    opacity: 0;
   }
 }
 
