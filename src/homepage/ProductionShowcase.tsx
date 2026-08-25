@@ -58,7 +58,7 @@ function MarqueeRow({
                 />
               </div>
               <div className="px-2 py-2.5 text-center sm:px-3 sm:py-3">
-                <P className="!text-[12px] font-semibold tracking-wide text-[#113227] sm:!text-[13px]">
+                <P className="zephyr-type-support font-semibold tracking-wide text-[#113227]">
                   {item.name}
                 </P>
               </div>

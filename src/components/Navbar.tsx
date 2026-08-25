@@ -103,8 +103,8 @@ const DockNavItem = ({
   const y = useSpring(liftRaw, { mass: 0.15, stiffness: 420, damping: 32 });
 
   const linkClassName = `
-              relative z-10 flex items-center gap-1 px-3 xl:px-5 py-1.5 rounded-full text-[13px] xl:text-[14.5px]
-              font-medium whitespace-nowrap transition-colors duration-300 ease-out
+              nav-dock-link
+              transition-colors duration-300 ease-out
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/40 focus-visible:ring-offset-2
               ${isActive ? 'text-white font-semibold' : 'text-[#4A4B4F] hover:text-black'}
             `;
@@ -148,7 +148,7 @@ const DockNavItem = ({
               transition={{ duration: 0.25, ease: EASE_PREMIUM }}
               className="relative z-10 flex"
             >
-              <ChevronDown className="w-3.5 h-3.5" />
+              <ChevronDown className="nav-dock-link__chevron relative z-10" />
             </motion.span>
           </button>
         ) : onContactIntercept && link.path === '/contact' ? (
@@ -396,7 +396,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full py-1 transition-[background-color,box-shadow] duration-300 ease-out ${
+      className={`fixed top-0 z-[100] w-full py-[clamp(0.35rem,0.4vw,0.65rem)] transition-[background-color,box-shadow] duration-300 ease-out ${
         glassy
           ? 'zephyr-nav--glassy bg-transparent shadow-none'
           : scrolled
@@ -407,22 +407,16 @@ const Navbar = () => {
       {/* Sibling layer (not an ancestor of the dropdown) so Safari hit-testing stays intact */}
       <span className="zephyr-nav-glass" aria-hidden />
       {/* All screens: edge-to-edge with tight side padding */}
-      <div className="zephyr-container relative z-10 flex w-full items-center justify-between gap-4 xl:gap-8">
+      <div className="zephyr-container nav-bar-inner relative z-10 flex w-full items-center justify-between">
         <Link
           to="/"
           className="relative z-10 flex shrink-0 items-center px-2 py-1"
           aria-label="Zephyr home"
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-0 overflow-hidden rounded-full"
-          >
-            <span className="absolute inset-[1px] rounded-full bg-white shadow-[0_1px_10px_rgba(17,50,39,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#11BB8A]/25" />
-          </span>
           <img
             src="/brand/logo.png"
             alt="Zephyr Logo"
-            className="relative z-10 h-10 w-auto object-contain sm:h-11 md:h-12"
+            className="nav-logo-img relative z-10"
           />
         </Link>
 
@@ -437,7 +431,7 @@ const Navbar = () => {
             mouseX.set(Infinity);
             scheduleCloseProductsDropdown();
           }}
-          className={`relative hidden xl:flex items-center rounded-full px-1 py-0.5 transition-colors duration-300 ${
+          className={`nav-dock-pill relative hidden xl:flex items-center rounded-full transition-colors duration-300 ${
             glassy
               ? 'bg-white/70 shadow-sm ring-1 ring-white/60'
               : 'bg-[#F1F3F4] shadow-sm'
@@ -476,7 +470,7 @@ const Navbar = () => {
                         transition={{ duration: 0.18, ease: EASE_PREMIUM }}
                         onMouseEnter={openProductsDropdown}
                         onMouseLeave={scheduleCloseProductsDropdown}
-                        className="absolute left-0 top-full z-[120] w-64 pt-3 origin-top"
+                        className="nav-products-menu absolute left-0 top-full z-[120] pt-3 origin-top"
                       >
                         <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl shadow-black/5">
                           {PRODUCT_LINKS.map((product) => (
@@ -484,7 +478,7 @@ const Navbar = () => {
                               key={product.path}
                               to={product.path}
                               role="menuitem"
-                              className="flex items-center justify-between gap-2 px-5 py-3 text-sm font-medium text-[#4A4B4F] transition-colors hover:bg-gray-50 hover:text-black"
+                              className="nav-products-menu__item"
                               onClick={() => setIsProductsOpen(false)}
                             >
                               <span>{product.name}</span>

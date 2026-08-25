@@ -8,7 +8,7 @@ const JointPain = () => {
         <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-12 xl:gap-16">
           <Reveal className="flex w-full justify-center lg:w-auto">
             <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
-              <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
+              <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
                   src="/facility/jointpain-cdmo-lab.webp"
                   alt="CDMO manufacturing laboratory"
@@ -19,7 +19,7 @@ const JointPain = () => {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
+              <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
                   src="/facility/gallery-1.png"
                   alt="Manufacturing facility"
@@ -29,7 +29,7 @@ const JointPain = () => {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="h-40 w-24 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-48 sm:w-28 md:h-64 md:w-36 lg:h-72 lg:w-40">
+              <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
                   src="/facility/gallery-rd-analytical-labs.webp"
                   alt="R&D and analytical laboratories"
@@ -47,7 +47,7 @@ const JointPain = () => {
             <H2 className="mb-3">Contract manufacturing partner</H2>
             <Reveal>
               <P className="mb-3">
-                <span className="font-para text-[10px] font-bold leading-[120%] tracking-[0.05em] md:text-[12px] md:leading-[20px] lg:text-[14px]">
+                <span className="font-para font-bold">
                   CDMO partner for private-label dietary supplement brands.
                   <br />
                 </span>
@@ -66,24 +66,18 @@ const JointPain = () => {
           </div>
         </div>
 
-        <Reveal className="mx-auto mt-10 max-w-7xl space-y-4 text-center lg:text-left">
-          <P className="mb-3">
+        {/* <Reveal className="zephyr-prose mx-auto mt-10 w-full space-y-4 text-center lg:mx-0 lg:text-left">
+          <P>
             Zephyr is a full-service CDMO for dietary supplement brand owners and
             marketers. Vitamin, mineral, specialty tablet, and packaging
             capabilities support US private-label and contract manufacturing
-            launches.
-          </P>
-          <P className="mb-3">
-            Programs run from formulation brief through commercial release of
+            launches. Programs run from formulation brief through commercial release of
             finished goods. We align process, pack specs, and documentation to
-            your target market and channel.
-          </P>
-          <P>
-            With large-scale tablet, capsule, and jar capacity, we
+            your target market and channel. With large-scale tablet, capsule, and jar capacity, we
             continue to optimize manufacturing processes and invest in our
             licensed facility for safe, consistent commercial supply.
           </P>
-        </Reveal>
+        </Reveal> */}
       </div>
     </section>
   );

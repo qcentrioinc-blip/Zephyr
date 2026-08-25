@@ -34,7 +34,7 @@ export default function Showreel() {
                 <div className="mt-6">
                   <Link
                     to="/research"
-                    className="group inline-flex w-fit items-center gap-2 rounded-full bg-[#113227] px-5 py-2 text-[14px] font-para font-normal leading-[140%] text-white shadow-sm transition-all duration-300 hover:gap-3 hover:shadow-lg md:text-[16px]"
+                    className="group inline-flex w-fit items-center gap-2 rounded-full bg-[#113227] px-5 py-2.5 font-para font-normal zephyr-type-btn text-white shadow-sm transition-all duration-300 hover:gap-3 hover:shadow-lg"
                   >
                     {content.buttonText}
                     <ArrowRight

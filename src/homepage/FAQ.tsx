@@ -80,7 +80,7 @@ const FAQ = () => {
       <div className="zephyr-container">
         <div className="mb-5 text-center">
           <H2>Frequently asked questions</H2>
-          <P className="mt-2 text-gray-600">
+          <P className="zephyr-prose mx-auto mt-2 text-gray-600">
             Practical answers for brand owners exploring a Zephyr manufacturing
             partnership.
           </P>

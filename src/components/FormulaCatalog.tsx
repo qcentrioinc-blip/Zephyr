@@ -235,15 +235,15 @@ export default function FormulaCatalog({
         />
 
         <div className="zephyr-container relative z-10 pt-10 pb-8 sm:pt-12 sm:pb-10">
-          <div className="mx-auto flex min-h-[280px] max-w-7xl flex-col justify-center py-12 sm:min-h-[320px] sm:py-16 lg:min-h-[360px] lg:py-20">
+          <div className="mx-auto flex min-h-[280px] w-full flex-col justify-center py-12 sm:min-h-[320px] sm:py-16 lg:min-h-[360px] lg:py-20">
             <P
-              className="mb-3 text-sm font-semibold uppercase tracking-[0.14em]"
+              className="mb-3 font-semibold uppercase tracking-[0.14em]"
               style={{ color: theme.accent }}
             >
               Private label & contract manufacturing catalog
             </P>
             <H1 className="max-w-3xl text-gray-900">{theme.title}</H1>
-            <P className="mt-4 max-w-2xl text-gray-800" style={{ color: theme.border }}>
+            <P className="zephyr-prose mt-4 text-gray-800" style={{ color: theme.border }}>
               {theme.subtitle}
             </P>
             <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-gray-700">

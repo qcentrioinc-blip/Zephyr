@@ -150,8 +150,8 @@ function ExploreCard({
               showFx ? "[clip-path:inset(0%_0_0_0)]" : "[clip-path:inset(100%_0_0_0)]"
             }`}
           >
-            <H3 className="mb-1 text-white !text-[11px] sm:!text-[13px] md:!text-[15px] lg:!text-[16px]" animate={false}>{item.title}</H3>
-            <P className="text-white !text-[9px] sm:!text-[10px] md:!text-[11px] lg:!text-[12px]">{item.description}</P>
+            <H3 className="mb-1 text-white !text-[12px] sm:!text-[14px] md:!text-[15px] lg:!text-[16px]" animate={false}>{item.title}</H3>
+            <P className="text-white !text-[11px] sm:!text-[12px] md:!text-[13px]">{item.description}</P>
           </div>
         </div>
       </div>

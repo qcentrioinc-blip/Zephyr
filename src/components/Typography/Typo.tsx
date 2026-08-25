@@ -21,33 +21,11 @@ function plainText(children: ReactNode): string | null {
   return null;
 }
 
-const h1Size = `
-  font-manrope font-bold
-  leading-[1.1]
-  text-[24px] md:text-[32px] lg:text-[46px]
-  tracking-wide
-`;
-
-const h2Size = `
-  font-manrope font-semibold
-  leading-[1.1]
-  text-[20px] md:text-[24px] lg:text-[32px]
-  tracking-wide
-`;
-
-const h3Size = `
-  font-manrope font-semibold
-  leading-[1.1]
-  text-[18px] md:text-[18px] lg:text-[24px]
-  tracking-wide
-`;
-
-const h4Size = `
-  font-manrope font-semibold
-  leading-[1.1]
-  text-[16px] md:text-[16px] lg:text-[18px]
-  tracking-wide
-`;
+/* Fluid type lives in index.css (.zephyr-type-*) — 1920 baseline + 75% caps */
+const h1Size = `font-manrope font-bold zephyr-type-h1`;
+const h2Size = `font-manrope font-semibold zephyr-type-h2`;
+const h3Size = `font-manrope font-semibold zephyr-type-h3`;
+const h4Size = `font-manrope font-semibold zephyr-type-h4`;
 
 export const H1 = ({
   children,
@@ -159,14 +137,7 @@ export const H4 = ({
 
 export const P = ({ children, className = "", style }: TypographyProps) => (
   <p
-    className={`
-      font-para font-normal
-      leading-[120%] md:leading-[20px]
-      text-[10px] md:text-[12px] lg:text-[14px]
-      tracking-[0.05em]
-      text-fade-in
-      ${className}
-    `}
+    className={`font-para font-normal zephyr-type-p text-fade-in ${className}`}
     style={style}
   >
     {children}
@@ -179,13 +150,7 @@ export const SupportingText = ({
   style,
 }: TypographyProps) => (
   <p
-    className={`
-      font-para font-normal
-      leading-[120%]
-      text-[12px] md:text-[14px] lg:text-[16px]
-      tracking-[0.05em]
-      ${className}
-    `}
+    className={`font-para font-normal zephyr-type-support ${className}`}
     style={style}
   >
     {children}

@@ -5,39 +5,22 @@
   --font-para: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Shared page rhythm — use on content sections site-wide */
+/* Shared page shell — full width minus fluid gutters (tokens in index.css) */
 .zephyr-container {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  max-width: 80rem; /* max-w-7xl */
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 640px) {
-  .zephyr-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .zephyr-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
+  max-width: none;
+  padding-left: var(--zephyr-gutter);
+  padding-right: var(--zephyr-gutter);
 }
 
 .zephyr-section {
   width: 100%;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-block: clamp(33px, 2.6vw, 50px);
 }
 
-@media (min-width: 768px) {
-  .zephyr-section {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
+/* Readable measure for long body blocks; grids/cards use full shell */
+.zephyr-prose {
+  max-width: 70ch;
 }

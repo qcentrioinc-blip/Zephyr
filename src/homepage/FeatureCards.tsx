@@ -150,13 +150,13 @@ export default function FeaturesSection() {
                 key={card.title}
                 className="group flex flex-col rounded-2xl border border-[#6d6d6d] bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-5"
               >
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <H3 className="whitespace-pre-line uppercase leading-[1.1] text-[#111111]">
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <H3 className="uppercase leading-[1.15] text-[#111111]">
                     {card.title}
                   </H3>
-                  <Icon className="h-12 w-12 shrink-0 text-black sm:h-14 sm:w-14" />
+                  <Icon className="h-11 w-11 shrink-0 text-black sm:h-12 sm:w-12" />
                 </div>
-                <P>{card.description}</P>
+                <P className="text-gray-700">{card.description}</P>
               </article>
             );
           })}

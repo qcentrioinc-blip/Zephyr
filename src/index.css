@@ -1,23 +1,70 @@
 /* Fixed header stack (navbar [+ breadcrumbs]) — keep page spacers / sticky toolbars aligned */
 :root {
-  /* Nav py-1 + logo h-10 + capsule */
-  --zephyr-nav-h: 3.5rem;
-  /* Breadcrumb py-2.5 + text line */
+  /*
+   * Larger nav chrome for 100% + 75%. Caps ≈ 1920 target ÷ 0.75 so zoom-out
+   * keeps visual size (not smaller).
+   * 4.4vw @1920 ≈ 84px; @2560 ≈ 112px → visual ≈ 84px after ×0.75.
+   */
+  --zephyr-nav-h: clamp(64px, 4.4vw, 112px);
+  /* Clear gap under fixed nav before accordion / page content */
+  --zephyr-nav-gap: clamp(20px, 1.8vw, 40px);
   --zephyr-crumb-h: 2.5rem;
+  /*
+   * CloudDiet-style gutters (1920 baseline). Cap 200px holds at both
+   * 1920@100% and ~2560@75%; ultra-wide tightens below.
+   */
+  --zephyr-gutter: clamp(25px, calc(12.5vw - 40px), 200px);
+  /* Hero / accordion — slightly tighter so panels stay wide */
+  --zephyr-hero-gutter: clamp(12px, calc(4vw - 16px), 64px);
+  /* Soft legacy fallback only — do not grow at 2000/2400 */
+  --zephyr-content-max: 100%;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 2300px) {
   :root {
-    /* logo sm:h-11 */
-    --zephyr-nav-h: 3.75rem;
+    --zephyr-gutter: 140px;
+    --zephyr-hero-gutter: 48px;
   }
 }
 
-@media (min-width: 768px) {
-  :root {
-    /* logo md:h-12 */
-    --zephyr-nav-h: 4rem;
-  }
+/*
+ * Fluid type: floors protect 100% mid-laptops; caps engage near ~2560 (75%).
+ * Body grows enough at 75% so description stays readable after zoom shrink.
+ */
+.zephyr-type-h1 {
+  font-size: clamp(28px, max(2.4vw, 36px), 62px);
+  line-height: 120%;
+  letter-spacing: -1px;
+}
+.zephyr-type-h2 {
+  font-size: clamp(22px, max(1.667vw, 26px), 43px);
+  line-height: 120%;
+  letter-spacing: -1px;
+}
+.zephyr-type-h3 {
+  font-size: clamp(17px, max(1.25vw, 20px), 32px);
+  line-height: 120%;
+  letter-spacing: -0.7px;
+}
+.zephyr-type-h4 {
+  font-size: clamp(15px, max(0.938vw, 17px), 24px);
+  line-height: 120%;
+  letter-spacing: -0.7px;
+}
+/* Description / body — larger 75% cap so copy doesn’t look tiny after zoom */
+.zephyr-type-p {
+  font-size: clamp(15px, max(0.95vw, 16px), 26px);
+  line-height: 155%;
+  letter-spacing: -0.4px;
+}
+.zephyr-type-support {
+  font-size: clamp(13px, max(0.85vw, 14px), 22px);
+  line-height: 145%;
+  letter-spacing: -0.2px;
+}
+.zephyr-type-btn {
+  font-size: clamp(13px, max(0.8333vw, 14px), 22px);
+  line-height: 120%;
 }
 
 body {
@@ -27,19 +74,19 @@ body {
 
 .para {
   font-family: "Plus Jakarta Sans", sans-serif;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.4px;
 }
 
 p {
   font-family: "Plus Jakarta Sans", sans-serif;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.4px;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 @keyframes text-fade-in {
@@ -73,6 +120,64 @@ h4 {
   .nav-launch-badge {
     animation: none;
   }
+}
+
+/* Desktop nav — larger logo + dock for 100% and 75% */
+.nav-dock-link {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: clamp(0.6rem, 0.65vw, 1rem) clamp(0.9rem, 1.35vw, 2rem);
+  border-radius: 9999px;
+  /* ~16 @1920; ~22 @2560 → visual ≈ 16 after 75% zoom */
+  font-size: clamp(13px, 0.85vw, 22px);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease-out;
+}
+
+.nav-dock-link__chevron {
+  width: clamp(16px, 1vw, 22px);
+  height: clamp(16px, 1vw, 22px);
+}
+
+.nav-dock-pill {
+  padding: clamp(0.28rem, 0.32vw, 0.5rem) clamp(0.4rem, 0.45vw, 0.65rem);
+}
+
+.nav-logo-img {
+  /* ~81 @1920; ~100 @2560 → visual ≈ 75 after 75% zoom */
+  height: clamp(56px, 4.2vw, 100px);
+  width: auto;
+  object-fit: contain;
+}
+
+.nav-products-menu {
+  width: clamp(17rem, 19vw, 22rem);
+}
+
+.nav-products-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: clamp(0.8rem, 0.8vw, 1.15rem) clamp(1.35rem, 1.35vw, 1.85rem);
+  font-size: clamp(0.9rem, 0.95vw, 1.2rem);
+  font-weight: 500;
+  color: #4a4b4f;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-products-menu__item:hover {
+  background-color: #f9fafb;
+  color: #000;
+}
+
+.nav-bar-inner {
+  gap: clamp(1rem, 1.5vw, 2.5rem);
+  min-height: var(--zephyr-nav-h);
 }
 
 /* Homepage unscrolled navbar — frosted glass + shine (sibling layer, not on <nav>) */
@@ -299,6 +404,8 @@ a.strip-slide-up {
 
 /* ── Site-wide: Zephyr green glass (#11BB8A / #113227) ── */
 html {
+  /* Stable rem @100%; gentle grow for 75% — floor avoids crushing 1440@100% */
+  font-size: clamp(15px, 0.8333vw, 18px);
   scrollbar-width: thin;
   scrollbar-color: rgb(11, 85, 64) rgba(155, 223, 200, 0.06);
 }
@@ -621,17 +728,21 @@ img {
 }
 
 @media (min-width: 1200px) {
-  /* Accordion starts flush under the navbar. The top padding equals nav height so
-     the sage wash sits behind the glass bar, with no card overlap and no gap. */
+  /* Full viewport hero: nav gap on top, accordion fills the rest (100% and 75%) */
   .product-accordion-section--desktop {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    justify-content: flex-start;
     margin-top: 0;
     height: 100dvh;
     min-height: 100dvh;
     max-height: 100dvh;
-    padding: calc(var(--zephyr-nav-h) + 10px) 1rem 1.1rem;
+    box-sizing: border-box;
+    padding:
+      calc(var(--zephyr-nav-h) + var(--zephyr-nav-gap))
+      var(--zephyr-hero-gutter)
+      clamp(0.65rem, 0.9vw, 1rem);
     background:
       radial-gradient(90% 70% at 12% 0%, rgba(255, 164, 61, 0.35) 0%, transparent 46%),
       radial-gradient(80% 60% at 88% 0%, rgba(74, 163, 167, 0.28) 0%, transparent 48%),
@@ -639,46 +750,37 @@ img {
   }
 }
 
-@media (min-width: 640px) {
-  .product-accordion-section--desktop {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .product-accordion-section--desktop {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-@media (min-width: 1200px) and (min-height: 860px) {
-  .product-accordion-section--desktop {
-    justify-content: center;
-  }
-}
-
 .product-accordion-shell {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 80rem;
-  height: 100%;
+  max-width: min(110rem, 100%);
+  /* Fill remaining viewport under nav — no fixed px cap (that left empty space at 75%) */
+  flex: 1 1 auto;
+  height: auto;
   min-height: 0;
+  max-height: none;
   margin-inline: auto;
 }
 
 @media (min-width: 1200px) {
   .product-accordion-shell {
-    max-height: min(calc(100dvh - var(--zephyr-nav-h) - 1.75rem), 820px);
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .product-accordion-row {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
   }
 }
 
 /* Slightly tighter inactive type in the zoom / mid-desktop band so 3 panels stay readable */
 @media (min-width: 1200px) and (max-width: 1535px) {
   .product-accordion-card:not(.is-active) .product-accordion-card__title {
-    font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+    font-size: clamp(1.28rem, 1.95vw, 1.55rem);
   }
 
   .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
@@ -917,38 +1019,38 @@ img {
 }
 
 .product-accordion-card:not(.is-active) .accordion-icon-wrap {
-  width: 76px;
-  height: 76px;
+  width: clamp(64px, 4.5vw, 88px);
+  height: clamp(64px, 4.5vw, 88px);
   border-radius: 18px;
 }
 
 .accordion-icon-svg {
-  width: 32px;
-  height: 32px;
+  width: clamp(32px, 2.2vw, 44px);
+  height: clamp(32px, 2.2vw, 44px);
 }
 
 .product-accordion-card:not(.is-active) .accordion-icon-svg {
-  width: 38px;
-  height: 38px;
+  width: clamp(34px, 2.4vw, 46px);
+  height: clamp(34px, 2.4vw, 46px);
 }
 
 .product-accordion-card__title {
   font-family: var(--font-manrope, Manrope, sans-serif);
-  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.85rem);
   font-weight: 700;
   line-height: 1.1;
   margin: 0;
 }
 
 .product-accordion-card:not(.is-active) .product-accordion-card__title {
-  font-size: clamp(1.45rem, 1.55rem, 1.72rem);
+  font-size: clamp(1.35rem, 1.85vw, 2rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
 
 .product-accordion-card__subtitle {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: clamp(0.85rem, 0.9vw, 1.05rem);
   line-height: 1.4;
   color: #6b7280;
   transition: color 0.35s ease;
@@ -956,7 +1058,7 @@ img {
 
 .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
   color: #111;
-  font-size: clamp(0.92rem, 0.98rem, 1.02rem);
+  font-size: clamp(0.9rem, 0.95vw, 1.1rem);
   line-height: 1.45;
   max-width: 18ch;
 }
@@ -979,7 +1081,7 @@ img {
 
 .product-accordion-card__description {
   margin: 0.5rem 0 0;
-  font-size: 0.78rem;
+  font-size: clamp(0.85rem, 0.9vw, 1.05rem);
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.9);
   max-width: 34ch;
@@ -992,11 +1094,11 @@ img {
   align-items: center;
   gap: 0.35rem;
   align-self: center;
-  padding: 0.55rem 1.1rem;
+  padding: clamp(0.55rem, 0.55vw, 0.75rem) clamp(1.1rem, 1.1vw, 1.5rem);
   border-radius: 999px;
   border: 1px solid #111;
   background: transparent;
-  font-size: 0.82rem;
+  font-size: clamp(0.88rem, 0.9vw, 1.05rem);
   font-weight: 600;
   color: inherit;
   cursor: pointer;
@@ -1008,8 +1110,8 @@ img {
 
 .product-accordion-card:not(.is-active) .product-accordion-card__cta {
   margin-top: 1rem;
-  padding: 0.65rem 1.3rem;
-  font-size: 0.92rem;
+  padding: clamp(0.65rem, 0.6vw, 0.8rem) clamp(1.3rem, 1.2vw, 1.55rem);
+  font-size: clamp(0.95rem, 0.95vw, 1.06rem);
 }
 
 .product-accordion-card.is-active .product-accordion-card__cta {
@@ -1020,6 +1122,26 @@ img {
 
 .product-accordion-card__cta:hover {
   background: rgba(255, 255, 255, 0.12);
+}
+
+/* Large screens — modest density; fluid clamps already handle 75% zoom */
+@media (min-width: 1536px) {
+  .product-accordion-card__inner {
+    padding: 2.25rem 1.75rem 2.25rem;
+  }
+
+  .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
+    max-width: 20ch;
+  }
+
+  .product-accordion-card__description {
+    max-width: 38ch;
+    margin-top: 0.65rem;
+  }
+
+  .product-accordion-card__image {
+    max-width: min(100%, 300px);
+  }
 }
 
 /* Mobile / tablet hero carousel (< 1280px) */
