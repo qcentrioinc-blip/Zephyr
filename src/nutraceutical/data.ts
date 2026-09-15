@@ -237,39 +237,39 @@ const rawCatalog: RawCategory[] = [
   {
     name: "Geriatric Care",
     formulas: [
-      f("Geriatric Care", "Ginseng Extract + Lecithin + Vitamins + Minerals"),
-      f("Geriatric Care", "Omega 3 + Pomegranate Extract + Vitamin C + Magnesium + Zinc"),
-      f("Geriatric Care", "Ginseng Extract + Vitamin B12 + Vitamin A + Vitamin C + Vitamin E + Selenium + Chromium"),
-      f("Geriatric Care", "L-Carnitine + Biotin + Choline + Citrus Bioflavonoids + Multi-Vitamins + Minerals"),
+      f("geiragtic care", "Ginseng Extract + Lecithin + Vitamins + Minerals"),
+      f("geiragtic care", "Omega 3 + Pomegranate Extract + Vitamin C + Magnesium + Zinc"),
+      f("geiragtic care", "Ginseng Extract + Vitamin B12 + Vitamin A + Vitamin C + Vitamin E + Selenium + Chromium"),
+      f("geiragtic care", "L-Carnitine + Biotin + Choline + Citrus Bioflavonoids + Multi-Vitamins + Minerals"),
     ],
   },
   {
     name: "Varicose Veins",
     formulas: [
-      f("Varicose Veins", "Hesperidin + Grapeseed Extract + Vitamin C"),
-      f("Varicose Veins", "Citrus Bioflavonoid + Lycopene + Vitamin A + Vitamin C"),
+      f("varicouse veins", "Hesperidin + Grapeseed Extract + Vitamin C"),
+      f("varicouse veins", "Citrus Bioflavonoid + Lycopene + Vitamin A + Vitamin C"),
     ],
   },
   {
     name: "Kidney Health",
     formulas: [
-      f("Kidney Health", "D-Mannose + Pomegranate Extract + L-Taurine + Vitamin D"),
-      f("Kidney Health", "Cranberry Powder + N-Acetylcysteine + L-Carnitine + Vitamin C"),
+      f("kidney health", "D-Mannose + Pomegranate Extract + L-Taurine + Vitamin D"),
+      f("kidney health", "Cranberry Powder + N-Acetylcysteine + L-Carnitine + Vitamin C"),
     ],
   },
   {
     name: "Digestive Health",
     formulas: [
-      f("Digestive Health", "Pre-biotic"),
-      f("Digestive Health", "Pro-biotic"),
-      f("Digestive Health", "Bromelain + Papain + Amylase"),
+      f("digestive health", "Pre-biotic"),
+      f("digestive health", "Pro-biotic"),
+      f("digestive health", "Bromelain + Papain + Amylase"),
     ],
   },
   {
     name: "Weight Management",
     formulas: [
-      f("Weight Management", "Whey Protein"),
-      f("Weight Management", "Fenugreek + Green Coffee"),
+      f("weight management", "Whey Protein"),
+      f("weight management", "Fenugreek + Green Coffee"),
     ],
   },
 ];

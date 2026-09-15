@@ -83,7 +83,7 @@ export default function FormulaModalGallery({
 
   return (
     <div
-      className="relative flex h-full min-h-[220px] flex-col bg-[#f7f8f9] sm:min-h-[280px] lg:min-h-0"
+      className="relative flex h-[min(46dvh,360px)] shrink-0 flex-col bg-[#f7f8f9] sm:h-[min(42dvh,380px)] lg:h-full lg:min-h-0 lg:shrink"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -94,9 +94,9 @@ export default function FormulaModalGallery({
               key={src}
               src={src}
               alt={i === 0 ? alt : `${alt} — ${labels[i] ?? "packaging"}`}
-              className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
-                i === index ? "opacity-100" : "pointer-events-none opacity-0"
-              }`}
+              className={`absolute inset-0 h-full w-full object-contain object-center transition-opacity duration-500 ${
+                i === 0 ? "p-3" : "px-3 py-4"
+              } ${i === index ? "opacity-100" : "pointer-events-none opacity-0"}`}
               draggable={false}
             />
           ) : null,

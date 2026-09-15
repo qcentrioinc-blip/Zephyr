@@ -55,10 +55,10 @@ const Breadcrumbs = () => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="fixed inset-x-0 top-[var(--zephyr-nav-h)] z-[90] w-full border-b border-gray-200/80 bg-white/95 backdrop-blur-md"
+      className="zephyr-breadcrumbs fixed inset-x-0 z-[99] w-full border-b border-gray-200 bg-white shadow-[0_1px_0_rgba(0,0,0,0.04)]"
     >
-      <div className="zephyr-container flex items-center py-2.5">
-        <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-500 pl-0">
+      <div className="zephyr-container flex min-h-[var(--zephyr-crumb-h)] items-center py-2 sm:py-2.5">
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 pl-0 text-sm text-gray-600 sm:text-[15px]">
           {crumbs.map((crumb, index) => {
             const isLast = index === crumbs.length - 1;
             return (

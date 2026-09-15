@@ -6,8 +6,8 @@ import Reveal from "../components/Reveal";
 const advantages = [
   {
     icon: Building2,
-    title: "65K sq ft facility",
-    body: "Production facility and laboratories built for partner manufacturing programs.",
+    title: "Integrated manufacturing",
+    body: "Dispensing through granulation, compression, coating, capsule filling, and finished-goods packaging under one roof.",
   },
   {
     icon: Gauge,
@@ -37,7 +37,7 @@ export default function PartnerAdvantage() {
             </p>
             <H2>Built for brand owners who need reliable commercial supply</H2>
             <P className="mt-4 max-w-xl text-gray-600">
-              Zephyr combines high capacity manufacturing with development-led
+              Vitalcore combines high capacity manufacturing with development-led
               transfer and quality systems US brand owners can take to audit.
               Private label and contract partners move from brief to finished
               goods with a clear path.
@@ -77,7 +77,7 @@ export default function PartnerAdvantage() {
             <div className="overflow-hidden rounded-[28px]">
               <img
                 src="/facility/production-hero-wide.png"
-                alt="Zephyr manufacturing facility"
+                alt="Vitalcore manufacturing facility"
                 className="aspect-[4/5] h-full w-full object-cover sm:aspect-[5/6]"
                 loading="lazy"
                 decoding="async"

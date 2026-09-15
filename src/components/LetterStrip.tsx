@@ -31,7 +31,7 @@ const MAX_LETTERS = 72;
 
 /**
  * CloudDiet / Qcentrio strip-slide letter reveal.
- * Ported for Zephyr — inherit text color by default.
+ * Ported for Vitalcore — inherit text color by default.
  */
 function LetterStripInner({
   text,

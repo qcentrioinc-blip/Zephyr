@@ -73,7 +73,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
     src: "/facility/productions-hero-right.webp",
     title: "Facility exterior & scale",
     category: "Factory Tour",
-    caption: "65,000 sq ft manufacturing footprint in Karnataka, India.",
+    caption: "Commercial manufacturing campus in Karnataka, India, built for partner batch release and audit readiness.",
   },
   {
     id: "rd-lab",
@@ -121,7 +121,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
   },
   {
     id: "blister",
-    src: "/packaging/Blisters.jpg",
+    src: "/packaging/blister.webp",
     title: "Blister packaging lines",
     category: "Production Facility",
     caption: "Thermoform and cold-form blister formats for retail-ready packs.",
@@ -129,7 +129,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
   },
   {
     id: "bottle",
-    src: "/packaging/Bottle%20packs.jpg",
+    src: "/packaging/bottle-packs.webp",
     title: "Bottle packing lines",
     category: "Production Facility",
     caption: "Liquids, syrups, and bottle finished goods with in-line checks.",
@@ -137,7 +137,7 @@ const GALLERY_DISABLED: GalleryItem[] = [
   },
   {
     id: "jar",
-    src: "/packaging/jar.jpg",
+    src: "/packaging/jar.webp",
     title: "Jar finishing & labelling",
     category: "Production Facility",
     caption: "Powders, gummies, and jarred formats through secondary packaging.",

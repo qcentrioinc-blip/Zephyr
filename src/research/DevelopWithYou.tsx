@@ -13,7 +13,7 @@ import { H2, H3, P } from "../components/Typography/Typo";
 import Reveal from "../components/Reveal";
 
 const intro =
-  "Zephyr works closely with customers to move concepts to commercial manufacturing. We start with market-led concept formulas, run pilot trials, complete validation work, and transfer programs into full-scale production.";
+  "Vitalcore works closely with customers to move concepts to commercial manufacturing. We start with market-led concept formulas, run pilot trials, complete validation work, and transfer programs into full-scale production.";
 
 const capabilities = [
   { title: "Pilot facility & labs", detail: "Fully equipped small-scale pilot facility and development laboratories.", icon: FlaskConical },

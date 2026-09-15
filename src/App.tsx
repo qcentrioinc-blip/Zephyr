@@ -116,7 +116,7 @@ function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) 
       {showCrumbs && (
         <div
           aria-hidden="true"
-          className="h-[calc(var(--zephyr-nav-h)+var(--zephyr-crumb-h))]"
+          className="h-[var(--zephyr-header-stack)]"
         />
       )}
       <Suspense fallback={<RouteFallback />}>

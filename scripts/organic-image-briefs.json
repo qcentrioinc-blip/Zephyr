@@ -1,0 +1,1703 @@
+{
+  "version": 1,
+  "generatedAt": "2026-09-09T12:16:08.861Z",
+  "logoPath": "public/brand/vitalcore-logo-clear.png",
+  "refs": {
+    "bottleA": "public/brand/ref-organic/bottle-a.png",
+    "bottleB": "public/brand/ref-organic/bottle-b.png",
+    "bottleC": "public/brand/ref-organic/bottle-c.png",
+    "bottleTrio": "public/brand/ref-organic/bottle-trio.png",
+    "label": "public/brand/ref-organic/label-colorful.png",
+    "lifestylePomegranate": "public/brand/ref-organic/lifestyle-pomegranate.jpg",
+    "lifestyleIron": "public/brand/ref-organic/lifestyle-iron.jpg",
+    "bottleAmberPacker": "public/brand/ref-organic/bottle-amber-packer.png"
+  },
+  "bottleModels": {
+    "primary": "Squat faceted organic bottle (shape from organic-squat-faceted.png); Vitalcore engraved on cap top only; no label logo"
+  },
+  "products": [
+    {
+      "id": 1,
+      "folder": "Liverwort",
+      "formula": "Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod",
+      "lead": "Cissus Quadrangularis",
+      "secondary": "+ Boswellia Serrata + Piperine + Hadjod",
+      "bottle": "A",
+      "fill": "amber gummies",
+      "palette": [
+        "sage",
+        "bone",
+        "amber"
+      ],
+      "props": [
+        "cissus stems",
+        "boswellia resin",
+        "ginger root slices"
+      ],
+      "benefitLine": "Joint Mobility for Everyday Wellness",
+      "benefitIcons": [
+        "JOINT SUPPORT",
+        "MOBILITY",
+        "RECOVERY",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liverwort/Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liverwort/Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod.webp",
+      "asset": "vital-org-01.png"
+    },
+    {
+      "id": 2,
+      "folder": "Liverwort",
+      "formula": "Cat's Claw + Bromelain Extract + Ashwagandha Root",
+      "lead": "Cat's Claw",
+      "secondary": "+ Bromelain Extract + Ashwagandha Root",
+      "bottle": "B",
+      "fill": "tan tablets",
+      "palette": [
+        "bark-brown",
+        "cream",
+        "green"
+      ],
+      "props": [
+        "cat's claw vine",
+        "ashwagandha root",
+        "dried herbs"
+      ],
+      "benefitLine": "Immune & Joint Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "JOINT SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liverwort/Cat's Claw + Bromelain Extract + Ashwagandha Root.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liverwort/Cat's Claw + Bromelain Extract + Ashwagandha Root.webp",
+      "asset": "vital-org-02.png"
+    },
+    {
+      "id": 3,
+      "folder": "Liverwort",
+      "formula": "Rosehip Powder + Ginger + Curcumin + Maca Root",
+      "lead": "Rosehip Powder",
+      "secondary": "+ Ginger + Curcumin + Maca Root",
+      "bottle": "C",
+      "fill": "orange capsules",
+      "palette": [
+        "rose",
+        "coral",
+        "cream"
+      ],
+      "props": [
+        "dried rosehips",
+        "fresh ginger",
+        "turmeric root",
+        "maca powder bowl"
+      ],
+      "benefitLine": "Joint & Antioxidant Support for Everyday Wellness",
+      "benefitIcons": [
+        "JOINT SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "RECOVERY",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liverwort/Rosehip Powder + Ginger + Curcumin + Maca Root.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liverwort/Rosehip Powder + Ginger + Curcumin + Maca Root.webp",
+      "asset": "vital-org-03.png"
+    },
+    {
+      "id": 4,
+      "folder": "Liverwort",
+      "formula": "Guggul + Sea Buck Thorn + Schindra + Eucalyptus",
+      "lead": "Guggul",
+      "secondary": "+ Sea Buck Thorn + Schindra + Eucalyptus",
+      "bottle": "A",
+      "fill": "amber gummies",
+      "palette": [
+        "amber",
+        "olive",
+        "cream"
+      ],
+      "props": [
+        "guggul resin",
+        "sea buckthorn berries",
+        "eucalyptus leaves"
+      ],
+      "benefitLine": "Joint Comfort for Everyday Wellness",
+      "benefitIcons": [
+        "JOINT SUPPORT",
+        "MOBILITY",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liverwort/Guggul + Sea Buck Thorn + Schindra + Eucalyptus.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liverwort/Guggul + Sea Buck Thorn + Schindra + Eucalyptus.webp",
+      "asset": "vital-org-04.png"
+    },
+    {
+      "id": 5,
+      "folder": "Liverwort",
+      "formula": "Burdock Root + Moringa Leaf + Willow Bark + Curcumin",
+      "lead": "Burdock Root",
+      "secondary": "+ Moringa Leaf + Willow Bark + Curcumin",
+      "bottle": "B",
+      "fill": "green tablets",
+      "palette": [
+        "earth",
+        "green",
+        "gold"
+      ],
+      "props": [
+        "burdock root",
+        "moringa leaves",
+        "willow bark",
+        "turmeric"
+      ],
+      "benefitLine": "Joint & Botanical Support for Everyday Wellness",
+      "benefitIcons": [
+        "JOINT SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liverwort/Burdock Root + Moringa Leaf + Willow Bark + Curcumin.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liverwort/Burdock Root + Moringa Leaf + Willow Bark + Curcumin.webp",
+      "asset": "vital-org-05.png"
+    },
+    {
+      "id": 6,
+      "folder": "Guduchi",
+      "formula": "Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil",
+      "lead": "Astragalus Root",
+      "secondary": "+ Aronia Berry + Maitake Mushroom + Holy Basil",
+      "bottle": "C",
+      "fill": "amber capsules",
+      "palette": [
+        "gold",
+        "berry",
+        "cream"
+      ],
+      "props": [
+        "astragalus slices",
+        "aronia berries",
+        "maitake mushroom",
+        "holy basil"
+      ],
+      "benefitLine": "Immune Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "ENERGY BOOST",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Guduchi/Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Guduchi/Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil.webp",
+      "asset": "vital-org-06.png"
+    },
+    {
+      "id": 7,
+      "folder": "Guduchi",
+      "formula": "Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit",
+      "lead": "Neem Leaf",
+      "secondary": "+ Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit",
+      "bottle": "A",
+      "fill": "forest-green gummies",
+      "palette": [
+        "deep-green",
+        "cream",
+        "sage"
+      ],
+      "props": [
+        "neem leaves",
+        "noni fruit",
+        "ashwagandha root",
+        "moringa pods"
+      ],
+      "benefitLine": "Immune & Clean-Label Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Guduchi/Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Guduchi/Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit.webp",
+      "asset": "vital-org-07.png"
+    },
+    {
+      "id": 8,
+      "folder": "Guduchi",
+      "formula": "American Ginseng + Kalmegh + Echinacea Root + Spirulina",
+      "lead": "American Ginseng",
+      "secondary": "+ Kalmegh + Echinacea Root + Spirulina",
+      "bottle": "B",
+      "fill": "beige tablets",
+      "palette": [
+        "cream",
+        "green",
+        "teal"
+      ],
+      "props": [
+        "ginseng root",
+        "kalmegh leaves",
+        "echinacea flowers",
+        "spirulina powder"
+      ],
+      "benefitLine": "Immune & Energy Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "ENERGY BOOST",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Guduchi/American Ginseng + Kalmegh + Echinacea Root + Spirulina.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Guduchi/American Ginseng + Kalmegh + Echinacea Root + Spirulina.webp",
+      "asset": "vital-org-08.png"
+    },
+    {
+      "id": 9,
+      "folder": "Guduchi",
+      "formula": "Curcumin + Moringa + Liquorice + Ashwagandha Root",
+      "lead": "Curcumin",
+      "secondary": "+ Moringa + Liquorice + Ashwagandha Root",
+      "bottle": "C",
+      "fill": "golden capsules",
+      "palette": [
+        "turmeric-gold",
+        "green",
+        "cream"
+      ],
+      "props": [
+        "turmeric root",
+        "moringa leaves",
+        "liquorice sticks",
+        "ashwagandha"
+      ],
+      "benefitLine": "Immune & Antioxidant Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "JOINT SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Guduchi/Curcumin + Moringa + Liquorice + Ashwagandha Root.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Guduchi/Curcumin + Moringa + Liquorice + Ashwagandha Root.webp",
+      "asset": "vital-org-09.png"
+    },
+    {
+      "id": 10,
+      "folder": "Magnolia Bark",
+      "formula": "Manjistha Stem + Propolis + Avocado Fruit",
+      "lead": "Manjistha Stem",
+      "secondary": "+ Propolis + Avocado Fruit",
+      "bottle": "A",
+      "fill": "berry gummies",
+      "palette": [
+        "magenta",
+        "cream",
+        "green"
+      ],
+      "props": [
+        "manjistha stems",
+        "propolis",
+        "avocado halves"
+      ],
+      "benefitLine": "Skin & Beauty Support for Everyday Wellness",
+      "benefitIcons": [
+        "SKIN HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "RADIANCE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Magnolia Bark/Manjistha Stem + Propolis + Avocado Fruit.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Magnolia Bark/Manjistha Stem + Propolis + Avocado Fruit.webp",
+      "asset": "vital-org-10.png"
+    },
+    {
+      "id": 11,
+      "folder": "Magnolia Bark",
+      "formula": "Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry",
+      "lead": "Aloe Vera",
+      "secondary": "+ Bamboo Stem + Sesbania Grandiflora + Bearberry",
+      "bottle": "B",
+      "fill": "pale green tablets",
+      "palette": [
+        "mint",
+        "cream",
+        "soft-green"
+      ],
+      "props": [
+        "aloe vera leaf cut",
+        "bamboo stems",
+        "bearberry leaves"
+      ],
+      "benefitLine": "Hair, Skin & Nails Support for Everyday Wellness",
+      "benefitIcons": [
+        "SKIN HEALTH",
+        "HAIR SUPPORT",
+        "HYDRATION",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Magnolia Bark/Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Magnolia Bark/Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry.webp",
+      "asset": "vital-org-11.png"
+    },
+    {
+      "id": 12,
+      "folder": "Magnolia Bark",
+      "formula": "Amla + Bhringraj + Brahmi + Grapeseed",
+      "lead": "Amla",
+      "secondary": "+ Bhringraj + Brahmi + Grapeseed",
+      "bottle": "C",
+      "fill": "green capsules",
+      "palette": [
+        "lime",
+        "berry",
+        "cream"
+      ],
+      "props": [
+        "fresh amla",
+        "bhringraj leaves",
+        "brahmi sprigs",
+        "grapeseeds"
+      ],
+      "benefitLine": "Hair & Radiance Support for Everyday Wellness",
+      "benefitIcons": [
+        "HAIR SUPPORT",
+        "SKIN HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Magnolia Bark/Amla + Bhringraj + Brahmi + Grapeseed.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Magnolia Bark/Amla + Bhringraj + Brahmi + Grapeseed.webp",
+      "asset": "vital-org-12.png"
+    },
+    {
+      "id": 13,
+      "folder": "Magnolia Bark",
+      "formula": "Orange + Hibiscus + Gingko Biloba + Green Tea",
+      "lead": "Orange",
+      "secondary": "+ Hibiscus + Gingko Biloba + Green Tea",
+      "bottle": "A",
+      "fill": "orange gummies",
+      "palette": [
+        "citrus",
+        "hibiscus-pink",
+        "green"
+      ],
+      "props": [
+        "orange wedges",
+        "hibiscus flowers",
+        "ginkgo leaves",
+        "green tea"
+      ],
+      "benefitLine": "Beauty & Antioxidant Support for Everyday Wellness",
+      "benefitIcons": [
+        "SKIN HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "RADIANCE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Magnolia Bark/Orange + Hibiscus + Gingko Biloba + Green Tea.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Magnolia Bark/Orange + Hibiscus + Gingko Biloba + Green Tea.webp",
+      "asset": "vital-org-13.png"
+    },
+    {
+      "id": 14,
+      "folder": "Horsetail",
+      "formula": "Elderberry + Green Tea + Beetroot",
+      "lead": "Elderberry",
+      "secondary": "+ Green Tea + Beetroot",
+      "bottle": "A",
+      "fill": "deep purple gummies",
+      "palette": [
+        "purple",
+        "beet-red",
+        "sage"
+      ],
+      "props": [
+        "elderberry clusters",
+        "green tea leaves",
+        "sliced beetroot"
+      ],
+      "benefitLine": "Immune & Heart Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "HEART HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Horsetail/Elderberry + Green Tea + Beetroot.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Horsetail/Elderberry + Green Tea + Beetroot.webp",
+      "asset": "vital-org-14.png"
+    },
+    {
+      "id": 15,
+      "folder": "Horsetail",
+      "formula": "Pomegranate + Cranberry + Curcumin",
+      "lead": "Pomegranate",
+      "secondary": "+ Cranberry + Curcumin",
+      "bottle": "B",
+      "fill": "red-orange tablets",
+      "palette": [
+        "ruby",
+        "cranberry",
+        "gold"
+      ],
+      "props": [
+        "halved pomegranate",
+        "cranberries",
+        "turmeric powder bowl"
+      ],
+      "benefitLine": "Antioxidant & Cellular Support for Everyday Wellness",
+      "benefitIcons": [
+        "CELLULAR HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "URINARY SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Horsetail/Pomegranate + Cranberry + Curcumin.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Horsetail/Pomegranate + Cranberry + Curcumin.webp",
+      "asset": "vital-org-15.png"
+    },
+    {
+      "id": 16,
+      "folder": "Horsetail",
+      "formula": "Wheat Grass + Acai Berry + Raspberries + Papain",
+      "lead": "Wheat Grass",
+      "secondary": "+ Acai Berry + Raspberries + Papain",
+      "bottle": "C",
+      "fill": "light-green capsules",
+      "palette": [
+        "bright-green",
+        "berry-red",
+        "cream"
+      ],
+      "props": [
+        "wheatgrass bundle",
+        "acai berries",
+        "raspberries",
+        "halved papaya"
+      ],
+      "benefitLine": "Detox, Digestion & Everyday Wellness",
+      "benefitIcons": [
+        "DETOX SUPPORT",
+        "DIGESTIVE HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Horsetail/Wheat Grass + Acai Berry + Raspberries + Papain.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Horsetail/Wheat Grass + Acai Berry + Raspberries + Papain.webp",
+      "asset": "vital-org-16.png"
+    },
+    {
+      "id": 17,
+      "folder": "Horsetail",
+      "formula": "Spirulina + Tart Cherry + Bacopa Monnieri",
+      "lead": "Spirulina",
+      "secondary": "+ Tart Cherry + Bacopa Monnieri",
+      "bottle": "A",
+      "fill": "dark green gummies",
+      "palette": [
+        "deep-green",
+        "cherry-red",
+        "cream"
+      ],
+      "props": [
+        "spirulina powder bowl",
+        "tart cherries",
+        "bacopa leaves"
+      ],
+      "benefitLine": "Focus, Recovery & Everyday Wellness",
+      "benefitIcons": [
+        "COGNITIVE SUPPORT",
+        "RECOVERY SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Horsetail/Spirulina + Tart Cherry + Bacopa Monnieri.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Horsetail/Spirulina + Tart Cherry + Bacopa Monnieri.webp",
+      "asset": "vital-org-17.png"
+    },
+    {
+      "id": 18,
+      "folder": "Gynoestemma",
+      "formula": "Punarnava + Astragalus + Cranberry",
+      "lead": "Punarnava",
+      "secondary": "+ Astragalus + Cranberry",
+      "bottle": "C",
+      "fill": "brown capsules",
+      "palette": [
+        "earth-green",
+        "berry",
+        "cream"
+      ],
+      "props": [
+        "punarnava roots",
+        "astragalus",
+        "cranberries"
+      ],
+      "benefitLine": "Kidney & Fluid Balance for Everyday Wellness",
+      "benefitIcons": [
+        "KIDNEY SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Gynoestemma/Punarnava + Astragalus + Cranberry.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Gynoestemma/Punarnava + Astragalus + Cranberry.webp",
+      "asset": "vital-org-18.png"
+    },
+    {
+      "id": 19,
+      "folder": "Gynoestemma",
+      "formula": "Horse Tail Herb + Birch Leaf + Tulsi Ark",
+      "lead": "Horse Tail Herb",
+      "secondary": "+ Birch Leaf + Tulsi Ark",
+      "bottle": "A",
+      "fill": "sage gummies",
+      "palette": [
+        "sage",
+        "birch",
+        "cream"
+      ],
+      "props": [
+        "horsetail stems",
+        "birch leaves",
+        "tulsi sprigs"
+      ],
+      "benefitLine": "Kidney & Botanical Support for Everyday Wellness",
+      "benefitIcons": [
+        "KIDNEY SUPPORT",
+        "DETOX SUPPORT",
+        "MINERAL SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Gynoestemma/Horse Tail Herb + Birch Leaf + Tulsi Ark.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Gynoestemma/Horse Tail Herb + Birch Leaf + Tulsi Ark.webp",
+      "asset": "vital-org-19.png"
+    },
+    {
+      "id": 20,
+      "folder": "Gynoestemma",
+      "formula": "Manjistha + Amla + Fennel Seed + Celery",
+      "lead": "Manjistha",
+      "secondary": "+ Amla + Fennel Seed + Celery",
+      "bottle": "B",
+      "fill": "pink tablets",
+      "palette": [
+        "magenta",
+        "celery-green",
+        "cream"
+      ],
+      "props": [
+        "manjistha",
+        "amla",
+        "fennel seeds",
+        "celery stalks"
+      ],
+      "benefitLine": "Kidney & Cleanse Support for Everyday Wellness",
+      "benefitIcons": [
+        "KIDNEY SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Gynoestemma/Manjistha + Amla + Fennel Seed + Celery.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Gynoestemma/Manjistha + Amla + Fennel Seed + Celery.webp",
+      "asset": "vital-org-20.png"
+    },
+    {
+      "id": 21,
+      "folder": "Holy Basil",
+      "formula": "Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc",
+      "lead": "Iron",
+      "secondary": "+ Folic Acid + Vitamin B12 + Vitamin B6 + Zinc",
+      "bottle": "B",
+      "fill": "beige capsules",
+      "palette": [
+        "deep-green",
+        "beet-red",
+        "terracotta"
+      ],
+      "props": [
+        "spinach bowl",
+        "halved beets",
+        "pumpkin seeds",
+        "orange wedges",
+        "dates"
+      ],
+      "benefitLine": "Blood & Energy Support for Everyday Wellness",
+      "benefitIcons": [
+        "HEALTHY BLOOD",
+        "ENERGY BOOST",
+        "IMMUNE SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Holy Basil/Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Holy Basil/Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc.webp",
+      "asset": "vital-org-21.png"
+    },
+    {
+      "id": 22,
+      "folder": "Holy Basil",
+      "formula": "Folic Acid + Vitamin B12 + Vitamin C",
+      "lead": "Folic Acid",
+      "secondary": "+ Vitamin B12 + Vitamin C",
+      "bottle": "A",
+      "fill": "green gummies",
+      "palette": [
+        "leaf-green",
+        "citrus",
+        "cream"
+      ],
+      "props": [
+        "leafy greens",
+        "citrus slices",
+        "B-vitamin softgels nearby"
+      ],
+      "benefitLine": "Blood & Cellular Support for Everyday Wellness",
+      "benefitIcons": [
+        "HEALTHY BLOOD",
+        "CELLULAR HEALTH",
+        "ENERGY BOOST",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Holy Basil/Folic Acid + Vitamin B12 + Vitamin C.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Holy Basil/Folic Acid + Vitamin B12 + Vitamin C.webp",
+      "asset": "vital-org-22.png"
+    },
+    {
+      "id": 23,
+      "folder": "Holy Basil",
+      "formula": "Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc",
+      "lead": "Folic Acid",
+      "secondary": "+ Vitamin B12 + Vitamin C + Iron + Zinc",
+      "bottle": "B",
+      "fill": "yellow tablets",
+      "palette": [
+        "leaf-green",
+        "citrus",
+        "cream"
+      ],
+      "props": [
+        "leafy greens",
+        "citrus slices",
+        "B-vitamin softgels nearby"
+      ],
+      "benefitLine": "Blood & Cellular Support for Everyday Wellness",
+      "benefitIcons": [
+        "HEALTHY BLOOD",
+        "CELLULAR HEALTH",
+        "ENERGY BOOST",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Holy Basil/Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Holy Basil/Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc.webp",
+      "asset": "vital-org-23.png"
+    },
+    {
+      "id": 24,
+      "folder": "Holy Basil",
+      "formula": "Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12",
+      "lead": "Vitamin B1",
+      "secondary": "+ Vitamin B2 + Vitamin B6 + Vitamin B12",
+      "bottle": "C",
+      "fill": "yellow capsules",
+      "palette": [
+        "sunshine",
+        "cream",
+        "soft-orange"
+      ],
+      "props": [
+        "whole grains",
+        "sunflower seeds",
+        "leafy greens"
+      ],
+      "benefitLine": "Energy & Nervous System Support for Everyday Wellness",
+      "benefitIcons": [
+        "ENERGY BOOST",
+        "NERVE SUPPORT",
+        "METABOLISM",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Holy Basil/Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Holy Basil/Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12.webp",
+      "asset": "vital-org-24.png"
+    },
+    {
+      "id": 25,
+      "folder": "Triphala",
+      "formula": "Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark",
+      "lead": "Horse Chestnut",
+      "secondary": "+ Rutin Powder + Arjuna + Cassia Bark",
+      "bottle": "A",
+      "fill": "brown gummies",
+      "palette": [
+        "chestnut",
+        "wine",
+        "cream"
+      ],
+      "props": [
+        "horse chestnuts",
+        "arjuna bark",
+        "cassia bark"
+      ],
+      "benefitLine": "Heart & Circulation Support for Everyday Wellness",
+      "benefitIcons": [
+        "HEART HEALTH",
+        "CIRCULATION",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Triphala/Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Triphala/Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark.webp",
+      "asset": "vital-org-25.png"
+    },
+    {
+      "id": 26,
+      "folder": "Triphala",
+      "formula": "Aronia Berry + Piperine + Maitake Mushroom",
+      "lead": "Aronia Berry",
+      "secondary": "+ Piperine + Maitake Mushroom",
+      "bottle": "B",
+      "fill": "purple tablets",
+      "palette": [
+        "deep-purple",
+        "mushroom-tan",
+        "cream"
+      ],
+      "props": [
+        "aronia berries",
+        "black pepper",
+        "maitake mushroom"
+      ],
+      "benefitLine": "Heart & Antioxidant Support for Everyday Wellness",
+      "benefitIcons": [
+        "HEART HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "IMMUNE SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Triphala/Aronia Berry + Piperine + Maitake Mushroom.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Triphala/Aronia Berry + Piperine + Maitake Mushroom.webp",
+      "asset": "vital-org-26.png"
+    },
+    {
+      "id": 27,
+      "folder": "Triphala",
+      "formula": "Arjuna + Guggul + Brahmi",
+      "lead": "Arjuna",
+      "secondary": "+ Guggul + Brahmi",
+      "bottle": "C",
+      "fill": "brown capsules",
+      "palette": [
+        "bark-brown",
+        "sage",
+        "cream"
+      ],
+      "props": [
+        "arjuna bark",
+        "guggul resin",
+        "brahmi leaves"
+      ],
+      "benefitLine": "Heart Health for Everyday Wellness",
+      "benefitIcons": [
+        "HEART HEALTH",
+        "CIRCULATION",
+        "CALM SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Triphala/Arjuna + Guggul + Brahmi.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Triphala/Arjuna + Guggul + Brahmi.webp",
+      "asset": "vital-org-27.png"
+    },
+    {
+      "id": 28,
+      "folder": "Triphala",
+      "formula": "Fenugreek Seed + Amla + Garlic Powder + Arjuna",
+      "lead": "Fenugreek Seed",
+      "secondary": "+ Amla + Garlic Powder + Arjuna",
+      "bottle": "A",
+      "fill": "golden gummies",
+      "palette": [
+        "mustard",
+        "green",
+        "cream"
+      ],
+      "props": [
+        "fenugreek seeds",
+        "amla",
+        "garlic cloves",
+        "arjuna bark"
+      ],
+      "benefitLine": "Heart & Metabolic Support for Everyday Wellness",
+      "benefitIcons": [
+        "HEART HEALTH",
+        "METABOLISM",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Triphala/Fenugreek Seed + Amla + Garlic Powder + Arjuna.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Triphala/Fenugreek Seed + Amla + Garlic Powder + Arjuna.webp",
+      "asset": "vital-org-28.png"
+    },
+    {
+      "id": 29,
+      "folder": "Curcuma Longa",
+      "formula": "Gingko Biloba + Bacopa Monnieri + Shankhpushpi",
+      "lead": "Gingko Biloba",
+      "secondary": "+ Bacopa Monnieri + Shankhpushpi",
+      "bottle": "B",
+      "fill": "green tablets",
+      "palette": [
+        "ginkgo-gold",
+        "green",
+        "cream"
+      ],
+      "props": [
+        "ginkgo leaves",
+        "bacopa sprigs",
+        "shankhpushpi flowers"
+      ],
+      "benefitLine": "Brain Health for Everyday Wellness",
+      "benefitIcons": [
+        "COGNITIVE SUPPORT",
+        "FOCUS",
+        "MEMORY SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Curcuma Longa/Gingko Biloba + Bacopa Monnieri + Shankhpushpi.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Curcuma Longa/Gingko Biloba + Bacopa Monnieri + Shankhpushpi.webp",
+      "asset": "vital-org-29.png"
+    },
+    {
+      "id": 30,
+      "folder": "Curcuma Longa",
+      "formula": "Rosemary Leaf + Gotu Kola + Curcumin + Vacha",
+      "lead": "Rosemary Leaf",
+      "secondary": "+ Gotu Kola + Curcumin + Vacha",
+      "bottle": "C",
+      "fill": "green capsules",
+      "palette": [
+        "herb-green",
+        "turmeric",
+        "cream"
+      ],
+      "props": [
+        "rosemary sprigs",
+        "gotu kola",
+        "turmeric",
+        "vacha root"
+      ],
+      "benefitLine": "Brain & Clarity Support for Everyday Wellness",
+      "benefitIcons": [
+        "COGNITIVE SUPPORT",
+        "FOCUS",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Curcuma Longa/Rosemary Leaf + Gotu Kola + Curcumin + Vacha.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Curcuma Longa/Rosemary Leaf + Gotu Kola + Curcumin + Vacha.webp",
+      "asset": "vital-org-30.png"
+    },
+    {
+      "id": 31,
+      "folder": "Curcuma Longa",
+      "formula": "Bacopa Monnieri + Rhodiola Rosea + Ginseng",
+      "lead": "Bacopa Monnieri",
+      "secondary": "+ Rhodiola Rosea + Ginseng",
+      "bottle": "A",
+      "fill": "green gummies",
+      "palette": [
+        "soft-green",
+        "rose",
+        "cream"
+      ],
+      "props": [
+        "bacopa leaves",
+        "rhodiola root",
+        "ginseng root"
+      ],
+      "benefitLine": "Brain Health for Everyday Wellness",
+      "benefitIcons": [
+        "COGNITIVE SUPPORT",
+        "FOCUS",
+        "STRESS BALANCE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Curcuma Longa/Bacopa Monnieri + Rhodiola Rosea + Ginseng.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Curcuma Longa/Bacopa Monnieri + Rhodiola Rosea + Ginseng.webp",
+      "asset": "vital-org-31.png"
+    },
+    {
+      "id": 32,
+      "folder": "Kalmegh",
+      "formula": "Shatavari + Black Sesame Seed + Liquorice Root + Musta",
+      "lead": "Shatavari",
+      "secondary": "+ Black Sesame Seed + Liquorice Root + Musta",
+      "bottle": "B",
+      "fill": "cream tablets",
+      "palette": [
+        "cream",
+        "sesame",
+        "soft-pink"
+      ],
+      "props": [
+        "shatavari roots",
+        "black sesame",
+        "liquorice root",
+        "musta"
+      ],
+      "benefitLine": "Women's Wellness for Everyday Balance",
+      "benefitIcons": [
+        "WOMEN'S HEALTH",
+        "HORMONE BALANCE",
+        "ENERGY BOOST",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Kalmegh/Shatavari + Black Sesame Seed + Liquorice Root + Musta.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Kalmegh/Shatavari + Black Sesame Seed + Liquorice Root + Musta.webp",
+      "asset": "vital-org-32.png"
+    },
+    {
+      "id": 33,
+      "folder": "Kalmegh",
+      "formula": "Gokshuru + Holy Basil + Ashwagandha Root + Shalparni",
+      "lead": "Gokshuru",
+      "secondary": "+ Holy Basil + Ashwagandha Root + Shalparni",
+      "bottle": "C",
+      "fill": "beige capsules",
+      "palette": [
+        "earth",
+        "basil-green",
+        "cream"
+      ],
+      "props": [
+        "gokshura fruits",
+        "holy basil",
+        "ashwagandha root"
+      ],
+      "benefitLine": "Women's Vitality for Everyday Wellness",
+      "benefitIcons": [
+        "WOMEN'S HEALTH",
+        "VITALITY",
+        "STRESS BALANCE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Kalmegh/Gokshuru + Holy Basil + Ashwagandha Root + Shalparni.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Kalmegh/Gokshuru + Holy Basil + Ashwagandha Root + Shalparni.webp",
+      "asset": "vital-org-33.png"
+    },
+    {
+      "id": 34,
+      "folder": "Kalmegh",
+      "formula": "Ashoka + Jeevanti + Punarnava + Guduchi",
+      "lead": "Ashoka",
+      "secondary": "+ Jeevanti + Punarnava + Guduchi",
+      "bottle": "A",
+      "fill": "brown gummies",
+      "palette": [
+        "bark",
+        "sage",
+        "cream"
+      ],
+      "props": [
+        "ashoka bark",
+        "jeevanti stems",
+        "punarnava",
+        "guduchi"
+      ],
+      "benefitLine": "Women's Wellness for Everyday Balance",
+      "benefitIcons": [
+        "WOMEN'S HEALTH",
+        "HORMONE BALANCE",
+        "DETOX SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Kalmegh/Ashoka + Jeevanti + Punarnava + Guduchi.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Kalmegh/Ashoka + Jeevanti + Punarnava + Guduchi.webp",
+      "asset": "vital-org-34.png"
+    },
+    {
+      "id": 35,
+      "folder": "Gymnema Sylvestre",
+      "formula": "Ashwagandha Root + Mucuna Pruriens + Safed Musli",
+      "lead": "Ashwagandha Root",
+      "secondary": "+ Mucuna Pruriens + Safed Musli",
+      "bottle": "B",
+      "fill": "beige tablets",
+      "palette": [
+        "sand",
+        "sage",
+        "cream"
+      ],
+      "props": [
+        "ashwagandha roots",
+        "mucuna beans",
+        "safed musli"
+      ],
+      "benefitLine": "Men's Vitality for Everyday Wellness",
+      "benefitIcons": [
+        "MEN'S HEALTH",
+        "VITALITY",
+        "STRESS BALANCE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Gymnema Sylvestre/Ashwagandha Root + Mucuna Pruriens + Safed Musli.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Gymnema Sylvestre/Ashwagandha Root + Mucuna Pruriens + Safed Musli.webp",
+      "asset": "vital-org-35.png"
+    },
+    {
+      "id": 36,
+      "folder": "Gymnema Sylvestre",
+      "formula": "Muira Puama + Gokhru + Shilajit",
+      "lead": "Muira Puama",
+      "secondary": "+ Gokhru + Shilajit",
+      "bottle": "C",
+      "fill": "brown capsules",
+      "palette": [
+        "wood",
+        "mineral",
+        "cream"
+      ],
+      "props": [
+        "muira puama bark",
+        "gokhru",
+        "shilajit resin"
+      ],
+      "benefitLine": "Men's Vitality for Everyday Wellness",
+      "benefitIcons": [
+        "MEN'S HEALTH",
+        "ENERGY BOOST",
+        "VITALITY",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Gymnema Sylvestre/Muira Puama + Gokhru + Shilajit.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Gymnema Sylvestre/Muira Puama + Gokhru + Shilajit.webp",
+      "asset": "vital-org-36.png"
+    },
+    {
+      "id": 37,
+      "folder": "Gymnema Sylvestre",
+      "formula": "Shilajit + Ashwagandha Root + Ginseng",
+      "lead": "Shilajit",
+      "secondary": "+ Ashwagandha Root + Ginseng",
+      "bottle": "A",
+      "fill": "dark mineral gummies",
+      "palette": [
+        "mineral-black",
+        "gold",
+        "cream"
+      ],
+      "props": [
+        "shilajit resin",
+        "ashwagandha root",
+        "ginseng"
+      ],
+      "benefitLine": "Men's Strength for Everyday Wellness",
+      "benefitIcons": [
+        "MEN'S HEALTH",
+        "ENERGY BOOST",
+        "VITALITY",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Gymnema Sylvestre/Shilajit + Ashwagandha Root + Ginseng.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Gymnema Sylvestre/Shilajit + Ashwagandha Root + Ginseng.webp",
+      "asset": "vital-org-37.png"
+    },
+    {
+      "id": 38,
+      "folder": "Liquorice",
+      "formula": "Bitter Melon + Lucuma + Banaba Leaf",
+      "lead": "Bitter Melon",
+      "secondary": "+ Lucuma + Banaba Leaf",
+      "bottle": "B",
+      "fill": "green tablets",
+      "palette": [
+        "bitter-green",
+        "gold",
+        "cream"
+      ],
+      "props": [
+        "bitter melon slices",
+        "lucuma powder",
+        "banaba leaves"
+      ],
+      "benefitLine": "Metabolic Support for Everyday Wellness",
+      "benefitIcons": [
+        "METABOLISM",
+        "BLOOD SUGAR SUPPORT",
+        "DIGESTIVE HEALTH",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liquorice/Bitter Melon + Lucuma + Banaba Leaf.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liquorice/Bitter Melon + Lucuma + Banaba Leaf.webp",
+      "asset": "vital-org-38.png"
+    },
+    {
+      "id": 39,
+      "folder": "Liquorice",
+      "formula": "Chitrak Root + Fenugreek Seed + Olive Leaf",
+      "lead": "Chitrak Root",
+      "secondary": "+ Fenugreek Seed + Olive Leaf",
+      "bottle": "C",
+      "fill": "brown capsules",
+      "palette": [
+        "earth-red",
+        "olive",
+        "cream"
+      ],
+      "props": [
+        "chitrak root",
+        "fenugreek seeds",
+        "olive leaves"
+      ],
+      "benefitLine": "Metabolic Support for Everyday Wellness",
+      "benefitIcons": [
+        "METABOLISM",
+        "DIGESTIVE HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liquorice/Chitrak Root + Fenugreek Seed + Olive Leaf.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liquorice/Chitrak Root + Fenugreek Seed + Olive Leaf.webp",
+      "asset": "vital-org-39.png"
+    },
+    {
+      "id": 40,
+      "folder": "Liquorice",
+      "formula": "Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark",
+      "lead": "Prickly Pear Leaf",
+      "secondary": "+ Mulberry Leaf + Cinnamon Bark",
+      "bottle": "A",
+      "fill": "green gummies",
+      "palette": [
+        "cactus-green",
+        "cinnamon",
+        "cream"
+      ],
+      "props": [
+        "prickly pear pads",
+        "mulberry leaves",
+        "cinnamon sticks"
+      ],
+      "benefitLine": "Metabolic Support for Everyday Wellness",
+      "benefitIcons": [
+        "METABOLISM",
+        "BLOOD SUGAR SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liquorice/Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liquorice/Prickly Pear Leaf + Mulberry Leaf + Cinnamon Bark.webp",
+      "asset": "vital-org-40.png"
+    },
+    {
+      "id": 41,
+      "folder": "Liquorice",
+      "formula": "Gymnema Leaf + Bilberry",
+      "lead": "Gymnema Leaf",
+      "secondary": "+ Bilberry",
+      "bottle": "B",
+      "fill": "green tablets",
+      "palette": [
+        "leaf-green",
+        "bilberry-blue",
+        "cream"
+      ],
+      "props": [
+        "gymnema leaves",
+        "fresh bilberries"
+      ],
+      "benefitLine": "Metabolic Support for Everyday Wellness",
+      "benefitIcons": [
+        "METABOLISM",
+        "BLOOD SUGAR SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Liquorice/Gymnema Leaf + Bilberry.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Liquorice/Gymnema Leaf + Bilberry.webp",
+      "asset": "vital-org-41.png"
+    },
+    {
+      "id": 42,
+      "folder": "Cinnamon",
+      "formula": "Milk Thistle + Dandelion Root + Green Turmeric",
+      "lead": "Milk Thistle",
+      "secondary": "+ Dandelion Root + Green Turmeric",
+      "bottle": "C",
+      "fill": "green capsules",
+      "palette": [
+        "thistle-green",
+        "gold",
+        "cream"
+      ],
+      "props": [
+        "milk thistle flowers",
+        "dandelion root",
+        "green turmeric"
+      ],
+      "benefitLine": "Liver Health for Everyday Wellness",
+      "benefitIcons": [
+        "LIVER SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Cinnamon/Milk Thistle + Dandelion Root + Green Turmeric.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Cinnamon/Milk Thistle + Dandelion Root + Green Turmeric.webp",
+      "asset": "vital-org-42.png"
+    },
+    {
+      "id": 43,
+      "folder": "Cinnamon",
+      "formula": "Kutki + Schisandra Berry + Nigella Sativa",
+      "lead": "Kutki",
+      "secondary": "+ Schisandra Berry + Nigella Sativa",
+      "bottle": "A",
+      "fill": "earth gummies",
+      "palette": [
+        "bitter-earth",
+        "berry",
+        "cream"
+      ],
+      "props": [
+        "kutki root",
+        "schisandra berries",
+        "nigella seeds"
+      ],
+      "benefitLine": "Liver Health for Everyday Wellness",
+      "benefitIcons": [
+        "LIVER SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Cinnamon/Kutki + Schisandra Berry + Nigella Sativa.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Cinnamon/Kutki + Schisandra Berry + Nigella Sativa.webp",
+      "asset": "vital-org-43.png"
+    },
+    {
+      "id": 44,
+      "folder": "Cinnamon",
+      "formula": "Milk Thistle + Artichoke Fruit + Myrobalan",
+      "lead": "Milk Thistle",
+      "secondary": "+ Artichoke Fruit + Myrobalan",
+      "bottle": "B",
+      "fill": "green tablets",
+      "palette": [
+        "thistle-green",
+        "gold",
+        "cream"
+      ],
+      "props": [
+        "milk thistle flowers",
+        "dandelion root",
+        "green turmeric"
+      ],
+      "benefitLine": "Liver Health for Everyday Wellness",
+      "benefitIcons": [
+        "LIVER SUPPORT",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Cinnamon/Milk Thistle + Artichoke Fruit + Myrobalan.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Cinnamon/Milk Thistle + Artichoke Fruit + Myrobalan.webp",
+      "asset": "vital-org-44.png"
+    },
+    {
+      "id": 45,
+      "folder": "Moringa",
+      "formula": "Evening Primrose + Nettle Leaf + Valerian + Wild Yam",
+      "lead": "Evening Primrose",
+      "secondary": "+ Nettle Leaf + Valerian + Wild Yam",
+      "bottle": "C",
+      "fill": "cream capsules",
+      "palette": [
+        "primrose-yellow",
+        "nettle-green",
+        "lavender"
+      ],
+      "props": [
+        "evening primrose flowers",
+        "nettle leaves",
+        "valerian root",
+        "wild yam"
+      ],
+      "benefitLine": "Menopause Support for Everyday Balance",
+      "benefitIcons": [
+        "HORMONE BALANCE",
+        "CALM SUPPORT",
+        "WOMEN'S HEALTH",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Moringa/Evening Primrose + Nettle Leaf + Valerian + Wild Yam.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Moringa/Evening Primrose + Nettle Leaf + Valerian + Wild Yam.webp",
+      "asset": "vital-org-45.png"
+    },
+    {
+      "id": 46,
+      "folder": "Moringa",
+      "formula": "Flaxseed + Red Clover + Black Cohosh Root + Ginseng",
+      "lead": "Flaxseed",
+      "secondary": "+ Red Clover + Black Cohosh Root + Ginseng",
+      "bottle": "A",
+      "fill": "brown gummies",
+      "palette": [
+        "flax-brown",
+        "clover-pink",
+        "cream"
+      ],
+      "props": [
+        "flaxseeds",
+        "red clover",
+        "black cohosh root",
+        "ginseng"
+      ],
+      "benefitLine": "Menopause Support for Everyday Balance",
+      "benefitIcons": [
+        "HORMONE BALANCE",
+        "WOMEN'S HEALTH",
+        "CALM SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Moringa/Flaxseed + Red Clover + Black Cohosh Root + Ginseng.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Moringa/Flaxseed + Red Clover + Black Cohosh Root + Ginseng.webp",
+      "asset": "vital-org-46.png"
+    },
+    {
+      "id": 47,
+      "folder": "Moringa",
+      "formula": "Motherwort + Passion Flower + Valerian",
+      "lead": "Motherwort",
+      "secondary": "+ Passion Flower + Valerian",
+      "bottle": "B",
+      "fill": "green tablets",
+      "palette": [
+        "herb-green",
+        "passion-purple",
+        "cream"
+      ],
+      "props": [
+        "motherwort sprigs",
+        "passion flower",
+        "valerian root"
+      ],
+      "benefitLine": "Calm & Balance for Everyday Wellness",
+      "benefitIcons": [
+        "CALM SUPPORT",
+        "HORMONE BALANCE",
+        "SLEEP SUPPORT",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Moringa/Motherwort + Passion Flower + Valerian.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Moringa/Motherwort + Passion Flower + Valerian.webp",
+      "asset": "vital-org-47.png"
+    },
+    {
+      "id": 48,
+      "folder": "Ashwagandha",
+      "formula": "Kalmegh + Curcumin + Astragalus",
+      "lead": "Kalmegh",
+      "secondary": "+ Curcumin + Astragalus",
+      "bottle": "C",
+      "fill": "amber capsules",
+      "palette": [
+        "bitter-green",
+        "gold",
+        "cream"
+      ],
+      "props": [
+        "kalmegh leaves",
+        "turmeric root",
+        "astragalus slices"
+      ],
+      "benefitLine": "Immune & Liver Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "LIVER SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Ashwagandha/Kalmegh + Curcumin + Astragalus.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Ashwagandha/Kalmegh + Curcumin + Astragalus.webp",
+      "asset": "vital-org-48.png"
+    },
+    {
+      "id": 49,
+      "folder": "Ashwagandha",
+      "formula": "Ginger + Liquorice + Cardamom",
+      "lead": "Ginger",
+      "secondary": "+ Liquorice + Cardamom",
+      "bottle": "A",
+      "fill": "golden gummies",
+      "palette": [
+        "ginger-gold",
+        "cardamom-green",
+        "cream"
+      ],
+      "props": [
+        "fresh ginger",
+        "liquorice sticks",
+        "cardamom pods"
+      ],
+      "benefitLine": "Digestive Comfort for Everyday Wellness",
+      "benefitIcons": [
+        "DIGESTIVE HEALTH",
+        "CALM SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Ashwagandha/Ginger + Liquorice + Cardamom.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Ashwagandha/Ginger + Liquorice + Cardamom.webp",
+      "asset": "vital-org-49.png"
+    },
+    {
+      "id": 50,
+      "folder": "Ashwagandha",
+      "formula": "Kalmegh + Pippali + Vasaka",
+      "lead": "Kalmegh",
+      "secondary": "+ Pippali + Vasaka",
+      "bottle": "B",
+      "fill": "amber capsules",
+      "palette": [
+        "bitter-green",
+        "gold",
+        "cream"
+      ],
+      "props": [
+        "kalmegh leaves",
+        "turmeric root",
+        "astragalus slices"
+      ],
+      "benefitLine": "Immune & Liver Support for Everyday Wellness",
+      "benefitIcons": [
+        "IMMUNE SUPPORT",
+        "LIVER SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Ashwagandha/Kalmegh + Pippali + Vasaka.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Ashwagandha/Kalmegh + Pippali + Vasaka.webp",
+      "asset": "vital-org-50.png"
+    },
+    {
+      "id": 51,
+      "folder": "Garcinia Cambogia",
+      "formula": "Goji Berry + Bilberry + Marigold + Carrot",
+      "lead": "Goji Berry",
+      "secondary": "+ Bilberry + Marigold + Carrot",
+      "bottle": "C",
+      "fill": "orange capsules",
+      "palette": [
+        "goji-orange",
+        "bilberry",
+        "marigold"
+      ],
+      "props": [
+        "goji berries",
+        "bilberries",
+        "marigold petals",
+        "carrot"
+      ],
+      "benefitLine": "Vision & Antioxidant Support for Everyday Wellness",
+      "benefitIcons": [
+        "EYE HEALTH",
+        "ANTIOXIDANT DEFENSE",
+        "VITALITY",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Garcinia Cambogia/Goji Berry + Bilberry + Marigold + Carrot.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Garcinia Cambogia/Goji Berry + Bilberry + Marigold + Carrot.webp",
+      "asset": "vital-org-51.png"
+    },
+    {
+      "id": 52,
+      "folder": "Garcinia Cambogia",
+      "formula": "Fennel Seed + Bay Berry + Spinach",
+      "lead": "Fennel Seed",
+      "secondary": "+ Bay Berry + Spinach",
+      "bottle": "A",
+      "fill": "green gummies",
+      "palette": [
+        "fennel-green",
+        "berry",
+        "spinach"
+      ],
+      "props": [
+        "fennel seeds",
+        "bay berries",
+        "fresh spinach"
+      ],
+      "benefitLine": "Digestive & Cleanse Support for Everyday Wellness",
+      "benefitIcons": [
+        "DIGESTIVE HEALTH",
+        "DETOX SUPPORT",
+        "ANTIOXIDANT DEFENSE",
+        "OVERALL WELLNESS"
+      ],
+      "status": "vitalcore_v3",
+      "outPath": "public/product-images/Organic-review/Garcinia Cambogia/Fennel Seed + Bay Berry + Spinach.webp",
+      "bottleShape": "amber-packer",
+      "noQuantity": true,
+      "livePath": "public/product-images/Organic/Garcinia Cambogia/Fennel Seed + Bay Berry + Spinach.webp",
+      "asset": "vital-org-52.png"
+    }
+  ],
+  "logoNotes": "Use exact mint-green + slate-teal Zephyr wordmark. Do NOT recolor. Do NOT replace with brown serif Rooted in Wellness logo."
+}

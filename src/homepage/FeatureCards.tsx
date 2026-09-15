@@ -121,13 +121,13 @@ const FEATURE_CARDS: FeatureCard[] = [
   {
     title: "CUSTOM FORMULATION",
     description:
-      "From concept to commercial scale, Zephyr develops herbaceuticals, nutraceuticals, and organic specialty tablets for US private-label and contract partners.",
+      "From concept to commercial scale, Vitalcore develops herbaceuticals, nutraceuticals, and organic specialty tablets for US private-label and contract partners.",
     Icon: FlaskGif,
   },
   {
     title: "LICENSED FACILITY",
     description:
-      "65,000 sq ft production and laboratories with humidity-controlled dispensing, granulation, compression, coating, and capsule filling.",
+      "Humidity-controlled dispensing, granulation, compression, coating, and capsule filling under GMP and ISO quality systems.",
     Icon: FactoryGif,
   },
   {

@@ -37,7 +37,7 @@ const ITEMS: ExploreItem[] = [
   {
     title: "Organic",
     description:
-      "Organic and clean-label manufacturing for private-label launch.",
+      "Organic and clean label manufacturing for private label launch.",
     image: "/homepage/organic.webp",
     color: "bg-[#547A3D]",
     borderColor: "#547A3D",
@@ -140,7 +140,7 @@ function ExploreCard({
             alt={item.title}
             loading="lazy"
             decoding="async"
-            className={`h-[95%] w-[95%] bg-white object-contain transition-transform duration-500 ${
+            className={`h-full w-full rounded-full object-cover transition-transform duration-500 ${
               showFx ? "scale-[1.03]" : "scale-100"
             }`}
           />

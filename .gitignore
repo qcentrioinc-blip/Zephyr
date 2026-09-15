@@ -15,6 +15,9 @@ dist-ssr
 .env.*
 !.env.example
 
+# Local tooling (ffmpeg, etc.) — not part of the site
+.tools/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

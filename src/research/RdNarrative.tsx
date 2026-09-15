@@ -29,7 +29,7 @@ export default function RdNarrative() {
           </p>
           <H2>From formulation brief to commercial dossier</H2>
           <P className="mt-4 text-gray-600">
-            Zephyr product development labs connect market insight, pilot
+            Vitalcore product development labs connect market insight, pilot
             science, and manufacturing transfer so US brand partners can move
             from idea to finished specification with clarity.
           </P>

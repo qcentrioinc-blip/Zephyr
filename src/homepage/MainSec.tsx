@@ -366,17 +366,17 @@ const MainSec: React.FC = () => {
           <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
         </button>
 
-        <div className="pointer-events-none relative -mt-6 sm:-mt-10 md:-mt-18 lg:-mt-18 xl:-mt-24 flex h-[300px] xs:h-[320px] sm:h-[360px] md:h-[460px] lg:h-[460px] xl:h-[min(62dvh,720px)] justify-center overflow-visible">
+        <div className="pointer-events-none relative -mt-6 sm:-mt-10 md:-mt-18 lg:-mt-18 xl:-mt-24 flex h-[280px] xs:h-[300px] sm:h-[340px] md:h-[430px] lg:h-[430px] xl:h-[min(56dvh,640px)] justify-center overflow-visible">
           {/* Soft fully-blurred white blob behind product images */}
           <div
-            className="pointer-events-none absolute left-1/2 top-[48%] z-10 h-[240px] w-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 blur-[48px] sm:h-[320px] sm:w-[320px] sm:blur-[56px] md:h-[400px] md:w-[400px] md:blur-[64px] lg:h-[400px] lg:w-[400px] lg:blur-[64px] xl:top-[46%] xl:h-[min(56dvh,680px)] xl:w-[min(56dvh,680px)] xl:blur-[80px]"
+            className="pointer-events-none absolute left-1/2 top-[52%] z-10 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 blur-[48px] sm:h-[300px] sm:w-[300px] sm:blur-[56px] md:h-[360px] md:w-[360px] md:blur-[64px] lg:h-[360px] lg:w-[360px] lg:blur-[64px] xl:top-[50%] xl:h-[min(50dvh,600px)] xl:w-[min(50dvh,600px)] xl:blur-[80px]"
             aria-hidden
           />
 
           {/* Orbit: mobile/tablet below xl; large product treatment from xl up */}
           <div className="pointer-events-none absolute inset-0 z-[11] flex items-center justify-center" aria-hidden>
             <svg
-              className="absolute h-[170px] w-[300px] translate-y-28 sm:h-[200px] sm:w-[460px] sm:translate-y-16 md:h-[230px] md:w-[520px] md:translate-y-48 lg:h-[230px] lg:w-[520px] lg:translate-y-48 xl:h-[300px] xl:w-[700px] xl:translate-y-36 -rotate-6"
+              className="absolute h-[170px] w-[300px] translate-y-32 sm:h-[200px] sm:w-[460px] sm:translate-y-20 md:h-[230px] md:w-[520px] md:translate-y-52 lg:h-[230px] lg:w-[520px] lg:translate-y-52 xl:h-[280px] xl:w-[660px] xl:translate-y-40 -rotate-6"
               viewBox="0 0 1200 420"
               fill="none"
             >
@@ -394,7 +394,7 @@ const MainSec: React.FC = () => {
           </div>
 
           <div
-            className="mainsec-product-stage relative z-20 flex h-[250px] w-[180px] translate-y-10 items-center justify-center bg-transparent sm:h-[340px] sm:w-[240px] sm:translate-y-12 md:h-[420px] md:w-[280px] md:translate-y-16 lg:h-[420px] lg:w-[280px] lg:translate-y-16 xl:h-[min(64dvh,780px)] xl:w-[500px] xl:-translate-y-12"
+            className="mainsec-product-stage relative z-20 flex h-[230px] w-[165px] translate-y-14 items-center justify-center bg-transparent sm:h-[310px] sm:w-[220px] sm:translate-y-16 md:h-[380px] md:w-[250px] md:translate-y-20 lg:h-[380px] lg:w-[250px] lg:translate-y-20 xl:h-[min(56dvh,680px)] xl:w-[440px] xl:-translate-y-4"
             style={
               useLiteMotion
                 ? undefined

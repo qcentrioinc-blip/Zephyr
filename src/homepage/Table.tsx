@@ -25,15 +25,12 @@ export default function Table() {
               stay aligned to MOQ, dosage form, and market requirements.
             </P>
 
-            <div className="flex items-end justify-between gap-4 pt-4 md:pt-6">
-              <div>
-                <H4 className="">Manufacturing partner</H4>
-              </div>
-
+            <div className="flex items-center justify-between gap-4 pt-4 md:pt-6">
+              <H4 className="m-0 shrink-0">Manufactured by</H4>
               <img
                 src="/brand/logo.png"
                 alt="Zephyr"
-                className="h-8 w-auto object-contain sm:h-16"
+                className="h-8 w-auto max-w-[45%] object-contain object-right sm:h-10 md:h-12"
               />
             </div>
           </div>
@@ -41,7 +38,7 @@ export default function Table() {
           <div className="overflow-hidden rounded-[14px] bg-[#E6DCCD] shadow-[0_2px_10px_rgba(0,0,0,0.04)]">
             <img
               src={facilityImage}
-              alt="Zephyr production facility"
+              alt="Vitalcore production facility"
               width={800}
               height={1000}
               loading="lazy"
@@ -52,10 +49,11 @@ export default function Table() {
           <div className="flex flex-col gap-3 lg:h-full lg:justify-between">
             <div className="rounded-[14px] bg-[#F7F8F2] px-4 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:px-5 sm:py-5 md:flex-1 md:px-7 md:py-6">
               <p className="font-manrope zephyr-type-h1 font-bold text-[#000000]">
-                65K sq ft
+                cGMP / ISO
               </p>
               <P className="mt-2 max-w-full sm:mt-3 xl:max-w-[290px]">
-                Production facility and laboratories for partner manufacturing.
+                Validated processes, QA/QC coverage, and audit-ready documentation
+                for commercial release.
               </P>
             </div>
 

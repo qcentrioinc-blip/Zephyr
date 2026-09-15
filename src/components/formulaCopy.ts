@@ -45,7 +45,7 @@ const CATEGORY_BENEFITS: Record<string, string[]> = {
   "Skin & Beauty": [
     "Collagen, biotin, and antioxidant complexes for beauty-from-within lines",
     "Stable dosage forms for long retail shelf programs",
-    "Marketing-ready pack shots using standard Zephyr bottle renders",
+    "Marketing-ready pack shots using standard Vitalcore bottle renders",
   ],
   "Men's Health": [
     "Targeted mineral and botanical stacks for men's wellness portfolios",
@@ -93,7 +93,7 @@ export function buildFormulaDescription(
   rangeId: FormulaRangeId,
 ): string {
   const range = RANGE_LABEL[rangeId];
-  return `${formula} is offered as a ${range.toLowerCase()} formulation within our ${category} catalog. Zephyr supports US private-label and contract manufacturing programs with batch release documentation, flexible dosage formats, and finished-goods packaging options. Formulation briefs can be aligned to your target channel, label claims review, and commercial MOQ requirements without retail pricing on this catalog.`;
+  return `${formula} is offered as a ${range.toLowerCase()} formulation within our ${category} catalog. Vitalcore supports US private-label and contract manufacturing programs with batch release documentation, flexible dosage formats, and finished-goods packaging options. Formulation briefs can be aligned to your target channel, label claims review, and commercial MOQ requirements without retail pricing on this catalog.`;
 }
 
 export function buildFormulaBenefits(

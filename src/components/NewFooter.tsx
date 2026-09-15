@@ -74,9 +74,9 @@ const NewFooter = () => {
           <div className="col-span-2 flex flex-col items-center text-center sm:items-start sm:text-left lg:col-span-1">
             <Link to="/" className="mb-3 inline-flex shrink-0 items-center">
               <img
-                src="/brand/logo.png"
-                alt="Zephyr"
-                className="h-12 w-auto object-contain sm:h-14 md:h-20"
+                src="/brand/vitalcore-logo.svg"
+                alt="Vitalcore"
+                className="h-11 w-auto object-contain sm:h-12 md:h-14"
               />
             </Link>
             <P className="max-w-[300px] text-sm text-white/70">
@@ -90,7 +90,7 @@ const NewFooter = () => {
             </P> */}
           </div>
 
-          <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
+          <div className="flex flex-col items-center text-center sm:items-start sm:text-left lg:pt-[calc(3.5rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}
@@ -111,7 +111,7 @@ const NewFooter = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center text-center sm:items-start sm:text-left">
+          <div className="flex flex-col items-center text-center sm:items-start sm:text-left lg:pt-[calc(3.5rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}
@@ -184,9 +184,15 @@ const NewFooter = () => {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-2 pt-1 md:flex-row">
-          <P className="font-para tracking-normal text-white/70">
-            © {new Date().getFullYear()} Zephyr. All rights reserved.
-          </P>
+          <div className="flex flex-col items-center gap-1 md:items-start">
+            <P className="font-para tracking-normal text-white/70">
+              © {new Date().getFullYear()} Vitalcore. All rights reserved.
+            </P>
+            <P className="text-white/50">
+              VitalCore, by{" "}
+              <span className="font-bold tracking-[0.1em]">ZEPHYR</span>.
+            </P>
+          </div>
           <P className="text-white/50">
             B2B manufacturing partner · Nutraceutical · Herbaceutical · Organic
           </P>

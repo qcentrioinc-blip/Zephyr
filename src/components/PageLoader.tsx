@@ -121,7 +121,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       role={canEnter ? "button" : undefined}
       tabIndex={canEnter ? 0 : -1}
       aria-busy={!canEnter}
-      aria-label={canEnter ? "Click to enter Zephyr" : undefined}
+      aria-label={canEnter ? "Click to enter Vitalcore" : undefined}
     >
       <div className="zephyr-page-loader__media" aria-hidden>
         <video
@@ -139,8 +139,8 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
 
       <div className="zephyr-page-loader__copy">
         <img
-          src="/brand/logo-lock.png"
-          alt="Zephyr"
+          src="/brand/vitalcore-logo.svg"
+          alt="Vitalcore"
           className="zephyr-page-loader__logo"
           draggable={false}
         />

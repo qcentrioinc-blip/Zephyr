@@ -35,16 +35,24 @@ function listImages(dir) {
   return fs.readdirSync(dir).filter(isNamedProductFile);
 }
 
+function formulaStem(filename) {
+  // Strip .v34.webp sidecars to the product formula name
+  if (/\.v34\.webp$/i.test(filename)) return filename.replace(/\.v34\.webp$/i, "");
+  return stem(filename);
+}
+
 function findFile(files, formula) {
   const want = normalize(formula);
-  const exact = files.find((file) => normalize(stem(file)) === want);
-  if (exact) return exact;
+  const exactMatches = files.filter((file) => normalize(formulaStem(file)) === want);
+  if (exactMatches.length) {
+    return exactMatches.find((f) => /\.v34\.webp$/i.test(f)) || exactMatches[0];
+  }
 
   const wantTokens = new Set(want.split("+").filter(Boolean));
   let best = null;
   let bestScore = 0;
   for (const file of files) {
-    const tokens = new Set(normalize(stem(file)).split("+").filter(Boolean));
+    const tokens = new Set(normalize(formulaStem(file)).split("+").filter(Boolean));
     if (!tokens.size || !wantTokens.size) continue;
     let overlap = 0;
     for (const token of wantTokens) if (tokens.has(token)) overlap += 1;
@@ -156,7 +164,7 @@ const organicCatalog = [
 ];
 
 generateRange({
-  rangeFolder: "Nuetraceutical",
+  rangeFolder: "Nutraceutical",
   outFile: path.join(root, "src/nutraceutical/imageManifest.ts"),
   exportName: "NUTRA_PRODUCT_IMAGES",
   folderByCategory: {
@@ -177,6 +185,11 @@ generateRange({
     Vision: "Vision",
     "Liver Detox": "Liver Detox",
     Menopause: "Menopause",
+    "Geriatric Care": "geiragtic care",
+    "Varicose Veins": "varicouse veins",
+    "Kidney Health": "kidney health",
+    "Digestive Health": "digestive health",
+    "Weight Management": "weight management",
   },
   catalog: nutraCatalog,
 });

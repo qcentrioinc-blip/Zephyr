@@ -10,8 +10,8 @@ const JointPain = () => {
             <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
               <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
-                  src="/facility/jointpain-cdmo-lab.webp"
-                  alt="CDMO manufacturing laboratory"
+                  src="/facility/jointpain-1.webp"
+                  alt="R&D and analytical laboratories"
                   loading="lazy"
                   decoding="async"
                   width={320}
@@ -21,8 +21,8 @@ const JointPain = () => {
               </div>
               <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
-                  src="/facility/gallery-1.png"
-                  alt="Manufacturing facility"
+                  src="/facility/jointpain-2.webp"
+                  alt="CDMO manufacturing laboratory"
                   loading="lazy"
                   width={320}
                   height={576}
@@ -31,8 +31,8 @@ const JointPain = () => {
               </div>
               <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
-                  src="/facility/gallery-rd-analytical-labs.webp"
-                  alt="R&D and analytical laboratories"
+                  src="/facility/jointpain-3.webp"
+                  alt="Manufacturing facility"
                   loading="lazy"
                   width={320}
                   height={576}
@@ -51,24 +51,24 @@ const JointPain = () => {
                   CDMO partner for private-label dietary supplement brands.
                   <br />
                 </span>
-                Zephyr operates a 65,000 sq ft production facility and laboratories
-                focused on nutraceutical, herbaceutical, and organic products. We
-                manufacture vitamins, minerals, specialty dosages, and finished
+                Vitalcore runs integrated dispensing, granulation, compression,
+                coating, and packaging lines focused on nutraceutical,
+                herbaceutical, and organic products. We manufacture vitamins, minerals, specialty dosages, and finished
                 supplements for private-label and brand owners. Quality systems and
                 commercial reliability sit at the center of every program.
               </P>
-              <P className="mb-3">
+              {/* <P className="mb-3">
                 We support long-term partnerships with nutraceutical,
                 herbaceutical, and organic brand owners, including US marketers and
                 procurement teams that need dependable finished-goods supply.
-              </P>
+              </P> */}
             </Reveal>
           </div>
         </div>
 
         {/* <Reveal className="zephyr-prose mx-auto mt-10 w-full space-y-4 text-center lg:mx-0 lg:text-left">
           <P>
-            Zephyr is a full-service CDMO for dietary supplement brand owners and
+            Vitalcore is a full-service CDMO for dietary supplement brand owners and
             marketers. Vitamin, mineral, specialty tablet, and packaging
             capabilities support US private-label and contract manufacturing
             launches. Programs run from formulation brief through commercial release of

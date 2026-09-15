@@ -6,7 +6,7 @@ import Reveal from "../components/Reveal";
 const content = {
   title: "Formulation depth. Audit-ready quality systems.",
   description:
-    "Zephyr manufactures to GMP and ISO quality standards for US dietary supplement brands. We offer vitamin, mineral, and specialty formulations across multiple dosage forms, with documentation focused on safety, batch consistency, and finished-goods performance.",
+    "Vitalcore manufactures to GMP and ISO quality standards for US dietary supplement brands. We offer vitamin, mineral, and specialty formulations across multiple dosage forms, with documentation focused on safety, batch consistency, and finished-goods performance.",
   buttonText: "Explore R&D",
 };
 
@@ -20,7 +20,7 @@ export default function Showreel() {
               <div className="relative min-h-[220px] md:min-h-[340px]">
                 <img
                   src="/Generated/showreel-formulation.webp"
-                  alt="Zephyr formulation laboratory"
+                  alt="Vitalcore formulation laboratory"
                   width={800}
                   height={600}
                   loading="lazy"

@@ -5,13 +5,13 @@ export const PACKAGING_IMAGES = {
   powder: "/packaging/powder.webp",
   gummy: "/packaging/gummy.webp",
   jelly: "/packaging/jelly.webp",
-  jar: "/packaging/jar.jpg",
-  sachets: "/packaging/Sachets.svg",
-  blisters: "/packaging/Blisters.jpg",
-  bulkPacks: "/packaging/Bulk packs.jpg",
-  bottlePacks: "/packaging/Bottle packs.jpg",
-  aluAlu: "/packaging/Alu Alu.jpg",
-  stickPack: "/packaging/Stick-pack.svg",
+  jar: "/packaging/jar.webp",
+  sachets: "/packaging/sachets.webp",
+  blisters: "/packaging/blister.webp",
+  bulkPacks: "/packaging/bulk-packs.webp",
+  bottlePacks: "/packaging/bottle-packs.webp",
+  aluAlu: "/packaging/alu-alu.webp",
+  stickPack: "/packaging/stick-pack.webp",
 } as const;
 
 /** Shared finished-goods packaging slides for formula cards (after bottle). */

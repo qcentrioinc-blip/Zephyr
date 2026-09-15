@@ -1,8 +1,8 @@
-# Zephyr
+# Vitalcore
 
-B2B marketing site for **Zephyr**, a CDMO / private-label dietary supplement manufacturing partner. Product ranges: Nutraceutical, Herbaceutical, and Organic.
+B2B marketing site for **Vitalcore**, a CDMO / private-label dietary supplement brand. **Zephyr** is the parent company; this site speaks as Vitalcore. Product ranges: Nutraceutical, Herbaceutical, and Organic.
 
-Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/ISO, formats, and India · Spain · USA partnerships) follow **Biofern Life Sciences** source-of-truth data, presented under the Zephyr brand. Do not invent new company claims.
+Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/ISO, formats, and India · Spain · USA partnerships) follow **Biofern Life Sciences** source-of-truth data, presented under the Vitalcore brand. Do not invent new company claims.
 
 ## Tech stack
 
@@ -41,12 +41,13 @@ Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/I
 
 Keep published facts aligned with Biofern source material:
 
-- **Facility:** 65,000 sq ft · Plot #168-P5, Vemgal Industrial Area, Kolar District, Karnataka, India  
+- **Facility:** Plot #168-P5, Vemgal Industrial Area, Kolar District, Karnataka, India  
 - **CIN:** `U24100KA2019PTC120330`  
 - **Capacity (monthly):** up to 5B tablets · 100M capsules · 60M sachets · 1M jars  
 - **Quality:** GMP / ISO / cGMP systems  
 - **Markets:** India manufacturing · Spain & USA partners  
 - **Positioning:** private label / contract manufacturing / MOQ on inquiry — not retail
+- **Brand:** Vitalcore (site voice). Parent company Zephyr is named only in the footer legal line.
 
 When editing copy, use US B2B CDMO tone (brand owners, procurement, R&D partners). Avoid retail or wellness-influencer language.
 
@@ -54,9 +55,9 @@ When editing copy, use US B2B CDMO tone (brand owners, procurement, R&D partners
 
 Already in place:
 
-- Meta description, Open Graph / Twitter tags, canonical URLs via `src/Global/Seo.tsx` + `index.html`
+- Meta description, Open Graph / Twitter tags, canonical URLs via `src/components/Seo.tsx` + `index.html`
 - `public/robots.txt` and `public/sitemap.xml` (update the domain if the production URL changes)
-- Favicon at `public/favicon.svg`
+- Brand logo / favicon: `public/brand/vitalcore-logo-clear.png`
 - Route-level code splitting (`React.lazy` in `App.tsx`)
 - Primary heroes and packaging assets served as **WebP** (PNG masters kept for regeneration)
 - Subset Google Fonts (Manrope + Plus Jakarta Sans, weights 400–700)
@@ -78,11 +79,14 @@ Re-check after deploy:
 2. Chrome DevTools → Lighthouse (Mobile) on `/`
 3. Confirm document title/description change on route navigation
 
-If the live domain is not `https://zephyr.vercel.app`, update:
+### When the Vitalcore domain is ready
 
-- `SITE_URL` in `src/Global/Seo.tsx`
+Production URLs currently still use `https://zephyr.vercel.app`. After the Vitalcore domain is finalized, update:
+
+- `SITE_URL` in `src/components/Seo.tsx`
 - Canonical / OG URLs in `index.html`
 - `public/robots.txt` and `public/sitemap.xml`
+- Vercel project domain / DNS
 
 ## Deploy (Vercel)
 
@@ -126,3 +130,4 @@ Local OTP APIs run under `npm run dev` via a Vite middleware plugin (`vite-otp-a
 - Organic catalog currently mirrors Herbaceutical formula lists by design (leave until unique SKUs are provided)
 - Do not relocate component folders casually; MainSec layout/animations are sensitive — prefer copy-only edits there
 - Production “Stats” block stays commented unless product asks to restore it
+- Internal CSS class prefixes (`zephyr-*`) are intentional and not user-facing

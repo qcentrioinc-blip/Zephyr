@@ -30,10 +30,7 @@ const FOLDER_BY_CATEGORY = {
 
 /** formula display text overrides where filename differs */
 const FORMULA_FILENAME = {
-  "Joint care|Cat's Claw + Bromelain Extract + Ashwagandha Root":
-    "Cat\u2019s Claw + Bromelain Extract + Ashwagandha Root",
-  "Female fertility|Gokshuru + Holy Basil + Ashwagandha Root + Shalparni":
-    "Gokshuru + Holy Basil + Ashwagandha Root + Shalparni",
+  // Prefer straight apostrophe filenames (0x27) on disk
 };
 
 function normalizeStem(name) {
@@ -46,7 +43,14 @@ function listImages(folder) {
   const map = new Map();
   for (const file of fs.readdirSync(dir)) {
     if (!/\.(jpe?g|png|webp|avif)$/i.test(file)) continue;
-    map.set(normalizeStem(file), file);
+    // Prefer reframed 3:4 sidecars (*.v34.webp) over square sources
+    if (/\.v34\.webp$/i.test(file)) {
+      const base = file.replace(/\.v34\.webp$/i, "");
+      map.set(base, file);
+      continue;
+    }
+    const stem = normalizeStem(file);
+    if (!map.has(stem)) map.set(stem, file);
   }
   return map;
 }
@@ -60,7 +64,7 @@ const catalog = [
   ["Joint Care", ["Cissus Quadrangularis + Boswellia Serrata + Piperine + Hadjod", "Cat's Claw + Bromelain Extract + Ashwagandha Root", "Rosehip Powder + Ginger + Curcumin + Maca Root", "Guggul + Sea Buck Thorn + Schindra + Eucalyptus", "Burdock Root + Moringa Leaf + Willow Bark + Curcumin"]],
   ["Immunity Boosters", ["Astragalus Root + Aronia Berry + Maitake Mushroom + Holy Basil", "Neem Leaf + Morinda Citrifolia Fruit + Ashwagandha Root + Moringa Fruit", "American Ginseng + Kalmegh + Echinacea Root + Spirulina", "Curcumin + Moringa + Liquorice + Ashwagandha Root"]],
   ["Hair, Skin & Nails", ["Manjistha Stem + Propolis + Avocado Fruit", "Aloe Vera + Bamboo Stem + Sesbania Grandiflora + Bearberry", "Amla + Bhringraj + Brahmi + Grapeseed", "Orange + Hibiscus + Gingko Biloba + Green Tea"]],
-  ["Anti-Oxidants", ["Elderberry + Green Tea + Beetroot", "Wheat Grass + Acai Berry + Raspberries + Papain", "Spirulina + Tart Cherry + Bacopa Monnieri"]],
+  ["Anti-Oxidants", ["Elderberry + Green Tea + Beetroot", "Wheat Grass + Acai Berry + Raspberries + Papain", "Spirulina + Tart Cherry + Bacopa Monnieri", "Pomegranate + Cranberry + Curcumin"]],
   ["Kidney Health", ["Punarnava + Astragalus + Cranberry", "Horse Tail Herb + Birch Leaf + Tulsi Ark", "Manjistha + Amla + Fennel Seed + Celery"]],
   ["Haematinic", ["Iron + Folic Acid + Vitamin B12 + Vitamin B6 + Zinc", "Folic Acid + Vitamin B12 + Vitamin C", "Folic Acid + Vitamin B12 + Vitamin C + Iron + Zinc", "Vitamin B1 + Vitamin B2 + Vitamin B6 + Vitamin B12"]],
   ["Heart Health", ["Horse Chestnut + Rutin Powder + Arjuna + Cassia Bark", "Aronia Berry + Piperine + Maitake Mushroom", "Arjuna + Guggul + Brahmi", "Fenugreek Seed + Amla + Garlic Powder + Arjuna"]],

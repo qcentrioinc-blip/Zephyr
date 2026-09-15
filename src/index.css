@@ -1,22 +1,26 @@
-/* Fixed header stack (navbar [+ breadcrumbs]) — keep page spacers / sticky toolbars aligned */
+﻿/* Fixed header stack (navbar [+ breadcrumbs]) â€” keep page spacers / sticky toolbars aligned */
 :root {
   /*
-   * Larger nav chrome for 100% + 75%. Caps ≈ 1920 target ÷ 0.75 so zoom-out
+   * Larger nav chrome for 100% + 75%. Caps â‰ˆ 1920 target Ã· 0.75 so zoom-out
    * keeps visual size (not smaller).
-   * 4.4vw @1920 ≈ 84px; @2560 ≈ 112px → visual ≈ 84px after ×0.75.
+   * 4.4vw @1920 â‰ˆ 84px; @2560 â‰ˆ 112px â†’ visual â‰ˆ 84px after Ã—0.75.
    */
-  --zephyr-nav-h: clamp(64px, 4.4vw, 112px);
+  --zephyr-nav-inner-h: clamp(60px, 4vw, 88px);
+  /* Matches <nav> vertical padding */
+  --zephyr-nav-pad-y: clamp(0.35rem, 0.45vw, 0.95rem);
+  --zephyr-nav-h: calc(var(--zephyr-nav-inner-h) + var(--zephyr-nav-pad-y));
   /* Clear gap under fixed nav before accordion / page content */
   --zephyr-nav-gap: clamp(20px, 1.8vw, 40px);
-  --zephyr-crumb-h: 2.5rem;
+  --zephyr-crumb-h: clamp(2.75rem, calc(2.25rem + 0.45vw), 3.25rem);
+  --zephyr-header-stack: calc(var(--zephyr-nav-h) + var(--zephyr-crumb-h));
   /*
    * CloudDiet-style gutters (1920 baseline). Cap 200px holds at both
    * 1920@100% and ~2560@75%; ultra-wide tightens below.
    */
   --zephyr-gutter: clamp(25px, calc(12.5vw - 40px), 200px);
-  /* Hero / accordion — slightly tighter so panels stay wide */
+  /* Hero / accordion â€” slightly tighter so panels stay wide */
   --zephyr-hero-gutter: clamp(12px, calc(4vw - 16px), 64px);
-  /* Soft legacy fallback only — do not grow at 2000/2400 */
+  /* Soft legacy fallback only â€” do not grow at 2000/2400 */
   --zephyr-content-max: 100%;
 }
 
@@ -51,7 +55,7 @@
   line-height: 120%;
   letter-spacing: -0.7px;
 }
-/* Description / body — larger 75% cap so copy doesn’t look tiny after zoom */
+/* Description / body â€” larger 75% cap so copy doesnâ€™t look tiny after zoom */
 .zephyr-type-p {
   font-size: clamp(15px, max(0.95vw, 16px), 26px);
   line-height: 155%;
@@ -100,7 +104,7 @@ h4 {
   }
 }
 
-/* Products dropdown — Skincare "Just launched" */
+/* Products dropdown â€” Skincare "Just launched" */
 @keyframes nav-launch-pulse {
   0%,
   100% {
@@ -122,16 +126,17 @@ h4 {
   }
 }
 
-/* Desktop nav — larger logo + dock for 100% and 75% */
+/* Desktop nav â€” larger logo + dock for 100% and 75% */
 .nav-dock-link {
   position: relative;
   z-index: 10;
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  padding: clamp(0.6rem, 0.65vw, 1rem) clamp(0.9rem, 1.35vw, 2rem);
+  /* Slightly roomier vertical padding only — keep horizontal + font size */
+  padding: clamp(0.52rem, 0.55vw, 0.88rem) clamp(0.9rem, 1.35vw, 2rem);
   border-radius: 9999px;
-  /* ~16 @1920; ~22 @2560 → visual ≈ 16 after 75% zoom */
+  /* ~16 @1920; ~22 @2560 â†’ visual â‰ˆ 16 after 75% zoom */
   font-size: clamp(13px, 0.85vw, 22px);
   font-weight: 500;
   white-space: nowrap;
@@ -144,12 +149,12 @@ h4 {
 }
 
 .nav-dock-pill {
-  padding: clamp(0.28rem, 0.32vw, 0.5rem) clamp(0.4rem, 0.45vw, 0.65rem);
+  /* Slightly roomier vertical padding only — keep side padding */
+  padding: clamp(0.2rem, 0.25vw, 0.4rem) clamp(0.4rem, 0.45vw, 0.65rem);
 }
 
 .nav-logo-img {
-  /* ~81 @1920; ~100 @2560 → visual ≈ 75 after 75% zoom */
-  height: clamp(56px, 4.2vw, 100px);
+  height: clamp(40px, 3.2vw, 56px);
   width: auto;
   object-fit: contain;
 }
@@ -157,12 +162,14 @@ h4 {
 /* Mobile: smaller logo + shorter nav chrome */
 @media (max-width: 767px) {
   :root {
-    --zephyr-nav-h: clamp(40px, 10vw, 46px);
+    --zephyr-nav-inner-h: clamp(40px, 10vw, 46px);
+    --zephyr-nav-pad-y: 0.5rem;
     --zephyr-nav-gap: clamp(10px, 3vw, 16px);
+    --zephyr-crumb-h: 2.75rem;
   }
 
   .nav-logo-img {
-    height: clamp(28px, 7vw, 34px);
+    height: clamp(30px, 7.5vw, 38px);
   }
 }
 
@@ -189,10 +196,14 @@ h4 {
 
 .nav-bar-inner {
   gap: clamp(1rem, 1.5vw, 2.5rem);
-  min-height: var(--zephyr-nav-h);
+  min-height: var(--zephyr-nav-inner-h);
 }
 
-/* Homepage unscrolled navbar — frosted glass + shine (sibling layer, not on <nav>) */
+.zephyr-breadcrumbs {
+  top: var(--zephyr-nav-h);
+}
+
+/* Homepage unscrolled navbar â€” frosted glass + shine (sibling layer, not on <nav>) */
 @keyframes zephyr-nav-glass-sheen {
   0% {
     transform: translateX(0);
@@ -263,18 +274,17 @@ h4 {
 }
 
 /*
- * Mobile / tablet homepage hero (MainSec carousel): solid bar instead of glass.
- * Logo PNG has a dark field — it disappears on orange / teal / green slides
- * when the nav is fully transparent.
+ * Homepage hero: keep frosted glass on all breakpoints so the video
+ * shows through behind the navbar (no forced solid white bar).
  */
 @media (max-width: 1199px) {
   nav.zephyr-nav--glassy {
-    background-color: rgba(255, 255, 255, 0.97) !important;
-    box-shadow: 0 1px 16px rgba(0, 0, 0, 0.08);
+    background-color: transparent !important;
+    box-shadow: none;
   }
 
   nav.zephyr-nav--glassy .zephyr-nav-glass {
-    opacity: 0;
+    opacity: 1;
   }
 }
 
@@ -282,7 +292,7 @@ h4 {
   animation: text-fade-in 0.45s ease-out both;
 }
 
-/* ── LetterStrip (ported from CloudDiet / Qcentrio) ── */
+/* â”€â”€ LetterStrip (ported from CloudDiet / Qcentrio) â”€â”€ */
 .strip-slide-up {
   opacity: 0;
 }
@@ -311,7 +321,7 @@ h4 {
   overflow: hidden;
   display: inline-block;
   transform: none;
-  /* Descender room inside the slide mask (g/G) — margin pulls visual line-height tighter */
+  /* Descender room inside the slide mask (g/G) â€” margin pulls visual line-height tighter */
   line-height: 1.22;
   padding-bottom: 0.12em;
   margin-bottom: -0.07em;
@@ -426,13 +436,13 @@ a.strip-slide-up {
 }
 
 /*
- * Glossy glass scrollbars — same language as the footer features strip
+ * Glossy glass scrollbars â€” same language as the footer features strip
  * (translucent tint + soft border + top highlight), not solid fills.
  */
 
-/* ── Site-wide: Zephyr green glass (#11BB8A / #113227) ── */
+/* â”€â”€ Site-wide: Zephyr green glass (#11BB8A / #113227) â”€â”€ */
 html {
-  /* Stable rem @100%; gentle grow for 75% — floor avoids crushing 1440@100% */
+  /* Stable rem @100%; gentle grow for 75% â€” floor avoids crushing 1440@100% */
   font-size: clamp(15px, 0.8333vw, 18px);
   scrollbar-width: thin;
   scrollbar-color: rgb(11, 85, 64) rgba(155, 223, 200, 0.06);
@@ -514,7 +524,7 @@ html::-webkit-scrollbar-thumb:hover {
   width: 9px;
 }
 
-/* Herbaceutical — amber glass (#C38046) */
+/* Herbaceutical â€” amber glass (#C38046) */
 .zephyr-scroll-herba {
   scrollbar-color: rgba(195, 128, 70, 0.55) rgba(195, 128, 70, 0.08);
 }
@@ -576,7 +586,7 @@ html::-webkit-scrollbar-thumb:hover {
     0 0 14px rgba(195, 128, 70, 0.38);
 }
 
-/* Nutraceutical — teal glass (#4AA3A7) */
+/* Nutraceutical â€” teal glass (#4AA3A7) */
 .zephyr-scroll-nutra {
   scrollbar-color: rgba(74, 163, 167, 0.55) rgba(74, 163, 167, 0.08);
 }
@@ -638,7 +648,7 @@ html::-webkit-scrollbar-thumb:hover {
     0 0 14px rgba(74, 163, 167, 0.38);
 }
 
-/* Organic — olive glass (#547A3D) */
+/* Organic â€” olive glass (#547A3D) */
 .zephyr-scroll-organic {
   scrollbar-color: rgba(84, 122, 61, 0.55) rgba(84, 122, 61, 0.08);
 }
@@ -700,10 +710,10 @@ html::-webkit-scrollbar-thumb:hover {
     0 0 14px rgba(84, 122, 61, 0.38);
 }
 
-/* ─── Mac / Safari (WebKit) hardening ───
+/* â”€â”€â”€ Mac / Safari (WebKit) hardening â”€â”€â”€
  * Causes we mitigate:
- * 1) filter:drop-shadow on <img> + transform/opacity → gray/black compositing “placeholder” boxes
- * 2) will-change left on permanently → sticky GPU layers / shade behind media
+ * 1) filter:drop-shadow on <img> + transform/opacity â†’ gray/black compositing â€œplaceholderâ€ boxes
+ * 2) will-change left on permanently â†’ sticky GPU layers / shade behind media
  * 3) black studio PNG backdrops show as rectangles on cream pages
  * 4) backdrop-filter without -webkit- prefix fails on older Safari
  * 5) 100vh includes chrome UI inconsistently on Safari (prefer dvh with vh fallback)
@@ -750,7 +760,7 @@ img {
   backdrop-filter: blur(8px);
 }
 
-/* ── Product accordion hero (homepage) ── */
+/* â”€â”€ Product accordion hero (homepage) â”€â”€ */
 .product-accordion-section {
   box-sizing: border-box;
 }
@@ -783,7 +793,7 @@ img {
   flex-direction: column;
   width: 100%;
   max-width: min(110rem, 100%);
-  /* Fill remaining viewport under nav — no fixed px cap (that left empty space at 75%) */
+  /* Fill remaining viewport under nav â€” no fixed px cap (that left empty space at 75%) */
   flex: 1 1 auto;
   height: auto;
   min-height: 0;
@@ -805,8 +815,9 @@ img {
   }
 }
 
-/* Slightly tighter inactive type in the zoom / mid-desktop band so 3 panels stay readable */
-@media (min-width: 1200px) and (max-width: 1535px) {
+/* Slightly tighter inactive type in the mid-desktop band.
+ * Keep equal flex so 90â€“100% matches the podium vibe. */
+@media (min-width: 1200px) and (max-width: 1799px) {
   .product-accordion-card:not(.is-active) .product-accordion-card__title {
     font-size: clamp(1.28rem, 1.95vw, 1.55rem);
   }
@@ -827,12 +838,72 @@ img {
   }
 
   .product-accordion-card.is-active .product-accordion-card__media {
-    max-height: min(38vh, 320px);
+    max-height: 310px;
   }
 
   .product-accordion-card__image {
-    max-height: min(38vh, 320px);
+    max-height: 310px;
     max-width: min(100%, 210px);
+  }
+}
+
+/*
+ * ~80% on ~1440â€“1536 (CSS ~1800â€“1920): scale art â‰ˆ Ã·0.8 so visual size
+ * matches the 310px@100% look. Equal panels â€” no flex grow.
+ */
+@media (min-width: 1800px) and (max-width: 1919px) {
+  .product-accordion-card:not(.is-active) .product-accordion-card__title {
+    font-size: clamp(1.28rem, 1.95vw, 1.55rem);
+  }
+
+  .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
+    font-size: 0.86rem;
+    max-width: 14ch;
+  }
+
+  .product-accordion-card:not(.is-active) .accordion-icon-wrap {
+    width: 60px;
+    height: 60px;
+  }
+
+  .product-accordion-card:not(.is-active) .accordion-icon-svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .product-accordion-card.is-active .product-accordion-card__media {
+    max-height: 390px;
+  }
+
+  .product-accordion-card__image {
+    max-height: 390px;
+    max-width: min(100%, 265px);
+  }
+}
+
+/* Large desktop @100% / approaching zoom-out â€” solid bottle presence */
+@media (min-width: 1920px) and (max-width: 2399px) {
+  .product-accordion-card:not(.is-active) .product-accordion-card__title {
+    font-size: clamp(1.28rem, 1.95vw, 1.55rem);
+  }
+
+  .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
+    font-size: 0.86rem;
+    max-width: 16ch;
+  }
+
+  .product-accordion-card.is-active .product-accordion-card__media {
+    max-height: 480px;
+    transform: translateY(2.25rem);
+  }
+
+  .product-accordion-card:nth-child(3).is-active .product-accordion-card__media {
+    transform: translate(0.5rem, 2.5rem);
+  }
+
+  .product-accordion-card__image {
+    max-height: 480px;
+    max-width: min(100%, 320px);
   }
 }
 
@@ -854,7 +925,10 @@ img {
   overflow: hidden;
   background: #fff;
   color: #111;
-  transition: background-color 0.45s ease, color 0.35s ease;
+  transition:
+    flex-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.45s ease,
+    color 0.35s ease;
   cursor: default;
   outline: none;
 }
@@ -889,11 +963,11 @@ img {
 .product-accordion-card.is-active .product-accordion-card__media {
   position: relative;
   z-index: 3;
-  transform: translateY(2rem);
+  transform: translateY(2.75rem);
 }
 
 .product-accordion-card:nth-child(3).is-active .product-accordion-card__media {
-  transform: translate(0.5rem, 2.25rem);
+  transform: translate(0.5rem, 3rem);
 }
 
 .product-accordion-card.is-active .product-accordion-card__content {
@@ -901,7 +975,7 @@ img {
   padding-top: 1rem;
 }
 
-/* Linear gradient behind text only — clear at the top, darker at the bottom */
+/* Linear gradient behind text only â€” clear at the top, darker at the bottom */
 .product-accordion-card.is-active .product-accordion-card__content::before {
   content: "";
   position: absolute;
@@ -963,15 +1037,15 @@ img {
 }
 
 .product-accordion-card.is-active .product-accordion-card__media {
-  max-height: min(46vh, 400px);
+  max-height: 310px;
   opacity: 1;
-  margin-bottom: 1rem;
+  margin-bottom: 0.65rem;
 }
 
 .product-accordion-card__image {
-  max-height: min(46vh, 400px);
+  max-height: 310px;
   width: auto;
-  max-width: min(100%, 260px);
+  max-width: min(100%, 210px);
   object-fit: contain;
   mix-blend-mode: normal;
   filter: none !important;
@@ -1023,7 +1097,7 @@ img {
   text-align: left;
 }
 
-/* ── Animated industry icon (inactive state) ─────────────────────── */
+/* â”€â”€ Animated industry icon (inactive state) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .product-accordion-card__icon {
   display: flex;
   align-items: center;
@@ -1152,23 +1226,62 @@ img {
   background: rgba(255, 255, 255, 0.12);
 }
 
-/* Large screens — modest density; fluid clamps already handle 75% zoom */
-@media (min-width: 1536px) {
-  .product-accordion-card__inner {
-    padding: 2.25rem 1.75rem 2.25rem;
+/*
+ * Zoom-out: enlarge product art so bottles keep 100%-like presence.
+ * 80% â‰ˆ 2400 CSS on 1920; 75% â‰ˆ 2560. Caps were too tight vs the tall card.
+ */
+@media (min-width: 2400px) and (max-width: 2559px) {
+  .product-accordion-shell {
+    max-width: min(110rem, 100%);
   }
 
-  .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
-    max-width: 20ch;
+  .product-accordion-card.is-active .product-accordion-card__media {
+    max-height: 580px;
+    margin-bottom: 0.35rem;
+    transform: translateY(2rem);
   }
 
-  .product-accordion-card__description {
-    max-width: 38ch;
-    margin-top: 0.65rem;
+  .product-accordion-card:nth-child(3).is-active .product-accordion-card__media {
+    transform: translate(0.5rem, 2.25rem);
   }
 
   .product-accordion-card__image {
-    max-width: min(100%, 300px);
+    max-height: 580px;
+    max-width: min(100%, 400px);
+  }
+}
+
+@media (min-width: 2560px) {
+  .product-accordion-shell {
+    max-width: min(110rem, 100%);
+  }
+
+  .product-accordion-card__inner {
+    padding: 2rem 1.5rem 1.75rem;
+  }
+
+  .product-accordion-card:not(.is-active) .product-accordion-card__subtitle {
+    max-width: 18ch;
+  }
+
+  .product-accordion-card__description {
+    max-width: 36ch;
+    margin-top: 0.65rem;
+  }
+
+  .product-accordion-card.is-active .product-accordion-card__media {
+    max-height: 640px;
+    margin-bottom: 0.25rem;
+    transform: translateY(1.75rem);
+  }
+
+  .product-accordion-card:nth-child(3).is-active .product-accordion-card__media {
+    transform: translate(0.5rem, 2rem);
+  }
+
+  .product-accordion-card__image {
+    max-height: 640px;
+    max-width: min(100%, 440px);
   }
 }
 
@@ -1385,6 +1498,143 @@ img {
   }
 }
 
+
+/* ── Homepage video hero ── */
+.lifestyle-hero {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  /* Clear fixed navbar on all breakpoints — video starts below it */
+  margin-top: var(--zephyr-nav-h);
+  padding-top: 0;
+  width: 100%;
+}
+
+.lifestyle-hero__frame {
+  position: relative;
+  width: 100%;
+  /* Height comes from the active video aspect-ratio (set inline) */
+  height: auto;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Desktop only — slightly shorter than full aspect, but taller than prior cap */
+@media (min-width: 1024px) {
+  .lifestyle-hero__frame {
+    max-height: min(46rem, 52vw);
+  }
+}
+
+@media (min-width: 1440px) {
+  .lifestyle-hero__frame {
+    max-height: min(48rem, 50vw);
+  }
+}
+
+.lifestyle-hero__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.lifestyle-hero__video {
+  width: 100%;
+  height: 100%;
+  /* Frame aspect matches the video → fills with no letterboxing */
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  pointer-events: none;
+}
+
+.lifestyle-hero__dots {
+  position: absolute;
+  bottom: clamp(1rem, 2.5vw, 1.75rem);
+  left: 50%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.lifestyle-hero__dot {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    width 0.25s ease;
+}
+
+.lifestyle-hero__dot.is-active {
+  width: 1.35rem;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Bottom-right joined arrow pair (layout like reference; Zephyr neutrals) */
+.lifestyle-hero__arrows {
+  position: absolute;
+  right: clamp(0.85rem, 2vw, 1.5rem);
+  bottom: clamp(1rem, 2.5vw, 1.75rem);
+  z-index: 21;
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(12, 12, 12, 0.72);
+}
+
+.lifestyle-hero__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2.75rem, 4.5vw, 3.25rem);
+  height: clamp(2.75rem, 4.5vw, 3.25rem);
+  padding: 0;
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lifestyle-hero__arrow:last-child {
+  border-right: 0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.lifestyle-hero__arrow:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.lifestyle-hero__arrow:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: -2px;
+}
+
+.lifestyle-hero__arrow-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+}
+
 @supports (height: 100dvh) {
   .min-h-screen {
     min-height: 100dvh;
@@ -1393,4 +1643,3 @@ img {
     height: 100dvh;
   }
 }
-

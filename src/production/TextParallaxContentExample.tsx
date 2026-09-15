@@ -29,7 +29,7 @@ const panels: Panel[] = [
     subheading: "Formulation",
     heading: "Formulation before commercial scale.",
     title: "Concept formulas shaped with partners",
-    p1: "Zephyr uses market analysis and supplier assessment to provide concept formulas for new product development and existing product optimization.",
+    p1: "Vitalcore uses market analysis and supplier assessment to provide concept formulas for new product development and existing product optimization.",
     p2: "Our product development manager and laboratory teams turn briefs into workable formulas ready for pilot evaluation.",
     imageSide: "left",
   },
@@ -224,8 +224,8 @@ const TextParallaxContent = ({
         className="sticky z-0 px-5"
         style={{
           /* Sit below fixed navbar + breadcrumb so the stage is not clipped */
-          top: `calc(var(--zephyr-nav-h) + var(--zephyr-crumb-h) + ${PAD}px)`,
-          height: `calc(100dvh - var(--zephyr-nav-h) - var(--zephyr-crumb-h) - ${PAD * 2}px)`,
+          top: `calc(var(--zephyr-header-stack) + ${PAD}px)`,
+          height: `calc(100dvh - var(--zephyr-header-stack) - ${PAD * 2}px)`,
         }}
       >
         <div className="relative h-full w-full overflow-hidden bg-transparent">

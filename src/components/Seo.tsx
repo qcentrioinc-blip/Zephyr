@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
 const SITE_URL = "https://zephyr.vercel.app";
-const DEFAULT_OG = `${SITE_URL}/brand/logo.png`;
+const DEFAULT_OG = `${SITE_URL}/brand/vitalcore-logo-clear.png`;
 
 type PageMeta = {
   title: string;
@@ -11,43 +11,43 @@ type PageMeta = {
 
 const META: Record<string, PageMeta> = {
   "/": {
-    title: "Zephyr | CDMO & Private-Label Manufacturing Partner",
+    title: "Vitalcore | CDMO & Private-Label Manufacturing Partner",
     description:
-      "Zephyr manufactures nutraceutical, herbaceutical, and organic dietary supplements for US brand owners. 65,000 sq ft facility, GMP/ISO systems, and MOQ-ready private-label programs.",
+      "Vitalcore manufactures nutraceutical, herbaceutical, and organic dietary supplements for US brand owners. GMP/ISO systems, high-capacity production, and MOQ-ready private-label programs.",
   },
   "/research": {
-    title: "R&D and New Product Development | Zephyr",
+    title: "R&D and New Product Development | Vitalcore",
     description:
       "Pilot labs, stability testing, validation, and commercial transfer for dietary supplement brand partners. Concept formulas through full-scale manufacturing.",
   },
   "/production": {
-    title: "Production & Facilities | Zephyr",
+    title: "Production & Facilities | Vitalcore",
     description:
       "Humidity-controlled dispensing, granulation, compression, coating, capsule filling, and finished-goods packaging for private-label scale-up. Capacity up to 5B tablets per month.",
   },
   // Gallery page disabled
   // "/gallery": {
-  //   title: "Facility Gallery | Zephyr",
+  //   title: "Facility Gallery | Vitalcore",
   //   description:
   //     "Manufacturing floors, packaging lines, and laboratory environments supporting nutraceutical, herbaceutical, and organic partner programs.",
   // },
   "/contact": {
-    title: "Request MOQ | Zephyr Contact",
+    title: "Request MOQ | Vitalcore Contact",
     description:
       "Start a manufacturing inquiry for private-label or contract production. Share your dosage form, packaging, and estimated volume.",
   },
   "/herbaceutical": {
-    title: "Herbaceutical Formulas | Zephyr",
+    title: "Herbaceutical Formulas | Vitalcore",
     description:
       "Botanical dietary supplement catalog for private-label and contract manufacturing. MOQ and manufacturing on inquiry.",
   },
   "/nutraceutical": {
-    title: "Nutraceutical Formulas | Zephyr",
+    title: "Nutraceutical Formulas | Vitalcore",
     description:
       "Vitamins, minerals, and specialty dietary supplement formulas for commercial brand portfolios. Private label & contract manufacturing.",
   },
   "/organic": {
-    title: "Organic Formulas | Zephyr",
+    title: "Organic Formulas | Vitalcore",
     description:
       "Organic and clean-label private-label manufacturing catalog. MOQ and manufacturing on inquiry.",
   },
@@ -69,7 +69,7 @@ export default function Seo() {
       <meta name="robots" content="index,follow" />
 
       <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="Zephyr" />
+      <meta property="og:site_name" content="Vitalcore" />
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />
       <meta property="og:url" content={canonical} />

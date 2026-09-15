@@ -14,23 +14,37 @@
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background: #0d241c;
+  /* Stable layer so <video> can't jump above the overlay when later UI mounts */
+  isolation: isolate;
+  transform: translateZ(0);
 }
 
 .zephyr-page-loader__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  /* Dim on the video itself so darkness is identical before/after the enter cursor */
+  filter: brightness(0.54);
 }
 
 .zephyr-page-loader__overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Same strength always — not tied to .is-ready */
   background: linear-gradient(
     180deg,
-    rgba(13, 36, 28, 0.72) 0%,
-    rgba(17, 50, 39, 0.78) 45%,
-    rgba(8, 24, 18, 0.82) 100%
+    rgba(0, 0, 0, 0.38) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
+    rgba(0, 0, 0, 0.55) 100%
   );
 }
 
@@ -120,9 +134,9 @@ html.scroll-restore-pending .zephyr-page-loader {
   height: clamp(104px, 18vw, 118px);
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.12);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  /* Solid frost — no backdrop-filter (that was forcing a late global darken) */
+  background: rgba(20, 40, 34, 0.72);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
   display: grid;
   place-items: center;
   pointer-events: none;

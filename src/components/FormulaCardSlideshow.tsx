@@ -54,7 +54,7 @@ export default function FormulaCardSlideshow({
     ? "opacity 0.15s ease"
     : `opacity ${FADE_MS}ms ${FADE_EASE}`;
   const objectClass = imageFit === "contain" ? "object-contain" : "object-cover";
-  const imagePad = imageFit === "contain" ? "p-2" : "";
+  const imagePad = "";
 
   const clearCycle = () => {
     if (intervalRef.current) {

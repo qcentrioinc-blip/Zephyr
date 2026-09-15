@@ -16,9 +16,9 @@ export const STATS_CIRCLE_GIFS = {
 const Stats = () => {
   const statCards: StatCard[] = [
     {
-      number: "65K",
+      number: "Pilot",
       description:
-        "Square feet of production facility and laboratories supporting partner manufacturing.",
+        "Formulation trials, stability studies, and validation pathways from concept to commercial transfer.",
     },
     {
       number: "3",
@@ -50,13 +50,13 @@ const Stats = () => {
                   <P className="flex-1 text-gray-600">
                     From humidity-controlled dispensing and granulation to
                     high-speed compression, coating, and hard-gel capsule filling.
-                    Zephyr lines support flexible private label manufacturing with
+                    Vitalcore lines support flexible private label manufacturing with
                     GMP and ISO quality systems.
                   </P>
                 <div className="w-full shrink-0 sm:w-40 lg:w-48">
                   <img
                     src="/facility/research-stats.png"
-                    alt="Zephyr manufacturing capability"
+                    alt="Vitalcore manufacturing capability"
                     className="h-auto w-full object-contain shadow-md"
                     loading="lazy"
                     decoding="async"

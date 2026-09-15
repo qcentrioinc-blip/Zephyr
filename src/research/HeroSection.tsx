@@ -39,7 +39,7 @@ const HeroSection: React.FC = () => {
         <Reveal className="mx-auto mb-8 max-w-4xl text-center sm:mb-10 lg:mb-12">
           <H1 className="mb-4 sm:mb-5">R&D and New Product Development</H1>
           <P className="mx-auto max-w-2xl">
-            Zephyr works closely with customers to develop commercial-ready
+            Vitalcore works closely with customers to develop commercial-ready
             formulations, from market-led concept formulas to pilot trials,
             validation, and full-scale manufacturing transfer.
           </P>
@@ -51,7 +51,7 @@ const HeroSection: React.FC = () => {
           <div className="zephyr-container overflow-hidden">
             <img
               src="/facility/research-hero.webp"
-              alt="Zephyr research and development laboratory"
+              alt="Vitalcore research and development laboratory"
               className="h-[160px] w-full rounded-t-3xl object-cover sm:h-[200px] sm:rounded-t-4xl md:h-[240px] lg:h-[280px]"
             />
           </div>

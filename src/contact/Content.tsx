@@ -294,7 +294,7 @@ const Content = () => {
                   <CelebrationBurst reduceMotion={reduceMotion} />
                   <H3 className="text-[#113227]">Enquiry received</H3>
                   <P className="mx-auto mt-3 max-w-sm text-gray-600">
-                    Thank you for contacting Zephyr. Your manufacturing inquiry
+                    Thank you for contacting Vitalcore. Your manufacturing inquiry
                     has been received. Our team will follow up on your company
                     email within one to two business days.
                   </P>

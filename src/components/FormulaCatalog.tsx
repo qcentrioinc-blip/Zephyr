@@ -40,10 +40,10 @@ function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover" }
       tabIndex={0}
       onClick={onOpen}
       onKeyDown={handleKeyDown}
-      className="group mx-auto flex h-full w-full max-w-[220px] cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="group flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200/90 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-shadow hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{ outlineColor: "var(--formula-accent, #113227)" }}
     >
-      <div className="relative h-[160px] w-full sm:h-[190px] lg:h-[210px]">
+      <div className="relative aspect-[3/4] w-full">
         <FormulaCardSlideshow bottleImage={item.image} alt="" imageFit={imageFit} />
       </div>
 
@@ -270,7 +270,7 @@ export default function FormulaCatalog({
       <section className="zephyr-container zephyr-section">
         <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           <aside className="hidden shrink-0 lg:block lg:w-72">
-            <div className="space-y-4 lg:sticky lg:top-[calc(var(--zephyr-nav-h)+var(--zephyr-crumb-h)+1rem)]">
+            <div className="space-y-4 lg:sticky lg:top-[calc(var(--zephyr-header-stack)+1rem)]">
               <div className="relative">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
@@ -296,7 +296,7 @@ export default function FormulaCatalog({
           </aside>
 
           <div className="min-w-0 flex-1">
-            <div className="sticky top-[calc(var(--zephyr-nav-h)+var(--zephyr-crumb-h))] z-[80] -mx-1 mb-4 flex flex-col gap-3 border-b border-gray-200/80 bg-white/95 px-1 py-3 backdrop-blur-md lg:hidden">
+            <div className="sticky top-[var(--zephyr-header-stack)] z-[80] -mx-1 mb-4 flex flex-col gap-3 border-b border-gray-200/80 bg-white/95 px-1 py-3 backdrop-blur-md lg:hidden">
               <div className="flex items-center gap-2">
                 <div className="relative min-w-0 flex-1">
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -448,7 +448,7 @@ export default function FormulaCatalog({
                             transition={{ duration: 0.3, ease: EASE }}
                             className="overflow-hidden"
                           >
-                            <div className="grid grid-cols-2 justify-items-center gap-3 border-t border-gray-100 bg-white p-3 sm:grid-cols-3 sm:p-4 lg:grid-cols-4">
+                            <div className="grid grid-cols-2 gap-3 border-t border-gray-100 bg-white p-3 sm:grid-cols-3 sm:p-4 lg:grid-cols-4">
                               {category.formulas.map((item) => (
                                 <FormulaCard
                                   key={item.id}

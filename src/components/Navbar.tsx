@@ -396,7 +396,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-[100] w-full py-1 md:py-[clamp(0.35rem,0.4vw,0.65rem)] transition-[background-color,box-shadow] duration-300 ease-out ${
+      className={`fixed top-0 z-[100] w-full py-0.5 md:py-[clamp(0.25rem,0.3vw,0.45rem)] transition-[background-color,box-shadow] duration-300 ease-out ${
         glassy
           ? 'zephyr-nav--glassy bg-transparent shadow-none'
           : scrolled
@@ -410,12 +410,12 @@ const Navbar = () => {
       <div className="zephyr-container nav-bar-inner relative z-10 flex w-full items-center justify-between">
         <Link
           to="/"
-          className="relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2 md:py-1"
-          aria-label="Zephyr home"
+          className="relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2"
+          aria-label="Vitalcore home"
         >
           <img
-            src="/brand/logo.png"
-            alt="Zephyr Logo"
+            src="/brand/vitalcore-logo.svg"
+            alt="Vitalcore Logo"
             className="nav-logo-img relative z-10"
           />
         </Link>

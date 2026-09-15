@@ -5,12 +5,12 @@ import CelebrationBurst from "../components/CelebrationBurst";
 
 const faqs = [
   {
-    q: "What is Zephyr’s manufacturing capacity?",
+    q: "What is Vitalcore’s manufacturing capacity?",
     a: "We currently support manufacturing and packaging capacity of up to 5 billion tablets, 100 million capsules, 60 million sachets, and 1 million jars per month. That capacity supports US private label and contract manufacturing partners who need reliable scale.",
   },
   {
     q: "Do you support custom formulations and MOQ projects?",
-    a: "Yes. Zephyr co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Contact and our team will advise.",
+    a: "Yes. Vitalcore co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Contact and our team will advise.",
   },
   {
     q: "Which dosage formats and packaging options do you offer?",
@@ -81,7 +81,7 @@ const FAQ = () => {
         <div className="mb-5 text-center">
           <H2>Frequently asked questions</H2>
           <P className="zephyr-prose mx-auto mt-2 text-gray-600">
-            Practical answers for brand owners exploring a Zephyr manufacturing
+            Practical answers for brand owners exploring a Vitalcore manufacturing
             partnership.
           </P>
         </div>
