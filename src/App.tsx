@@ -61,7 +61,13 @@ function RouteReady({
   return <>{children}</>
 }
 
-function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) {
+function AppContent({
+  onBootReady,
+  playbackAllowed,
+}: {
+  onBootReady: (ready: boolean) => void
+  playbackAllowed: boolean
+}) {
   const { pathname } = useLocation()
   const hideFooter = pathname === '/contact'
   const showCrumbs =
@@ -126,7 +132,10 @@ function AppContent({ onBootReady }: { onBootReady: (ready: boolean) => void }) 
           onPending={markPending}
         >
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route
+              path="/"
+              element={<Homepage playbackAllowed={playbackAllowed} />}
+            />
             <Route path="/research" element={<Research />} />
             <Route path="/production" element={<Production />} />
             {/* Gallery route disabled — /gallery returns no match (404) */}
@@ -152,7 +161,10 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <AppContent onBootReady={setBootReady} />
+        <AppContent
+          onBootReady={setBootReady}
+          playbackAllowed={entered}
+        />
         {showEntryGate ? (
           <PageLoader
             ready={bootReady}
