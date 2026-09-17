@@ -15,10 +15,15 @@ import Reveal from "../components/Reveal";
  * Hero: LifestyleHero (video carousel) on all breakpoints.
  * MainSec / ProductAccordion kept in repo but unused on the homepage for now.
  */
-export default function Homepage() {
+type HomepageProps = {
+  /** False while page-lock is open — hero may load but must not play. */
+  playbackAllowed?: boolean;
+};
+
+export default function Homepage({ playbackAllowed = true }: HomepageProps) {
   return (
     <main className="min-h-screen bg-white">
-      <LifestyleHero />
+      <LifestyleHero playbackAllowed={playbackAllowed} />
       <JointPain />
       <Reveal>
         <FeaturesSection />

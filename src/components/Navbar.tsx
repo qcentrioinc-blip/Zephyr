@@ -16,8 +16,8 @@ interface ProductLink {
 }
 
 const PRODUCT_LINKS: ProductLink[] = [
-  { name: 'Herbaceutical', path: '/herbaceutical' },
   { name: 'Nutraceutical', path: '/nutraceutical' },
+  { name: 'Herbaceutical', path: '/herbaceutical' },
   { name: 'Organic', path: '/organic' },
 ];
 

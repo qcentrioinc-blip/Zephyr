@@ -15,16 +15,6 @@ interface ExploreItem {
 
 const ITEMS: ExploreItem[] = [
   {
-    title: "Herbaceutical",
-    description:
-      "Botanical dietary supplements for private-label brand programs.",
-    image: "/homepage/herbal.webp",
-    color: "bg-[#C38046]",
-    borderColor: "#C38046",
-    textColor: "#C38046",
-    link: "/herbaceutical",
-  },
-  {
     title: "Nutraceutical",
     description:
       "Vitamins, minerals, and specialty supplements for commercial brand portfolios.",
@@ -33,6 +23,16 @@ const ITEMS: ExploreItem[] = [
     borderColor: "#4AA3A7",
     textColor: "#4AA3A7",
     link: "/nutraceutical",
+  },
+  {
+    title: "Herbaceutical",
+    description:
+      "Botanical dietary supplements for private-label brand programs.",
+    image: "/homepage/herbal.webp",
+    color: "bg-[#C38046]",
+    borderColor: "#C38046",
+    textColor: "#C38046",
+    link: "/herbaceutical",
   },
   {
     title: "Organic",

@@ -96,13 +96,13 @@ export default function ProductionShowcase() {
           transition={{ duration: 0.45, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
         >
           <div>
-            <H3 className="mb-4 text-[#113227]">Dosage formats</H3>
-            <MarqueeRow items={dosageFormats} direction="left" />
+            <H3 className="mb-4 text-[#113227]">Packaging options</H3>
+            <MarqueeRow items={packagingOptions} direction="right" />
           </div>
 
           <div>
-            <H3 className="mb-4 text-[#113227]">Packaging options</H3>
-            <MarqueeRow items={packagingOptions} direction="right" />
+            <H3 className="mb-4 text-[#113227]">Dosage formats</H3>
+            <MarqueeRow items={dosageFormats} direction="left" />
           </div>
         </motion.div>
 

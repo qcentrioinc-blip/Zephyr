@@ -43,17 +43,19 @@ const instantVariants: Variants = {
 function VideoSlide({
   src,
   isActive,
+  playbackAllowed,
   onEnded,
   registerActiveRef,
 }: {
   src: string;
   isActive: boolean;
+  playbackAllowed: boolean;
   onEnded: () => void;
   registerActiveRef?: (node: HTMLVideoElement | null) => void;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const isPresent = useIsPresent();
-  const shouldPlay = isActive && isPresent;
+  const shouldPlay = isActive && isPresent && playbackAllowed;
 
   useEffect(() => {
     if (shouldPlay) registerActiveRef?.(ref.current);
@@ -80,8 +82,9 @@ function VideoSlide({
       void video.play().catch(() => {});
     } else {
       video.pause();
+      if (!playbackAllowed) video.currentTime = 0;
     }
-  }, [shouldPlay]);
+  }, [shouldPlay, playbackAllowed]);
 
   return (
     <video
@@ -90,13 +93,21 @@ function VideoSlide({
       src={src}
       muted
       playsInline
-      preload="auto"
+      /* Slide-1 may preload under the page-lock; later slides preload after enter */
+      preload={isActive || playbackAllowed ? "auto" : "none"}
       aria-hidden
     />
   );
 }
 
-export default function LifestyleHero() {
+type LifestyleHeroProps = {
+  /** False while page-lock gate is open — content may load, but videos stay paused. */
+  playbackAllowed?: boolean;
+};
+
+export default function LifestyleHero({
+  playbackAllowed = true,
+}: LifestyleHeroProps) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const reduceMotion = Boolean(useReducedMotion());
@@ -117,7 +128,7 @@ export default function LifestyleHero() {
 
   const go = useCallback(
     (dir: number) => {
-      if (lockRef.current) return;
+      if (lockRef.current || !playbackAllowed) return;
       lockRef.current = true;
       setDirection(dir);
       setIndex((i) => (i + dir + VIDEOS.length) % VIDEOS.length);
@@ -125,15 +136,17 @@ export default function LifestyleHero() {
         lockRef.current = false;
       }, reduceMotion ? 80 : 580);
     },
-    [reduceMotion],
+    [reduceMotion, playbackAllowed],
   );
 
   const advance = useCallback(() => go(1), [go]);
   const prev = useCallback(() => go(-1), [go]);
   const next = useCallback(() => go(1), [go]);
 
-  /* Preload next video */
+  /* Preload next slide only after the entry gate is unlocked */
   useEffect(() => {
+    if (!playbackAllowed) return;
+
     const nextSrc = VIDEOS[(index + 1) % VIDEOS.length].src;
     if (!preloadRef.current) {
       preloadRef.current = document.createElement("video");
@@ -142,20 +155,20 @@ export default function LifestyleHero() {
     }
     preloadRef.current.src = nextSrc;
     preloadRef.current.load();
-  }, [index]);
+  }, [index, playbackAllowed]);
 
-  /* Pause when tab hidden; resume active slide when visible */
+  /* Pause when tab hidden; resume active slide when visible (only if unlocked) */
   useEffect(() => {
     const onVisibility = () => {
       const video = activeVideoRef.current;
-      if (!video) return;
+      if (!video || !playbackAllowed) return;
       if (document.hidden) video.pause();
       else void video.play().catch(() => {});
     };
 
     document.addEventListener("visibilitychange", onVisibility);
     return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, [index]);
+  }, [index, playbackAllowed]);
 
   return (
     <section
@@ -181,6 +194,7 @@ export default function LifestyleHero() {
             <VideoSlide
               src={slide.src}
               isActive={slide.id === currentId}
+              playbackAllowed={playbackAllowed}
               onEnded={advance}
               registerActiveRef={setActiveVideoRef}
             />
