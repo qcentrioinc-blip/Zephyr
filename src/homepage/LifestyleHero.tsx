@@ -13,9 +13,6 @@ const VIDEOS = [
   { id: "slide-3", src: "/videos/slide-3.mp4" },
 ] as const;
 
-/** Match slide 1 (21:9) so every slide keeps the same frame height */
-const HERO_ASPECT = "21 / 9";
-
 const slideVariants: Variants = {
   enter: (dir: number) => ({
     x: dir >= 0 ? "100%" : "-100%",
@@ -176,10 +173,7 @@ export default function LifestyleHero({
       aria-roledescription="carousel"
       aria-label="Zephyr product videos"
     >
-      <div
-        className="lifestyle-hero__frame"
-        style={{ aspectRatio: HERO_ASPECT }}
-      >
+      <div className="lifestyle-hero__frame">
         <AnimatePresence mode="sync" custom={direction} initial={false}>
           <motion.div
             key={slide.id}

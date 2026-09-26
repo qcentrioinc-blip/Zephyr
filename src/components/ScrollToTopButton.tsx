@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
-const SHOW_AFTER_PX = 420;
+/** Shared with ProductLauncher — both controls appear after this scroll depth. */
+export const FLOATING_CONTROLS_SHOW_AFTER_PX = 420;
 
 /** Fixed bottom-right control to smoothly return to the top of the page. */
 export default function ScrollToTopButton() {
@@ -11,7 +12,7 @@ export default function ScrollToTopButton() {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > SHOW_AFTER_PX);
+      setVisible(window.scrollY > FLOATING_CONTROLS_SHOW_AFTER_PX);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

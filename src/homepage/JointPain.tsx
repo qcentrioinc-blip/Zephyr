@@ -5,8 +5,9 @@ const JointPain = () => {
   return (
     <section className="zephyr-section overflow-x-hidden">
       <div className="zephyr-container">
-        <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:gap-12 xl:gap-16">
-          <Reveal className="flex w-full justify-center lg:w-auto">
+        <div className="flex flex-col items-stretch gap-8 lg:flex-row lg:items-center lg:gap-12 xl:gap-16">
+          {/* Mobile/tablet: title → copy → images. Desktop: images left, copy right. */}
+          <Reveal className="order-2 flex w-full justify-center lg:order-1 lg:w-auto">
             <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
               <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
                 <img
@@ -42,8 +43,8 @@ const JointPain = () => {
             </div>
           </Reveal>
 
-          <div className="w-full max-w-3xl text-center lg:text-left">
-            <div className="mx-auto mb-1 h-[1px] w-20 bg-gray-500 md:w-28 lg:mx-0" />
+          <div className="order-1 w-full max-w-3xl text-left lg:order-2">
+            <div className="mb-1 h-[1px] w-20 bg-gray-500 md:w-28" />
             <H2 className="mb-3">Contract manufacturing partner</H2>
             <Reveal>
               <P className="mb-3">

@@ -70,8 +70,8 @@ const NewFooter = () => {
       />
 
       <div className="zephyr-container relative z-10">
-        <div className="mb-8 grid grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-[1.4fr_1fr_1fr_1.15fr] lg:gap-8">
-          <div className="col-span-2 flex flex-col items-center text-center sm:items-start sm:text-left lg:col-span-1">
+        <div className="mb-8 grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-[1.5fr_1fr_1fr] md:gap-x-12 md:gap-y-8 lg:grid-cols-[1.4fr_1fr_1fr_1.15fr] lg:gap-x-16 lg:gap-y-8">
+          <div className="col-span-2 flex flex-col items-start text-left md:col-span-1">
             <Link to="/" className="mb-3 inline-flex shrink-0 items-center">
               <img
                 src="/brand/vitalcore-logo.svg"
@@ -90,7 +90,7 @@ const NewFooter = () => {
             </P> */}
           </div>
 
-          <div className="flex flex-col items-center text-center sm:items-start sm:text-left lg:pt-[calc(3.5rem+0.75rem)]">
+          <div className="flex flex-col items-start text-left md:pt-[calc(3.5rem+0.75rem)] lg:pt-[calc(3.5rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}
@@ -111,7 +111,7 @@ const NewFooter = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center text-center sm:items-start sm:text-left lg:pt-[calc(3.5rem+0.75rem)]">
+          <div className="flex flex-col items-start text-left md:pt-[calc(3.5rem+0.75rem)] lg:pt-[calc(3.5rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}
@@ -132,7 +132,7 @@ const NewFooter = () => {
             </ul>
           </div>
 
-          <div className="col-span-2 flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:items-start sm:text-left lg:col-span-1">
+          <div className="col-span-2 flex flex-col items-start rounded-2xl border border-white/10 bg-white/5 p-5 text-left md:col-span-3 lg:col-span-1">
             <H3 className="mb-2 !text-[16px] text-white md:!text-[18px]">
               Discuss a private-label or contract program
             </H3>

@@ -1,17 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vitalcore">
-  <rect width="64" height="64" rx="14" fill="#113227"/>
-  <!-- Simple leaf mark — readable at 16px -->
-  <g transform="translate(32 33) rotate(-28)">
+  <!-- Dark brand tile with soft corners — clear at 16px -->
+  <rect width="64" height="64" rx="16" fill="#113227"/>
+  <!-- Single bold leaf mark (bright teal) -->
+  <g transform="translate(32 34) rotate(-26)">
     <path
       fill="#11BB8A"
-      d="M0-22C12-10 14 6 0 22C-14 6 -12-10 0-22Z"
+      d="M0-21C11.5-10 13.5 5.5 0 21C-13.5 5.5 -11.5-10 0-21Z"
     />
     <path
       fill="none"
       stroke="#0A7A5C"
-      stroke-width="2.4"
+      stroke-width="2.6"
       stroke-linecap="round"
-      d="M0-14V14"
+      d="M0-12.5V13"
     />
   </g>
 </svg>

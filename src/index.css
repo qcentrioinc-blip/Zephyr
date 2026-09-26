@@ -1503,20 +1503,23 @@ img {
 .lifestyle-hero {
   position: relative;
   overflow: hidden;
-  background: #000;
+  background: transparent;
   /* Clear fixed navbar on all breakpoints — video starts below it */
   margin-top: var(--zephyr-nav-h);
   padding-top: 0;
   width: 100%;
+  max-width: 100%;
 }
 
 .lifestyle-hero__frame {
   position: relative;
   width: 100%;
-  /* Height comes from the active video aspect-ratio (set inline) */
+  max-width: 100%;
+  /* Match source 21:9 so cover fills width without zoom/stretch on phones & tablets */
+  aspect-ratio: 21 / 9;
   height: auto;
   overflow: hidden;
-  background: #000;
+  background: transparent;
 }
 
 /* Desktop only — slightly shorter than full aspect, but taller than prior cap */
@@ -1548,12 +1551,14 @@ img {
 
 .lifestyle-hero__video {
   width: 100%;
+  max-width: 100%;
   height: 100%;
-  /* Frame aspect matches the video → fills with no letterboxing */
+  /* Edge-to-edge fill — no letterbox / black outline */
   object-fit: cover;
   object-position: center center;
   display: block;
   pointer-events: none;
+  background: transparent;
 }
 
 .lifestyle-hero__dots {
@@ -1633,6 +1638,44 @@ img {
   width: 1.35rem;
   height: 1.35rem;
   display: block;
+}
+
+/* Product launcher title — soft brand shine sweep */
+.product-launcher__shine {
+  background-image: linear-gradient(
+    105deg,
+    #113227 0%,
+    #113227 38%,
+    #11bb8a 50%,
+    #113227 62%,
+    #113227 100%
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: product-launcher-shine 3.2s ease-in-out infinite;
+}
+
+@keyframes product-launcher-shine {
+  0%,
+  28% {
+    background-position: 100% 50%;
+  }
+  58%,
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-launcher__shine {
+    animation: none;
+    background-image: none;
+    color: #113227;
+    -webkit-text-fill-color: #113227;
+  }
 }
 
 @supports (height: 100dvh) {

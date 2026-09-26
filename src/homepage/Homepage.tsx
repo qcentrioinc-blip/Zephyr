@@ -7,6 +7,7 @@ import ProductionShowcase from "./ProductionShowcase";
 import Explore from "./Explore";
 import FAQ from "./FAQ";
 import Reveal from "../components/Reveal";
+import ProductLauncher from "./ProductLauncher";
 
 /**
  * Eager sections so refresh-at-footer has full page height on first layout
@@ -41,6 +42,7 @@ export default function Homepage({ playbackAllowed = true }: HomepageProps) {
       <Reveal>
         <FAQ />
       </Reveal>
+      <ProductLauncher enabled={playbackAllowed} />
     </main>
   );
 }

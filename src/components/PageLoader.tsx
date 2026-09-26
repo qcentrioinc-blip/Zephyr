@@ -159,7 +159,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
             </motion.span>
             <TextRotate
               texts={ROTATING_TEXTS}
-              mainClassName="text-white px-2 sm:px-2 md:px-3 bg-white/15 border border-white/25 overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+              mainClassName="text-white overflow-hidden justify-center"
               staggerFrom="last"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -173,7 +173,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
           </motion.p>
         </LayoutGroup>
         <p className="zephyr-page-loader__tagline">
-          CDMO &amp; private-label manufacturing
+          Made for health
         </p>
       </div>
 

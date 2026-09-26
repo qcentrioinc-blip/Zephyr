@@ -12,6 +12,7 @@ type ShowcaseItem = {
 const dosageFormats: ShowcaseItem[] = [
   { name: "Tablets", image: PACKAGING_IMAGES.tablet },
   { name: "Capsules", image: PACKAGING_IMAGES.capsule },
+  { name: "Softgels", image: PACKAGING_IMAGES.softgel },
   { name: "Powders", image: PACKAGING_IMAGES.powder },
   { name: "Gummies", image: PACKAGING_IMAGES.gummy },
   { name: "Jelly", image: PACKAGING_IMAGES.jelly },

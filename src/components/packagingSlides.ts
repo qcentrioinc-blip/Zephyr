@@ -2,6 +2,7 @@
 export const PACKAGING_IMAGES = {
   tablet: "/packaging/tablet.webp",
   capsule: "/packaging/capsule.webp",
+  softgel: "/packaging/softgel.webp",
   powder: "/packaging/powder.webp",
   gummy: "/packaging/gummy.webp",
   jelly: "/packaging/jelly.webp",
