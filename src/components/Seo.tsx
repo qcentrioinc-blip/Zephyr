@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
-const SITE_URL = "https://zephyr.vercel.app";
+const SITE_URL = "https://www.zephyrlabsinc.com";
 const DEFAULT_OG = `${SITE_URL}/brand/vitalcore-logo-clear.png`;
 
 type PageMeta = {
@@ -11,9 +11,9 @@ type PageMeta = {
 
 const META: Record<string, PageMeta> = {
   "/": {
-    title: "Vitalcore | CDMO & Private-Label Manufacturing Partner",
+    title: "Vitalcore | Manufactured by Zephyr",
     description:
-      "Vitalcore manufactures nutraceutical, herbaceutical, and organic dietary supplements for US brand owners. GMP/ISO systems, high-capacity production, and MOQ-ready private-label programs.",
+      "Vitalcore is the brand. Zephyr is the manufacturing unit for vitamins, minerals, specialty dosages, and finished supplements for private-label and brand owners.",
   },
   "/research": {
     title: "R&D and New Product Development | Vitalcore",
@@ -32,9 +32,9 @@ const META: Record<string, PageMeta> = {
   //     "Manufacturing floors, packaging lines, and laboratory environments supporting nutraceutical, herbaceutical, and organic partner programs.",
   // },
   "/contact": {
-    title: "Request MOQ | Vitalcore Contact",
+    title: "Vitalcore | Manufactured by Zephyr",
     description:
-      "Start a manufacturing inquiry for private-label or contract production. Share your dosage form, packaging, and estimated volume.",
+      "Vitalcore is the brand. Zephyr is the manufacturing unit for vitamins, minerals, specialty dosages, and finished supplements for private-label and brand owners.",
   },
   "/herbaceutical": {
     title: "Herbaceutical Formulas | Vitalcore",

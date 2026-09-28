@@ -13,12 +13,12 @@ function FlaskGif({ className = "" }: { className?: string }) {
       <path
         d="M19 6h10v10l8 18a7 7 0 0 1-6.3 10H17.3A7 7 0 0 1 11 34l8-18V6z"
         fill="none"
-        stroke="currentColor"
+        stroke="#0F766E"
         strokeWidth="2.2"
         strokeLinejoin="round"
       />
-      <path d="M17 6h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-      <path fill="currentColor" opacity="0.35">
+      <path d="M17 6h14" stroke="#0F766E" strokeWidth="2.2" strokeLinecap="round" />
+      <path fill="#14B8A6" opacity="0.35">
         <animate
           attributeName="d"
           dur="2.4s"
@@ -26,15 +26,15 @@ function FlaskGif({ className = "" }: { className?: string }) {
           values="M14.5 34c2-3 5-4 9.5-4s7.5 1 9.5 4v2.5c-1.5 4-5 6.5-9.5 6.5S16 40.5 14.5 36.5V34z;M14.5 30c2-3 5-4 9.5-4s7.5 1 9.5 4v6.5c-1.5 4-5 6.5-9.5 6.5S16 40.5 14.5 36.5V30z;M14.5 34c2-3 5-4 9.5-4s7.5 1 9.5 4v2.5c-1.5 4-5 6.5-9.5 6.5S16 40.5 14.5 36.5V34z"
         />
       </path>
-      <circle cx="22" cy="36" r="1.4" fill="currentColor">
+      <circle cx="22" cy="36" r="1.4" fill="#0F766E">
         <animate attributeName="cy" values="36;28;36" dur="1.8s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.8s" repeatCount="indefinite" />
       </circle>
-      <circle cx="28" cy="34" r="1.1" fill="currentColor">
+      <circle cx="28" cy="34" r="1.1" fill="#0F766E">
         <animate attributeName="cy" values="34;26;34" dur="2.1s" begin="0.4s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.8;0.15;0.8" dur="2.1s" begin="0.4s" repeatCount="indefinite" />
       </circle>
-      <circle cx="25" cy="38" r="0.9" fill="currentColor">
+      <circle cx="25" cy="38" r="0.9" fill="#0F766E">
         <animate attributeName="cy" values="38;30;38" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.7;0.1;0.7" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
       </circle>
@@ -48,29 +48,21 @@ function FactoryGif({ className = "" }: { className?: string }) {
       <path
         d="M6 40V22l10 6V22l10 6V14h16v26H6z"
         fill="none"
-        stroke="currentColor"
+        stroke="#1E3A5F"
         strokeWidth="2.2"
         strokeLinejoin="round"
       />
-      <path d="M30 20h4M30 25h4M30 30h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="14" cy="14" r="2.2" fill="currentColor" opacity="0.25">
+      <path d="M30 20h4M30 25h4M30 30h4" stroke="#5BA4C9" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="14" cy="14" r="2.2" fill="#D97706">
         <animate attributeName="cy" values="16;8;16" dur="2.2s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.35;0;0.35" dur="2.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.9;0;0.9" dur="2.2s" repeatCount="indefinite" />
         <animate attributeName="r" values="1.5;3;1.5" dur="2.2s" repeatCount="indefinite" />
       </circle>
-      <circle cx="20" cy="12" r="2" fill="currentColor" opacity="0.2">
+      <circle cx="20" cy="12" r="2" fill="#D97706">
         <animate attributeName="cy" values="14;6;14" dur="2.5s" begin="0.5s" repeatCount="indefinite" />
-        <animate attributeName="opacity" values="0.3;0;0.3" dur="2.5s" begin="0.5s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.75;0;0.75" dur="2.5s" begin="0.5s" repeatCount="indefinite" />
         <animate attributeName="r" values="1.2;2.8;1.2" dur="2.5s" begin="0.5s" repeatCount="indefinite" />
       </circle>
-      <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none">
-        <animate
-          attributeName="d"
-          dur="1.4s"
-          repeatCount="indefinite"
-          values="M10 40h4M18 40h4M26 40h4;M14 40h4M22 40h4M30 40h4;M10 40h4M18 40h4M26 40h4"
-        />
-      </path>
     </svg>
   );
 }
@@ -81,14 +73,14 @@ function ShieldGif({ className = "" }: { className?: string }) {
       <path
         d="M24 6l14 5v11c0 9-6.2 15.6-14 18-7.8-2.4-14-9-14-18V11l14-5z"
         fill="none"
-        stroke="currentColor"
+        stroke="#166534"
         strokeWidth="2.2"
         strokeLinejoin="round"
       />
       <path
         d="M16.5 24.5l5 5 10-11"
         fill="none"
-        stroke="currentColor"
+        stroke="#16A34A"
         strokeWidth="2.4"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -109,7 +101,7 @@ function ShieldGif({ className = "" }: { className?: string }) {
           repeatCount="indefinite"
         />
       </path>
-      <circle cx="24" cy="24" r="3" fill="currentColor" opacity="0.12">
+      <circle cx="24" cy="24" r="3" fill="#22C55E" opacity="0.12">
         <animate attributeName="r" values="2;7;2" dur="2.6s" repeatCount="indefinite" />
         <animate attributeName="opacity" values="0.2;0;0.2" dur="2.6s" repeatCount="indefinite" />
       </circle>
@@ -154,7 +146,7 @@ export default function FeaturesSection() {
                   <H3 className="uppercase leading-[1.15] text-[#111111]">
                     {card.title}
                   </H3>
-                  <Icon className="h-11 w-11 shrink-0 text-black sm:h-12 sm:w-12" />
+                  <Icon className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
                 </div>
                 <P className="text-gray-700">{card.description}</P>
               </article>

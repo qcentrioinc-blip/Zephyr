@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://zephyr.vercel.app/</loc>
+    <loc>https://www.zephyrlabsinc.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://zephyr.vercel.app/research</loc>
+    <loc>https://www.zephyrlabsinc.com/research</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://zephyr.vercel.app/production</loc>
+    <loc>https://www.zephyrlabsinc.com/production</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <!-- Gallery page disabled
   <url>
-    <loc>https://zephyr.vercel.app/gallery</loc>
+    <loc>https://www.zephyrlabsinc.com/gallery</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   -->
   <url>
-    <loc>https://zephyr.vercel.app/contact</loc>
+    <loc>https://www.zephyrlabsinc.com/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zephyr.vercel.app/herbaceutical</loc>
+    <loc>https://www.zephyrlabsinc.com/herbaceutical</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://zephyr.vercel.app/nutraceutical</loc>
+    <loc>https://www.zephyrlabsinc.com/nutraceutical</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://zephyr.vercel.app/organic</loc>
+    <loc>https://www.zephyrlabsinc.com/organic</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

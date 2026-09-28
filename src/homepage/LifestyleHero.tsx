@@ -7,145 +7,287 @@ const VIDEOS = [
   { id: "slide-3", src: "/videos/slide-3.mp4" },
 ] as const;
 
-const FADE_MS = 450;
-const REVEAL_FALLBACK_MS = 1500;
+const SLIDE_MS = 720;
+/** Give up and keep the current picture. Never reveal the next slide on this timer. */
+const STAY_MS = 8000;
 const HAVE_CURRENT_DATA = 2;
+
+type StillPhase = "off" | "hold" | "go";
 
 type LifestyleHeroProps = {
   /** False while page-lock gate is open — content may load, but videos stay paused. */
   playbackAllowed?: boolean;
 };
 
+function slideOf(video: HTMLVideoElement) {
+  return video.parentElement;
+}
+
+function showIncoming(video: HTMLVideoElement) {
+  const slide = slideOf(video);
+  if (!slide) return;
+  slide.style.visibility = "";
+  slide.style.opacity = "1";
+}
+
+function hideOutgoing(video: HTMLVideoElement) {
+  const slide = slideOf(video);
+  if (slide) slide.style.visibility = "hidden";
+}
+
+function clearIncoming(videos: Array<HTMLVideoElement | null>) {
+  videos.forEach((video) => {
+    const slide = video ? slideOf(video) : null;
+    if (slide) slide.style.opacity = "";
+  });
+}
+
+function drawFrame(video: HTMLVideoElement, canvas: HTMLCanvasElement | null) {
+  if (!canvas) return false;
+  const width = video.videoWidth;
+  const height = video.videoHeight;
+  if (!width || !height || video.readyState < HAVE_CURRENT_DATA) return false;
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d", { alpha: false });
+  if (!ctx) return false;
+  try {
+    ctx.drawImage(video, 0, 0, width, height);
+    const pixel = ctx.getImageData(Math.floor(width / 2), Math.floor(height / 2), 1, 1).data;
+    if (pixel[3] === 0) return false;
+  } catch {
+    return false;
+  }
+  return true;
+}
+
+function waitUntilPlaying(started: Promise<void>, video: HTMLVideoElement) {
+  return new Promise<void>((resolve, reject) => {
+    let settled = false;
+    const finish = (fn: () => void) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("error", onError);
+      fn();
+    };
+    const onPlaying = () => {
+      if (video.seeking) return;
+      finish(resolve);
+    };
+    const onError = () => finish(() => reject(new Error("media")));
+    const timer = window.setTimeout(() => finish(() => reject(new Error("stay"))), STAY_MS);
+
+    video.addEventListener("playing", onPlaying);
+    video.addEventListener("error", onError);
+    started.then(
+      () => {
+        if (!video.paused && !video.seeking && video.readyState >= HAVE_CURRENT_DATA) {
+          finish(resolve);
+        }
+      },
+      () => finish(() => reject(new Error("play"))),
+    );
+    if (!video.paused && !video.seeking && video.readyState >= HAVE_CURRENT_DATA) {
+      finish(resolve);
+    }
+  });
+}
+
 export default function LifestyleHero({
   playbackAllowed = true,
 }: LifestyleHeroProps) {
   const [index, setIndex] = useState(0);
-  const [shownIndex, setShownIndex] = useState(0);
+  const [stillPhase, setStillPhase] = useState<StillPhase>("off");
+  const [stillDir, setStillDir] = useState<1 | -1>(1);
   const reduceMotion = Boolean(useReducedMotion());
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const fadeLock = useRef(false);
+  const stillRef = useRef<HTMLCanvasElement>(null);
+  const indexRef = useRef(0);
+  const busy = useRef(false);
+  const runRef = useRef(0);
+  const leavingFrom = useRef(0);
+  const stillPhaseRef = useRef<StillPhase>("off");
+  const stillDirRef = useRef<1 | -1>(1);
+  const reduceMotionRef = useRef(reduceMotion);
+  reduceMotionRef.current = reduceMotion;
+  indexRef.current = index;
+  stillDirRef.current = stillDir;
 
-  const beginClip = useCallback((nextIndex: number) => {
-    const showing = videoRefs.current[shownIndex];
-    const next = videoRefs.current[nextIndex];
-    if (showing && showing !== next) showing.pause();
-    if (next) {
-      if (next.readyState < HAVE_CURRENT_DATA) next.load();
-      if (next.readyState >= HAVE_CURRENT_DATA && next.currentTime > 0.05) {
+  const setPhase = useCallback((phase: StillPhase) => {
+    stillPhaseRef.current = phase;
+    setStillPhase(phase);
+  }, []);
+
+  const finishSlide = useCallback(() => {
+    if (stillPhaseRef.current === "off") return;
+    const outgoing = videoRefs.current[leavingFrom.current];
+    if (outgoing) {
+      outgoing.pause();
+      hideOutgoing(outgoing);
+    }
+    const canvas = stillRef.current;
+    /* Drop the still while it is still off-screen. Resetting its position first paints the old frame again. */
+    if (canvas) {
+      canvas.style.transition = "none";
+      canvas.style.opacity = "0";
+    }
+    setPhase("off");
+    busy.current = false;
+  }, [setPhase]);
+
+  const go = useCallback(
+    (dir: number) => {
+      if (!playbackAllowed || busy.current) return;
+      const from = indexRef.current;
+      const to = (from + dir + VIDEOS.length) % VIDEOS.length;
+      const next = videoRefs.current[to];
+      const current = videoRefs.current[from];
+      if (!next || !current) return;
+
+      busy.current = true;
+      const run = ++runRef.current;
+
+      /* Opacity 0 clips never reach `playing` on iPhone. Unhide before play(). */
+      showIncoming(next);
+      if (next.readyState === 0) next.load();
+      if (next.currentTime > 0.05) {
         try {
           next.currentTime = 0;
         } catch {
           /* iOS can reject a seek before the first frame exists */
         }
       }
-      void next.play().catch(() => {});
-    }
-    setIndex(nextIndex);
-  }, [shownIndex]);
+      const started = next.play();
 
-  /* Hold the current picture until the next clip has a frame, then crossfade. */
-  useEffect(() => {
-    if (index === shownIndex) return;
-    const video = videoRefs.current[index];
-    if (!video) return;
+      void (async () => {
+        try {
+          await waitUntilPlaying(started, next);
+          if (run !== runRef.current) return;
+          if (next.paused || next.readyState < HAVE_CURRENT_DATA) {
+            throw new Error("not playing");
+          }
 
-    let settled = false;
-    const reveal = () => {
-      if (settled) return;
-      settled = true;
-      window.clearTimeout(fallback);
-      video.removeEventListener("loadeddata", onFrame);
-      video.removeEventListener("canplay", onFrame);
-      video.removeEventListener("timeupdate", onFrame);
-      video.removeEventListener("seeked", onFrame);
-      setShownIndex(index);
-    };
+          leavingFrom.current = from;
+          indexRef.current = to;
+          const drawn = !reduceMotionRef.current && drawFrame(current, stillRef.current);
+          clearIncoming(videoRefs.current);
 
-    const onFrame = () => {
-      if (video.readyState >= HAVE_CURRENT_DATA) reveal();
-    };
+          if (!drawn) {
+            setIndex(to);
+            window.requestAnimationFrame(() => {
+              if (run !== runRef.current) return;
+              current.pause();
+              try {
+                current.currentTime = 0;
+              } catch {
+                /* ignore */
+              }
+              busy.current = false;
+            });
+            return;
+          }
 
-    const fallback = window.setTimeout(() => {
-      void video.play().catch(() => {});
-      reveal();
-    }, REVEAL_FALLBACK_MS);
-
-    video.addEventListener("loadeddata", onFrame);
-    video.addEventListener("canplay", onFrame);
-    video.addEventListener("timeupdate", onFrame);
-    video.addEventListener("seeked", onFrame);
-
-    if (video.readyState < HAVE_CURRENT_DATA) {
-      video.load();
-      void video.play().catch(() => {});
-    } else if (video.currentTime <= 0.05) {
-      reveal();
-    }
-
-    return () => {
-      settled = true;
-      window.clearTimeout(fallback);
-      video.removeEventListener("loadeddata", onFrame);
-      video.removeEventListener("canplay", onFrame);
-      video.removeEventListener("timeupdate", onFrame);
-      video.removeEventListener("seeked", onFrame);
-    };
-  }, [index, shownIndex]);
-
-  useEffect(() => {
-    fadeLock.current = true;
-    const delay = reduceMotion ? 0 : FADE_MS;
-    const id = window.setTimeout(() => {
-      fadeLock.current = false;
-    }, delay);
-    return () => window.clearTimeout(id);
-  }, [shownIndex, reduceMotion]);
-
-  const go = useCallback(
-    (dir: number) => {
-      if (!playbackAllowed || fadeLock.current || index !== shownIndex) return;
-      beginClip((index + dir + VIDEOS.length) % VIDEOS.length);
+          setStillDir(dir > 0 ? 1 : -1);
+          setPhase("hold");
+          setIndex(to);
+        } catch {
+          if (run !== runRef.current) return;
+          if (!next.paused) next.pause();
+          clearIncoming(videoRefs.current);
+          busy.current = false;
+        }
+      })();
     },
-    [playbackAllowed, index, shownIndex, beginClip],
+    [playbackAllowed, setPhase],
   );
 
-  const advance = useCallback(() => go(1), [go]);
-  const prev = useCallback(() => go(-1), [go]);
-  const next = useCallback(() => go(1), [go]);
+  useEffect(() => {
+    if (stillPhase !== "hold") return;
+    const canvas = stillRef.current;
+    const outgoing = videoRefs.current[leavingFrom.current];
+    const start = () => {
+      if (stillPhaseRef.current !== "hold" || !canvas) return;
+      outgoing?.pause();
+      const width = canvas.getBoundingClientRect().width || canvas.offsetWidth;
+      const shift = stillDirRef.current > 0 ? -width : width;
+      canvas.style.transform = `translate3d(${shift}px, 0, 0)`;
+      setPhase("go");
+    };
+    /* Hold is already painted. A timer covers browsers that skip this frame callback. */
+    const frame = window.requestAnimationFrame(start);
+    const timer = window.setTimeout(start, 48);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, [stillPhase, setPhase]);
 
-  /* Keep the requested clip playing. Pause the others, including while it is still hidden. */
+  useEffect(() => {
+    if (stillPhase !== "off") return;
+    const canvas = stillRef.current;
+    if (!canvas) return;
+    canvas.style.transform = "";
+    canvas.style.opacity = "";
+    canvas.style.transition = "";
+    const outgoing = videoRefs.current[leavingFrom.current];
+    if (outgoing && outgoing !== videoRefs.current[indexRef.current]) {
+      try {
+        outgoing.currentTime = 0;
+      } catch {
+        /* a hidden clip can reject a seek before its next visit */
+      }
+    }
+  }, [stillPhase]);
+
+  useEffect(() => {
+    if (stillPhase !== "go") return;
+    const id = window.setTimeout(finishSlide, SLIDE_MS + 120);
+    return () => window.clearTimeout(id);
+  }, [stillPhase, finishSlide]);
+
   useEffect(() => {
     if (!playbackAllowed) {
+      runRef.current += 1;
+      busy.current = false;
+      setPhase("off");
       videoRefs.current.forEach((video) => video?.pause());
       return;
     }
-    videoRefs.current.forEach((video, i) => {
-      if (!video) return;
-      if (i === index) {
-        if (video.paused) void video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    });
-  }, [index, playbackAllowed]);
+    const video = videoRefs.current[index];
+    if (video?.paused) void video.play().catch(() => {});
+  }, [playbackAllowed, index, setPhase]);
 
   useEffect(() => {
-    const video = videoRefs.current[shownIndex];
-    if (!video || !playbackAllowed || index !== shownIndex) return;
-    video.addEventListener("ended", advance);
-    return () => video.removeEventListener("ended", advance);
-  }, [shownIndex, index, playbackAllowed, advance]);
+    const video = videoRefs.current[index];
+    if (!video || !playbackAllowed) return;
+    const onEnded = () => go(1);
+    video.addEventListener("ended", onEnded);
+    return () => video.removeEventListener("ended", onEnded);
+  }, [index, playbackAllowed, go]);
 
   useEffect(() => {
     const onVisibility = () => {
-      const video = videoRefs.current[shownIndex];
-      if (!video || !playbackAllowed || index !== shownIndex) return;
+      const video = videoRefs.current[indexRef.current];
+      if (!video || !playbackAllowed || busy.current) return;
       if (document.hidden) video.pause();
       else void video.play().catch(() => {});
     };
     document.addEventListener("visibilitychange", onVisibility);
     return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, [shownIndex, index, playbackAllowed]);
+  }, [playbackAllowed]);
+
+  useEffect(() => {
+    const refs = videoRefs.current;
+    return () => {
+      runRef.current += 1;
+      refs.forEach((video) => video?.pause());
+    };
+  }, []);
+
+  const prev = useCallback(() => go(-1), [go]);
+  const next = useCallback(() => go(1), [go]);
 
   return (
     <section
@@ -157,7 +299,7 @@ export default function LifestyleHero({
         {VIDEOS.map((video, i) => (
           <div
             key={video.id}
-            className={`lifestyle-hero__slide${i === shownIndex ? " is-shown" : ""}`}
+            className={`lifestyle-hero__slide${i === index ? " is-shown" : ""}`}
           >
             <video
               ref={(node) => {
@@ -174,6 +316,17 @@ export default function LifestyleHero({
           </div>
         ))}
 
+        <canvas
+          ref={stillRef}
+          className={`lifestyle-hero__still${stillPhase === "hold" ? " is-hold" : ""}${stillPhase === "go" ? " is-go" : ""}`}
+          aria-hidden
+          onTransitionEnd={(event) => {
+            if (event.propertyName !== "transform") return;
+            if (event.target !== event.currentTarget) return;
+            finishSlide();
+          }}
+        />
+
         <div
           className="lifestyle-hero__dots"
           role="tablist"
@@ -183,9 +336,9 @@ export default function LifestyleHero({
             <span
               key={v.id}
               role="tab"
-              aria-selected={i === shownIndex}
+              aria-selected={i === index}
               aria-label={`Video ${i + 1} of ${VIDEOS.length}`}
-              className={`lifestyle-hero__dot${i === shownIndex ? " is-active" : ""}`}
+              className={`lifestyle-hero__dot${i === index ? " is-active" : ""}`}
             />
           ))}
         </div>
