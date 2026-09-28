@@ -1,11 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useIsPresent,
-  useReducedMotion,
-  type Variants,
-} from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 
 const VIDEOS = [
   { id: "slide-1", src: "/videos/slide-1.mp4" },
@@ -13,89 +7,8 @@ const VIDEOS = [
   { id: "slide-3", src: "/videos/slide-3.mp4" },
 ] as const;
 
-const slideVariants: Variants = {
-  enter: (dir: number) => ({
-    x: dir >= 0 ? "100%" : "-100%",
-  }),
-  center: {
-    x: 0,
-    transition: {
-      x: { type: "tween", duration: 0.55, ease: [0.25, 1, 0.5, 1] },
-    },
-  },
-  exit: (dir: number) => ({
-    x: dir >= 0 ? "-100%" : "100%",
-    transition: {
-      x: { type: "tween", duration: 0.55, ease: [0.25, 1, 0.5, 1] },
-    },
-  }),
-};
-
-const instantVariants: Variants = {
-  enter: { opacity: 0 },
-  center: { opacity: 1, transition: { duration: 0.01 } },
-  exit: { opacity: 0, transition: { duration: 0.01 } },
-};
-
-function VideoSlide({
-  src,
-  isActive,
-  playbackAllowed,
-  onEnded,
-  registerActiveRef,
-}: {
-  src: string;
-  isActive: boolean;
-  playbackAllowed: boolean;
-  onEnded: () => void;
-  registerActiveRef?: (node: HTMLVideoElement | null) => void;
-}) {
-  const ref = useRef<HTMLVideoElement>(null);
-  const isPresent = useIsPresent();
-  const shouldPlay = isActive && isPresent && playbackAllowed;
-
-  useEffect(() => {
-    if (shouldPlay) registerActiveRef?.(ref.current);
-    return () => {
-      if (shouldPlay) registerActiveRef?.(null);
-    };
-  }, [shouldPlay, registerActiveRef]);
-
-  useEffect(() => {
-    const video = ref.current;
-    if (!video || !shouldPlay) return;
-
-    const handleEnded = () => onEnded();
-    video.addEventListener("ended", handleEnded);
-    return () => video.removeEventListener("ended", handleEnded);
-  }, [shouldPlay, onEnded]);
-
-  useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
-
-    if (shouldPlay) {
-      video.currentTime = 0;
-      void video.play().catch(() => {});
-    } else {
-      video.pause();
-      if (!playbackAllowed) video.currentTime = 0;
-    }
-  }, [shouldPlay, playbackAllowed]);
-
-  return (
-    <video
-      ref={ref}
-      className="lifestyle-hero__video"
-      src={src}
-      muted
-      playsInline
-      /* Slide-1 may preload under the page-lock; later slides preload after enter */
-      preload={isActive || playbackAllowed ? "auto" : "none"}
-      aria-hidden
-    />
-  );
-}
+const FADE_MS = 450;
+const HAVE_CURRENT_DATA = 2;
 
 type LifestyleHeroProps = {
   /** False while page-lock gate is open — content may load, but videos stay paused. */
@@ -106,66 +19,118 @@ export default function LifestyleHero({
   playbackAllowed = true,
 }: LifestyleHeroProps) {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [shownIndex, setShownIndex] = useState(0);
   const reduceMotion = Boolean(useReducedMotion());
-  const lockRef = useRef(false);
-  const preloadRef = useRef<HTMLVideoElement | null>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const fadeLock = useRef(false);
 
-  const slide = VIDEOS[index];
-  const currentId = slide.id;
-  const variants = reduceMotion ? instantVariants : slideVariants;
-  const activeVideoRef = useRef<HTMLVideoElement | null>(null);
+  const revealWhenReady = useCallback((video: HTMLVideoElement, reveal: () => void) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("seeked", onSeeked);
+      reveal();
+    };
 
-  const setActiveVideoRef = useCallback(
-    (node: HTMLVideoElement | null) => {
-      activeVideoRef.current = node;
-    },
-    [],
-  );
+    const onSeeked = () => finish();
+
+    const onReady = () => {
+      if (video.currentTime > 0.05) {
+        video.addEventListener("seeked", onSeeked);
+        video.currentTime = 0;
+        return;
+      }
+      finish();
+    };
+
+    if (video.readyState < HAVE_CURRENT_DATA) {
+      video.addEventListener("loadeddata", onReady);
+      return () => {
+        settled = true;
+        video.removeEventListener("loadeddata", onReady);
+        video.removeEventListener("seeked", onSeeked);
+      };
+    }
+
+    if (video.currentTime > 0.05) {
+      video.addEventListener("seeked", onSeeked);
+      try {
+        video.currentTime = 0;
+      } catch {
+        finish();
+      }
+    } else {
+      finish();
+    }
+
+    return () => {
+      settled = true;
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("seeked", onSeeked);
+    };
+  }, []);
+
+  /* Hold the current clip until the next one has a decoded frame. */
+  useEffect(() => {
+    if (index === shownIndex) return;
+    const video = videoRefs.current[index];
+    if (!video) return;
+    return revealWhenReady(video, () => setShownIndex(index));
+  }, [index, shownIndex, revealWhenReady]);
+
+  useEffect(() => {
+    fadeLock.current = true;
+    const delay = reduceMotion ? 0 : FADE_MS;
+    const id = window.setTimeout(() => {
+      fadeLock.current = false;
+    }, delay);
+    return () => window.clearTimeout(id);
+  }, [shownIndex, reduceMotion]);
 
   const go = useCallback(
     (dir: number) => {
-      if (lockRef.current || !playbackAllowed) return;
-      lockRef.current = true;
-      setDirection(dir);
+      if (!playbackAllowed || fadeLock.current || index !== shownIndex) return;
       setIndex((i) => (i + dir + VIDEOS.length) % VIDEOS.length);
-      window.setTimeout(() => {
-        lockRef.current = false;
-      }, reduceMotion ? 80 : 580);
     },
-    [reduceMotion, playbackAllowed],
+    [playbackAllowed, index, shownIndex],
   );
 
   const advance = useCallback(() => go(1), [go]);
   const prev = useCallback(() => go(-1), [go]);
   const next = useCallback(() => go(1), [go]);
 
-  /* Preload next slide only after the entry gate is unlocked */
+  /* Play only the visible clip, and only after the entry gate opens. */
   useEffect(() => {
-    if (!playbackAllowed) return;
+    videoRefs.current.forEach((video, i) => {
+      if (!video) return;
+      const active = i === shownIndex && playbackAllowed && index === shownIndex;
+      if (active) {
+        if (video.paused) void video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, [shownIndex, index, playbackAllowed]);
 
-    const nextSrc = VIDEOS[(index + 1) % VIDEOS.length].src;
-    if (!preloadRef.current) {
-      preloadRef.current = document.createElement("video");
-      preloadRef.current.muted = true;
-      preloadRef.current.preload = "auto";
-    }
-    preloadRef.current.src = nextSrc;
-    preloadRef.current.load();
-  }, [index, playbackAllowed]);
+  useEffect(() => {
+    const video = videoRefs.current[shownIndex];
+    if (!video || !playbackAllowed || index !== shownIndex) return;
+    video.addEventListener("ended", advance);
+    return () => video.removeEventListener("ended", advance);
+  }, [shownIndex, index, playbackAllowed, advance]);
 
-  /* Pause when tab hidden; resume active slide when visible (only if unlocked) */
   useEffect(() => {
     const onVisibility = () => {
-      const video = activeVideoRef.current;
-      if (!video || !playbackAllowed) return;
+      const video = videoRefs.current[shownIndex];
+      if (!video || !playbackAllowed || index !== shownIndex) return;
       if (document.hidden) video.pause();
       else void video.play().catch(() => {});
     };
-
     document.addEventListener("visibilitychange", onVisibility);
     return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, [index, playbackAllowed]);
+  }, [shownIndex, index, playbackAllowed]);
 
   return (
     <section
@@ -174,26 +139,24 @@ export default function LifestyleHero({
       aria-label="Zephyr product videos"
     >
       <div className="lifestyle-hero__frame">
-        <AnimatePresence mode="sync" custom={direction} initial={false}>
-          <motion.div
-            key={slide.id}
-            className="lifestyle-hero__slide"
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            style={{ willChange: reduceMotion ? "opacity" : "transform" }}
+        {VIDEOS.map((video, i) => (
+          <div
+            key={video.id}
+            className={`lifestyle-hero__slide${i === shownIndex ? " is-shown" : ""}`}
           >
-            <VideoSlide
-              src={slide.src}
-              isActive={slide.id === currentId}
-              playbackAllowed={playbackAllowed}
-              onEnded={advance}
-              registerActiveRef={setActiveVideoRef}
+            <video
+              ref={(node) => {
+                videoRefs.current[i] = node;
+              }}
+              className="lifestyle-hero__video"
+              src={video.src}
+              muted
+              playsInline
+              preload="auto"
+              aria-hidden
             />
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        ))}
 
         <div
           className="lifestyle-hero__dots"
@@ -204,9 +167,9 @@ export default function LifestyleHero({
             <span
               key={v.id}
               role="tab"
-              aria-selected={i === index}
+              aria-selected={i === shownIndex}
               aria-label={`Video ${i + 1} of ${VIDEOS.length}`}
-              className={`lifestyle-hero__dot${i === index ? " is-active" : ""}`}
+              className={`lifestyle-hero__dot${i === shownIndex ? " is-active" : ""}`}
             />
           ))}
         </div>

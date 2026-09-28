@@ -1519,7 +1519,8 @@ img {
   aspect-ratio: 21 / 9;
   height: auto;
   overflow: hidden;
-  background: transparent;
+  /* Dark fallback so a decode gap is never the page white */
+  background: #0d241c;
 }
 
 /* Desktop only — slightly shorter than full aspect, but taller than prior cap */
@@ -1540,25 +1541,33 @@ img {
   inset: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  isolation: isolate;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.lifestyle-hero__slide.is-shown {
+  opacity: 1;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lifestyle-hero__slide {
+    transition: none;
+  }
 }
 
 .lifestyle-hero__video {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 100%;
   height: 100%;
   /* Edge-to-edge fill — no letterbox / black outline */
   object-fit: cover;
   object-position: center center;
   display: block;
   pointer-events: none;
-  background: transparent;
+  background: #0d241c;
 }
 
 .lifestyle-hero__dots {
