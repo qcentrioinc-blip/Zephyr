@@ -8,6 +8,7 @@ const VIDEOS = [
 ] as const;
 
 const FADE_MS = 450;
+const REVEAL_FALLBACK_MS = 1500;
 const HAVE_CURRENT_DATA = 2;
 
 type LifestyleHeroProps = {
@@ -24,61 +25,72 @@ export default function LifestyleHero({
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const fadeLock = useRef(false);
 
-  const revealWhenReady = useCallback((video: HTMLVideoElement, reveal: () => void) => {
-    let settled = false;
-    const finish = () => {
-      if (settled) return;
-      settled = true;
-      video.removeEventListener("loadeddata", onReady);
-      video.removeEventListener("seeked", onSeeked);
-      reveal();
-    };
-
-    const onSeeked = () => finish();
-
-    const onReady = () => {
-      if (video.currentTime > 0.05) {
-        video.addEventListener("seeked", onSeeked);
-        video.currentTime = 0;
-        return;
+  const beginClip = useCallback((nextIndex: number) => {
+    const showing = videoRefs.current[shownIndex];
+    const next = videoRefs.current[nextIndex];
+    if (showing && showing !== next) showing.pause();
+    if (next) {
+      if (next.readyState < HAVE_CURRENT_DATA) next.load();
+      if (next.readyState >= HAVE_CURRENT_DATA && next.currentTime > 0.05) {
+        try {
+          next.currentTime = 0;
+        } catch {
+          /* iOS can reject a seek before the first frame exists */
+        }
       }
-      finish();
-    };
-
-    if (video.readyState < HAVE_CURRENT_DATA) {
-      video.addEventListener("loadeddata", onReady);
-      return () => {
-        settled = true;
-        video.removeEventListener("loadeddata", onReady);
-        video.removeEventListener("seeked", onSeeked);
-      };
+      void next.play().catch(() => {});
     }
+    setIndex(nextIndex);
+  }, [shownIndex]);
 
-    if (video.currentTime > 0.05) {
-      video.addEventListener("seeked", onSeeked);
-      try {
-        video.currentTime = 0;
-      } catch {
-        finish();
-      }
-    } else {
-      finish();
-    }
-
-    return () => {
-      settled = true;
-      video.removeEventListener("loadeddata", onReady);
-      video.removeEventListener("seeked", onSeeked);
-    };
-  }, []);
-
-  /* Hold the current clip until the next one has a decoded frame. */
+  /* Hold the current picture until the next clip has a frame, then crossfade. */
   useEffect(() => {
     if (index === shownIndex) return;
     const video = videoRefs.current[index];
     if (!video) return;
-    return revealWhenReady(video, () => setShownIndex(index));
-  }, [index, shownIndex, revealWhenReady]);
+
+    let settled = false;
+    const reveal = () => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(fallback);
+      video.removeEventListener("loadeddata", onFrame);
+      video.removeEventListener("canplay", onFrame);
+      video.removeEventListener("timeupdate", onFrame);
+      video.removeEventListener("seeked", onFrame);
+      setShownIndex(index);
+    };
+
+    const onFrame = () => {
+      if (video.readyState >= HAVE_CURRENT_DATA) reveal();
+    };
+
+    const fallback = window.setTimeout(() => {
+      void video.play().catch(() => {});
+      reveal();
+    }, REVEAL_FALLBACK_MS);
+
+    video.addEventListener("loadeddata", onFrame);
+    video.addEventListener("canplay", onFrame);
+    video.addEventListener("timeupdate", onFrame);
+    video.addEventListener("seeked", onFrame);
+
+    if (video.readyState < HAVE_CURRENT_DATA) {
+      video.load();
+      void video.play().catch(() => {});
+    } else if (video.currentTime <= 0.05) {
+      reveal();
+    }
+
+    return () => {
+      settled = true;
+      window.clearTimeout(fallback);
+      video.removeEventListener("loadeddata", onFrame);
+      video.removeEventListener("canplay", onFrame);
+      video.removeEventListener("timeupdate", onFrame);
+      video.removeEventListener("seeked", onFrame);
+    };
+  }, [index, shownIndex]);
 
   useEffect(() => {
     fadeLock.current = true;
@@ -92,27 +104,30 @@ export default function LifestyleHero({
   const go = useCallback(
     (dir: number) => {
       if (!playbackAllowed || fadeLock.current || index !== shownIndex) return;
-      setIndex((i) => (i + dir + VIDEOS.length) % VIDEOS.length);
+      beginClip((index + dir + VIDEOS.length) % VIDEOS.length);
     },
-    [playbackAllowed, index, shownIndex],
+    [playbackAllowed, index, shownIndex, beginClip],
   );
 
   const advance = useCallback(() => go(1), [go]);
   const prev = useCallback(() => go(-1), [go]);
   const next = useCallback(() => go(1), [go]);
 
-  /* Play only the visible clip, and only after the entry gate opens. */
+  /* Keep the requested clip playing. Pause the others, including while it is still hidden. */
   useEffect(() => {
+    if (!playbackAllowed) {
+      videoRefs.current.forEach((video) => video?.pause());
+      return;
+    }
     videoRefs.current.forEach((video, i) => {
       if (!video) return;
-      const active = i === shownIndex && playbackAllowed && index === shownIndex;
-      if (active) {
+      if (i === index) {
         if (video.paused) void video.play().catch(() => {});
       } else {
         video.pause();
       }
     });
-  }, [shownIndex, index, playbackAllowed]);
+  }, [index, playbackAllowed]);
 
   useEffect(() => {
     const video = videoRefs.current[shownIndex];
@@ -147,6 +162,7 @@ export default function LifestyleHero({
             <video
               ref={(node) => {
                 videoRefs.current[i] = node;
+                if (node) node.setAttribute("webkit-playsinline", "true");
               }}
               className="lifestyle-hero__video"
               src={video.src}
