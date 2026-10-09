@@ -438,7 +438,7 @@ const Navbar = () => {
       <div ref={barRef} className="zephyr-container nav-bar-inner relative z-10 flex w-full items-center justify-between">
         <Link
           to="/"
-          className="relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2"
+          className="nav-logo-link relative z-10 flex shrink-0 items-center px-1.5 py-0 md:px-2"
           aria-label="Vitalcore home"
         >
           <img

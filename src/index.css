@@ -153,10 +153,19 @@ h4 {
   padding: clamp(0.2rem, 0.25vw, 0.4rem) clamp(0.4rem, 0.45vw, 0.65rem);
 }
 
+.nav-logo-link,
+.nav-logo-img {
+  /* Safari ignores the link's hand cursor on an img once -webkit-user-drag is none,
+     and shows the text I-beam instead. Set the hand on the image itself. */
+  cursor: pointer;
+}
+
 .nav-logo-img {
   height: calc(var(--zephyr-nav-inner-h) * 0.86);
   width: auto;
   object-fit: contain;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 /* Footer clip is a 16:9 frame with empty margin. The slot is just larger than the

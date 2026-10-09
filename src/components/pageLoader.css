@@ -3,6 +3,8 @@
   inset: 0;
   z-index: 99999;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   place-items: center;
   background: #0d241c;
   overflow: hidden;
@@ -103,6 +105,9 @@ html.scroll-restore-pending .zephyr-page-loader {
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 1.5rem;
   pointer-events: none;
   text-align: center;
@@ -114,10 +119,11 @@ canvas.zephyr-page-loader__logo {
 
 .zephyr-page-loader__logo {
   display: block;
-  width: min(98vw, 52rem);
+  width: min(100%, 98vw, 52rem);
   height: auto;
   max-height: clamp(10rem, 30vw, 16rem);
   object-fit: contain;
+  object-position: center;
   margin: 0 0 -3rem;
   user-select: none;
   -webkit-user-drag: none;
