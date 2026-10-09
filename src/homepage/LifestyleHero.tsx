@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
+import { retryPlay } from "@/lib/play-video";
 
 const VIDEOS = [
   { id: "slide-1", src: "/videos/slide-1.mp4" },
@@ -256,7 +257,8 @@ export default function LifestyleHero({
       return;
     }
     const video = videoRefs.current[index];
-    if (video?.paused) void video.play().catch(() => {});
+    if (!video?.paused) return;
+    return retryPlay(video);
   }, [playbackAllowed, index, setPhase]);
 
   useEffect(() => {
@@ -268,14 +270,19 @@ export default function LifestyleHero({
   }, [index, playbackAllowed, go]);
 
   useEffect(() => {
+    let cancel = () => {};
     const onVisibility = () => {
+      cancel();
       const video = videoRefs.current[indexRef.current];
       if (!video || !playbackAllowed || busy.current) return;
       if (document.hidden) video.pause();
-      else void video.play().catch(() => {});
+      else cancel = retryPlay(video);
     };
     document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
+    return () => {
+      cancel();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [playbackAllowed]);
 
   useEffect(() => {

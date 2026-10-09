@@ -153,23 +153,57 @@ h4 {
   padding: clamp(0.2rem, 0.25vw, 0.4rem) clamp(0.4rem, 0.45vw, 0.65rem);
 }
 
+.nav-logo-link,
 .nav-logo-img {
-  height: clamp(40px, 3.2vw, 56px);
-  width: auto;
-  object-fit: contain;
+  /* Safari ignores the link's hand cursor on an img once -webkit-user-drag is none,
+     and shows the text I-beam instead. Set the hand on the image itself. */
+  cursor: pointer;
 }
 
-/* Mobile: smaller logo + shorter nav chrome */
+.nav-logo-img {
+  height: calc(var(--zephyr-nav-inner-h) * 0.86);
+  width: auto;
+  object-fit: contain;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Footer clip is a 16:9 frame with empty margin. The slot is just larger than the
+   painted mark so the wordmark and tagline stay fully visible. */
+canvas.footer-logo-img {
+  height: 7rem;
+  width: auto;
+  max-width: none;
+  flex: none;
+  /* The clip's empty left margin is 11.875% of the frame. Pull the mark flush with the paragraph. */
+  transform: translateX(-11.875%);
+}
+
+@media (min-width: 640px) {
+  canvas.footer-logo-img {
+    height: 7.55rem;
+  }
+}
+
+@media (min-width: 768px) {
+  canvas.footer-logo-img {
+    height: 8.3rem;
+  }
+}
+
+/* Mobile: smaller logo + shorter nav chrome.
+   py-0.5 is 0.125rem top + 0.125rem bottom — pad-y must be that total
+   or the breadcrumb sits below the bar and page content shows through. */
 @media (max-width: 767px) {
   :root {
-    --zephyr-nav-inner-h: clamp(40px, 10vw, 46px);
-    --zephyr-nav-pad-y: 0.5rem;
+    --zephyr-nav-inner-h: 44px;
+    --zephyr-nav-pad-y: 0.25rem;
     --zephyr-nav-gap: clamp(10px, 3vw, 16px);
     --zephyr-crumb-h: 2.75rem;
   }
 
   .nav-logo-img {
-    height: clamp(30px, 7.5vw, 38px);
+    height: 32px;
   }
 }
 
@@ -196,7 +230,10 @@ h4 {
 
 .nav-bar-inner {
   gap: clamp(1rem, 1.5vw, 2.5rem);
+  height: var(--zephyr-nav-inner-h);
   min-height: var(--zephyr-nav-inner-h);
+  max-height: var(--zephyr-nav-inner-h);
+  overflow: visible;
 }
 
 .zephyr-breadcrumbs {
@@ -321,6 +358,8 @@ h4 {
   overflow: hidden;
   display: inline-block;
   transform: none;
+  /* Keep each word (or hyphen chunk) on one line — letters must not wrap mid-word */
+  white-space: nowrap;
   /* Descender room inside the slide mask (g/G) â€” margin pulls visual line-height tighter */
   line-height: 1.22;
   padding-bottom: 0.12em;

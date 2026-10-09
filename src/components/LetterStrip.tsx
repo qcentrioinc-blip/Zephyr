@@ -29,6 +29,18 @@ type LetterStripProps = {
 /** Skip letter-split on very long titles (performance). */
 const MAX_LETTERS = 72;
 
+/** Break only at hyphens so a compound stays readable ("Development-" / "to-" / "manufacturing"). */
+function hyphenChunks(word: string): string[] {
+  if (!word.includes("-")) return [word];
+  const parts = word.split("-");
+  const chunks: string[] = [];
+  parts.forEach((part, index) => {
+    if (index < parts.length - 1) chunks.push(`${part}-`);
+    else if (part) chunks.push(part);
+  });
+  return chunks.filter(Boolean);
+}
+
 /**
  * CloudDiet / Qcentrio strip-slide letter reveal.
  * Ported for Vitalcore — inherit text color by default.
@@ -115,24 +127,30 @@ function LetterStripInner({
 
   const body: ReactNode = useStrip ? (
     <>
-      {words.map((word, wi) => (
-        <span key={`${word}-${wi}`} className="row">
-          {word.split("").map((ch, ci) => {
-            const delay = 15 * letterIndex;
-            letterIndex += 1;
-            const isLast = ci === word.length - 1;
-            return (
-              <span
-                key={`${wi}-${ci}`}
-                className={reveal ? "letter-slide-animate" : undefined}
-                style={reveal ? { transitionDelay: `${delay}ms` } : undefined}
-              >
-                {isLast ? `${ch}\u00A0` : ch}
-              </span>
-            );
-          })}
-        </span>
-      ))}
+      {words.map((word, wi) => {
+        const chunks = hyphenChunks(word);
+        return chunks.map((chunk, ci) => {
+          const isLastChunk = ci === chunks.length - 1;
+          return (
+            <span key={`${wi}-${ci}-${chunk}`} className="row">
+              {chunk.split("").map((ch, li) => {
+                const delay = 15 * letterIndex;
+                letterIndex += 1;
+                const isLastLetter = li === chunk.length - 1;
+                return (
+                  <span
+                    key={`${wi}-${ci}-${li}`}
+                    className={reveal ? "letter-slide-animate" : undefined}
+                    style={reveal ? { transitionDelay: `${delay}ms` } : undefined}
+                  >
+                    {isLastChunk && isLastLetter ? `${ch}\u00A0` : ch}
+                  </span>
+                );
+              })}
+            </span>
+          );
+        });
+      })}
     </>
   ) : (
     trimmed

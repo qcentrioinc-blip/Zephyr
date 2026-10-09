@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, ListFilter, Search, Send, X } from "lucide-react";
@@ -21,6 +21,15 @@ type FormulaCardProps = {
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Fixed navbar + breadcrumb, plus a small gap so a heading sits just under them. */
+function stickyHeaderOffset() {
+  const nav = document.querySelector("nav");
+  const crumb = document.querySelector(".zephyr-breadcrumbs");
+  const navH = nav?.getBoundingClientRect().height ?? 0;
+  const crumbH = crumb?.getBoundingClientRect().height ?? 0;
+  return navH + crumbH + 12;
+}
 
 function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover" }: FormulaCardProps) {
   const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
@@ -70,6 +79,7 @@ type CategoryListProps = {
   activeCategory: string;
   onSelect: (name: string) => void;
   accent: string;
+  registerButton?: (name: string, el: HTMLButtonElement | null) => void;
 };
 
 function CategoryList({
@@ -77,12 +87,15 @@ function CategoryList({
   activeCategory,
   onSelect,
   accent,
+  registerButton,
 }: CategoryListProps) {
   return (
     <>
       <button
         type="button"
+        ref={registerButton ? (el) => registerButton("All", el) : undefined}
         onClick={() => onSelect("All")}
+        aria-current={activeCategory === "All" ? "true" : undefined}
         className={`mb-1 w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition ${
           activeCategory === "All"
             ? "text-white"
@@ -96,7 +109,9 @@ function CategoryList({
         <button
           key={c.name}
           type="button"
+          ref={registerButton ? (el) => registerButton(c.name, el) : undefined}
           onClick={() => onSelect(c.name)}
+          aria-current={activeCategory === c.name ? "true" : undefined}
           className={`mb-1 flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition ${
             activeCategory === c.name
               ? "font-semibold text-white"
@@ -137,6 +152,17 @@ export default function FormulaCatalog({
 }: Props) {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const filterRef = useRef<HTMLDivElement | null>(null);
+  const listTopRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const menuButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const scrollLockRef = useRef(false);
+  const scrollReleaseRef = useRef(0);
+  const scrollGenRef = useRef(0);
+  const spyRef = useRef<() => void>(() => {});
+
+  const registerMenuButton = useCallback((name: string, el: HTMLButtonElement | null) => {
+    menuButtonRefs.current[name] = el;
+  }, []);
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -154,7 +180,6 @@ export default function FormulaCatalog({
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return categories
-      .filter((c) => activeCategory === "All" || c.name === activeCategory)
       .map((c) => ({
         ...c,
         formulas: c.formulas.filter(
@@ -165,7 +190,7 @@ export default function FormulaCatalog({
         ),
       }))
       .filter((c) => c.formulas.length > 0);
-  }, [categories, activeCategory, query]);
+  }, [categories, query]);
 
   const visibleCount = filtered.reduce((n, c) => n + c.formulas.length, 0);
 
@@ -173,20 +198,119 @@ export default function FormulaCatalog({
     setOpenCategories((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const selectCategory = (name: string) => {
-    setActiveCategory(name);
-    setFilterOpen(false);
-    if (name !== "All") {
-      setOpenCategories((prev) => ({ ...prev, [name]: true }));
-      requestAnimationFrame(() => {
-        const el = sectionRefs.current[name];
-        if (!el) return;
-        const STICKY_OFFSET = 120;
-        const top = el.getBoundingClientRect().top + window.scrollY - STICKY_OFFSET;
-        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-      });
+  const scrollPageTo = (top: number) => {
+    const destination = Math.max(0, top);
+    const gen = ++scrollGenRef.current;
+    window.clearTimeout(scrollReleaseRef.current);
+    let done = false;
+    const finish = () => {
+      if (done || scrollGenRef.current !== gen) return;
+      done = true;
+      window.clearTimeout(scrollReleaseRef.current);
+      window.removeEventListener("scrollend", finish);
+      window.removeEventListener("scroll", watch);
+      scrollLockRef.current = false;
+      spyRef.current();
+    };
+    const watch = () => {
+      if (scrollGenRef.current !== gen) {
+        window.removeEventListener("scroll", watch);
+        return;
+      }
+      if (Math.abs(window.scrollY - destination) < 2) finish();
+    };
+    if (Math.abs(window.scrollY - destination) < 2) {
+      scrollLockRef.current = false;
+      spyRef.current();
+      return;
     }
+    scrollLockRef.current = true;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth";
+    window.scrollTo({ top: destination, behavior });
+    window.addEventListener("scroll", watch, { passive: true });
+    window.addEventListener("scrollend", finish, { once: true });
+    scrollReleaseRef.current = window.setTimeout(finish, 1200);
   };
+
+  useEffect(() => {
+    return () => {
+      scrollGenRef.current += 1;
+      window.clearTimeout(scrollReleaseRef.current);
+      scrollLockRef.current = false;
+    };
+  }, []);
+
+  const selectCategory = (name: string) => {
+    setFilterOpen(false);
+    if (name === "All") {
+      setActiveCategory("All");
+      const el = listTopRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - stickyHeaderOffset();
+      scrollPageTo(top);
+      return;
+    }
+    const el = sectionRefs.current[name];
+    if (!el) return;
+    setActiveCategory(name);
+    setOpenCategories((prev) => ({ ...prev, [name]: true }));
+    requestAnimationFrame(() => {
+      const section = sectionRefs.current[name];
+      if (!section) return;
+      const top = section.getBoundingClientRect().top + window.scrollY - stickyHeaderOffset();
+      scrollPageTo(top);
+    });
+  };
+
+  useEffect(() => {
+    const names = filtered.map((c) => c.name);
+    const update = () => {
+      if (scrollLockRef.current) return;
+      const offset = stickyHeaderOffset();
+      let current = "All";
+      for (const name of names) {
+        const el = sectionRefs.current[name];
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= offset + 4) current = name;
+      }
+      setActiveCategory((prev) => (prev === current ? prev : current));
+    };
+    spyRef.current = update;
+
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        update();
+      });
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [filtered]);
+
+  useEffect(() => {
+    const menu = menuRef.current;
+    const btn = menuButtonRefs.current[activeCategory];
+    if (!menu || !btn) return;
+    const menuRect = menu.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    if (menuRect.height < 2 || btnRect.height < 2) return;
+    const pad = 8;
+    if (btnRect.top < menuRect.top + pad) {
+      menu.scrollTop -= menuRect.top + pad - btnRect.top;
+    } else if (btnRect.bottom > menuRect.bottom - pad) {
+      menu.scrollTop += btnRect.bottom - (menuRect.bottom - pad);
+    }
+  }, [activeCategory]);
 
   useEffect(() => {
     if (!filterOpen) return;
@@ -283,6 +407,7 @@ export default function FormulaCatalog({
               </div>
 
               <div
+                ref={menuRef}
                 className={`${scrollClassName} max-h-[min(78vh,calc(100dvh-9rem))] min-h-[420px] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-3`}
               >
                 <CategoryList
@@ -290,13 +415,17 @@ export default function FormulaCatalog({
                   activeCategory={activeCategory}
                   onSelect={selectCategory}
                   accent={theme.accent}
+                  registerButton={registerMenuButton}
                 />
               </div>
             </div>
           </aside>
 
-          <div className="min-w-0 flex-1">
-            <div className="sticky top-[var(--zephyr-header-stack)] z-[80] -mx-1 mb-4 flex flex-col gap-3 border-b border-gray-200/80 bg-white/95 px-1 py-3 backdrop-blur-md lg:hidden">
+          <div ref={listTopRef} className="min-w-0 flex-1">
+            <div
+              ref={filterRef}
+              className="sticky relative top-[var(--zephyr-header-stack)] z-[80] -mx-[var(--zephyr-gutter)] mb-4 flex flex-col gap-3 border-b border-gray-200/80 bg-white px-[var(--zephyr-gutter)] py-3 backdrop-blur-md lg:hidden"
+            >
               <div className="flex items-center gap-2">
                 <div className="relative min-w-0 flex-1">
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -309,7 +438,7 @@ export default function FormulaCatalog({
                   />
                 </div>
 
-                <div className="relative shrink-0" ref={filterRef}>
+                <div className="shrink-0">
                   <button
                     type="button"
                     onClick={() => setFilterOpen((o) => !o)}
@@ -328,45 +457,45 @@ export default function FormulaCatalog({
                       </span>
                     )}
                   </button>
-
-                  <AnimatePresence>
-                    {filterOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                        transition={{ duration: 0.2, ease: EASE }}
-                        className="absolute right-0 z-40 mt-2 w-[min(86vw,300px)] overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl"
-                        role="listbox"
-                      >
-                        <div className="flex items-center justify-between border-b border-gray-100 px-3 py-2.5">
-                          <span className="text-sm font-semibold text-gray-800">
-                            Categories
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => setFilterOpen(false)}
-                            className="rounded-full p-1 text-gray-500 hover:bg-gray-100"
-                            aria-label="Close filter"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        </div>
-                        <div
-                          className={`${scrollClassName} max-h-[70vh] overflow-y-auto p-2`}
-                        >
-                          <CategoryList
-                            categories={categories}
-                            activeCategory={activeCategory}
-                            onSelect={selectCategory}
-                            accent={theme.accent}
-                          />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
               </div>
+
+              <AnimatePresence>
+                {filterOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2, ease: EASE }}
+                    className="absolute inset-x-0 top-full z-40 overflow-hidden border-y border-gray-200 bg-white shadow-xl"
+                    role="listbox"
+                  >
+                    <div className="flex items-center justify-between border-b border-gray-100 px-[var(--zephyr-gutter)] py-2.5">
+                      <span className="text-sm font-semibold text-gray-800">
+                        Categories
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setFilterOpen(false)}
+                        className="rounded-full p-1 text-gray-500 hover:bg-gray-100"
+                        aria-label="Close filter"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div
+                      className={`${scrollClassName} max-h-[70vh] overflow-y-auto px-[var(--zephyr-gutter)] py-2`}
+                    >
+                      <CategoryList
+                        categories={categories}
+                        activeCategory={activeCategory}
+                        onSelect={selectCategory}
+                        accent={theme.accent}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -374,9 +503,6 @@ export default function FormulaCatalog({
                 Showing{" "}
                 <strong className="text-gray-800">{visibleCount}</strong>{" "}
                 formula{visibleCount === 1 ? "" : "s"}
-                {activeCategory !== "All" && (
-                  <span className="text-gray-400"> · {activeCategory}</span>
-                )}
               </P>
               <Link
                 to={`/contact?subject=${encodeURIComponent(

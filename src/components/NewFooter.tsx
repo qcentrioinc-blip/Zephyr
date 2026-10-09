@@ -1,4 +1,6 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import VitalcoreLogoVideo from "@/components/VitalcoreLogoVideo";
 import {
   ArrowRight,
   FlaskConical,
@@ -45,6 +47,29 @@ const features: Feature[] = [
 ];
 
 const NewFooter = () => {
+  const footerRef = useRef<HTMLElement>(null);
+  const [playLogo, setPlayLogo] = useState(false);
+
+  useLayoutEffect(() => {
+    const node = footerRef.current;
+    if (!node || playLogo) return;
+    const rect = node.getBoundingClientRect();
+    const onScreen = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+    if (onScreen) {
+      setPlayLogo(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        setPlayLogo(true);
+        observer.disconnect();
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [playLogo]);
   const productLinks: FooterLink[] = [
     { name: "Nutraceutical", url: "/nutraceutical" },
     { name: "Herbaceutical", url: "/herbaceutical" },
@@ -59,7 +84,10 @@ const NewFooter = () => {
   ];
 
   return (
-    <footer className="relative w-full overflow-hidden rounded-t-4xl pt-11 pb-7 text-white sm:pt-12 sm:pb-8">
+    <footer
+      ref={footerRef}
+      className="relative w-full overflow-hidden rounded-t-4xl pt-11 pb-7 text-white sm:pt-12 sm:pb-8"
+    >
       <div className="absolute inset-0 bg-[#113227]" />
 
       <img
@@ -72,11 +100,15 @@ const NewFooter = () => {
       <div className="zephyr-container relative z-10">
         <div className="mb-8 grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-[1.5fr_1fr_1fr] md:gap-x-12 md:gap-y-8 lg:grid-cols-[1.4fr_1fr_1fr_1.15fr] lg:gap-x-16 lg:gap-y-8">
           <div className="col-span-2 flex flex-col items-start text-left md:col-span-1">
-            <Link to="/" className="mb-3 inline-flex shrink-0 items-center">
-              <img
-                src="/brand/vitalcore-logo.svg"
-                alt="Vitalcore"
-                className="h-11 w-auto object-contain sm:h-12 md:h-14"
+            <Link
+              to="/"
+              className="footer-logo-slot mb-3 inline-flex h-[4.75rem] w-[12.4rem] shrink-0 items-center justify-start overflow-hidden sm:h-[5.05rem] sm:w-[13.15rem] md:h-[5.55rem] md:w-[14.45rem]"
+            >
+              <VitalcoreLogoVideo
+                src="/videos/vitalcore-logo-footer.mp4"
+                play={playLogo}
+                still={false}
+                className="footer-logo-img h-full w-auto object-contain"
               />
             </Link>
             <P className="max-w-[300px] text-sm text-white/70">
@@ -90,7 +122,7 @@ const NewFooter = () => {
             </P> */}
           </div>
 
-          <div className="flex flex-col items-start text-left md:pt-[calc(3.5rem+0.75rem)] lg:pt-[calc(3.5rem+0.75rem)]">
+          <div className="flex flex-col items-start text-left md:pt-[calc(5.55rem+0.75rem)] lg:pt-[calc(5.55rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}
@@ -111,7 +143,7 @@ const NewFooter = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-start text-left md:pt-[calc(3.5rem+0.75rem)] lg:pt-[calc(3.5rem+0.75rem)]">
+          <div className="flex flex-col items-start text-left md:pt-[calc(5.55rem+0.75rem)] lg:pt-[calc(5.55rem+0.75rem)]">
             <H3
               className="mb-2 !text-[16px] md:!text-[18px] lg:!text-[20px]"
               style={{ color: ACCENT }}

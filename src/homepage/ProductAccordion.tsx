@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion, type TargetAndTransition, type Transition } from "framer-motion";
 import { ArrowRight, Leaf, Pill, Sprout } from "lucide-react";
 import { PRODUCT_ACCORDION_ITEMS, type ProductAccordionItem } from "./productAccordionData";
+import { retryPlay } from "@/lib/play-video";
 import { LetterStrip } from "../components/LetterStrip";
 import { HERO_DESKTOP_MIN_PX } from "./heroBreakpoints";
 
@@ -99,7 +100,7 @@ function InactivePanelVideo({
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !activeSrc || reduceMotion || !visible) return;
-    void video.play().catch(() => {});
+    return retryPlay(video);
   }, [activeSrc, visible, reduceMotion]);
 
   if (reduceMotion) return null;
@@ -123,7 +124,7 @@ function InactivePanelVideo({
           playsInline
           preload="metadata"
           onLoadedData={(e) => {
-            if (visible) void e.currentTarget.play().catch(() => {});
+            if (visible) retryPlay(e.currentTarget);
           }}
         />
       ) : null}
