@@ -1,3 +1,4 @@
+/** Also cleared from index.html when a hard refresh bypasses the cache. */
 const ENTRY_GATE_KEY = "zephyr:entry-gate-seen";
 
 /** True after the user has clicked through the entry gate this browser session. */

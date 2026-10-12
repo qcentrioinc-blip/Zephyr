@@ -38,7 +38,7 @@ export default function ScrollToTopButton() {
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           onClick={scrollUp}
           aria-label="Scroll to top"
-          className="fixed bottom-5 right-5 z-[110] flex h-11 w-11 items-center justify-center rounded-full bg-[#113227] text-white shadow-[0_8px_24px_rgba(17,50,39,0.28)] transition hover:bg-[#0d281f] hover:shadow-[0_10px_28px_rgba(17,50,39,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#11BB8A] focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12"
+          className="zephyr-scroll-top fixed bottom-5 right-5 z-[110] flex h-11 w-11 items-center justify-center rounded-full bg-[#113227] text-white shadow-[0_8px_24px_rgba(17,50,39,0.28)] transition hover:bg-[#0d281f] hover:shadow-[0_10px_28px_rgba(17,50,39,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#11BB8A] focus-visible:ring-offset-2 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12"
         >
           <ArrowUp className="h-5 w-5" strokeWidth={2.25} />
         </motion.button>

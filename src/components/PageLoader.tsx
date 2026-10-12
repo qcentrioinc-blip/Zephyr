@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { TextRotate } from "@/components/ui/text-rotate";
@@ -48,6 +48,16 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(pointer: coarse)").matches;
   });
+  const [playBackground, setPlayBackground] = useState(false);
+
+  useLayoutEffect(() => {
+    document.getElementById("zephyr-lock-mark")?.remove();
+  }, []);
+
+  useEffect(() => {
+    const start = window.setTimeout(() => setPlayBackground(true), 700);
+    return () => window.clearTimeout(start);
+  }, []);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -67,7 +77,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !playBackground) return;
 
     if (reduced || holdBackground) {
       video.pause();
@@ -79,7 +89,7 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       cancel();
       video.pause();
     };
-  }, [reduced, holdBackground]);
+  }, [reduced, holdBackground, playBackground]);
 
   useEffect(() => {
     if (!ready) return;
@@ -159,11 +169,11 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
         <video
           ref={videoRef}
           className="zephyr-page-loader__video"
-          src="/videos/page-lock.mp4"
+          src={playBackground ? "/videos/page-lock.mp4" : undefined}
           muted
           loop
           playsInline
-          preload={holdBackground ? "none" : "auto"}
+          preload={playBackground && !holdBackground ? "auto" : "none"}
         />
         <div className="zephyr-page-loader__overlay" />
       </div>
@@ -177,18 +187,21 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
       ) : null}
 
       <div className="zephyr-page-loader__copy">
-        <VitalcoreLogoVideo
-          className="zephyr-page-loader__logo"
-          onPlaybackSettled={() => {
-            setHoldBackground(false);
-            setLogoSettled(true);
-            if (!window.matchMedia(COMPACT_LOCK_QUERY).matches) setShowLine(true);
-          }}
-        />
+        <div className="zephyr-page-loader__logo-slot">
+          <VitalcoreLogoVideo
+            className="zephyr-page-loader__logo"
+            revealOnFrame
+            onPlaybackSettled={() => {
+              setHoldBackground(false);
+              setLogoSettled(true);
+              if (!window.matchMedia(COMPACT_LOCK_QUERY).matches) setShowLine(true);
+            }}
+          />
+        </div>
         {compact ? null : (
         <LayoutGroup>
           <motion.p
-            className="zephyr-page-loader__headline"
+            className={`zephyr-page-loader__headline${showLine ? " is-shown" : ""}`}
             initial={false}
             animate={{ opacity: showLine ? 1 : 0, y: showLine ? 0 : 12 }}
             transition={

@@ -17,6 +17,13 @@ type VitalcoreLogoVideoProps = {
   still?: boolean;
   /** Fires when the clip finishes, or when playback cannot start. */
   onPlaybackSettled?: () => void;
+  /**
+   * Keep the still mark visible until a real frame has been painted.
+   * Used by the lock screen so Safari can show the logo before the clip decodes.
+   */
+  revealOnFrame?: boolean;
+  /** Fires once, when the first non-black frame is on the canvas. */
+  onFrame?: () => void;
 };
 
 function keyBlack(data: Uint8ClampedArray) {
@@ -42,13 +49,18 @@ export default function VitalcoreLogoVideo({
   play = true,
   still = true,
   onPlaybackSettled,
+  revealOnFrame = false,
+  onFrame,
 }: VitalcoreLogoVideoProps) {
   const reduced = Boolean(useReducedMotion());
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const settledRef = useRef(onPlaybackSettled);
+  const frameRef = useRef(onFrame);
   const [useStill, setUseStill] = useState(reduced);
+  const [frameReady, setFrameReady] = useState(false);
   settledRef.current = onPlaybackSettled;
+  frameRef.current = onFrame;
 
   useEffect(() => {
     if (reduced || !play) settledRef.current?.();
@@ -115,7 +127,11 @@ export default function VitalcoreLogoVideo({
       ctx.imageSmoothingQuality = "high";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(scratch, 0, 0, canvas.width, canvas.height);
-      painted = true;
+      if (!painted) {
+        painted = true;
+        setFrameReady(true);
+        frameRef.current?.();
+      }
     };
 
     // On-screen bitmap is the CSS size × pixel density, never larger than the file.
@@ -280,13 +296,26 @@ export default function VitalcoreLogoVideo({
     };
   }, [reduced, play, src]);
 
-  if (reduced || useStill || !play) {
+  if (!revealOnFrame && (reduced || useStill || !play)) {
     if (!still && !reduced && !useStill) return null;
     return <img src={LOGO_STILL} alt="Vitalcore" className={className} draggable={false} />;
   }
 
+  if (revealOnFrame && (reduced || useStill || !play)) {
+    return <img src={LOGO_STILL} alt="Vitalcore" className={className} draggable={false} />;
+  }
+
   return (
-    <span className="relative inline-flex items-center">
+    <span className={revealOnFrame ? "zephyr-page-loader__logo-stack" : "relative inline-flex items-center"}>
+      {revealOnFrame ? (
+        <img
+          src={LOGO_STILL}
+          alt={frameReady ? "" : "Vitalcore"}
+          className={`${className ?? ""} zephyr-page-loader__logo-still${frameReady ? " is-covered" : ""}`}
+          draggable={false}
+          aria-hidden={frameReady}
+        />
+      ) : null}
       <video
         ref={videoRef}
         src={src}
@@ -294,19 +323,20 @@ export default function VitalcoreLogoVideo({
         playsInline
         preload="auto"
         aria-hidden
-        width={1024}
-        height={576}
+        width={1920}
+        height={1080}
         className="pointer-events-none absolute inset-0 h-full w-full object-contain"
         style={{ opacity: 0 }}
       />
       <canvas
         ref={canvasRef}
-        width={1024}
-        height={576}
-        className={className}
-        style={{ aspectRatio: "1024 / 576" }}
+        width={1920}
+        height={1080}
+        className={`${className ?? ""}${revealOnFrame ? ` zephyr-page-loader__logo-live${frameReady ? " is-live" : ""}` : ""}`}
+        style={revealOnFrame ? undefined : { aspectRatio: "16 / 9" }}
         role="img"
-        aria-label="Vitalcore"
+        aria-label={revealOnFrame && !frameReady ? undefined : "Vitalcore"}
+        aria-hidden={revealOnFrame && !frameReady ? true : undefined}
       />
     </span>
   );
