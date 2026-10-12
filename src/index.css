@@ -1742,6 +1742,16 @@ img {
   }
 }
 
+/* Keep the scroll-to-top control above the cookie card while that card is open. */
+html.zephyr-cookie-open .zephyr-scroll-top {
+  bottom: 17.5rem;
+}
+@media (min-width: 640px) {
+  html.zephyr-cookie-open .zephyr-scroll-top {
+    bottom: 16.75rem;
+  }
+}
+
 @supports (height: 100dvh) {
   .min-h-screen {
     min-height: 100dvh;

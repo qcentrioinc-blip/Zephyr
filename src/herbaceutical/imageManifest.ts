@@ -2,7 +2,7 @@
 export const HERB_PRODUCT_IMAGES: Record<string, string> = {
   "Anti Oxidents|Elderberry + Green Tea + Beetroot": "/product-images/Herbaceutical/Anti Oxidents/Elderberry + Green Tea + Beetroot.webp",
   "Anti Oxidents|Pomegranate + Cranberry + Curcumin": "/product-images/Herbaceutical/Anti Oxidents/Pomegranate + Cranberry + Curcumin.v34.webp",
-  "Anti Oxidents|Spirulina + Tart Cherry + Bacopa Monnieri": "/product-images/Herbaceutical/Anti Oxidents/Spirulina + Tart Cherry + Bacopa Monnieri.webp",
+  "Anti Oxidents|Spirulina + Tart Cherry + Bacopa Monnieri": "/product-images/Herbaceutical/Anti Oxidents/Spirulina + Tart Cherry + Bacopa Monnieri.v35.webp",
   "Anti Oxidents|Wheat Grass + Acai Berry + Raspberries + Papain": "/product-images/Herbaceutical/Anti Oxidents/Wheat Grass + Acai Berry + Raspberries + Papain.webp",
   "Brain Health|Bacopa Monnieri + Rhodiola Rosea + Ginseng": "/product-images/Herbaceutical/Brain Health/Bacopa Monnieri + Rhodiola Rosea + Ginseng.webp",
   "Brain Health|Gingko Biloba + Bacopa Monnieri + Shankhpushpi": "/product-images/Herbaceutical/Brain Health/Gingko Biloba + Bacopa Monnieri + Shankhpushpi.webp",

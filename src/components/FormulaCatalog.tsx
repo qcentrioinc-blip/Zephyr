@@ -31,6 +31,69 @@ function stickyHeaderOffset() {
   return navH + crumbH + 12;
 }
 
+/**
+ * Scrolling down: highlight once the header reaches the spot just under
+ * the previous card's trailing buttons.
+ * Scrolling up: highlight once the header sits flush under the navbar.
+ */
+const HIGHLIGHT_LINE_GAP = 104;
+/** How far a downward selection may travel on a short reverse before All returns. */
+const SHORT_REVERSE_HOLD = 120;
+
+function categoryByHeaderLine(
+  names: string[],
+  sections: Record<string, HTMLElement | null>,
+  line: number,
+) {
+  let current = "All";
+  for (const name of names) {
+    const el = sections[name];
+    if (!el) continue;
+    // 1px covers subpixel rounding so a header sitting on the line still counts.
+    if (el.getBoundingClientRect().top <= line + 1) current = name;
+  }
+  return current;
+}
+
+/**
+ * Scrolling up: the highlighted title is the first one that has reached the
+ * flush line under the navbar, or is still below it. Titles above the navbar
+ * stay unhighlighted so the category below them keeps the menu.
+ * The first category yields to All once its title drops back into the hero,
+ * except for a short reverse after it was selected while scrolling down.
+ */
+function categoryScrollingUp(
+  names: string[],
+  sections: Record<string, HTMLElement | null>,
+  active: string,
+) {
+  // The title bar's top edge, directly under the breadcrumb. The +12 gap in
+  // stickyHeaderOffset() sits too low for this upward switch.
+  const flush = stickyHeaderOffset() - 12;
+  let arrived: string | null = null;
+  for (const name of names) {
+    const el = sections[name];
+    if (!el) continue;
+    if (el.getBoundingClientRect().top >= flush - 2) {
+      arrived = name;
+      break;
+    }
+  }
+  if (!arrived) return names[names.length - 1] ?? "All";
+
+  const top = sections[arrived]?.getBoundingClientRect().top ?? flush;
+  if (arrived !== names[0] || top <= flush + 4) return arrived;
+
+  const holdUntil = stickyHeaderOffset() + HIGHLIGHT_LINE_GAP + SHORT_REVERSE_HOLD;
+  if (active === arrived && top <= holdUntil) return arrived;
+  return "All";
+}
+
+/** Letters and digits only, so "pre biotic" matches "Pre-biotic" and "b12" matches "B12". */
+function searchKey(value: string) {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
 function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover" }: FormulaCardProps) {
   const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -166,6 +229,8 @@ export default function FormulaCatalog({
 
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  const activeCategoryRef = useRef(activeCategory);
+  activeCategoryRef.current = activeCategory;
   const [filterOpen, setFilterOpen] = useState(false);
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
     () => Object.fromEntries(categories.map((c) => [c.name, true])),
@@ -178,15 +243,15 @@ export default function FormulaCatalog({
   const totalFormulas = categories.reduce((n, c) => n + c.formulas.length, 0);
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = searchKey(query);
     return categories
       .map((c) => ({
         ...c,
         formulas: c.formulas.filter(
           (f) =>
             !q ||
-            f.formula.toLowerCase().includes(q) ||
-            c.name.toLowerCase().includes(q),
+            searchKey(f.formula).includes(q) ||
+            searchKey(c.name).includes(q),
         ),
       }))
       .filter((c) => c.formulas.length > 0);
@@ -266,21 +331,32 @@ export default function FormulaCatalog({
 
   useEffect(() => {
     const names = filtered.map((c) => c.name);
+    let lastScrollY = window.scrollY;
+    let scrollingDown = true;
     const update = () => {
       if (scrollLockRef.current) return;
-      const offset = stickyHeaderOffset();
-      let current = "All";
-      for (const name of names) {
-        const el = sectionRefs.current[name];
-        if (!el) continue;
-        if (el.getBoundingClientRect().top <= offset + 4) current = name;
-      }
-      setActiveCategory((prev) => (prev === current ? prev : current));
+      const current = scrollingDown
+        ? categoryByHeaderLine(
+            names,
+            sectionRefs.current,
+            stickyHeaderOffset() + HIGHLIGHT_LINE_GAP,
+          )
+        : categoryScrollingUp(names, sectionRefs.current, activeCategoryRef.current);
+      setActiveCategory((prev) => {
+        if (prev === current) return prev;
+        activeCategoryRef.current = current;
+        return current;
+      });
     };
     spyRef.current = update;
 
     let frame = 0;
     const onScroll = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - lastScrollY) > 1) {
+        scrollingDown = y > lastScrollY;
+        lastScrollY = y;
+      }
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
@@ -411,7 +487,7 @@ export default function FormulaCatalog({
                 className={`${scrollClassName} max-h-[min(78vh,calc(100dvh-9rem))] min-h-[420px] overflow-y-auto rounded-2xl border border-gray-200 bg-white p-3`}
               >
                 <CategoryList
-                  categories={categories}
+                  categories={filtered}
                   activeCategory={activeCategory}
                   onSelect={selectCategory}
                   accent={theme.accent}
@@ -487,7 +563,7 @@ export default function FormulaCatalog({
                       className={`${scrollClassName} max-h-[70vh] overflow-y-auto px-[var(--zephyr-gutter)] py-2`}
                     >
                       <CategoryList
-                        categories={categories}
+                        categories={filtered}
                         activeCategory={activeCategory}
                         onSelect={selectCategory}
                         accent={theme.accent}

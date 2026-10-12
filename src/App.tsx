@@ -18,6 +18,7 @@ import ScrollToTop from './components/ScrollToTop'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import Seo from './components/Seo'
 import PageLoader from './components/PageLoader'
+import CookieNotice from './components/CookieNotice'
 import { hasSeenEntryGate, markEntryGateSeen } from './lib/entry-gate'
 /** Eager: first paint must not wait on a lazy chunk (Mac Safari often stuck on “Loading…”). */
 import Homepage from './homepage/Homepage'
@@ -156,7 +157,12 @@ function AppContent({
 function App() {
   const [entered, setEntered] = useState(() => hasSeenEntryGate())
   const [bootReady, setBootReady] = useState(false)
+  const [showCookie, setShowCookie] = useState(true)
   const showEntryGate = !entered
+
+  useLayoutEffect(() => {
+    if (entered) document.documentElement.classList.remove('zephyr-lock-pending')
+  }, [entered])
 
   return (
     <HelmetProvider>
@@ -165,11 +171,15 @@ function App() {
           onBootReady={setBootReady}
           playbackAllowed={entered}
         />
+        {showCookie ? (
+          <CookieNotice onAccept={() => setShowCookie(false)} />
+        ) : null}
         {showEntryGate ? (
           <PageLoader
             ready={bootReady}
             onEnter={() => {
               markEntryGateSeen()
+              document.documentElement.classList.remove('zephyr-lock-pending')
               setEntered(true)
             }}
           />
