@@ -74,8 +74,8 @@ html.scroll-restore-pending .zephyr-page-loader {
 }
 
 .zephyr-page-loader__enter-circle {
-  width: 84px;
-  height: 84px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.72);
   background: rgba(20, 40, 34, 0.72);

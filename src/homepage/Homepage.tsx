@@ -1,5 +1,4 @@
 import LifestyleHero from "./LifestyleHero";
-import JointPain from "./JointPain";
 import FeaturesSection from "./FeatureCards";
 import Showreel from "./Showreel";
 import Table from "./Table";
@@ -25,7 +24,6 @@ export default function Homepage({ playbackAllowed = true }: HomepageProps) {
   return (
     <main className="min-h-screen bg-white">
       <LifestyleHero playbackAllowed={playbackAllowed} />
-      <JointPain />
       <Reveal>
         <FeaturesSection />
       </Reveal>

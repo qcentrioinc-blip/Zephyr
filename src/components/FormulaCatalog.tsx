@@ -18,6 +18,7 @@ type FormulaCardProps = {
   enquireHref: (formula: string, category: string) => string;
   onOpen: () => void;
   imageFit?: "cover" | "contain";
+  priority?: boolean;
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -94,7 +95,7 @@ function searchKey(value: string) {
   return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
-function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover" }: FormulaCardProps) {
+function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover", priority = false }: FormulaCardProps) {
   const handleKeyDown = (e: ReactKeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -116,7 +117,7 @@ function FormulaCard({ item, category, enquireHref, onOpen, imageFit = "cover" }
       style={{ outlineColor: "var(--formula-accent, #113227)" }}
     >
       <div className="relative aspect-[3/4] w-full">
-        <FormulaCardSlideshow bottleImage={item.image} alt="" imageFit={imageFit} />
+        <FormulaCardSlideshow bottleImage={item.image} alt="" imageFit={imageFit} priority={priority} />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-3">
@@ -258,6 +259,17 @@ export default function FormulaCatalog({
   }, [categories, query]);
 
   const visibleCount = filtered.reduce((n, c) => n + c.formulas.length, 0);
+
+  const priorityIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const category of filtered) {
+      for (const item of category.formulas) {
+        if (ids.size >= 4) return ids;
+        ids.add(item.id);
+      }
+    }
+    return ids;
+  }, [filtered]);
 
   const toggleCategory = (name: string) => {
     setOpenCategories((prev) => ({ ...prev, [name]: !prev[name] }));
@@ -658,6 +670,7 @@ export default function FormulaCatalog({
                                   category={category.name}
                                   enquireHref={enquireHref}
                                   imageFit="contain"
+                                  priority={priorityIds.has(item.id)}
                                   onOpen={() =>
                                     setSelected({
                                       item,

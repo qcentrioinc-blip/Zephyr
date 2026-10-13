@@ -46,7 +46,7 @@ export default function DevelopWithYou() {
               return (
                 <article
                   key={item.title}
-                  className="flex gap-3 rounded-2xl border border-gray-200 bg-[#F7F8F2] p-4 transition duration-200 ease-out hover:z-10 hover:scale-[1.03] hover:border-[#113227]/25 hover:bg-white"
+                  className="flex gap-3 rounded-2xl border border-gray-200 bg-[#EAF4E4] p-4 transition duration-200 ease-out hover:z-10 hover:scale-[1.03] hover:border-[#113227]/25 hover:bg-white"
                 >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-[#113227] shadow-sm">
                     <Icon className="h-4 w-4" strokeWidth={1.75} />

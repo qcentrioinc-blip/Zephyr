@@ -20,6 +20,8 @@ type FormulaCardSlideshowProps = {
   alt?: string;
   className?: string;
   imageFit?: "cover" | "contain";
+  /** First-row cards only. The rest wait until they are near the screen. */
+  priority?: boolean;
 };
 
 function preload(src: string) {
@@ -36,6 +38,7 @@ export default function FormulaCardSlideshow({
   alt = "",
   className = "",
   imageFit = "cover",
+  priority = false,
 }: FormulaCardSlideshowProps) {
   const reduceMotion = Boolean(useReducedMotion());
   const slides = useMemo(
@@ -121,8 +124,8 @@ export default function FormulaCardSlideshow({
           aria-hidden={index !== 0}
           draggable={false}
           decoding="async"
-          loading="eager"
-          fetchPriority="high"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : "low"}
           className={`absolute inset-0 h-full w-full ${objectClass} ${imagePad} ${
             index === 0 ? "opacity-100" : "opacity-0"
           }`}
