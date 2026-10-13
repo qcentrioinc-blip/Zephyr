@@ -1,86 +1,35 @@
-import { H2, P } from "../components/Typography/Typo";
-import Reveal from "../components/Reveal";
-
 const JointPain = () => {
   return (
-    <section className="zephyr-section overflow-x-hidden">
-      <div className="zephyr-container">
-        <div className="flex flex-col items-stretch gap-8 lg:flex-row lg:items-center lg:gap-12 xl:gap-16">
-          {/* Mobile/tablet: title → copy → images. Desktop: images left, copy right. */}
-          <Reveal className="order-2 flex w-full justify-center lg:order-1 lg:w-auto">
-            <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6">
-              <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
-                <img
-                  src="/facility/jointpain-1.webp"
-                  alt="R&D and analytical laboratories"
-                  loading="lazy"
-                  decoding="async"
-                  width={320}
-                  height={576}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
-                <img
-                  src="/facility/jointpain-2.webp"
-                  alt="CDMO manufacturing laboratory"
-                  loading="lazy"
-                  width={320}
-                  height={576}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="h-44 w-28 flex-shrink-0 overflow-hidden rounded-[999px] shadow-lg sm:h-52 sm:w-32 md:h-64 md:w-36 lg:h-80 lg:w-44">
-                <img
-                  src="/facility/jointpain-3.webp"
-                  alt="Manufacturing facility"
-                  loading="lazy"
-                  width={320}
-                  height={576}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          </Reveal>
-
-          <div className="order-1 w-full max-w-3xl text-left lg:order-2">
-            <div className="mb-1 h-[1px] w-20 bg-gray-500 md:w-28" />
-            <H2 className="mb-3">Contract manufacturing partner</H2>
-            <Reveal>
-              <P className="mb-3">
-                <span className="font-para font-bold">
-                  CDMO partner for private-label dietary supplement brands.
-                  <br />
-                </span>
-                Vitalcore runs integrated dispensing, granulation, compression,
-                coating, and packaging lines focused on nutraceutical,
-                herbaceutical, and organic products. We manufacture vitamins, minerals, specialty dosages, and finished
-                supplements for private-label and brand owners. Quality systems and
-                commercial reliability sit at the center of every program.
-              </P>
-              {/* <P className="mb-3">
-                We support long-term partnerships with nutraceutical,
-                herbaceutical, and organic brand owners, including US marketers and
-                procurement teams that need dependable finished-goods supply.
-              </P> */}
-            </Reveal>
-          </div>
-        </div>
-
-        {/* <Reveal className="zephyr-prose mx-auto mt-10 w-full space-y-4 text-center lg:mx-0 lg:text-left">
-          <P>
-            Vitalcore is a full-service CDMO for dietary supplement brand owners and
-            marketers. Vitamin, mineral, specialty tablet, and packaging
-            capabilities support US private-label and contract manufacturing
-            launches. Programs run from formulation brief through commercial release of
-            finished goods. We align process, pack specs, and documentation to
-            your target market and channel. With large-scale tablet, capsule, and jar capacity, we
-            continue to optimize manufacturing processes and invest in our
-            licensed facility for safe, consistent commercial supply.
-          </P>
-        </Reveal> */}
-      </div>
-    </section>
+    <div className="mb-10 text-center md:mb-14">
+      <p
+        className="mb-4 flex items-center justify-center gap-3 font-manrope text-[11px] font-medium uppercase text-[#7a827d] sm:text-xs"
+        style={{ letterSpacing: "0.36em", fontFamily: "Manrope, sans-serif" }}
+      >
+        <span className="h-px w-5 bg-current sm:w-7" aria-hidden="true" />
+        Contract manufacturing partner
+        <span className="h-px w-5 bg-current sm:w-7" aria-hidden="true" />
+      </p>
+      <h2 className="mx-auto max-w-4xl font-manrope text-[clamp(28px,2.8vw,42px)] font-semibold leading-[1.2] tracking-[-0.02em] text-[#1a1f1c]">
+        From formulation to market,{" "}
+        <br className="hidden sm:block" />
+        a trusted partner for{" "}
+        <span className="relative inline-block text-[#11BB8A]">
+          healthier
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 120 12"
+            className="pointer-events-none absolute -bottom-[0.18em] left-0 h-[0.42em] w-full"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M1 4.2C22 8.8 48 10.2 64 9.2 86 7.8 104 5.4 119 3.6 104 7.2 84 10.6 62 11.2 40 11.8 18 9.4 1 4.2Z"
+              fill="currentColor"
+            />
+          </svg>
+        </span>{" "}
+        brands
+      </h2>
+    </div>
   );
 };
 

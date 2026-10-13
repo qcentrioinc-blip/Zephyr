@@ -1,9 +1,17 @@
 import type { FC } from "react";
 import { H3, P } from "../components/Typography/Typo";
+import JointPain from "./JointPain";
 
 type FeatureCard = {
   title: string;
   description: string;
+  image: string;
+  imageAlt: string;
+  imagePosition: string;
+  imageFit: string;
+  imageWidth: string;
+  wash: string;
+  glow: string;
   Icon: FC<{ className?: string }>;
 };
 
@@ -114,18 +122,39 @@ const FEATURE_CARDS: FeatureCard[] = [
     title: "CUSTOM FORMULATION",
     description:
       "From concept to commercial scale, Vitalcore develops herbaceuticals, nutraceuticals, and organic specialty tablets for US private-label and contract partners.",
+    image: "/homepage/card-formulation.webp?v=1",
+    imageAlt: "Green leaves beside a bowl of botanical powder",
+    imagePosition: "right center",
+    imageFit: "object-cover",
+    imageWidth: "w-[48%]",
+    wash: "linear-gradient(100deg, #f4fbf6 0%, #eef6ea 55%, #e4f0e2 100%)",
+    glow: "rgba(17,187,138,0.38)",
     Icon: FlaskGif,
   },
   {
     title: "LICENSED FACILITY",
     description:
       "Humidity-controlled dispensing, granulation, compression, coating, and capsule filling under GMP and ISO quality systems.",
+    image: "/homepage/card-facility.webp?v=1",
+    imageAlt: "Green and white capsules on a production line",
+    imagePosition: "right center",
+    imageFit: "object-cover",
+    imageWidth: "w-[48%]",
+    wash: "linear-gradient(100deg, #f4f8fc 0%, #e7eef6 55%, #d5e2ee 100%)",
+    glow: "rgba(59,130,196,0.38)",
     Icon: FactoryGif,
   },
   {
     title: "QA / QC SYSTEMS",
     description:
       "End-to-end raw material, in-process, and finished-product testing under GMP and ISO protocols by an experienced QA/QC team.",
+    image: "/homepage/card-qaqc.webp?v=1",
+    imageAlt: "A gloved hand holding a green and white capsule",
+    imagePosition: "right center",
+    imageFit: "object-cover",
+    imageWidth: "w-[48%]",
+    wash: "linear-gradient(100deg, #fffaf3 0%, #f6f4ef 55%, #ece8e2 100%)",
+    glow: "rgba(212,160,23,0.4)",
     Icon: ShieldGif,
   },
 ];
@@ -134,21 +163,42 @@ export default function FeaturesSection() {
   return (
     <section className="zephyr-section">
       <div className="zephyr-container">
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4">
+        <JointPain />
+        <div className="grid grid-cols-1 gap-4 md:flex md:snap-x md:snap-mandatory md:gap-5 md:overflow-x-auto md:overscroll-x-contain lg:grid lg:grid-cols-3 lg:overflow-visible">
           {FEATURE_CARDS.map((card) => {
             const { Icon } = card;
             return (
               <article
                 key={card.title}
-                className="group flex flex-col rounded-2xl border border-[#6d6d6d] bg-white p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-5"
+                className="group relative flex min-h-[15.5rem] flex-col overflow-hidden rounded-2xl p-5 transition duration-300 hover:-translate-y-1 sm:p-6 md:w-[min(26rem,82%)] md:shrink-0 md:snap-start lg:w-auto"
+                style={{
+                  background: card.wash,
+                  boxShadow: `0 0 0 1px ${card.glow}`,
+                }}
               >
-                <div className="mb-3 flex items-start justify-between gap-3">
-                  <H3 className="uppercase leading-[1.15] text-[#111111]">
-                    {card.title}
-                  </H3>
-                  <Icon className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
+                <img
+                  src={card.image}
+                  alt={card.imageAlt}
+                  className={`pointer-events-none absolute right-0 top-0 h-full ${card.imageWidth} ${card.imageFit}`}
+                  style={{
+                    objectFit: card.imageFit === "object-contain" ? "contain" : "cover",
+                    objectPosition: card.imagePosition,
+                    transform: "translateX(18px)",
+                    maskImage:
+                      "linear-gradient(90deg, transparent 0%, #000 18%)",
+                    WebkitMaskImage:
+                      "linear-gradient(90deg, transparent 0%, #000 18%)",
+                  }}
+                />
+                <div className="relative z-10 flex max-w-[78%] flex-col">
+                  <div className="mb-3 flex items-center gap-3">
+                    <Icon className="h-10 w-10 shrink-0" />
+                    <H3 className="uppercase leading-[1.15] text-[#111111]">
+                      {card.title}
+                    </H3>
+                  </div>
+                  <P className="max-w-[88%] text-gray-700">{card.description}</P>
                 </div>
-                <P className="text-gray-700">{card.description}</P>
               </article>
             );
           })}

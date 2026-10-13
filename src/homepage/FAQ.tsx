@@ -122,7 +122,7 @@ const FAQ = () => {
             })}
           </div>
 
-          <div className="rounded-2xl bg-[#F7F8F2] p-5">
+          <div className="rounded-2xl bg-[#EAF4E4] p-5">
             <AnimatePresence mode="wait">
               {sent ? (
                 <motion.div
