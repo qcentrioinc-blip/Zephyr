@@ -257,18 +257,16 @@ const Content = () => {
               {([1, 2] as Step[]).map((n, idx) => (
                 <div key={n} className="flex items-center gap-2 sm:gap-2.5">
                   <span
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
-                      step >= n
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${step >= n
                         ? "bg-[#11BB8A] text-white"
                         : "bg-gray-200 text-gray-600"
-                    }`}
+                      }`}
                   >
                     {n}
                   </span>
                   <span
-                    className={`hidden whitespace-nowrap text-xs font-semibold sm:inline ${
-                      step >= n ? "text-[#113227]" : "text-gray-700"
-                    }`}
+                    className={`hidden whitespace-nowrap text-xs font-semibold sm:inline ${step >= n ? "text-[#113227]" : "text-gray-700"
+                      }`}
                   >
                     {STEP_LABELS[n]}
                   </span>

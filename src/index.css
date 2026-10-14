@@ -1,4 +1,4 @@
-﻿/* Fixed header stack (navbar [+ breadcrumbs]) â€” keep page spacers / sticky toolbars aligned */
+/* Fixed header stack (navbar [+ breadcrumbs]) â€” keep page spacers / sticky toolbars aligned */
 :root {
   /*
    * Larger nav chrome for 100% + 75%. Caps â‰ˆ 1920 target Ã· 0.75 so zoom-out
@@ -1742,13 +1742,13 @@ img {
   }
 }
 
-/* Keep the scroll-to-top control above the cookie card while that card is open. */
+/* Keep the scroll-to-top control neatly above the cookie banner while open. */
 html.zephyr-cookie-open .zephyr-scroll-top {
-  bottom: 17.5rem;
+  bottom: 11rem;
 }
 @media (min-width: 640px) {
   html.zephyr-cookie-open .zephyr-scroll-top {
-    bottom: 16.75rem;
+    bottom: 7.25rem;
   }
 }
 

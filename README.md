@@ -2,7 +2,7 @@
 
 B2B marketing site for **Vitalcore**, a CDMO / private-label dietary supplement brand. **Zephyr** is the parent company; this site speaks as Vitalcore. Product ranges: Nutraceutical, Herbaceutical, and Organic.
 
-Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/ISO, formats, and India · Spain · USA partnerships) follow **Biofern Life Sciences** source-of-truth data, presented under the Vitalcore brand. Do not invent new company claims.
+Factual claims on the site (facility size, monthly capacity, GMP/ISO, formats, and India · Spain · USA partnerships) are presented under the Vitalcore brand. Do not invent new company claims.
 
 ## Tech stack
 
@@ -39,10 +39,8 @@ Factual claims on the site (facility size, monthly capacity, address, CIN, GMP/I
 
 ## Content & facts
 
-Keep published facts aligned with Biofern source material:
+Keep published facts aligned with source material:
 
-- **Facility:** Plot #168-P5, Vemgal Industrial Area, Kolar District, Karnataka, India  
-- **CIN:** `U24100KA2019PTC120330`  
 - **Capacity (monthly):** up to 5B tablets · 100M capsules · 60M sachets · 1M jars  
 - **Quality:** GMP / ISO / cGMP systems  
 - **Markets:** India manufacturing · Spain & USA partners  

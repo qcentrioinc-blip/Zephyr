@@ -13,12 +13,14 @@ interface ProductLink {
   name: string;
   path: string;
   badge?: string;
+  comingSoon?: boolean;
 }
 
 const PRODUCT_LINKS: ProductLink[] = [
   { name: 'Nutraceutical', path: '/nutraceutical' },
   { name: 'Herbaceutical', path: '/herbaceutical' },
   { name: 'Organic', path: '/organic' },
+  { name: 'Bioceutical', path: '#', badge: 'Coming soon', comingSoon: true },
 ];
 
 const NAV_LINKS: NavLinkItem[] = [
@@ -268,21 +270,40 @@ const MobileMenu = ({ isOpen, onClose, activePath, onContactIntercept }: MobileM
                           transition={{ duration: 0.24, ease: EASE_PREMIUM }}
                           className="overflow-hidden pl-4"
                         >
-                          {PRODUCT_LINKS.map((product) => (
-                            <Link
-                              key={product.path}
-                              to={product.path}
-                              onClick={onClose}
-                              className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm text-[#4A4B4F] hover:text-black transition-colors"
-                            >
-                              <span>{product.name}</span>
-                              {product.badge && (
-                                <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                                  {product.badge}
-                                </span>
-                              )}
-                            </Link>
-                          ))}
+                          {PRODUCT_LINKS.map((product) => {
+                            if (product.comingSoon) {
+                              return (
+                                <div
+                                  key={product.name}
+                                  className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm text-[#8a8d93] cursor-default select-none opacity-85"
+                                  aria-disabled="true"
+                                >
+                                  <span>{product.name}</span>
+                                  {product.badge && (
+                                    <span className="nav-launch-badge shrink-0 rounded-full bg-[#16382d]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#16382d]">
+                                      {product.badge}
+                                    </span>
+                                  )}
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <Link
+                                key={product.path}
+                                to={product.path}
+                                onClick={onClose}
+                                className="flex items-center justify-between gap-2 px-4 py-2.5 text-sm text-[#4A4B4F] hover:text-black transition-colors"
+                              >
+                                <span>{product.name}</span>
+                                {product.badge && (
+                                  <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                                    {product.badge}
+                                  </span>
+                                )}
+                              </Link>
+                            );
+                          })}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -502,22 +523,42 @@ const Navbar = () => {
                         className="nav-products-menu absolute left-0 top-full z-[120] pt-3 origin-top"
                       >
                         <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl shadow-black/5">
-                          {PRODUCT_LINKS.map((product) => (
-                            <Link
-                              key={product.path}
-                              to={product.path}
-                              role="menuitem"
-                              className="nav-products-menu__item"
-                              onClick={() => setIsProductsOpen(false)}
-                            >
-                              <span>{product.name}</span>
-                              {product.badge ? (
-                                <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                                  {product.badge}
-                                </span>
-                              ) : null}
-                            </Link>
-                          ))}
+                          {PRODUCT_LINKS.map((product) => {
+                            if (product.comingSoon) {
+                              return (
+                                <div
+                                  key={product.name}
+                                  role="menuitem"
+                                  aria-disabled="true"
+                                  className="nav-products-menu__item nav-products-menu__item--disabled cursor-default select-none text-[#8a8d93] hover:bg-transparent hover:text-[#8a8d93] opacity-85"
+                                >
+                                  <span>{product.name}</span>
+                                  {product.badge ? (
+                                    <span className="nav-launch-badge shrink-0 rounded-full bg-[#16382d]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#16382d]">
+                                      {product.badge}
+                                    </span>
+                                  ) : null}
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <Link
+                                key={product.path}
+                                to={product.path}
+                                role="menuitem"
+                                className="nav-products-menu__item"
+                                onClick={() => setIsProductsOpen(false)}
+                              >
+                                <span>{product.name}</span>
+                                {product.badge ? (
+                                  <span className="nav-launch-badge shrink-0 rounded-full bg-[#0F3D38] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+                                    {product.badge}
+                                  </span>
+                                ) : null}
+                              </Link>
+                            );
+                          })}
                         </div>
                       </motion.div>
                     ) : null}

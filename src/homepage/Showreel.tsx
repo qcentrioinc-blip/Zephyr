@@ -5,7 +5,7 @@ import Reveal from "../components/Reveal";
 
 const content = {
   description:
-    "Vitalcore manufactures to GMP and ISO quality standards for US dietary supplement brands. We offer vitamin, mineral, and specialty formulations across multiple dosage forms, with documentation focused on safety, batch consistency, and finished-goods performance.",
+    "Zephyr manufactures to GMP and ISO quality standards for US dietary supplement brands. We offer vitamin, mineral, and specialty formulations across multiple dosage forms, with documentation focused on safety, batch consistency, and finished-goods performance.",
   buttonText: "Explore R&D",
 };
 
