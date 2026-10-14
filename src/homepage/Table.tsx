@@ -35,7 +35,7 @@ export default function Table() {
                 5 billion tablets, 100 million capsules, 60 million sachets, and 1 million jars per month.
               </p>
               <P className="mt-3 text-[#3d5248]">
-                Capacity planned for private-label and contract programs that need dependable throughput month after month. Built for partners who need reliable scale without compromising quality, documentation, or commercial release timing. From early formulation through finished-goods packaging, programs stay aligned to MOQ, dosage form, and market requirements.
+                Capacity planned for private-label and contract programs that need dependable throughout month after month. Built for partners who need reliable scale without compromising quality, documentation, or commercial release timing. From early formulation through finished goods packaging, programs stay aligned to MOQ, dosage form, and market requirements.
               </P>
             </div>
 

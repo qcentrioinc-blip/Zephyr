@@ -5,12 +5,12 @@ import CelebrationBurst from "../components/CelebrationBurst";
 
 const faqs = [
   {
-    q: "What is Vitalcore’s manufacturing capacity?",
+    q: "What is Zephyr’s manufacturing capacity?",
     a: "We currently support manufacturing and packaging capacity of up to 5 billion tablets, 100 million capsules, 60 million sachets, and 1 million jars per month. That capacity supports US private label and contract manufacturing partners who need reliable scale.",
   },
   {
     q: "Do you support custom formulations and MOQ projects?",
-    a: "Yes. Vitalcore co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Contact and our team will advise.",
+    a: "Yes. Zephyr co-develops and manufactures custom nutraceutical, herbaceutical, and organic products. MOQ depends on dosage format, packaging, and complexity. Share your brief via Contact and our team will advise.",
   },
   {
     q: "Which dosage formats and packaging options do you offer?",
@@ -81,7 +81,7 @@ const FAQ = () => {
         <div className="mb-5 text-center">
           <H2>Frequently asked questions</H2>
           <P className="zephyr-prose mx-auto mt-2 text-gray-600">
-            Practical answers for brand owners exploring a Vitalcore manufacturing
+            Practical answers for brand owners exploring a Zephyr manufacturing
             partnership.
           </P>
         </div>
@@ -93,11 +93,10 @@ const FAQ = () => {
               return (
                 <div
                   key={item.q}
-                  className={`overflow-hidden rounded-2xl border bg-white transition-colors duration-300 ${
-                    open
-                      ? "border-[#113227] shadow-[0_0_0_1px_#113227]"
-                      : "border-gray-200"
-                  }`}
+                  className={`overflow-hidden rounded-2xl border bg-white transition-colors duration-300 ${open
+                    ? "border-[#113227] shadow-[0_0_0_1px_#113227]"
+                    : "border-gray-200"
+                    }`}
                 >
                   <button
                     type="button"
@@ -107,9 +106,8 @@ const FAQ = () => {
                     <H4 className={open ? "text-[#113227]" : ""} animate={false}>{item.q}</H4>
                     <QuestionIcon
                       active={open}
-                      className={`h-6 w-6 shrink-0 transition-transform duration-300 ${
-                        open ? "rotate-45" : ""
-                      }`}
+                      className={`h-6 w-6 shrink-0 transition-transform duration-300 ${open ? "rotate-45" : ""
+                        }`}
                     />
                   </button>
                   {open && (
@@ -122,7 +120,10 @@ const FAQ = () => {
             })}
           </div>
 
-          <div className="rounded-2xl bg-[#EAF4E4] p-5">
+          <div 
+            className="relative flex h-full flex-col justify-between overflow-hidden rounded-[26px] bg-[#dff0e6] bg-cover bg-center p-6 shadow-sm border border-[#d6ecdf]"
+            style={{ backgroundImage: "url('/homepage/faq-note-bg.jpg')" }}
+          >
             <AnimatePresence mode="wait">
               {sent ? (
                 <motion.div
@@ -131,7 +132,7 @@ const FAQ = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.28 }}
-                  className="flex flex-col items-center py-4 text-center"
+                  className="relative z-10 flex h-full flex-col items-center justify-center py-8 text-center"
                   role="status"
                   aria-live="polite"
                 >
@@ -145,7 +146,7 @@ const FAQ = () => {
                   <button
                     type="button"
                     onClick={() => setSent(false)}
-                    className="mt-5 rounded-full bg-[#113227] px-5 py-2.5 text-sm font-semibold text-white"
+                    className="mt-5 cursor-pointer rounded-full bg-[#113227] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0d281f]"
                   >
                     Send another
                   </button>
@@ -156,24 +157,35 @@ const FAQ = () => {
                   initial={reduceMotion ? false : { opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  className="relative z-10 flex h-full flex-col justify-between"
                 >
-                  <P className="mb-3 text-gray-600">
-                    Share a short note about your query.
-                  </P>
-                  <textarea
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    rows={5}
-                    placeholder="Tell us about your formulation or private-label requirement…"
-                    className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#547A3D]"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    className="mt-4 rounded-full bg-[#113227] px-5 py-2.5 text-sm font-semibold text-white"
-                  >
-                    Send note
-                  </button>
+                  <div>
+                    <h3 className="font-manrope text-[17px] font-semibold tracking-tight text-[#16382d] sm:text-[18px]">
+                      Share a short note about your query.
+                    </h3>
+
+                    {/* Crisp white card textarea */}
+                    <div className="relative mt-4">
+                      <textarea
+                        value={feedback}
+                        onChange={(e) => setFeedback(e.target.value)}
+                        rows={4}
+                        placeholder="Tell us about your formulation or private-label requirement…"
+                        className="w-full resize-none rounded-2xl border border-white/80 bg-white/95 p-4 text-[14px] leading-relaxed text-[#2c4037] placeholder:text-gray-400 shadow-[0_2px_12px_rgba(15,50,38,0.04)] outline-none transition focus:border-[#11BB8A] focus:ring-2 focus:ring-[#11BB8A]/25"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Send note pill button at bottom-left */}
+                  <div className="mt-5 pb-1">
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      className="cursor-pointer inline-flex items-center justify-center rounded-full bg-[#0a382a] px-6 py-2.5 text-[14px] font-semibold text-white shadow-md transition-all duration-200 hover:bg-[#05261c] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#11BB8A]"
+                    >
+                      Send note
+                    </button>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
