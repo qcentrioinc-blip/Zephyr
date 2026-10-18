@@ -1589,7 +1589,8 @@ img {
   opacity: 1;
 }
 
-.lifestyle-hero__video {
+.lifestyle-hero__video,
+.lifestyle-hero__poster {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1600,9 +1601,16 @@ img {
   display: block;
   pointer-events: none;
   background: transparent;
-  /* A transform on the live video blanks it on iPhone and Safari. */
   transform: none;
   backface-visibility: visible;
+}
+
+.lifestyle-hero__poster {
+  z-index: 0;
+}
+
+.lifestyle-hero__video {
+  z-index: 1;
 }
 
 /* Only this still moves. The <video> elements stay put. */

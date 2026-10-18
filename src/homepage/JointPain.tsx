@@ -27,7 +27,7 @@ const JointPain = () => {
             />
           </svg>
         </span>{" "}
-        brands
+        Products
       </h2>
     </div>
   );
