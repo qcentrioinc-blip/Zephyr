@@ -24,7 +24,7 @@ export default function CookieNotice({ onAccept }: CookieNoticeProps) {
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="relative flex flex-col gap-3.5 overflow-hidden rounded-[22px] sm:rounded-full border border-white/90 bg-gradient-to-tl from-[#e4f5ed]/95 via-[#f5fbf8]/95 to-white/95 px-6 py-4 shadow-[0_16px_45px_rgba(15,50,38,0.16)] backdrop-blur-md sm:py-4.5 sm:px-8 md:flex-row md:items-center md:justify-between md:gap-7">
-        
+
         {/* Soft bottom-right ambient gradient glow */}
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_65%_at_90%_90%,rgba(17,187,138,0.18),rgba(20,184,166,0.06)_50%,transparent_80%)]"

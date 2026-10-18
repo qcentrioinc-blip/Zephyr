@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import { TextRotate } from "@/components/ui/text-rotate";
+import BlurRotateText from "./BlurRotateText";
 import VitalcoreLogoVideo from "@/components/VitalcoreLogoVideo";
 import { retryPlay } from "@/lib/play-video";
 import "./pageLoader.css";
@@ -14,8 +14,8 @@ const COMPACT_EXIT_MS = 280;
 const COMPACT_LOCK_QUERY = "(max-width: 1366px)";
 
 const ROTATING_TEXTS = [
-  "Herbaceutical",
   "Nutraceutical",
+  "Herbaceutical",
   "Organic",
 ];
 
@@ -199,38 +199,31 @@ export default function PageLoader({ ready, onEnter }: PageLoaderProps) {
           />
         </div>
         {compact ? null : (
-        <LayoutGroup>
-          <motion.p
-            className={`zephyr-page-loader__headline${showLine ? " is-shown" : ""}`}
-            initial={false}
-            animate={{ opacity: showLine ? 1 : 0, y: showLine ? 0 : 12 }}
-            transition={
-              reduced ? { duration: 0.2 } : { duration: 0.45, ease: "easeOut" }
-            }
-            aria-hidden={!showLine}
-          >
-            <motion.span
-              className="zephyr-page-loader__lead"
-              layout
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+          <LayoutGroup>
+            <motion.p
+              className={`zephyr-page-loader__headline${showLine ? " is-shown" : ""}`}
+              initial={false}
+              animate={{ opacity: showLine ? 1 : 0, y: showLine ? 0 : 12 }}
+              transition={
+                reduced ? { duration: 0.2 } : { duration: 0.45, ease: "easeOut" }
+              }
+              aria-hidden={!showLine}
             >
-              Partner for
-            </motion.span>
-            <TextRotate
-              texts={ROTATING_TEXTS}
-              mainClassName="text-white overflow-hidden justify-center"
-              staggerFrom="last"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
-              staggerDuration={0.025}
-              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={2000}
-              auto={showLine && !reduced}
-            />
-          </motion.p>
-        </LayoutGroup>
+              <motion.span
+                className="zephyr-page-loader__lead"
+                layout
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              >
+                Partner for
+              </motion.span>
+              <BlurRotateText
+                texts={ROTATING_TEXTS}
+                interval={2600}
+                auto={showLine && !reduced}
+                className="text-white"
+              />
+            </motion.p>
+          </LayoutGroup>
         )}
         {!compact && showLine && canEnter ? (
           <motion.div

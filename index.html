@@ -27,7 +27,7 @@
       rel="stylesheet"
     />
     <!-- Warm hero decode on first visit (cuts first-scroll layout stutter on Mac). -->
-    <link rel="preload" as="image" href="/homepage/herbal.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/videos/slide-1-poster.webp" fetchpriority="high" />
     <link rel="preload" as="image" href="/brand/vitalcore-logo.svg" />
     <title>Vitalcore | Manufactured by Zephyr</title>
     <script>
@@ -38,12 +38,22 @@
           if ("scrollRestoration" in history) history.scrollRestoration = "manual";
           var gateKey = "zephyr:entry-gate-seen";
           var nav = performance.getEntriesByType("navigation")[0];
+          // On normal reload (F5 / reload button), keep entry-gate state in sessionStorage so the user stays on their page.
+          // On hard reload (Ctrl+F5 / Shift+Reload), transferSize reflects an un-cached network fetch (> 0) or server reload,
+          // while deliveryType !== "cache". However, deliveryType alone was wiping normal reloads where deliveryType is empty string.
+          // In standard browser sessions, sessionStorage naturally persists across normal reloads.
+          // Detect explicit hard refresh where transferSize > 0 and navigation was forced reload with bypass,
+          // while ensuring normal reload never clears the gate.
           if (
             nav &&
             nav.type === "reload" &&
-            typeof nav.deliveryType === "string" &&
-            nav.deliveryType !== "cache"
+            typeof nav.transferSize === "number" &&
+            nav.transferSize > 0 &&
+            nav.deliveryType === "" &&
+            nav.encodedBodySize > 0 &&
+            nav.transferSize >= nav.encodedBodySize
           ) {
+            // Uncached / hard reload: clear gate to trigger lock screen
             sessionStorage.removeItem(gateKey);
           }
           if (sessionStorage.getItem(gateKey) !== "1") {

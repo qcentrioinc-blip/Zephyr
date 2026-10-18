@@ -308,6 +308,15 @@ export default function LifestyleHero({
             key={video.id}
             className={`lifestyle-hero__slide${i === index ? " is-shown" : ""}`}
           >
+            {/* Instant poster image — paints immediately without waiting for video element decode */}
+            <img
+              src={video.poster}
+              alt=""
+              aria-hidden="true"
+              fetchPriority={i === 0 ? "high" : "low"}
+              decoding="async"
+              className="lifestyle-hero__poster"
+            />
             <video
               ref={(node) => {
                 videoRefs.current[i] = node;

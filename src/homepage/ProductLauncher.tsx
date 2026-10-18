@@ -192,12 +192,9 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
     <div className="flex h-[min(80vh,42rem)] flex-col">
       <div className="flex shrink-0 items-center justify-between gap-3 border-b border-black/5 px-4 py-3">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#113227]/70">
-            Product ranges
-          </p>
-          <p className="product-launcher__shine mt-0.5 text-[15px] font-semibold sm:text-base">
-            High-Demand Formulations
-          </p>
+          <h3 className="font-manrope text-[17px] font-semibold tracking-tight text-[#113227] sm:text-[18px]">
+            Product Ranges
+          </h3>
         </div>
         <button
           type="button"
@@ -261,7 +258,7 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
                   onClick={() => toggleCategory(cat.name)}
                   className="flex w-full items-center justify-between gap-2 px-2 py-3 text-left transition hover:bg-black/[0.03]"
                 >
-                  <span className="text-[13px] font-semibold text-[#113227] sm:text-sm">
+                  <span className="font-manrope text-[13px] font-semibold text-[#113227] sm:text-sm">
                     {cat.name}
                   </span>
                   <ChevronDown
@@ -301,7 +298,7 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
                               onClick={() =>
                                 openProduct(activeRange, cat.name, item)
                               }
-                              className="group w-full rounded-lg px-2.5 py-2 text-left text-[12px] font-medium leading-snug whitespace-normal text-[#113227]/90 transition hover:bg-black/[0.04] sm:text-[13px]"
+                              className="group w-full rounded-lg px-2.5 py-2 text-left font-para text-[12px] font-medium leading-snug whitespace-normal text-[#113227]/90 transition hover:bg-black/[0.04] sm:text-[13px]"
                               style={
                                 {
                                   ["--hover-accent"]: rangeMeta.theme.accent,
@@ -328,7 +325,7 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
         <Link
           to={rangeMeta.href}
           onClick={closePanel}
-          className="group inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-95"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 font-manrope text-sm font-semibold text-white transition hover:opacity-95"
           style={{ backgroundColor: rangeMeta.theme.accent }}
         >
           View all {rangeMeta.label}
@@ -359,7 +356,7 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
                     id={panelId}
                     role="dialog"
                     aria-modal="false"
-                    aria-label="High-Demand Formulations"
+                    aria-label="Product Ranges"
                     tabIndex={-1}
                     initial={
                       reduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }
@@ -387,7 +384,7 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
                 aria-label={
                   open
                     ? "Close products"
-                    : "Browse high-demand formulations"
+                    : "Browse product ranges"
                 }
                 whileTap={reduceMotion ? undefined : { scale: 0.96 }}
                 className="flex items-center gap-2 rounded-full bg-[#113227] py-3 pl-3.5 pr-4 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(17,50,39,0.28)] transition hover:bg-[#0d281f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#11BB8A] focus-visible:ring-offset-2"
@@ -428,7 +425,7 @@ export default function ProductLauncher({ enabled = true }: ProductLauncherProps
               id={panelId}
               role="dialog"
               aria-modal="true"
-              aria-label="High-Demand Formulations"
+              aria-label="Product Ranges"
               tabIndex={-1}
               initial={reduceMotion ? false : { y: "100%" }}
               animate={{ y: 0 }}

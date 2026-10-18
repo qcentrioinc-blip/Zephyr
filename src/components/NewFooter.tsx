@@ -11,7 +11,11 @@ import {
 } from "lucide-react";
 import { H3, P } from "./Typography/Typo";
 
-type FooterLink = { name: string; url: string };
+type FooterLink = {
+  name: string;
+  url: string;
+  comingSoon?: boolean;
+};
 
 const ACCENT = "#11BB8A";
 const STRIP_BORDER = "rgba(17, 187, 138, 0.35)";
@@ -74,6 +78,7 @@ const NewFooter = () => {
     { name: "Nutraceutical", url: "/nutraceutical" },
     { name: "Herbaceutical", url: "/herbaceutical" },
     { name: "Organic", url: "/organic" },
+    { name: "Bioceuticals", url: "#", comingSoon: true },
   ];
 
   const companyLinks: FooterLink[] = [
@@ -132,12 +137,24 @@ const NewFooter = () => {
             <ul className="m-0 list-none space-y-2 p-0">
               {productLinks.map((link) => (
                 <li key={link.name} className="m-0 p-0">
-                  <Link
-                    to={link.url}
-                    className="inline-block text-[13px] text-white/90 transition-colors hover:text-[#11BB8A] sm:text-[15px]"
-                  >
-                    {link.name}
-                  </Link>
+                  {link.comingSoon ? (
+                    <span
+                      className="inline-flex items-center gap-1.5 text-[13px] text-white/60 cursor-default select-none sm:text-[15px]"
+                      aria-disabled="true"
+                    >
+                      <span>{link.name}</span>
+                      <span className="rounded-full bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-white/80">
+                        Coming soon
+                      </span>
+                    </span>
+                  ) : (
+                    <Link
+                      to={link.url}
+                      className="inline-block text-[13px] text-white/90 transition-colors hover:text-[#11BB8A] sm:text-[15px]"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
