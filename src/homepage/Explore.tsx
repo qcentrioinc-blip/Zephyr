@@ -74,12 +74,14 @@ function CircularLabel({
   textColor,
   borderColor,
   rotated,
+  isMobile = false,
 }: {
   title: string;
   pathKey: string;
   textColor: string;
   borderColor: string;
   rotated: boolean;
+  isMobile?: boolean;
 }) {
   const pathId = `circlePath-${pathKey}`;
   // Exact repetitions so words evenly fill the circle perimeter without overflowing or merging
@@ -111,11 +113,12 @@ function CircularLabel({
 
       <text
         fill={textColor}
-        fontSize="13"
-        letterSpacing="3"
-        fontWeight="500"
+        fontSize={isMobile ? "11.5" : "13"}
+        letterSpacing={isMobile ? "2" : "3"}
+        fontWeight={isMobile ? "600" : "500"}
         textLength={CIRCLE_CIRCUMFERENCE}
         lengthAdjust="spacing"
+        className="font-manrope select-none"
       >
         <textPath href={`#${pathId}`} startOffset="0%">
           {repeatedText}
@@ -131,6 +134,7 @@ function ExploreCard({
   sizeClassName,
   insetClassName,
   hoverFx = false,
+  isMobile = false,
 }: {
   item: ExploreItem;
   pathKey: string;
@@ -138,6 +142,7 @@ function ExploreCard({
   insetClassName: string;
   /** Desktop-only: ring text spin + colored overlay reveal */
   hoverFx?: boolean;
+  isMobile?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
@@ -172,6 +177,7 @@ function ExploreCard({
         textColor={item.textColor}
         borderColor={item.borderColor}
         rotated={showFx}
+        isMobile={isMobile}
       />
 
       <div
@@ -259,8 +265,9 @@ function MobileGridLayout({ items }: { items: ExploreItem[] }) {
           <ExploreCard
             item={item}
             pathKey={`mob-${item.title}`}
-            sizeClassName="h-[160px] w-[160px]"
-            insetClassName="inset-[26px]"
+            sizeClassName="h-[160px] w-[160px] xs:h-[168px] xs:w-[168px]"
+            insetClassName="inset-[26px] xs:inset-[27px]"
+            isMobile={true}
           />
         </div>
       ))}
